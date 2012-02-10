@@ -1,0 +1,22 @@
+Papyrillio\BeehiveBundle\Entity\Compilation:
+    type: entity
+    table: compilation
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        volume:
+            type: integer
+        start:
+            type: date
+        end:
+            type: date
+        publication:
+            type: date
+    oneToMany:
+        corrections:
+            targetEntity: Correction
+            mappedBy: compilation
+    # don't forget to init the collection in entity __construct() method

@@ -1,0 +1,36 @@
+Papyrillio\BeehiveBundle\Entity\Correction:
+    type: entity
+    table: correction
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        bl:
+            type: integer
+        tm:
+            type: integer
+        hgv:
+            type: string
+            length: 64
+        ddb:
+            type: string
+            length: 64
+        position:
+            type: text
+        description:
+            type: text
+    manyToOne:
+        compilation:
+            targetEntity: Compilation
+            inversedBy: corrections
+            joinColumn:
+                name: compilation_id
+                referencedColumnName: id
+                nullable: false
+    oneToMany:
+        tasks:
+            targetEntity: Task
+            mappedBy: correction
+    # don't forget to init the collection in entity __construct() method

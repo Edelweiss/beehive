@@ -1,0 +1,7 @@
+parameters:
+#    papyrillio_beehive.example.class: Papyrillio\BeehiveBundle\Example
+
+services:
+#    papyrillio_beehive.example:
+#        class: %papyrillio_beehive.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

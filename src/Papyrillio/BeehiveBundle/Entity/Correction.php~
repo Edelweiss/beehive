@@ -1,0 +1,14 @@
+<?php
+
+namespace Papyrillio\BeehiveBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Papyrillio\BeehiveBundle\Entity\Correction
+ */
+class Correction
+{
+
+
+}

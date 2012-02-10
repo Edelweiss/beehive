@@ -1,0 +1,25 @@
+Papyrillio\BeehiveBundle\Entity\Task:
+    type: entity
+    table: task
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        category:
+            type: string
+            length: 64
+        description:
+            type: text
+        cleared:
+            type: datetime
+            nullable: true
+    manyToOne:
+        correction:
+            targetEntity: Correction
+            inversedBy: tasks
+            joinColumn:
+                name: correction_id
+                referencedColumnName: id
+                nullable: false

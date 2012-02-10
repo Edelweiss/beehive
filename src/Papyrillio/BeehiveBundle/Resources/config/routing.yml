@@ -1,0 +1,3 @@
+PapyrillioBeehiveBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: PapyrillioBeehiveBundle:Default:index }

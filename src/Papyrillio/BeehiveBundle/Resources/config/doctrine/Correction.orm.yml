@@ -1,6 +1,8 @@
 Papyrillio\BeehiveBundle\Entity\Correction:
     type: entity
     table: correction
+    gedmo:
+        loggable
     id:
         id:
             type: integer
@@ -21,6 +23,8 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             type: text
         description:
             type: text
+            gedmo:
+                - versioned
     manyToOne:
         compilation:
             targetEntity: Compilation

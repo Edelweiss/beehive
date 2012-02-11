@@ -1,0 +1,3 @@
+PapyrillioSecurityBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: PapyrillioSecurityBundle:Default:index }

@@ -1,0 +1,7 @@
+parameters:
+#    papyrillio_user.example.class: Papyrillio\UserBundle\Example
+
+services:
+#    papyrillio_user.example:
+#        class: %papyrillio_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

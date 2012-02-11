@@ -1,6 +1,22 @@
+PapyrillioUserBundle:
+    resource: "@PapyrillioUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+PapyrillioSecurityBundle:
+    resource: "@PapyrillioSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
 PapyrillioBeehiveBundle:
     resource: "@PapyrillioBeehiveBundle/Resources/config/routing.yml"
     prefix:   /
+
+login:
+    pattern:   /login
+    defaults:  { _controller: PapyrillioSecurityBundle:Security:login }
+login_check:
+    pattern:   /login_check
+logout:
+    pattern:   /logout
 
 # Internal routing configuration to handle ESI
 #_internal:

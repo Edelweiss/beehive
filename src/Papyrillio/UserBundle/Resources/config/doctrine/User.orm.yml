@@ -1,0 +1,32 @@
+Papyrillio\UserBundle\Entity\User:
+    type: entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 255
+            unique: true
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 40
+        email:
+            type: string
+            length: 255
+            unique: true
+        name:
+            type: string
+            length: 255
+            unique: true
+        roles:
+            type: array
+        isActive:
+            type: boolean
+            name: is_active

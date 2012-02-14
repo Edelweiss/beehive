@@ -23,10 +23,10 @@ class LoadCorrectionData extends AbstractFixture implements OrderedFixtureInterf
           array('b' => 126, 't' => 12359, 'h' => '12359b', 'd' => 'l.ink;;49', 'p' => 'mekao 342 e', 'desc' => 'ξέχασε → ξέκόσε', 'task' => array()),
           array('b' => 126, 't' => 12359, 'h' => '12359c', 'd' => 'l.ink;;49', 'p' => 'mekao 989 r', 'desc' => 'εκτός → εκτόςύψος', 'task' => array()),
           
-          array('b' => 321, 't' => 878, 'h' => '878', 'd' => 'im.pa 8', 'p' => 'iama IIa', 'desc' => 'ως → ως tuje oficiala τέτοιο', 'task' => array()),
-          array('b' => 321, 't' => 878, 'h' => '878', 'd' => 'im.pa 8', 'p' => 'iama IIb (havi mekao)', 'desc' => 'Si ano trae troa, ot nome sensubjekta muo. Gingivalo nederlando haltostreko nen ve. Kiam geto morgaŭo ik dev. Ene hu pako internacia, tek mo kunigi tutampleksa (απομόνωση προκαλείς συνεντεύξεις ως πες).', 'task' => array()),
+          array('b' => 321, 't' => 878, 'h' => '878', 'd' => 'G.Anon II 1234;78', 'p' => 'iama IIa', 'desc' => 'ως → ως tuje oficiala τέτοιο', 'task' => array()),
+          array('b' => 321, 't' => 878, 'h' => '878', 'd' => 'G.Anon II 1234;78', 'p' => 'iama IIb (havi mekao)', 'desc' => 'Si ano trae troa, ot nome sensubjekta muo. Gingivalo nederlando haltostreko nen ve. Kiam geto morgaŭo ik dev. Ene hu pako internacia, tek mo kunigi tutampleksa (απομόνωση προκαλείς συνεντεύξεις ως πες).', 'task' => array()),
           
-          array('b' => 345, 't' => 90405, 'h' => '90405', 'd' => 'G.Anon II 1234;78', 'p' => 'alikaŭze 1-4', 'desc' => 'Plue (ξεχειλίζει αντιλήφθηκαν) ni geto kilometro inkluzive, am enz kab\'o alikaŭze. U ist jaro frazo. Nen at participo posttagmezo, eŭro intera ies vi. Tiuj alies centimetro cii on.', 'task' => array(
+          array('b' => 345, 't' => 23633, 'h' => '23633', 'd' => 'p.ammon;2;27', 'p' => 'alikaŭze 1-4', 'desc' => 'Plue (ξεχειλίζει αντιλήφθηκαν) ni geto kilometro inkluzive, am enz kab\'o alikaŭze. U ist jaro frazo. Nen at participo posttagmezo, eŭro intera ies vi. Tiuj alies centimetro cii on.', 'task' => array(
           'hgv' => array('d' => 'Jen ator 23 inter ju, hago.', 'c' => '2010-01-13'),
           'ddb' => array('d' => 'Pluso elnombrado sat io, ador vortfarado', 'c' => '2010-01-13'),
           'apis' => array('d' => 'Sub nf timi nuna 23 trans 89 mf dekuma.', 'c' => '2010-01-13'),
@@ -51,9 +51,10 @@ class LoadCorrectionData extends AbstractFixture implements OrderedFixtureInterf
             $task->setCategory($category);
             $task->setDescription($taskData['d']);
             if($taskData['c']){
-              $task->setDescription(new DateTime($taskData['c']));
+              $task->setCleared(new DateTime($taskData['c']));
             }
-            
+            $task->setCorrection($correction);
+            $manager->persist($task);
           }
 
           $manager->persist($correction);

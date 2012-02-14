@@ -3,14 +3,73 @@
 namespace Papyrillio\BeehiveBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Loggable;
 /**
  * Papyrillio\BeehiveBundle\Entity\Correction
  */
 class Correction
 {
+    public function getTitle(){
+      $collection = '';
+      foreach(explode('.', $this->collection) as $collectionPart){
+        $collection .= ucfirst($collectionPart) . '.';
+      }
+      $collection = rtrim($collection, '.');
 
+      return $collection . ' ' . $this->volume . ' ' . $this->document . ', ' . $this->position;
+    }
 
+    /**
+     * Set ddb
+     *
+     * @param string $ddb
+     */
+    public function setDdb($ddb)
+    {
+        $this->ddb = $ddb;
+
+        $tokenList = explode(';', $this->ddb);
+        $this->collection = array_key_exists(0, $tokenList) ? $tokenList[0] : '';
+        $this->volume     = array_key_exists(1, $tokenList) ? $tokenList[1] : '';
+        $this->document   = array_key_exists(2, $tokenList) ? $tokenList[2] : '';
+    }
+
+    /**
+     * Set tm
+     *
+     * @param integer $tm
+     */
+    public function setTm($tm)
+    {
+        $this->tm = $tm;
+        $this->folder = ceil($this->tm / 1000.0);
+    }
+
+    public function getLink($type = 'pi'){
+      switch($type){
+        case 'pi':
+          return 'http://www.papyri.info/ddbdp/' . $this->ddb;
+        case 'githubddb':
+          return 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml';
+        case 'githubhgv':
+          return 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml';
+        case 'hgv':
+          return 'http://www.papy.uni-heidelberg.de/Hauptregister/FMPro?-DB=Hauptregister_&-Format=DTableVw.htm&Publikation='. $this->collection . '&Band='. $this->volume . '&Nummer='. $this->document . '&-Max=20&-Find';
+          
+          
+          
+        default:
+          return '';
+      }
+    }
+
+    public function getLinks(){
+      $links = array();
+      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV') as $type => $name){
+        $links[$name] = $this->getLink($type);
+      }
+      return $links;
+    }
     /**
      * @var integer $id
      */
@@ -27,6 +86,11 @@ class Correction
     private $tm;
 
     /**
+     * @var integer $folder
+     */
+    private $folder;
+
+    /**
      * @var string $hgv
      */
     private $hgv;
@@ -35,6 +99,20 @@ class Correction
      * @var string $ddb
      */
     private $ddb;
+    /**
+     * @var string $collection
+     */
+    private $collection;
+
+    /**
+     * @var string $volume
+     */
+    private $volume;
+
+    /**
+     * @var string $document
+     */
+    private $document;
 
     /**
      * @var text $position
@@ -92,16 +170,6 @@ class Correction
     }
 
     /**
-     * Set tm
-     *
-     * @param integer $tm
-     */
-    public function setTm($tm)
-    {
-        $this->tm = $tm;
-    }
-
-    /**
      * Get tm
      *
      * @return integer 
@@ -109,6 +177,26 @@ class Correction
     public function getTm()
     {
         return $this->tm;
+    }
+
+    /**
+     * Set folder
+     *
+     * @param integer $folder
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
+    }
+
+    /**
+     * Get folder
+     *
+     * @return integer 
+     */
+    public function getFolder()
+    {
+        return $this->folder;
     }
 
     /**
@@ -132,16 +220,6 @@ class Correction
     }
 
     /**
-     * Set ddb
-     *
-     * @param string $ddb
-     */
-    public function setDdb($ddb)
-    {
-        $this->ddb = $ddb;
-    }
-
-    /**
      * Get ddb
      *
      * @return string 
@@ -149,6 +227,66 @@ class Correction
     public function getDdb()
     {
         return $this->ddb;
+    }
+
+    /**
+     * Set collection
+     *
+     * @param string $collection
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
+    }
+
+    /**
+     * Get collection
+     *
+     * @return string 
+     */
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
+     * Set volume
+     *
+     * @param string $volume
+     */
+    public function setVolume($volume)
+    {
+        $this->volume = $volume;
+    }
+
+    /**
+     * Get volume
+     *
+     * @return string 
+     */
+    public function getVolume()
+    {
+        return $this->volume;
+    }
+
+    /**
+     * Set document
+     *
+     * @param string $document
+     */
+    public function setDocument($document)
+    {
+        $this->document = $document;
+    }
+
+    /**
+     * Get document
+     *
+     * @return string 
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 
     /**

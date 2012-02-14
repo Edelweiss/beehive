@@ -13,10 +13,21 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             type: integer
         tm:
             type: integer
+        folder:
+            type: integer
         hgv:
             type: string
             length: 64
         ddb:
+            type: string
+            length: 64
+        collection:
+            type: string
+            length: 64
+        volume:
+            type: string
+            length: 64
+        document:
             type: string
             length: 64
         position:

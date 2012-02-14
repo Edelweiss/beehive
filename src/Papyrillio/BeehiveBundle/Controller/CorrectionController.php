@@ -3,8 +3,14 @@
 namespace Papyrillio\BeehiveBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class CorrectionController extends Controller{
+  protected $entityManager = null;
+  protected $repository = null;
+  protected $correction = null;
+  protected $logs = null;
+
   public function listAction($id){
     return $this->render('PapyrillioBeehiveBundle:Default:about.html.twig');
   }
@@ -12,7 +18,15 @@ class CorrectionController extends Controller{
     return $this->render('PapyrillioBeehiveBundle:Default:contact.html.twig');
   }
   public function updateAction($id){
-    return $this->render('PapyrillioBeehiveBundle:Default:help.html.twig');
+    $this->retrieveCorrection($id);
+    
+    $setter = 'set' . ucfirst($this->getParameter('elementid'));
+    $getter = 'get' . ucfirst($this->getParameter('elementid'));
+    
+    $this->correction->$setter($this->getParameter('newvalue'));
+    $this->entityManager->flush();
+    
+    return new Response($this->correction->$getter());
   }
   public function showAction($id){
 
@@ -20,19 +34,27 @@ class CorrectionController extends Controller{
       return $this->forward('PapyrillioBeehiveBundle:Correction:list');
     }
 
-    $em = $this->getDoctrine()->getEntityManager();
-    $repo = $em->getRepository('PapyrillioBeehiveBundle:Correction');
+    $this->retrieveCorrection($id);
 
-    $correction = $repo->findOneBy(array('id' => $id));
+    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs));
+  }
+  
+  protected function getParameter($key){
+    return $this->getRequest()->request->get($key) ? $this->getRequest()->request->get($key) : $this->getRequest()->query->get($key);
+  }
+  
+  protected function retrieveCorrection($id){
+    $this->entityManager = $this->getDoctrine()->getEntityManager();
+    $this->repository = $this->entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+
+    $this->correction = $this->repository->findOneBy(array('id' => $id));
     
-    $log = $em->getRepository('StofDoctrineExtensionsBundle:LogEntry');
-    #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
-    $logs = $log->getLogEntries($correction);
-
-    if(!$correction){
+    if(!$this->correction){
       throw $this->createNotFoundException('The item does not exist');
     }
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $correction, 'logs' => $logs));
+    $log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
+    #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
+    $this->logs = $log->getLogEntries($this->correction);
   }
 }

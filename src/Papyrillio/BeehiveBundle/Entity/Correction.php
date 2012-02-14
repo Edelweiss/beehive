@@ -16,7 +16,7 @@ class Correction
       }
       $collection = rtrim($collection, '.');
 
-      return $collection . ' ' . $this->volume . ' ' . $this->document . ', ' . $this->position;
+      return $collection . ' ' . $this->volume . ' ' . $this->document;
     }
 
     /**

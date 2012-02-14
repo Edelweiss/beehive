@@ -27,6 +27,6 @@ PapyrillioBeehiveBundle_correctionedit:
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:edit }
 
 PapyrillioBeehiveBundle_correctionupdate:
-    pattern:  /correction/update
+    pattern:  /correction/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:update }
 

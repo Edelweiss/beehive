@@ -3,12 +3,16 @@
 namespace Papyrillio\BeehiveBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * Papyrillio\BeehiveBundle\Entity\Task
  */
 class Task
 {
+    public function isCleared(){
+      return ($this->cleared instanceof DateTime);
+    }
     /**
      * @var integer $id
      */

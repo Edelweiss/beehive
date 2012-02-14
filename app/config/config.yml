@@ -47,6 +47,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        #mappings:
+        #    StofDoctrineExtensionsBundle: ~
+        #    PapyrillioBeehiveBundle: ~
+        #    PapyrillioUserBundle: ~
 
 # Stof Doctrine Extensions Configuration
 stof_doctrine_extensions:

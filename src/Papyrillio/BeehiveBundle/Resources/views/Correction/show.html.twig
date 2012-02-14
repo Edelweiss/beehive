@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h3>{{ correction.title }}</h3>
+<div id="correction">
+  <h4><a href="#">Korrektur</a></h4>
+  <div><p>{{ correction.description }}</p></div>
+  <h4><a href="#">Definierte Aufgaben</a></h4>
+  <div>
+    <ul class="task">
+      {% for task in correction.tasks %}
+        <li>{{ task.category }}, {{ task.description }}, {{ task.isCleared ? 'yes' : 'no' }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <h4><a href="#">Weitere Quellen</a></h4>
+  <div>
+    <ul class="links">
+      {% for name,link in correction.links %}
+        <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <h4><a href="#">Versionslogbuch</a></h4>
+  <div>
+    <ul class="logs">
+      {% for log in logs %}
+        <li>Version {{ log.version }} / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.data.description }}, {{ log.username }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript">
+  
+  jQuery(document).ready(function(){
+    $( "#correction" ).accordion();
+  });
+  
+  </script>
+{% endblock %}
+
+
+{% endblock %}

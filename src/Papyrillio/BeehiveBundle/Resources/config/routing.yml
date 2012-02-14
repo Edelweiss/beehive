@@ -1,3 +1,32 @@
+PapyrillioBeehiveBundle_about:
+    pattern:  /about
+    defaults: { _controller: PapyrillioBeehiveBundle:Default:about }
+
+PapyrillioBeehiveBundle_contact:
+    pattern:  /contact
+    defaults: { _controller: PapyrillioBeehiveBundle:Default:contact }
+
+PapyrillioBeehiveBundle_help:
+    pattern:  /help
+    defaults: { _controller: PapyrillioBeehiveBundle:Default:help }
+
 PapyrillioBeehiveBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: PapyrillioBeehiveBundle:Default:index }
+
+PapyrillioBeehiveBundle_correctionlist:
+    pattern:  /correction/list
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:list }
+
+PapyrillioBeehiveBundle_correctionshow:
+    pattern:  /correction/show/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:show }
+
+PapyrillioBeehiveBundle_correctionedit:
+    pattern:  /correction/edit
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:edit }
+
+PapyrillioBeehiveBundle_correctionupdate:
+    pattern:  /correction/update
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:update }
+

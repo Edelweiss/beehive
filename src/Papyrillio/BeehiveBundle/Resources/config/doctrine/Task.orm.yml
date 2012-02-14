@@ -1,6 +1,8 @@
 Papyrillio\BeehiveBundle\Entity\Task:
     type: entity
     table: task
+    gedmo:
+        loggable
     id:
         id:
             type: integer
@@ -12,9 +14,13 @@ Papyrillio\BeehiveBundle\Entity\Task:
             length: 64
         description:
             type: text
+            gedmo:
+                - versioned
         cleared:
             type: datetime
             nullable: true
+            gedmo:
+                - versioned
     manyToOne:
         correction:
             targetEntity: Correction

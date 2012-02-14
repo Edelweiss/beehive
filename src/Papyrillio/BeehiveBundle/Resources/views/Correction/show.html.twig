@@ -28,7 +28,7 @@
         <li>Version {{ log.version }} / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
           <ul>
             {% for key,value in log.data %}
-              <li>{{ key }} = {{ value }}</li>
+              <li>{{ key }} → {{ value }}</li>
             {% endfor %}
           </ul>
         </li>

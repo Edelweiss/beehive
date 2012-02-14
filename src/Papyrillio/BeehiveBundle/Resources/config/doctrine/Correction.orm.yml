@@ -32,6 +32,8 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             length: 64
         position:
             type: text
+            gedmo:
+                - versioned
         description:
             type: text
             gedmo:

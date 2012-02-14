@@ -1,0 +1,46 @@
+body {
+  color: white;
+  font-size: 66%;
+  background: url("images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #222222;
+}
+
+h3 {
+  text-align: center;
+  width: auto;
+}
+
+div#site {
+  height: auto !important;
+  min-height: 100%;
+  position: relative;
+  width: 1024px;
+  margin: 0 auto;
+  background-color: black;
+  color: white;
+  background: url("images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #111111;
+}
+
+div#header {
+  border-bottom: 0.1em solid #0972A5;
+  padding: 1em;
+}
+
+div#content {
+  min-height: 100%;
+  padding: 1em 1em 5em;
+}
+
+div#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 0.1em solid #0972A5;
+}
+
+a {
+  color: #0972A5;
+}
+
+p {
+  padding: 1em;
+}

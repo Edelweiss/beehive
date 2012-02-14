@@ -13,6 +13,19 @@ class Task
     public function isCleared(){
       return ($this->cleared instanceof DateTime);
     }
+    
+    public function markAsCleared(){
+      $this->cleared = new DateTime('now');
+    }
+    
+    public function markAsToBeDone(){
+      $this->cleared = null;
+    }
+    
+    public function getTitle(){
+      return strtoupper($this->category);
+    }
+    
     /**
      * @var integer $id
      */

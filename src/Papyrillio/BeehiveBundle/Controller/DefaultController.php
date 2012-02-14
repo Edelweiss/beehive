@@ -14,7 +14,7 @@ class DefaultController extends Controller{
     public function helpAction(){
         return $this->render('PapyrillioBeehiveBundle:Default:help.html.twig');
     }
-    public function indexAction($name){
-        return $this->render('PapyrillioBeehiveBundle:Default:index.html.twig', array('name' => $name));
+    public function indexAction(){
+        return $this->render('PapyrillioBeehiveBundle:Default:index.html.twig');
     }
 }

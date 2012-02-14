@@ -15,14 +15,20 @@
     <body>
         <div id="site">
             <div id="header">
-              Hallo {{ app.user.name }}!
+              {% if app.user %}
+                Hallo {{ app.user.name }}!
+              {% else %}
+                <a href="{{ path('login') }}">Login</a>
+              {% endif %}
             </div>
             <div id="content">
                 {% block body %}{% endblock %}
             </div>
             <div id="footer">
                 <p>
-                    <a href="{{ path('logout') }}">Abmelden</a>
+                    {% if app.user %}
+                      <a href="{{ path('logout') }}">Abmelden</a>
+                    {% endif %}
                     <a href="{{ path('PapyrillioBeehiveBundle_about') }}">Info</a>
                     <a href="{{ path('PapyrillioBeehiveBundle_contact') }}">Kontakt</a>
                     <a href="{{ path('PapyrillioBeehiveBundle_help') }}">Hilfe</a>

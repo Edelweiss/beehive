@@ -40,6 +40,10 @@
   </div>
 </div>
 
+<p class="actionHolder">
+  <a href="{{ path('PapyrillioBeehiveBundle_correctiondelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
+</p>
+
 {% block javascripts %}
   {{ parent() }}
   

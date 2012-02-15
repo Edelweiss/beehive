@@ -4,6 +4,8 @@ namespace Papyrillio\BeehiveBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Papyrillio\BeehiveBundle\Entity\Correction;
+use Papyrillio\BeehiveBundle\Entity\Compilation;
 use DateTime;
 
 class CorrectionController extends BeehiveController{
@@ -12,12 +14,57 @@ class CorrectionController extends BeehiveController{
   protected $correction = null;
   protected $logs = null;
 
-  public function listAction($id){
-    return $this->render('PapyrillioBeehiveBundle:Default:about.html.twig');
+  public function listAction(){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+
+    $corrections = $repository->findAll();
+    
+    return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
   }
-  public function editAction($id){
-    return $this->render('PapyrillioBeehiveBundle:Default:contact.html.twig');
+  public function newAction(){
+    $correction = new Correction();
+    
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+
+    $correction->setCompilation($this->getCompilation());
+
+    $form = $this->createFormBuilder($correction)
+      ->add('bl', 'number')
+      ->add('tm', 'number')
+      ->add('hgv', 'text')
+      ->add('ddb', 'text')
+      ->add('position', 'text')
+      ->add('description', 'textarea')
+      ->getForm();
+
+    if ($this->getRequest()->getMethod() == 'POST') {
+        
+      $form->bindRequest($this->getRequest());
+
+      if ($form->isValid()) {
+        $entityManager->persist($correction);
+        $entityManager->flush();
+
+        return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionshow', array('id' => $correction->getId())));
+      }
+    }
+
+    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilation' => $correction->getCompilation(), 'compilations' => $compilationRepository->findAll()));
   }
+
+  protected function getCompilation(){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+
+    if($this->getRequest()->getMethod() == 'POST'){
+      return $compilationRepository->findOneBy(array('id' => $this->getParameter('compilation')));
+    }else{
+      return $compilationRepository->findOneBy(array('volume' => 13));
+    }
+  }
+
   public function updateAction($id){
     $this->retrieveCorrection($id);
     
@@ -29,6 +76,20 @@ class CorrectionController extends BeehiveController{
     
     return new Response($this->correction->$getter());
   }
+
+  public function deleteAction($id){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+    $correction = $repository->findOneBy(array('id' => $id));
+    foreach($correction->getTasks() as $task){
+      $entityManager->remove($task);
+    }
+
+    $entityManager->remove($correction);
+    $entityManager->flush();
+    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionlist'));
+  }
+
   public function showAction($id){
 
     if(!$id){

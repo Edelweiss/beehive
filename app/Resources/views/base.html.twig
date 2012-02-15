@@ -17,6 +17,8 @@
             <div id="header">
               {% if app.user %}
                 Hallo {{ app.user.name }}!
+                <a href="{{ path('PapyrillioBeehiveBundle_correctionnew') }}">Neuen Korrektureintrag anlegen</a>
+                <a href="{{ path('PapyrillioBeehiveBundle_correctionlist') }}">Korrektureinträge ansehen</a>
               {% else %}
                 <a href="{{ path('login') }}">Login</a>
               {% endif %}

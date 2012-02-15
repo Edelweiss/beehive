@@ -4,6 +4,30 @@ namespace Papyrillio\BeehiveBundle\Entity;
 class Compilation
 {
     /**
+     * Set volume
+     *
+     * @param integer $volume
+     */
+    public function setVolume($volume){
+        $this->volume = $volume;
+        $this->updateTitle();
+    }
+
+    /**
+    * Set fascicle
+    *
+    * @param integer $fascicle
+    */
+    public function setFascicle($fascicle){
+        $this->fascicle = $fascicle;
+        $this->updateTitle();
+    }
+    
+    protected function updateTitle(){
+      $this->title = $this->numberToRoman($this->volume) . ($this->fascicle ? ' ' . $this->fascicle : '');
+    }
+
+    /**
      * @var integer $id
      */
     private $id;
@@ -12,6 +36,16 @@ class Compilation
      * @var integer $volume
      */
     private $volume;
+
+    /**
+     * @var integer $fascicle
+     */
+    private $fascicle;
+
+    /**
+     * @var text $title
+     */
+    private $title;
 
     /**
      * @var date $start
@@ -49,13 +83,33 @@ class Compilation
     }
 
     /**
-     * Set volume
+     * Get fascicle
      *
-     * @param integer $volume
+     * @return integer 
      */
-    public function setVolume($volume)
+    public function getFascicle()
     {
-        $this->volume = $volume;
+        return $this->fascicle;
+    }
+
+    /**
+     * Set title
+     *
+     * @param text $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return text 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -147,4 +201,31 @@ class Compilation
     {
         return $this->corrections;
     }
+    
+    protected function numberToRoman($num)
+    {
+       // Make sure that we only use the integer portion of the value
+       $n = intval($num);
+       $result = '';
+   
+       // Declare a lookup array that we will use to traverse the number:
+       $lookup = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400,
+       'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40,
+       'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+   
+       foreach ($lookup as $roman => $value) 
+       {
+           // Determine the number of matches
+           $matches = intval($n / $value);
+   
+           // Store that many characters
+           $result .= str_repeat($roman, $matches);
+   
+           // Substract that from the number
+           $n = $n % $value;
+       }
+   
+       // The Roman numeral should be built, return it
+       return $result;
+    } // http://www.go4expert.com/forums/showthread.php?t=4948
 }

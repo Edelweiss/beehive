@@ -28,9 +28,13 @@ PapyrillioBeehiveBundle_correctionshow:
     pattern:  /correction/show/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:show }
 
-PapyrillioBeehiveBundle_correctionedit:
-    pattern:  /correction/edit
-    defaults: { _controller: PapyrillioBeehiveBundle:Correction:edit }
+PapyrillioBeehiveBundle_correctiondelete:
+    pattern:  /correction/delete/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:delete }
+
+PapyrillioBeehiveBundle_correctionnew:
+    pattern:  /correction/new
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:new }
 
 PapyrillioBeehiveBundle_correctionupdate:
     pattern:  /correction/update/{id}

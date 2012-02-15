@@ -7,10 +7,10 @@
 {% endif %}
 
 <form id="login" action="{{ path('login_check') }}" method="post">
-    <label for="username">Name:</label>
+    <label for="username">Name</label>
     <input class="data" type="text" id="username" name="_username" value="{{ last_username }}" />
 
-    <label for="password">Passwort:</label>
+    <label for="password">Passwort</label>
     <input class="data" type="password" id="password" name="_password" />
 
     {#
@@ -18,7 +18,7 @@
         <input type="hidden" name="_target_path" value="/account" />
     #}
 
-    <input class="submit" type="submit" name="login" />
+    <input class="submit" type="submit" name="login" value="Anmelden" />
 </form>
 
 {% endblock %}

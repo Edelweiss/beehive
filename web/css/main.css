@@ -14,6 +14,7 @@ div#site {
   width: 1024px;
   margin: 0 auto;
   color: white;
+  padding: 0 0 23em;
   /*background: url("dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #111111;*/
  background-color: #111111;
 }
@@ -63,6 +64,60 @@ h3 span {
   background: url("dark-hive/images/?new=0972a5&w=1&h=100&f=png&q=100&fltr[]=over|textures/04_highlight_hard.png|0|0|20") repeat-x scroll 50% 50% #0972A5;
 }
 
+.actionHolder a {
+  float: right;
+}
+
+/* CORRECTION NEW */
+
+form#correctionNew {
+  margin: 0 auto;
+  width: 26em;
+  padding: 2em;
+}
+
+form#correctionNew label {
+  margin: 0.2em;
+  width: 20%;
+  display: block;
+  float: left;
+}
+
+form#correctionNew div {
+  clear: both;
+  float: none;
+}
+
+form#correctionNew div select,
+form#correctionNew div textarea,
+form#correctionNew div input {
+  width: 70%;
+  margin: 0.2em;
+  float: right;
+}
+
+form#correctionNew div textarea,
+form#correctionNew div input {
+  border: 0.1em solid #0972A5;
+}
+
+form#correctionNew div input#form_position {
+  width: 100%;
+}
+
+form#correctionNew div textarea {
+  width: 100%;
+  padding: 0.1em 0 0.1em;
+}
+
+form#correctionNew input.submit{
+  margin: 0.2em;
+  float: right;
+}
+
+
+/* LOGIN */
+
 form#login {
   margin: 0 auto;
   width: 19em;
@@ -84,6 +139,30 @@ form#login input.data{
   width: 12em;
 }
 
+/* CORRETION SHOW */
+
 div.log{
   height: 20em;
+}
+
+/* FORM DIV */
+
+div#form div {
+  position: relative;
+  width: 100%;
+  clear: both;
+  float: none;
+}
+
+div#form div ul {
+    background: #ffc73d url(dark-hive/images/ui-bg_glass_40_ffc73d_1x400.png) 50% 50% repeat-x;
+
+    border: 1px solid #FFB73D;
+    color: #111111;
+    border-radius: 6px 6px 6px 6px;
+    outline: 0 none !important;
+    margin: 0;
+
+    float: none;
+    clear: both;
 }

@@ -9,12 +9,20 @@ Papyrillio\BeehiveBundle\Entity\Compilation:
     fields:
         volume:
             type: integer
+        fascicle:
+            type: integer
+            nullable: true
+        title:
+            type: text
         start:
             type: date
+            nullable: true
         end:
             type: date
+            nullable: true
         publication:
             type: date
+            nullable: true
     oneToMany:
         corrections:
             targetEntity: Correction

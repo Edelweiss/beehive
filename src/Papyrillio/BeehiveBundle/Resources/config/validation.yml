@@ -1,0 +1,39 @@
+Papyrillio\BeehiveBundle\Entity\Correction:
+    message: 'Ungültige Eingabe'
+    properties:
+        bl:
+            - NotBlank:
+                message: 'Bl-Ids sind rein numerisch wie z.B. »12345«'
+            - Regex:
+                pattern: '/^\d+$/'
+                message: 'Bl-Ids sind rein numerisch wie z.B. »12345«'
+        tm:
+            - NotBlank:
+                message: 'TM-Nummern sind rein numerisch wie z.B. »9183«'
+            - Regex:
+                pattern: '/^\d+$/'
+                message: 'TM-Nummern sind rein numerisch wie z.B. »9183«'
+        hgv:
+            - NotBlank:
+                message: 'HGV-Ids dürfen nur aus der TM-Nummer gefolgt von einem Kleinbuchstaben zur Kennzeichnung des Textschnipsels bestehen wie z.B. »9183a«'
+            - Regex:
+                pattern: '/^\d+[a-z]*$/'
+                message: 'HGV-Ids dürfen nur aus der TM-Nummer gefolgt von einem Kleinbuchstaben zur Kennzeichnung des Textschnipsels bestehen wie z.B. »9183a«'
+        ddb:
+            - NotBlank:
+                message: 'Bl Ids sind rein numerisch wie z.B. »bgu;2;452«'
+            - Regex:
+                pattern: '/^[^;]+;[^;]*;[^;]+$/'
+                message: 'Bl Ids sind rein numerisch wie z.B. »bgu;2;452«'
+        position:
+            - NotBlank:
+                message: 'Bitte einen Eintrag für die Position im Text oder die Verwendungsweise der Korrektur festlegen (Freitext).'
+            - MinLength:
+                limit: 3
+                message: 'Bitte einen Eintrag für die Position im Text oder die Verwendungsweise der Korrektur festlegen (Freitext).'
+        description:
+            - NotBlank:
+                message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'
+            - MinLength:
+                limit: 3
+                message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'

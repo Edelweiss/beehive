@@ -47,19 +47,20 @@ class CorrectionController extends BeehiveController{
       $this->get('logger')->info('******************************* sort: ' . $sort);
       $this->get('logger')->info('******************************* sortDirection: ' . $sortDirection);
       $this->get('logger')->info('******************************* totalPages: ' . $totalPages);
+      
+      $orderBy = 'c.' . $sort . ' ' . $sortDirection;
+      if($sort == 'title'){
+        $orderBy = 'c.bl, c.text ' . $sortDirection;
+      }
 
       $query = $entityManager->createQuery('
         SELECT c FROM PapyrillioBeehiveBundle:Correction c
         LEFT JOIN c.tasks t
         GROUP BY c.id
-        ORDER BY c.' . $sort . ' ' . $sortDirection
+        ORDER BY ' . $orderBy
       )->setFirstResult($offset)->setMaxResults($limit);
       
       $corrections = $query->getResult();
-      
-      
-
-      
 
       return $this->render('PapyrillioBeehiveBundle:Correction:list.xml.twig', array('corrections' => $corrections, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page));
     } else {
@@ -78,6 +79,8 @@ class CorrectionController extends BeehiveController{
 
     $form = $this->createFormBuilder($correction)
       ->add('bl', 'number')
+      ->add('edition', 'text')
+      ->add('text', 'text')
       ->add('tm', 'number')
       ->add('hgv', 'text')
       ->add('ddb', 'text')

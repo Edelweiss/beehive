@@ -10,15 +10,9 @@ use Gedmo\Loggable;
 class Correction
 {
     public function getTitle(){
-      $collection = '';
-      foreach(explode('.', $this->collection) as $collectionPart){
-        $collection .= ucfirst($collectionPart) . '.';
-      }
-      $collection = rtrim($collection, '.');
-
-      return $collection . ' ' . $this->volume . ' ' . $this->document;
+      return $this->bl . ' = ' . $this->edition . ' ' . $this->text;
     }
-    
+
     public function hasTask($category = null){
       if($category){
         $count = 0;
@@ -103,6 +97,16 @@ class Correction
      * @var integer $bl
      */
     private $bl;
+    /**
+     * @var string $edition
+     */
+
+    private $edition;
+
+    /**
+     * @var string $text
+     */
+    private $text;
 
     /**
      * @var integer $tm
@@ -191,6 +195,46 @@ class Correction
     public function getBl()
     {
         return $this->bl;
+    }
+
+    /**
+     * Set edition
+     *
+     * @param string $edition
+     */
+    public function setEdition($edition)
+    {
+        $this->edition = $edition;
+    }
+
+    /**
+     * Get edition
+     *
+     * @return string 
+     */
+    public function getEdition()
+    {
+        return $this->edition;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string 
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 
     /**

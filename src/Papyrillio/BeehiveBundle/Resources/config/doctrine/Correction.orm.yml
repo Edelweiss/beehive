@@ -11,6 +11,12 @@ Papyrillio\BeehiveBundle\Entity\Correction:
     fields:
         bl:
             type: integer
+        edition:
+            type: string
+            length: 64
+        text:
+            type: string
+            length: 64
         tm:
             type: integer
         folder:

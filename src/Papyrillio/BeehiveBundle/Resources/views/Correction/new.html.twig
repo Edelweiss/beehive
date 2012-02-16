@@ -6,8 +6,7 @@
 <form id="correctionNew" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
     <div>
         <label>Band</label>
-        <select name="compilation">
-        
+        <select name="compilation">        
         {% for compi in compilations %}
           <option value="{{ compi.id }}" {{ compi.id == compilation.id ? 'selected="selected"' : '' }}>{{ compi.title }}</option>
         {% endfor %}

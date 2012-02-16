@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h3>{{ correction.bl }} = {{ correction.title }}, <span id="position" class="edit">{{ correction.position }}</span></h3>
+<h3>{{ correction.title }}, <span id="position" class="edit">{{ correction.position }}</span></h3>
 <div id="correction">
   <h4><a href="#">Korrektur</a></h4>
   <div><p id="description" class="editArea">{{ correction.description }}</p></div>
@@ -15,6 +15,7 @@
   </div>
   <h4><a href="#">Weitere Quellen</a></h4>
   <div>
+    {{ correction.bl }} / {{ correction.edition }} {{ correction.text }} = TM {{ correction.tm }} = HGV {{ correction.hgv }} = DDB {{ correction.ddb }}
     <ul class="links">
       {% for name,link in correction.links %}
         <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>

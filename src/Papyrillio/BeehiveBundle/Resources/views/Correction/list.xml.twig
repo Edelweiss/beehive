@@ -1,0 +1,23 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<rows>
+  <page>{{ page }}</page>
+  <total>{{ totalPages }}</total>
+  <records>{{ count }}</records>
+  {% for correction in corrections %}
+    <row id = '{{ correction.id }}'>
+      <cell>{{ correction.compilation.title }}</cell>
+      <cell>{{ correction.bl }}</cell>
+      <cell>{{ correction.tm }}</cell>
+      <cell>{{ correction.hgv }}</cell>
+      <cell>{{ correction.ddb }}</cell>
+      <cell><![CDATA[<a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': correction.id}) }}">{{ correction.title }}</a>]]></cell>
+      <cell>{{ correction.position }}</cell>
+      <cell>{{ correction.description }}</cell>
+      <cell>{{ correction.hasOpenTask('bl') ? '✘' : '✔' }}</cell>
+      <cell>{{ correction.hasOpenTask('tm') ? '✘' : '✔' }}</cell>
+      <cell>{{ correction.hasOpenTask('hgv') ? '✘' : '✔' }}</cell>
+      <cell>{{ correction.hasOpenTask('ddb') ? '✘' : '✔' }}</cell>
+      <cell>{{ correction.hasOpenTask('apis') ? '✘' : '✔' }}</cell>
+    </row>
+  {% endfor %}
+</rows>

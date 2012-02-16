@@ -17,11 +17,57 @@ class CorrectionController extends BeehiveController{
   public function listAction(){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-
-    $corrections = $repository->findAll();
+    $corrections = array();
     
-    return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
+    
+    /*$query = $entityManager->createQuery('
+        SELECT c, t, count(t.id) FROM PapyrillioBeehiveBundle:Correction c
+        LEFT JOIN c.tasks t
+        GROUP BY c.id'
+      );
+      $corrections = $query->getResult();*/
+      //$this->get('logger')->info('*************************' . print_r($corrections, true));
+
+    if ($this->getRequest()->getMethod() == 'POST') {
+      $limit = $this->getParameter('rows');
+      $page = $this->getParameter('page');
+      $offset = $page * $limit - $limit;
+      $offset = $offset < 0 ? 0 : $offset;
+      $sort = $this->getParameter('sidx');
+      $sortDirection = $this->getParameter('sord');
+      
+      $query = $entityManager->createQuery('SELECT COUNT(c.id) FROM  PapyrillioBeehiveBundle:Correction c');
+      $count = $query->getSingleScalarResult();
+      
+      $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+      
+      $this->get('logger')->info('******************************* limit: ' . $limit);
+      $this->get('logger')->info('******************************* page: ' . $page);
+      $this->get('logger')->info('******************************* offset: ' . $offset);
+      $this->get('logger')->info('******************************* sort: ' . $sort);
+      $this->get('logger')->info('******************************* sortDirection: ' . $sortDirection);
+      $this->get('logger')->info('******************************* totalPages: ' . $totalPages);
+
+      $query = $entityManager->createQuery('
+        SELECT c FROM PapyrillioBeehiveBundle:Correction c
+        LEFT JOIN c.tasks t
+        GROUP BY c.id
+        ORDER BY c.' . $sort . ' ' . $sortDirection
+      )->setFirstResult($offset)->setMaxResults($limit);
+      
+      $corrections = $query->getResult();
+      
+      
+
+      
+
+      return $this->render('PapyrillioBeehiveBundle:Correction:list.xml.twig', array('corrections' => $corrections, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page));
+    } else {
+      
+      return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
+    }
   }
+  
   public function newAction(){
     $correction = new Correction();
     

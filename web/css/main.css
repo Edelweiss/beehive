@@ -3,7 +3,7 @@
 body {
   color: white;
   font-size: 66%;
-  /*background: url("dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #222222;*/
+  /*background: url("jquery/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #222222;*/
   background-color: #222222;
 }
 
@@ -15,7 +15,7 @@ div#site {
   margin: 0 auto;
   color: white;
   padding: 0 0 23em;
-  /*background: url("dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #111111;*/
+  /*background: url("jquery/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #111111;*/
  background-color: #111111;
 }
 
@@ -61,9 +61,18 @@ h3 span {
   padding: 0.1em 0.4em;
   font-size: 1em;
   border: 1px solid #26B3F7;
-  background: url("dark-hive/images/?new=0972a5&w=1&h=100&f=png&q=100&fltr[]=over|textures/04_highlight_hard.png|0|0|20") repeat-x scroll 50% 50% #0972A5;
+  background: url('jquery/dark-hive/images/?new=0972a5&w=1&h=100&f=png&q=100&fltr[]=over|textures/04_highlight_hard.png|0|0|20') repeat-x scroll 50% 50% #0972A5;
 }
 
+.keyword {
+  font-weight: bold;
+  color: #0972A5;
+}
+
+.keywordBright {
+  font-weight: bold;
+  color: #26B3F7;
+}
 .actionHolder a {
   float: right;
 }
@@ -145,6 +154,8 @@ div.log{
   height: 20em;
 }
 
+/* CORRECTION LIST */
+
 /* FORM DIV */
 
 div#form div {
@@ -155,7 +166,7 @@ div#form div {
 }
 
 div#form div ul {
-    background: #ffc73d url(dark-hive/images/ui-bg_glass_40_ffc73d_1x400.png) 50% 50% repeat-x;
+    background: #ffc73d url('jquery/dark-hive/images/ui-bg_glass_40_ffc73d_1x400.png') 50% 50% repeat-x;
 
     border: 1px solid #FFB73D;
     color: #111111;

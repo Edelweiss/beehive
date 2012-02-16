@@ -18,6 +18,30 @@ class Correction
 
       return $collection . ' ' . $this->volume . ' ' . $this->document;
     }
+    
+    public function hasTask($category = null){
+      if($category){
+        $count = 0;
+        foreach($this->getTasks() as $task){
+          if($task->getCategory() == $category){
+            $count++;
+          }
+        }
+        return $count;
+      } else {
+        return count($this->getTasks());
+      }
+    }
+    
+    public function hasOpenTask($category = null){
+      $count = 0;
+      foreach($this->getTasks() as $task){
+        if((($category === null) || ($task->getCategory() === $category)) && !$task->isCleared()){
+          $count++;
+        }
+      }
+      return $count;
+    }
 
     /**
      * Set ddb

@@ -9,7 +9,7 @@
   <div>
     <ul class="task">
       {% for task in correction.tasks %}
-        <li>{{ task.title }}: <span id="task_{{ task.id }}_description" class="editTask">{{ task.description }}</span> <span id="task_{{ task.id }}_cleared" class="editTaskSelect highlight">{{ task.isCleared ? '✓' : '✘' }}</span></li>
+        <li>{{ task.title }}: <span id="task_{{ task.id }}_description" class="editTask">{{ task.description }}</span> <span id="task_{{ task.id }}_cleared" class="editTaskSelect highlight">{{ task.isCleared ? '✔' : '✘' }}</span></li>
       {% endfor %}
     </ul>
   </div>
@@ -93,7 +93,7 @@
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
       type: 'select',
-      data: {'✓': 'erledigt', '✘': 'offen'},
+      data: {'✔': 'erledigt', '✘': 'offen'},
       style: 'inherit',
       submit: 'OK'
     });

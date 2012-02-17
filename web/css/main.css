@@ -42,6 +42,10 @@ a {
   color: #0972A5;
 }
 
+a:hover {
+  color: #26B3F7;
+}
+
 p {
   padding: 1em;
 }
@@ -176,4 +180,30 @@ div#form div ul {
 
     float: none;
     clear: both;
+}
+
+/* CORRECTION REPORT */
+
+table.reportLeiden thead th,
+table.reportLeiden tbody td.edition {
+  height: 2.2em;
+  text-align: left;
+  vertical-align: middle;
+  padding: 0.2em 0.4em 0.2em 0.4em;
+  font-size: 1.1em;
+}
+
+table.reportLeiden tbody td {
+  padding: 0.2em 0.4em 0.2em 0.4em;
+  vertical-align: top;
+}
+
+table.reportLeiden tbody td.edition {
+  font-weight: bold;
+  vertical-align: top;
+}
+
+table.reportLeiden thead th.task  {
+  font-weight: normal;
+  font-style: italic;
 }

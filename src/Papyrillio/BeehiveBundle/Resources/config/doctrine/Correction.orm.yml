@@ -38,6 +38,7 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             length: 64
         position:
             type: text
+            nullable: true
             gedmo:
                 - versioned
         description:

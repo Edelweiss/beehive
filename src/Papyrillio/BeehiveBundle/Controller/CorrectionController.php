@@ -84,7 +84,7 @@ class CorrectionController extends BeehiveController{
       ->add('tm', 'number')
       ->add('hgv', 'text')
       ->add('ddb', 'text')
-      ->add('position', 'text')
+      ->add('position', 'text', array('required' => false))
       ->add('description', 'textarea')
       ->getForm();
 

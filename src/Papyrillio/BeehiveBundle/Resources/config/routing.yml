@@ -20,6 +20,14 @@ PapyrillioBeehiveBundle_homepage:
 
 # Correction
 
+PapyrillioBeehiveBundle_report:
+    pattern:  /report
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:leiden, compilationVolume: 13 }
+
+PapyrillioBeehiveBundle_reportleiden:
+    pattern:  /report/leiden/{compilationVolume}
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:leiden, compilationVolume: 13 }
+
 PapyrillioBeehiveBundle_correctionlist:
     pattern:  /correction/list
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:list }

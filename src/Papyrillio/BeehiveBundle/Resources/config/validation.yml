@@ -34,12 +34,6 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             - Regex:
                 pattern: '/^[^;]+;[^;]*;[^;]+$/'
                 message: 'Bl Ids sind rein numerisch wie z.B. »bgu;2;452«'
-        position:
-            - NotBlank:
-                message: 'Bitte einen Eintrag für die Position im Text oder die Verwendungsweise der Korrektur festlegen (Freitext).'
-            - MinLength:
-                limit: 3
-                message: 'Bitte einen Eintrag für die Position im Text oder die Verwendungsweise der Korrektur festlegen (Freitext).'
         description:
             - NotBlank:
                 message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'

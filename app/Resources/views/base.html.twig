@@ -19,6 +19,7 @@
                 Hallo {{ app.user.name }}!
                 <a href="{{ path('PapyrillioBeehiveBundle_correctionnew') }}">Neuen Korrektureintrag anlegen</a>
                 <a href="{{ path('PapyrillioBeehiveBundle_correctionlist') }}">Korrektureinträge ansehen</a>
+                <a href="{{ path('PapyrillioBeehiveBundle_report') }}">Bericht abrufen</a>
               {% else %}
                 <a href="{{ path('login') }}">Login</a>
               {% endif %}

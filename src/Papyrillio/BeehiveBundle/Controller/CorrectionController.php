@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Papyrillio\BeehiveBundle\Entity\Correction;
 use Papyrillio\BeehiveBundle\Entity\Compilation;
+use Papyrillio\BeehiveBundle\Entity\Edition;
 use DateTime;
 
 class CorrectionController extends BeehiveController{
@@ -49,13 +50,14 @@ class CorrectionController extends BeehiveController{
       $this->get('logger')->info('******************************* totalPages: ' . $totalPages);
       
       $orderBy = 'c.' . $sort . ' ' . $sortDirection;
-      if($sort == 'title'){
-        $orderBy = 'c.bl, c.text ' . $sortDirection;
+      if($sort == 'edition'){
+        //$orderBy = 'c.bl, c.text ' . $sortDirection;
+        $orderBy = 'e.sort, e.title ' . $sortDirection;
       }
 
       $query = $entityManager->createQuery('
         SELECT c FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t
+        LEFT JOIN c.tasks t JOIN c.edition e
         GROUP BY c.id
         ORDER BY ' . $orderBy
       )->setFirstResult($offset)->setMaxResults($limit);
@@ -74,18 +76,19 @@ class CorrectionController extends BeehiveController{
     
     $entityManager = $this->getDoctrine()->getEntityManager();
     $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+    $editionRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Edition');
 
     $correction->setCompilation($this->getCompilation());
+    $correction->setEdition($this->getEdition());
 
     $form = $this->createFormBuilder($correction)
-      ->add('bl', 'number')
-      ->add('edition', 'text')
       ->add('text', 'text')
+      ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
+      ->add('description', 'textarea', array('label' => 'Eintrag'))
       ->add('tm', 'number')
       ->add('hgv', 'text')
       ->add('ddb', 'text')
-      ->add('position', 'text', array('required' => false))
-      ->add('description', 'textarea')
+      ->add('source', 'number', array('label' => 'Quelle'))
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {
@@ -100,17 +103,28 @@ class CorrectionController extends BeehiveController{
       }
     }
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilation' => $correction->getCompilation(), 'compilations' => $compilationRepository->findAll()));
+    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilations' => $compilationRepository->findAll(), 'editions' => $editionRepository->findAll()));
   }
 
   protected function getCompilation(){
     $entityManager = $this->getDoctrine()->getEntityManager();
-    $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
 
     if($this->getRequest()->getMethod() == 'POST'){
-      return $compilationRepository->findOneBy(array('id' => $this->getParameter('compilation')));
+      return $repository->findOneBy(array('id' => $this->getParameter('compilation')));
     }else{
-      return $compilationRepository->findOneBy(array('volume' => 13));
+      return $repository->findOneBy(array('volume' => 13));
+    }
+  }
+
+  protected function getEdition(){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Edition');
+
+    if($this->getRequest()->getMethod() == 'POST'){
+      return $repository->findOneBy(array('id' => $this->getParameter('edition')));
+    }else{
+      return $repository->findOneBy(array('sort' => 0));
     }
   }
 

@@ -1,0 +1,28 @@
+Papyrillio\BeehiveBundle\Entity\Edition:
+    type: entity
+    table: edition
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        sort:
+            type: integer
+        title:
+            type: text
+        collection:
+            type: text
+        volume:
+            type: text
+            nullable: true
+        remark:
+            type: text
+            nullable: true
+        material:
+            type: text
+    oneToMany:
+        corrections:
+            targetEntity: Correction
+            mappedBy: edition
+    # don't forget to init the collection in entity __construct() method

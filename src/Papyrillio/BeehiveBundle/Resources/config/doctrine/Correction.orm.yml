@@ -9,11 +9,8 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             generator:
                 strategy: AUTO
     fields:
-        bl:
+        source:
             type: integer
-        edition:
-            type: string
-            length: 64
         text:
             type: string
             length: 64
@@ -46,6 +43,14 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             gedmo:
                 - versioned
     manyToOne:
+        edition:
+            targetEntity: Edition
+            inversedBy: corrections
+            joinColumn:
+                name: edition_id
+                referencedColumnName: id
+                nullable: false
+
         compilation:
             targetEntity: Compilation
             inversedBy: corrections

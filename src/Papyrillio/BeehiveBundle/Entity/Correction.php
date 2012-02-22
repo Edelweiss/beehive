@@ -10,7 +10,7 @@ use Gedmo\Loggable;
 class Correction
 {
     public function getTitle(){
-      return $this->bl . ' = ' . $this->edition . ' ' . $this->text;
+      return $this->getEdition()->getSort() . ' = ' . $this->getEdition()->getTitle();
     }
 
     public function hasTask($category = null){
@@ -67,15 +67,15 @@ class Correction
       switch($type){
         case 'pi':
           return 'http://www.papyri.info/ddbdp/' . $this->ddb;
+        case 'biblio':
+          return 'http://www.papyri.info/biblio/' . $this->source;
         case 'githubddb':
           return 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml';
         case 'githubhgv':
           return 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml';
         case 'hgv':
           return 'http://www.papy.uni-heidelberg.de/Hauptregister/FMPro?-DB=Hauptregister_&-Format=DTableVw.htm&Publikation='. $this->collection . '&Band='. $this->volume . '&Nummer='. $this->document . '&-Max=20&-Find';
-          
-          
-          
+
         default:
           return '';
       }
@@ -83,7 +83,7 @@ class Correction
 
     public function getLinks(){
       $links = array();
-      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV') as $type => $name){
+      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'biblio' => 'Biblio') as $type => $name){
         $links[$name] = $this->getLink($type);
       }
       return $links;
@@ -94,14 +94,9 @@ class Correction
     private $id;
 
     /**
-     * @var integer $bl
+     * @var integer $source
      */
-    private $bl;
-    /**
-     * @var string $edition
-     */
-
-    private $edition;
+    private $source;
 
     /**
      * @var string $text
@@ -161,6 +156,11 @@ class Correction
      * @var Papyrillio\BeehiveBundle\Entity\Compilation
      */
     private $compilation;
+   
+    /**
+     * @var Papyrillio\BeehiveBundle\Entity\Edition
+     */
+    private $edition;
 
     public function __construct()
     {
@@ -178,46 +178,6 @@ class Correction
     }
 
     /**
-     * Set bl
-     *
-     * @param integer $bl
-     */
-    public function setBl($bl)
-    {
-        $this->bl = $bl;
-    }
-
-    /**
-     * Get bl
-     *
-     * @return integer 
-     */
-    public function getBl()
-    {
-        return $this->bl;
-    }
-
-    /**
-     * Set edition
-     *
-     * @param string $edition
-     */
-    public function setEdition($edition)
-    {
-        $this->edition = $edition;
-    }
-
-    /**
-     * Get edition
-     *
-     * @return string 
-     */
-    public function getEdition()
-    {
-        return $this->edition;
-    }
-
-    /**
      * Set text
      *
      * @param string $text
@@ -225,6 +185,26 @@ class Correction
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    /**
+     * Set source
+     *
+     * @param integer $source
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * Get source
+     *
+     * @return integer 
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 
     /**
@@ -435,5 +415,26 @@ class Correction
     public function getCompilation()
     {
         return $this->compilation;
+    }
+
+
+    /**
+     * Set edition
+     *
+     * @param Papyrillio\BeehiveBundle\Entity\Edition $edition
+     */
+    public function setEdition(\Papyrillio\BeehiveBundle\Entity\Edition $edition)
+    {
+        $this->edition = $edition;
+    }
+
+    /**
+     * Get edition
+     *
+     * @return Papyrillio\BeehiveBundle\Entity\Edition 
+     */
+    public function getEdition()
+    {
+        return $this->edition;
     }
 }

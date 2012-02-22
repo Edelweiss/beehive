@@ -87,6 +87,7 @@ form#correctionNew {
   margin: 0 auto;
   width: 26em;
   padding: 2em;
+  position: relative;
 }
 
 form#correctionNew label {
@@ -128,6 +129,13 @@ form#correctionNew input.submit{
   float: right;
 }
 
+form#correctionNew div.idno {
+  position: absolute;
+  width: 16em;
+  top: 2em;
+  right: -16em;
+
+}
 
 /* LOGIN */
 

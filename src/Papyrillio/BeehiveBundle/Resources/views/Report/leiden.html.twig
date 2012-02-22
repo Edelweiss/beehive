@@ -17,7 +17,7 @@
     <tbody>
       {% for correction in corrections %}
         <tr id="correction{{ correction.id }}">
-          <td class="edition ui-widget-content ui-row-ltr">{{ correction.bl }}={{ correction.edition }}</td>
+          <td class="edition ui-widget-content ui-row-ltr">{{ correction.edition.sort }}={{ correction.edition.title }}</td>
           <td class="text ui-widget-content ui-row-ltr">{{ correction.text }}</td>
           <td class="position ui-widget-content ui-row-ltr">{{ correction.position }}</td>
           <td class="description ui-widget-content ui-row-ltr">{{ correction.description }}</td>

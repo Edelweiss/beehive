@@ -43,7 +43,7 @@ class LoadCompilationData extends AbstractFixture implements OrderedFixtureInter
 
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }
 ?>

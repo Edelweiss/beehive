@@ -4,18 +4,69 @@
 
 <h3>Neue Korrektur</h3>
 <form id="correctionNew" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+
     <div>
         <label>Band</label>
         <select name="compilation">        
         {% for compi in compilations %}
-          <option value="{{ compi.id }}" {{ compi.id == compilation.id ? 'selected="selected"' : '' }}>{{ compi.title }}</option>
+          <option value="{{ compi.id }}" {{ compi.id == form.vars.value.compilation.id ? 'selected="selected"' : '' }}>{{ compi.title }}</option>
         {% endfor %}
         </select>
     </div>
-
-    {{ form_widget(form) }}
+    <div>
+        <label>BL_Ed_Nr</label>
+        <select name="editionSort" id="editionSort">        
+        {% for edi in editions %}
+          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.sort }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label>Edition</label>
+        <select name="edition" id="editionTitle">
+        {% for edi in editions %}
+          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.title }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    
+    <div class="text">
+      {{ form_label(form.text) }}
+      {{ form_widget(form.text) }}
+      {{ form_errors(form.text) }}
+    </div>
+    
+    <div class="position">
+      {{ form_label(form.position) }}
+      {{ form_widget(form.position) }}
+      {{ form_errors(form.position) }}
+    </div>
+    
+    <div class="description">
+      {{ form_label(form.description) }}
+      {{ form_widget(form.description) }}
+      {{ form_errors(form.description) }}
+    </div>
+    
+    <div class="idno">
+    {{ form_rest(form) }}
+    </div>
 
     <input class="submit" type="submit" name="new" value="Datensatz anlegen" />
 </form>
 
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript">
+  
+  jQuery(document).ready(function(){
+    $('#editionTitle').change(function(o){$('#editionSort').val(this.value); });
+    $('#editionSort').change(function(o){$('#editionTitle').val(this.value); });
+  });
+  
+  </script>
 {% endblock %}

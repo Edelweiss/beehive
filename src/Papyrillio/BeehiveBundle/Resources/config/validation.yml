@@ -1,21 +1,16 @@
 Papyrillio\BeehiveBundle\Entity\Correction:
     message: 'Ungültige Eingabe'
     properties:
-        bl:
-            - NotBlank:
-                message: 'Editionsnummern sind rein numerisch wie z.B. »175«'
-            - Regex:
-                pattern: '/^\d+$/'
-                message: 'Editionsnummern sind rein numerisch wie z.B. »175«'
-        edition:
-            - NotBlank:
-                message: 'Editionsnamen sind als Freitext einzugeben wie z.B. »P. Cairo Masp. 1«'
-            - MinLength:
-                limit: 3
-                message: 'Editionsnamen sind als Freitext einzugeben wie z.B. »P. Cairo Masp. 1«'
         text:
             - NotBlank:
                 message: 'Textbezeichner sind als Freitext einzugeben wie z.B. »16 (auf S. 17)«'
+        
+        source:
+            - NotBlank:
+                message: 'Bitte eine gültige Bilbio-Id eingeben, Bilbio-Ids sind rein numerisch wie z.B. »4066«'
+            - Regex:
+                pattern: '/^\d+$/'
+                message: 'Bitte eine gültige Bilbio-Id eingeben, Bilbio-Ids sind rein numerisch wie z.B. »4066«'
         tm:
             - NotBlank:
                 message: 'TM-Nummern sind rein numerisch wie z.B. »9183«'

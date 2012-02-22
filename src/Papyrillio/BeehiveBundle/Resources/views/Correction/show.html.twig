@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h3>{{ correction.title }}, <span id="position" class="edit">{{ correction.position }}</span></h3>
+<h3>{{ correction.title }}, <span id="text" class="edit">{{ correction.text }}</span>, <span id="position" class="edit">{{ correction.position }}</span></h3>
 <div id="correction">
   <h4><a href="#">Korrektur</a></h4>
   <div><p id="description" class="editArea">{{ correction.description }}</p></div>
@@ -15,7 +15,16 @@
   </div>
   <h4><a href="#">Weitere Quellen</a></h4>
   <div>
-    {{ correction.bl }} / {{ correction.edition }} {{ correction.text }} = TM {{ correction.tm }} = HGV {{ correction.hgv }} = DDB {{ correction.ddb }}
+    Ids
+    <ul class="ids">
+
+        <li>TM  <span id="tm" class="edit">{{ correction.tm }}</span></li>
+        <li>HGV <span id="hgv" class="edit">{{ correction.hgv }}</span></li>
+        <li>DDB <span id="ddb" class="edit">{{ correction.ddb }}</span></li>
+        <li>Biblio <span id="source" class="edit">{{ correction.source }}</span></li>
+
+    </ul>
+    Links im Internet
     <ul class="links">
       {% for name,link in correction.links %}
         <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
@@ -61,6 +70,7 @@
       name : 'newvalue',
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
+      placeholder: '________',
       style: 'inherit'
     });
     $('.editArea').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
@@ -71,7 +81,8 @@
       submit: 'OK',
       //indicator: '<img src="{{ asset('images/spinner.gif') }}" />',
       indicator : 'Speichert...',
-      tooltip   : 'Klicken zum Editieren...'
+      tooltip   : 'Klicken zum Editieren...',
+      placeholder: '________'
     });
     $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
       id   : 'elementid_raw',
@@ -82,6 +93,7 @@
       },
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
+      placeholder: '________',
       style: 'inherit'
     });
     $('.editTaskSelect').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {

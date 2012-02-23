@@ -31,7 +31,7 @@ $(function(){
     mtype: 'POST',
     colNames:['Band', 'TM', 'HGV', 'DDB', 'Quelle', 'Edition', 'Text', 'Zeile', 'Eintrag', 'BL', 'TM', 'HGV', 'DDB', 'APIS', 'Biblio'],
     colModel :[ 
-      {name:'compilation', index:'compilation_id', width:32, resizable: false, sortable: false},
+      {name:'compilation', index:'compilation',    width:32, resizable: false, sortable: false},
       {name:'tm',          index:'tm',             width:55},
       {name:'hgv',         index:'hgv',            width:55},
       {name:'ddb',         index:'ddb',            width:77},
@@ -40,12 +40,12 @@ $(function(){
       {name:'text',        index:'text',           width:50},
       {name:'position',    index:'position',       width:80},
       {name:'description', index:'description',    width:250},
-      {name:'task_bl',     index:'task_bl',        width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false},
-      {name:'task_tm',     index:'task_tm',        width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false},
-      {name:'task_hgv',    index:'task_hgv',       width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false},
-      {name:'task_ddb',    index:'task_ddb',       width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false},
-      {name:'task_apis',   index:'task_apis',      width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false},
-      {name:'task_biblio', index:'task_biblio',    width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false} 
+      {name:'task_bl',     index:'task_bl',        width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false},
+      {name:'task_tm',     index:'task_tm',        width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false},
+      {name:'task_hgv',    index:'task_hgv',       width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false},
+      {name:'task_ddb',    index:'task_ddb',       width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false},
+      {name:'task_apis',   index:'task_apis',      width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false},
+      {name:'task_biblio', index:'task_biblio',    width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false} 
     ],
     pager: '#pager',
     rowNum:10,
@@ -55,6 +55,9 @@ $(function(){
     viewrecords: true,
     gridview: true,
     caption: 'Liste der Korrekturen'});
+    
+    jQuery("#list").jqGrid('filterToolbar', {});
+    
   }); 
   
   

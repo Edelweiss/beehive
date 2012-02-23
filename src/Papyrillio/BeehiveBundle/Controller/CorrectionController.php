@@ -30,16 +30,60 @@ class CorrectionController extends BeehiveController{
       //$this->get('logger')->info('*************************' . print_r($corrections, true));
 
     if ($this->getRequest()->getMethod() == 'POST') {
-      $limit = $this->getParameter('rows');
-      $page = $this->getParameter('page');
-      $offset = $page * $limit - $limit;
-      $offset = $offset < 0 ? 0 : $offset;
-      $sort = $this->getParameter('sidx');
+      
+      // PARAMETERS
+      
+      $limit         = $this->getParameter('rows');
+      $page          = $this->getParameter('page');
+      $offset        = $page * $limit - $limit;
+      $offset        = $offset < 0 ? 0 : $offset;
+      $sort          = $this->getParameter('sidx');
       $sortDirection = $this->getParameter('sord');
+
+      // ODER BY
       
-      $query = $entityManager->createQuery('SELECT COUNT(c.id) FROM  PapyrillioBeehiveBundle:Correction c');
+      $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
+      if($sort == 'edition'){
+        $orderBy = ' ORDER BY e.sort, e.title ' . $sortDirection;
+      }
+      if($sort == 'compilation'){
+        $orderBy = ' ORDER BY c2.volume ' . $sortDirection;
+      }
+
+      // WHERE
+      
+      $where = '';
+      if($this->getParameter('_search') == 'true'){
+        $where = '';
+        $prefix = ' WHERE ';
+        
+        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description') as $field){
+          if($this->getParameter($field)){
+            $where .= $prefix . 'c.' . $field . ' LIKE \'%' . $this->getParameter($field) . '%\'';
+            $prefix = ' AND ';
+          }
+        }
+
+        if($this->getParameter('edition')){
+          $where .= $prefix . '(e.title LIKE \'%' . $this->getParameter('edition') . '%\' OR e.sort LIKE \'%' . $this->getParameter('edition') . '%\')';
+          $prefix = ' AND ';
+        }
+
+        if($this->getParameter('compilation')){
+          $where .= $prefix . '(c2.title LIKE \'%' . $this->getParameter('compilation') . '%\' OR c2.volume LIKE \'%' . $this->getParameter('compilation') . '%\')';
+          $prefix = ' AND ';
+        }
+      }
+
+      // LIMIT
+
+      //$query = $entityManager->createQuery('SELECT COUNT(c.id) FROM  PapyrillioBeehiveBundle:Correction c');      
+      $query = $entityManager->createQuery('
+        SELECT count(DISTINCT c.id) FROM PapyrillioBeehiveBundle:Correction c
+        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
+        ' . $where
+      );
       $count = $query->getSingleScalarResult();
-      
       $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
       
       $this->get('logger')->info('******************************* limit: ' . $limit);
@@ -48,25 +92,18 @@ class CorrectionController extends BeehiveController{
       $this->get('logger')->info('******************************* sort: ' . $sort);
       $this->get('logger')->info('******************************* sortDirection: ' . $sortDirection);
       $this->get('logger')->info('******************************* totalPages: ' . $totalPages);
-      
-      $orderBy = 'c.' . $sort . ' ' . $sortDirection;
-      if($sort == 'edition'){
-        //$orderBy = 'c.bl, c.text ' . $sortDirection;
-        $orderBy = 'e.sort, e.title ' . $sortDirection;
-      }
 
+      // QUERY
+      
       $query = $entityManager->createQuery('
         SELECT c FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t JOIN c.edition e
-        GROUP BY c.id
-        ORDER BY ' . $orderBy
+        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $where . ' GROUP BY c.id ' . $orderBy
       )->setFirstResult($offset)->setMaxResults($limit);
       
       $corrections = $query->getResult();
 
       return $this->render('PapyrillioBeehiveBundle:Correction:list.xml.twig', array('corrections' => $corrections, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page));
     } else {
-      
       return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
     }
   }
@@ -177,8 +214,7 @@ class CorrectionController extends BeehiveController{
     $log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
     #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
     $this->logs = $log->getLogEntries($this->correction);
-    
-    
+
     foreach ($this->correction->getTasks() as $task) {
 
         $this->logs = array_merge($this->logs, $log->getLogEntries($task));

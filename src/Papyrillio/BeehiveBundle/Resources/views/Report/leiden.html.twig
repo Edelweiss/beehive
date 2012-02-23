@@ -20,12 +20,12 @@
           <td class="edition ui-widget-content ui-row-ltr">{{ correction.edition.sort }}={{ correction.edition.title }}</td>
           <td class="text ui-widget-content ui-row-ltr">{{ correction.text }}</td>
           <td class="position ui-widget-content ui-row-ltr">{{ correction.position }}</td>
-          <td class="description ui-widget-content ui-row-ltr">{{ correction.description }}</td>
+          <td class="description ui-widget-content ui-row-ltr greek">{{ correction.description }}</td>
           <td class="task ui-widget-content ui-row-ltr">
             {% if correction.hasTask() %}
               <ul>
                 {% for task in correction.tasks %}
-                  <li id="task{{ task.id }}">
+                  <li id="task{{ task.id }}" class="greek">
                     <span>{{ task.category }}</span>:
                     {{ task.description }}
                   </li>

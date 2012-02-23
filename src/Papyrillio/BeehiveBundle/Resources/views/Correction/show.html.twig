@@ -4,12 +4,12 @@
 <h3>{{ correction.title }}, <span id="text" class="edit">{{ correction.text }}</span>, <span id="position" class="edit">{{ correction.position }}</span></h3>
 <div id="correction">
   <h4><a href="#">Korrektur</a></h4>
-  <div><p id="description" class="editArea">{{ correction.description }}</p></div>
+  <div><p id="description" class="editArea greek">{{ correction.description }}</p></div>
   <h4><a href="#">Aufgaben</a></h4>
   <div>
     <ul class="task">
       {% for task in correction.tasks %}
-        <li>{{ task.title }}: <span id="task_{{ task.id }}_description" class="editTask">{{ task.description }}</span> <span id="task_{{ task.id }}_cleared" class="editTaskSelect highlight">{{ task.isCleared ? '✔' : '✘' }}</span></li>
+        <li>{{ task.title }}: <span id="task_{{ task.id }}_description" class="editTask greek">{{ task.description }}</span> <span id="task_{{ task.id }}_cleared" class="editTaskSelect highlight">{{ task.isCleared ? '✔' : '✘' }}</span></li>
       {% endfor %}
     </ul>
   </div>
@@ -82,7 +82,8 @@
       //indicator: '<img src="{{ asset('images/spinner.gif') }}" />',
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
-      placeholder: '________'
+      placeholder: '________',
+      cssclass: 'greek'
     });
     $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
       id   : 'elementid_raw',
@@ -94,7 +95,8 @@
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
       placeholder: '________',
-      style: 'inherit'
+      style: 'inherit',
+      cssclass: 'greek'
     });
     $('.editTaskSelect').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
       id   : 'elementid_raw',

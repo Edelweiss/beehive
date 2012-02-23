@@ -20,15 +20,6 @@ class CorrectionController extends BeehiveController{
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
     $corrections = array();
     
-    
-    /*$query = $entityManager->createQuery('
-        SELECT c, t, count(t.id) FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t
-        GROUP BY c.id'
-      );
-      $corrections = $query->getResult();*/
-      //$this->get('logger')->info('*************************' . print_r($corrections, true));
-
     if ($this->getRequest()->getMethod() == 'POST') {
       
       // PARAMETERS
@@ -58,7 +49,7 @@ class CorrectionController extends BeehiveController{
         $prefix = ' WHERE ';
         
         foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description') as $field){
-          if($this->getParameter($field)){
+          if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE \'%' . $this->getParameter($field) . '%\'';
             $prefix = ' AND ';
           }

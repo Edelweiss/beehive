@@ -12,6 +12,12 @@
   <table id="list"></table>
   <div id="pager"></div>
   
+  <br />
+  
+  <button id="columnsHideShow" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+    <span class="ui-button-text">Spalten anzeigen/verbergen</span>
+  </button>
+  
   {# for c in corrections %}
     {{ c.id }}
   {% endfor #}
@@ -25,7 +31,7 @@
   <script type="text/javascript">
   
 $(function(){
-  $("#list").jqGrid({
+  $('#list').jqGrid({
     url: '{{ path('PapyrillioBeehiveBundle_correctionlist') }}',
     datatype: 'xml',
     mtype: 'POST',
@@ -55,12 +61,26 @@ $(function(){
     viewrecords: true,
     gridview: true,
     caption: 'Liste der Korrekturen'});
+
+    $('#list').jqGrid('filterToolbar', {});
     
-    jQuery("#list").jqGrid('filterToolbar', {});
+    $('#list').jqGrid('gridResize', {});
+
+    $('#columnsHideShow').click(function(){
+      $('#list').jqGrid('columnChooser', {shrinkToFit: false, autowidth: false});
+      return false;
+    });
     
-  }); 
-  
-  
-  
+    /*$('#list').jqGrid ('navButtonAdd', '#columnator',
+     { caption: "", buttonicon: "ui-icon-calculator",
+       title: "Spalten auswählen",
+       onClickButton: function() {
+            grid.jqGrid('columnChooser');
+       }
+     });*/
+    
+
+  });
+
   </script>
 {% endblock %}

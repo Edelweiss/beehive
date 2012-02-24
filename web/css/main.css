@@ -3,7 +3,6 @@
 body {
   color: white;
   font-size: 66%;
-  /*background: url("jquery/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #222222;*/
   background-color: #222222;
 }
 
@@ -15,7 +14,6 @@ div#site {
   margin: 0 auto;
   color: white;
   padding: 0 0 23em;
-  /*background: url("jquery/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png") repeat-x scroll 50% 50% #111111;*/
  background-color: #111111;
 }
 
@@ -81,8 +79,12 @@ h3 span {
   float: right;
 }
 
+.ui-widget textarea,
+.ui-widget .ui-widget textarea,
+.ui-widget textarea.greek,
+.ui-widget .ui-widget textarea.greek,
 .greek {
-    font-family: "Lucida Grande","Cardo","Arial Unicode MS","New Athena Unicode","Athena Unicode","Lucida Grande","Verdana","Tahoma", "IFAO-Grec Unicode", 'KadmosU' !important;
+    font-family: "Lucida Grande", "Cardo", "Arial Unicode MS", "IFAO-Grec Unicode", "KadmosU", "New Athena Unicode", "Athena Unicode", "Lucida Grande", "Verdana", "Tahoma" !important;
 }
 
 /* CORRECTION NEW */

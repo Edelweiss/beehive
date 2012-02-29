@@ -1,0 +1,23 @@
+Papyrillio\UserBundle\Entity\User:
+    message: 'Ungültige Eingabe'
+    properties:
+        name:
+            - NotBlank:
+                message: 'Benutzernamen sind als Freitext einzugeben wie z.B. »Heinrich Lee«'
+        username:
+            - NotBlank:
+                message: 'Bitte einen eindeutigen Benutzernamen aus einfachen Tastaturzeichen auswählen z.B. »heinrich.lee«, »lee-heinrich« oder »hlee_357«'
+            - Regex:
+                pattern: '/^[\d\w\.\-_]+$/'
+                message: 'Bitte einen eindeutigen Benutzernamen aus einfachen Tastaturzeichen auswählen z.B. »heinrich.lee«, »lee-heinrich« oder »hlee_357«'
+        password:
+            - NotBlank:
+                message: 'Bitte ein Passwort angeben'
+            - MinLength:
+                limit: 5
+                message: Ein Passwort sollte aus mindestens fünf Zeichen bestehen.
+        email:
+            - NotBlank:
+                message: 'Bitte eine E-Mail im gängigen E-Mail-Format angeben, z.B. »heinrich@lee.eu«'
+            - Email:
+                message: 'Bitte eine E-Mail im gängigen E-Mail-Format angeben, z.B. »heinrich@lee.eu«'

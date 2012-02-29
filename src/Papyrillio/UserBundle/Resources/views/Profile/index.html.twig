@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+  Benutzername: {{ app.user.username }}
+  <br />
+  E-Mail: {{ app.user.email }}
+  <br />
+  Letzte Anmeldung am {{ app.user.lastLogin.format('d.m.Y') }} um {{ app.user.lastLogin.format('H:i') }} Uhr
+  <br />
+{% endblock %}

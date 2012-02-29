@@ -30,3 +30,9 @@ Papyrillio\UserBundle\Entity\User:
         isActive:
             type: boolean
             name: is_active
+        currentLogin:
+            type: datetime
+            name: current_login
+        lastLogin:
+            type: datetime
+            name: last_login

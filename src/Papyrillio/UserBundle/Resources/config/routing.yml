@@ -1,3 +1,35 @@
-PapyrillioUserBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: PapyrillioUserBundle:Default:index }
+PapyrillioUserBundle_list:
+    pattern:  /user/list
+    defaults: { _controller: PapyrillioUserBundle:Default:list }
+
+PapyrillioUserBundle_new:
+    pattern:  /user/new
+    defaults: { _controller: PapyrillioUserBundle:Default:new }
+
+PapyrillioUserBundle_delete:
+    pattern:  /user/delete/{id}
+    defaults: { _controller: PapyrillioUserBundle:Default:delete }
+
+PapyrillioUserBundle_reset:
+    pattern:  /reset/{id}
+    defaults: { _controller: PapyrillioUserBundle:Default:reset }
+
+PapyrillioUserBundle_update:
+    pattern:  /user/update
+    defaults: { _controller: PapyrillioUserBundle:Default:update }
+
+PapyrillioUserBundle_show:
+    pattern:  /user/{id}
+    defaults: { _controller: PapyrillioUserBundle:Default:show }
+
+PapyrillioUserBundle_password:
+    pattern:  /password
+    defaults: { _controller: PapyrillioUserBundle:Default:password }
+
+PapyrillioUserBundle_tadaima:
+    pattern:  /tadaima
+    defaults: { _controller: PapyrillioUserBundle:Default:tadaima }
+
+PapyrillioUserBundle_profile:
+    pattern:  /profile
+    defaults: { _controller: PapyrillioUserBundle:Profile:index }

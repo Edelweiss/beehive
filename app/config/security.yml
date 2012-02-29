@@ -34,7 +34,8 @@ security:
                 check_path:  /login_check
                 #use_referer: true
                 always_use_default_target_path: true
-                default_target_path: PapyrillioBeehiveBundle_home
+                #default_target_path: PapyrillioBeehiveBundle_home
+                default_target_path: PapyrillioUserBundle_tadaima
             logout:
                 path:   /logout
                 target: /login

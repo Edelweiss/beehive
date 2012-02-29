@@ -4,6 +4,7 @@ namespace Papyrillio\UserBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * Papyrillio\UserBundle\Entity\User
@@ -19,8 +20,21 @@ class User implements UserInterface
     
     public function __construct(){
         $this->isActive = true;
+        $this->lastLogin = new DateTime('now');
+        $this->currentLogin = new DateTime('now');
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
+
+    /**
+     * Get lastLoginToString
+     *
+     * @return datetime
+     */
+    public function lastLoginToString($fomat = 'Y:m:d')
+    {
+        return $this->lastLogin->format();
+    }
+    
     /**
      * @var integer $id
      */
@@ -60,6 +74,11 @@ class User implements UserInterface
      * @var boolean $isActive
      */
     private $isActive;
+
+    /**
+     * @var datetime $lastLogin
+     */
+    private $lastLogin;
 
 
     /**
@@ -210,5 +229,50 @@ class User implements UserInterface
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param datetime $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return datetime 
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+    /**
+     * @var datetime $currentLogin
+     */
+    private $currentLogin;
+
+
+    /**
+     * Set currentLogin
+     *
+     * @param datetime $currentLogin
+     */
+    public function setCurrentLogin($currentLogin)
+    {
+        $this->currentLogin = $currentLogin;
+    }
+
+    /**
+     * Get currentLogin
+     *
+     * @return datetime 
+     */
+    public function getCurrentLogin()
+    {
+        return $this->currentLogin;
     }
 }

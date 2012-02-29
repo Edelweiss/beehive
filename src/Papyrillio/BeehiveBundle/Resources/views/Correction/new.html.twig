@@ -3,7 +3,7 @@
 {% block body %}
 
 <h3>Neue Korrektur</h3>
-<form id="correctionNew" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
+<form id="correctionNew" class="new" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
     <div>

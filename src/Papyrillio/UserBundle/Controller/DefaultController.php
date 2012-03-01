@@ -104,7 +104,7 @@ class DefaultController extends UserController
     $repository = $entityManager->getRepository('PapyrillioUserBundle:User');
 
     $form = $this->createFormBuilder($user)
-      ->add('password', 'text', array('label' => 'Neues Passwort'))
+      ->add('password', 'password', array('label' => 'Neues Passwort'))
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {

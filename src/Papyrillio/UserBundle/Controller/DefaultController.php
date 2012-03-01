@@ -108,7 +108,7 @@ class DefaultController extends UserController
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {
-        
+
       $form->bindRequest($this->getRequest());
 
       if ($form->isValid()) {
@@ -131,7 +131,7 @@ class DefaultController extends UserController
   public function newAction(){
     $user = new User();
     $user->setRoles(array('ROLE_USER'));
-    
+
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioUserBundle:User');
 

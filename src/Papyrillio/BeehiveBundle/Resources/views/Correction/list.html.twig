@@ -15,18 +15,14 @@
   <br />
   
   <button id="columnsHideShow" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
-    <span class="ui-button-text">Spalten anzeigen/verbergen</span>
+    <span class="ui-button-text">hide/show columns</span>
   </button>
-  
-  {# for c in corrections %}
-    {{ c.id }}
-  {% endfor #}
 
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
-  <script src="{{ asset('js/jquery/i18n/grid.locale-de.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/jquery/i18n/grid.locale-en.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/jquery/jquery-jqGrid.min.js') }}" type="text/javascript"></script>
   <script type="text/javascript">
   
@@ -54,7 +50,8 @@ $(function(){
       {name:'task_biblio', index:'task_biblio',    width:28, align: 'center', classes: 'keyword', resizable: false, search: false, sortable: false} 
     ],
     pager: '#pager',
-    rowNum:10,
+    rowNum:100,
+    height:'auto',
     rowList:[10,20,50,100],
     sortname: 'edition',
     sortorder: 'desc',

@@ -16,10 +16,10 @@
         <div id="site">
             <div id="header">
               {% if app.user %}
-                <span>Hallo {{ app.user.name }}! {{ app.request.attributes.get('_route') }}</span>
+                <span>Hallo {{ app.user.name }}!</span>
                 
                 <div id="navigation" class="ui-widget">
-                  <div>Menüauswahl</div>
+                  <div>Navigation</div>
                   <ul id="menu" class="ui-corner-all" style="display: none;">
                     {% set navigation = {
                     'Berichtigungen': {'PapyrillioBeehiveBundle_correctionlist': {'title': 'Berichtigungen ansehen', 'parameters': {}}, 

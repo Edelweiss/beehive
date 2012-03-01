@@ -54,6 +54,10 @@ class Edition
         }
     }
     
+    public function __toString(){
+      return implode(';', array($this->id, $this->sort, $this->title, $this->collection, $this->volume, $this->remark, $this->material));
+    }
+
     /**
      * @var integer $id
      */

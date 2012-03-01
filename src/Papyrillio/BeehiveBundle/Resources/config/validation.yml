@@ -35,3 +35,22 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             - MinLength:
                 limit: 3
                 message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'
+
+Papyrillio\BeehiveBundle\Entity\Edition:
+    message: 'Ungültige Eingabe'
+    properties:
+        sort:
+            - NotBlank:
+                message: 'Bitte einen numerischen Wert größer 1 zur Sortierung angeben.'
+            - Min:
+                limit: 1
+                message: 'Bitte einen numerischen Wert größer 1 zur Sortierung angeben.'
+        title:
+            - NotBlank:
+                message: 'Bitte den Titel der Edition angeben. Falls eine Bandnummer vorhanden ist, wird diese durch ein Leerzeichen von der Sammlungsbezeichnung getrennt,  wie z.B. »P. Amh. 2«'
+        material:
+            - NotBlank:
+                message: 'Bitte eines der folgenden Materialien auswählen: »Papyrus«, »Ostrakon«'
+            - Regex:
+                pattern: '/^(Papyrus|Ostrakon)$/'
+                message: 'Bitte eines der folgenden Materialien auswählen: »Papyrus«, »Ostrakon«'

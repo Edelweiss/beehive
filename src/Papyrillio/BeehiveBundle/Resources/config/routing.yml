@@ -67,7 +67,7 @@ PapyrillioBeehiveBundle_editionnew:
     defaults: { _controller: PapyrillioBeehiveBundle:Edition:new }
 
 PapyrillioBeehiveBundle_editionupdate:
-    pattern:  /edition/update/{id}
+    pattern:  /edition/update
     defaults: { _controller: PapyrillioBeehiveBundle:Edition:update }
 
 # Task

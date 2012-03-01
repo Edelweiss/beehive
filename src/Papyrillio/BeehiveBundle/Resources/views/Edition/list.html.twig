@@ -7,8 +7,8 @@
 
 {% block body %}
 
-  <h3>Benutzerliste</h3>
-
+  <h3>Liste der Editionen</h3>
+  
   <table id="list"></table>
   <div id="pager"></div>
   
@@ -28,25 +28,30 @@
   
 $(function(){
   $('#list').jqGrid({
-    url: '{{ path('PapyrillioUserBundle_list') }}',
+    url: '{{ path('PapyrillioBeehiveBundle_editionlist') }}',
     datatype: 'xml',
     mtype: 'POST',
-    colNames:['Name', 'Benutzername', 'E-Mail-Adresse', 'Letzte Anmeldung'],
+    colNames:['Sortierung', 'Title', 'Sammlung', 'Band', 'Bemerkung', 'Material'],
     colModel :[ 
-      {name:'name',       index:'name'},
-      {name:'username',   index:'username'},
-      {name:'email',      index:'email'},
-      {name:'lastLogin',  index:'lastLogin'} 
+      {name:'sort',        index:'sort', editable: true},
+      {name:'title',       index:'title', editable: true},
+      {name:'collection',  index:'collection'},
+      {name:'volume',      index:'volume'},
+      {name:'remark',      index:'remark', editable: true},
+      {name:'material',    index:'material', editable: true} 
     ],
+    cellEdit: true,
+    cellsubmit: 'remote',
+    cellurl: '{{ path('PapyrillioBeehiveBundle_editionupdate') }}',
     pager: '#pager',
     rowNum:100,
     height:'auto',
     rowList:[10,20,50,100],
-    sortname: 'name',
-    sortorder: 'desc',
+    sortname: 'sort',
+    sortorder: 'asc',
     viewrecords: true,
     gridview: true,
-    caption: 'Benutzerliste'});
+    caption: 'Liste der Editionen'});
 
     $('#list').jqGrid('filterToolbar', {});
     

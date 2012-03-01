@@ -589,14 +589,14 @@ public static $EDITIONS = array(
   array('id' => 1271, 'title' => 'O. Wilcken 2', 'material' => 'Ostrakon'),
   array('id' => 1300, 'title' => 'Tavolette Varie', 'material' => 'Ostrakon')
 );
-  
+
     function load(ObjectManager $manager)
     {
         $editions = array();
           
         foreach(self::$EDITIONS as $edition){
           $e = new Edition();
-          $e->setSort($edition['id'] . '');
+          $e->setSort(($edition['id'] * 1000) . '');
           $e->setTitle($edition['title']);
           $e->setMaterial($edition['material']);
 

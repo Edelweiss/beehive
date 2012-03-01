@@ -23,7 +23,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
             array('r' => array('ROLE_USER', 'ROLE_ADMIN'), 'u' => 'cowey',      'n' => 'James Cowey',       'e' => 'james.cowey@urz.uni-heidelberg.de'),
             array('r' => array('ROLE_USER'),            'u' => 'jördens',    'n' => 'Andrea Jördens',    'e' => 'andrea.joerdens@zaw.uni-heidelberg.de'),
             array('r' => array('ROLE_USER'),            'u' => 'ast',        'n' => 'Rodney Ast',        'e' => 'rodney.ast@zaw.uni-heidelberg.de'),
-            array('r' => array('ROLE_USER'),            'u' => 'hoogendijk', 'n' => 'F.A.J. Hoogendijk', 'e' => 'f_a_j_hoogendijk@library.leidenuniv.nl')
+            array('r' => array('ROLE_USER'),            'u' => 'hoogendijk', 'n' => 'Cisca Hoogendijk', 'e' => 'f_a_j_hoogendijk@library.leidenuniv.nl')
         );
 
         foreach($dataList as $data){

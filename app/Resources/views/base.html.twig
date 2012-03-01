@@ -16,45 +16,41 @@
         <div id="site">
             <div id="header">
               {% if app.user %}
-                <span>Hallo {{ app.user.name }}!</span>
-                <!--a href="{{ path('PapyrillioBeehiveBundle_correctionnew') }}">Neuen Korrektureintrag anlegen</a>
-                <a href="{{ path('PapyrillioBeehiveBundle_correctionlist') }}">Korrektureinträge ansehen</a>
-                <a href="{{ path('PapyrillioBeehiveBundle_report') }}">Bericht abrufen</a-->
+                <span>Hallo {{ app.user.name }}! {{ app.request.attributes.get('_route') }}</span>
                 
                 <div id="navigation" class="ui-widget">
                   <div>Menüauswahl</div>
                   <ul id="menu" class="ui-corner-all" style="display: none;">
-                    <li>
-                      Korrekturen
-                      <ul>
-                        <li><a href="{{ path('PapyrillioBeehiveBundle_correctionlist') }}">Korrektureinträge ansehen</a></li>
-                        <li><a href="{{ path('PapyrillioBeehiveBundle_correctionnew') }}">Neue Korrektur anlegen</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      Editionen
-                      <ul>
-                        <li><a href="{{ path('PapyrillioBeehiveBundle_correctionlist') }}">Editionen ansehen</a></li>
-                        <li><a href="{{ path('PapyrillioBeehiveBundle_correctionnew') }}">Neue Edition anlegen</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      Berichte
-                      <ul>
-                        <li><a href="{{ path('PapyrillioBeehiveBundle_report') }}">Leiden Format</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      Benutzer
-                      <ul>
-                        <li><a href="{{ path('PapyrillioUserBundle_list') }}">Alle Benutzer anzeigen</a></li>
-                        <li><a href="{{ path('PapyrillioUserBundle_new') }}">Neuen Benutzer anlegen</a></li>
-                        <li><a href="{{ path('PapyrillioUserBundle_show', { 'id': app.user.id }) }}">Profil</a></li>
-                        <li><a href="{{ path('PapyrillioUserBundle_password') }}">Passwort ändern</a></li>
-                        <li><a href="{{ path('logout') }}">Abmelden</a></li>
-                      </ul>
-                    </li>
+                    {% set navigation = {
+                    'Berichtigungen': {'PapyrillioBeehiveBundle_correctionlist': {'title': 'Berichtigungen ansehen', 'parameters': {}}, 
+                                       'PapyrillioBeehiveBundle_correctionnew': {'title': 'Neue Berichtigung anlegen', 'parameters': {}}},
+                    'Editionen':      {'PapyrillioBeehiveBundle_editionlist': {'title': 'Editionen ansehen', 'parameters': {}}, 
+                                       'PapyrillioBeehiveBundle_editionnew': {'title': 'Edition anlegen', 'parameters': {}}},
+                    'Berichte':       {'PapyrillioBeehiveBundle_report': {'title': 'Leiden Format', 'parameters': {}}},
+                    'Benutzer':       {'PapyrillioUserBundle_list': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
+                                       'PapyrillioUserBundle_new': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
+                                       'PapyrillioUserBundle_show': {'title': 'Profil', 'parameters': { 'id': app.user.id }},
+                                       'PapyrillioUserBundle_password': {'title': 'Passwort ändern', 'parameters': {}}, 
+                                       'logout': {'title': 'Abmelden', 'parameters': {}}}
+                                       } %}
+                    
+                    {% for category, menu in navigation %}
+                      <li>
+                        {{ category }}
+                        <ul>
+                          {% for path, item in menu %}
+                            {% if path == app.request.attributes.get('_route') %}
+                              <li class="highlight">{{ item.title }}</li>
+                            {% else %}
+                              <li><a href="{{ path(path, item.parameters) }}">{{ item.title }}</a></li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% endfor %}
+
                   </ul>
+                  
                 </div>
 
               {% else %}

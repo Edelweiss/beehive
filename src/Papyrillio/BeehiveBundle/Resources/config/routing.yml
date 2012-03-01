@@ -48,6 +48,28 @@ PapyrillioBeehiveBundle_correctionupdate:
     pattern:  /correction/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:update }
 
+# Edition
+
+PapyrillioBeehiveBundle_editionlist:
+    pattern:  /edition/list
+    defaults: { _controller: PapyrillioBeehiveBundle:Edition:list }
+
+PapyrillioBeehiveBundle_editionshow:
+    pattern:  /edition/show/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Edition:show }
+
+PapyrillioBeehiveBundle_editiondelete:
+    pattern:  /edition/delete/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Edition:delete }
+
+PapyrillioBeehiveBundle_editionnew:
+    pattern:  /edition/new
+    defaults: { _controller: PapyrillioBeehiveBundle:Edition:new }
+
+PapyrillioBeehiveBundle_editionupdate:
+    pattern:  /edition/update/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Edition:update }
+
 # Task
 
 PapyrillioBeehiveBundle_taskupdate:

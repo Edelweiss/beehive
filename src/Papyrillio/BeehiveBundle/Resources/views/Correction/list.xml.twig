@@ -14,12 +14,12 @@
       <cell>{{ correction.text }}</cell>
       <cell>{{ correction.position }}</cell>
       <cell>{{ correction.description }}</cell>
-      <cell>{{ correction.hasTask('bl')     ? (correction.hasOpenTask('bl')     ? '✘' : '✔') : '' }}</cell>
-      <cell>{{ correction.hasTask('tm')     ? (correction.hasOpenTask('tm')     ? '✘' : '✔') : '' }}</cell>
-      <cell>{{ correction.hasTask('hgv')    ? (correction.hasOpenTask('hgv')    ? '✘' : '✔') : '' }}</cell>
-      <cell>{{ correction.hasTask('ddb')    ? (correction.hasOpenTask('ddb')    ? '✘' : '✔') : '' }}</cell>
-      <cell>{{ correction.hasTask('apis')   ? (correction.hasOpenTask('apis')   ? '✘' : '✔') : '' }}</cell>
-      <cell>{{ correction.hasTask('bilbio') ? (correction.hasOpenTask('bilbio') ? '✘' : '✔') : '' }}</cell>
+      <cell>{{ correction.status }}</cell>
+      <cell>{{ correction.creator }}</cell>
+      <cell>{{ correction.created.format('d.m.Y H:i') }}</cell>
+      {% for task in ['bl', 'tm', 'hgv', 'ddb', 'apis', 'biblio'] %}
+        <cell>{% if correction.hasTask(task) %}<![CDATA[<span title="Aufgaben">{{ correction.hasOpenTask(task) ? '✘' : '✔' }}</span>]]>{% endif %}</cell>
+      {% endfor %}
     </row>
   {% endfor %}
 </rows>

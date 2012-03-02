@@ -12,6 +12,7 @@ class Edition
     const MATERIAL_PAPYRUS = 'Papyrus';
     const MATERIAL_OSTRACON = 'Ostrakon';
     const MATERIAL_DEFAULT = 'Papyrus';
+    
     protected static $MATERIAL = array('Papyrus', 'Ostrakon');
 
     /**

@@ -47,8 +47,8 @@ class CorrectionController extends BeehiveController{
       if($this->getParameter('_search') == 'true'){
         $where = '';
         $prefix = ' WHERE ';
-        
-        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description') as $field){
+
+        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status') as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE \'%' . $this->getParameter($field) . '%\'';
             $prefix = ' AND ';
@@ -102,6 +102,8 @@ class CorrectionController extends BeehiveController{
   public function newAction(){
     $correction = new Correction();
     
+    $correction->setCreator($this->get('security.context')->getToken()->getUser()->getUsername());
+    
     $entityManager = $this->getDoctrine()->getEntityManager();
     $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
     $editionRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Edition');
@@ -113,10 +115,10 @@ class CorrectionController extends BeehiveController{
       ->add('text', 'text')
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))
-      ->add('tm', 'number')
-      ->add('hgv', 'text')
-      ->add('ddb', 'text')
-      ->add('source', 'number', array('label' => 'Quelle'))
+      ->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
+      ->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
+      ->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
+      ->add('source', 'number', array('required' => false, 'label' => 'Quelle'))
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {

@@ -4,37 +4,58 @@ namespace Papyrillio\BeehiveBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable;
+use DateTime;
 /**
  * Papyrillio\BeehiveBundle\Entity\Correction
  */
 class Correction
 {
+    const STATUS_UNCHECKED = 'unchecked';
+    const STATUS_REVIEWED  = 'reviewed';
+    const STATUS_FINALISED = 'finalised';
+    const STATUS_DEFAULT   = 'finalised';
+    
+    protected static $STATUS = array('unchecked', 'reviewed', 'finalised');
+
+    public function __construct()
+    {
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->status = self::STATUS_UNCHECKED;
+        $this->creator = 'system';
+        $this->created = new DateTime('now');
+        
+    }
+    
     public function getTitle(){
       return $this->getEdition()->getSort() . ' = ' . $this->getEdition()->getTitle();
     }
 
     public function hasTask($category = null){
-      if($category){
-        $count = 0;
-        foreach($this->getTasks() as $task){
-          if($task->getCategory() == $category){
-            $count++;
-          }
-        }
-        return $count;
-      } else {
-        return count($this->getTasks());
-      }
+      return count($this->getTasks($category));
     }
     
     public function hasOpenTask($category = null){
       $count = 0;
-      foreach($this->getTasks() as $task){
-        if((($category === null) || ($task->getCategory() === $category)) && !$task->isCleared()){
+      foreach($this->getTasks($category) as $task){
+        if(!$task->isCleared()){
           $count++;
         }
       }
       return $count;
+    }
+    
+    public function getTasks($category = null){
+      if($category === null){
+        return $this->tasks;
+      } else {
+        $tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach($this->tasks as $task){
+          if($task->getCategory() === $category){
+            $tasks->add($task);
+          }
+        }
+        return $tasks;
+      }
     }
 
     /**
@@ -68,7 +89,7 @@ class Correction
         case 'pi':
           return 'http://www.papyri.info/ddbdp/' . $this->ddb;
         case 'biblio':
-          return 'http://www.papyri.info/biblio/' . $this->source;
+          return $this->source ? 'http://www.papyri.info/biblio/' . $this->source : null;
         case 'githubddb':
           return 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml';
         case 'githubhgv':
@@ -77,14 +98,30 @@ class Correction
           return 'http://www.papy.uni-heidelberg.de/Hauptregister/FMPro?-DB=Hauptregister_&-Format=DTableVw.htm&Publikation='. $this->collection . '&Band='. $this->volume . '&Nummer='. $this->document . '&-Max=20&-Find';
 
         default:
-          return '';
+          return null;
       }
+    }
+
+    /**
+     * Set status
+     *
+     * @param text $status
+     */
+    public function setStatus($status)
+    {
+        if(in_array($status, self::$STATUS)){
+          $this->status = $status;
+        } else {
+          $this->status = self::STATUS_DEFAULT;
+        }
     }
 
     public function getLinks(){
       $links = array();
       foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'biblio' => 'Biblio') as $type => $name){
-        $links[$name] = $this->getLink($type);
+        if($this->getLink($type)){
+          $links[$name] = $this->getLink($type);
+        }
       }
       return $links;
     }
@@ -148,6 +185,21 @@ class Correction
     private $description;
 
     /**
+     * @var text $status
+     */
+    private $status;
+
+    /**
+     * @var text $creator
+     */
+    private $creator;
+
+    /**
+     * @var datetime $created
+     */
+    private $created;
+
+    /**
      * @var Papyrillio\BeehiveBundle\Entity\Task
      */
     private $tasks;
@@ -161,11 +213,6 @@ class Correction
      * @var Papyrillio\BeehiveBundle\Entity\Edition
      */
     private $edition;
-
-    public function __construct()
-    {
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Get id
@@ -378,6 +425,56 @@ class Correction
     }
 
     /**
+     * Get status
+     *
+     * @return text 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set creator
+     *
+     * @param text $creator
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * Get creator
+     *
+     * @return text 
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get created
+     *
+     * @return datetime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
      * Add tasks
      *
      * @param Papyrillio\BeehiveBundle\Entity\Task $tasks
@@ -385,16 +482,6 @@ class Correction
     public function addTask(\Papyrillio\BeehiveBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-    }
-
-    /**
-     * Get tasks
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
     }
 
     /**

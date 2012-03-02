@@ -64,8 +64,32 @@
   <script type="text/javascript">
   
   jQuery(document).ready(function(){
-    $('#editionTitle').change(function(o){$('#editionSort').val(this.value); });
-    $('#editionSort').change(function(o){$('#editionTitle').val(this.value); });
+    $('#editionTitle').change(function(event){
+      $('#editionSort').val(this.value);
+      if(this.value == 1){
+        $('#form_tm').removeAttr('required');
+        $('#form_hgv').removeAttr('required');
+        $('#form_ddb').removeAttr('required');
+      } else {
+        $('#form_tm').attr('required', 'required');
+        $('#form_hgv').attr('required', 'required');
+        $('#form_ddb').attr('required', 'required');
+      }
+    });
+
+    $('#editionSort').change(function(event){
+      $('#editionTitle').val(this.value);
+      if(this.value == 1){
+        $('#form_tm').removeAttr('required');
+        $('#form_hgv').removeAttr('required');
+        $('#form_ddb').removeAttr('required');
+      } else {
+        $('#form_tm').attr('required', 'required');
+        $('#form_hgv').attr('required', 'required');
+        $('#form_ddb').attr('required', 'required');
+      }
+    });
+
   });
   
   </script>

@@ -10,6 +10,10 @@ use DateTime;
  */
 class Task
 {
+    public function __toString(){
+      return $this->category . ': ' . $this->description;
+    }
+    
     public function isCleared(){
       return ($this->cleared instanceof DateTime);
     }

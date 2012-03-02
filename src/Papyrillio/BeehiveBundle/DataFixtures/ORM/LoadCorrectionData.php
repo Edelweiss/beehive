@@ -78,7 +78,9 @@ class LoadCorrectionData extends AbstractFixture implements OrderedFixtureInterf
         foreach($dataList as $data){
           $correction = new Correction();
           $correction->setText($data['text']);
-          $correction->setSource($data['biblio']);
+          if($data['biblio'] != 0){
+            $correction->setSource($data['biblio']);
+          }
           $correction->setTm($data['tm']);
           $correction->setHgv($data['hgv']);
           $correction->setDdb($data['ddb']);

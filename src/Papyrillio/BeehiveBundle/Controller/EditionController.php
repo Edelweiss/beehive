@@ -76,7 +76,7 @@ class EditionController extends BeehiveController{
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {
-        
+
       $form->bindRequest($this->getRequest());
 
       if ($form->isValid()) {

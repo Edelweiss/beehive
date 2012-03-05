@@ -46,3 +46,16 @@ Papyrillio\BeehiveBundle\Entity\Edition:
             - Regex:
                 pattern: '/^(Papyrus|Ostrakon)$/'
                 message: 'Bitte eines der folgenden Materialien auswählen: »Papyrus«, »Ostrakon«'
+
+Papyrillio\BeehiveBundle\Entity\Task:
+    message: 'Ungültige Eingabe'
+    properties:
+        category:
+            - NotBlank:
+                message: 'Bitte eine gültige Aufgaben-Kategorie auswählen: tm, hgv, ddb, biblio, bl oder apis.'
+            - Regex:
+                pattern: '/^(tm|hgv|ddb|apis|biblio|bl|apis)$/'
+                message: 'Bitte eine gültige Aufgaben-Kategorie auswählen: tm, hgv, ddb, biblio, bl oder apis.'
+        description:
+            - NotBlank:
+                message: 'Bitte eine Aufgabenbeschreibung angeben.'

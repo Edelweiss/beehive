@@ -7,24 +7,27 @@
   <div id="correction">
     <h4><a href="#">Berichtigung</a></h4>
     <div><p id="description" class="editArea greek">{{ correction.description }}</p></div>
-    <h4><a href="#">Aufgaben</a></h4>
-    <div>
-      <ul class="task">
-        {% for task in correction.tasks %}
-          <li>{{ task.title }}: <span id="task_{{ task.id }}_description" class="editTask greek">{{ task.description }}</span> <span id="task_{{ task.id }}_cleared" class="editTaskSelect highlight">{{ task.isCleared ? '✔' : '✘' }}</span></li>
-        {% endfor %}
-      </ul>
+    <h4><a href="#">Aufgaben und Status</a></h4>
+    <div id="task">
+      {% if correction.tasks | length %}
+        <ul class="task">
+          {% for task in correction.tasks %}
+            <li>{% include 'PapyrillioBeehiveBundle:Task:task.html.twig' with {'task': task} %}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="task">Es wurden keine Aufgaben definiert.</p>
+      {% endif %}
+      <p>Status: <span id="status">{{ correction.status }}</span></p>
     </div>
     <h4><a href="#">Weitere Quellen</a></h4>
     <div>
       Ids
       <ul class="ids">
-  
           <li>TM  <span id="tm" class="edit">{{ correction.tm }}</span></li>
           <li>HGV <span id="hgv" class="edit">{{ correction.hgv }}</span></li>
           <li>DDB <span id="ddb" class="edit">{{ correction.ddb }}</span></li>
           <li>Biblio <span id="source" class="edit">{{ correction.source }}</span></li>
-  
       </ul>
       Links im Internet
       <ul class="links">
@@ -53,8 +56,16 @@
   </div>
   
   <p class="actionHolder">
+    <span id="callDialogueTaskNew">Task anlegen</span>
     <a href="{{ path('PapyrillioBeehiveBundle_correctiondelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
   </p>
+
+  <div id="newTask" title="Neue Aufgabe anlegen">
+    <form id="taskNew" class="new" action="{{ path('PapyrillioBeehiveBundle_tasknew') }}" method="post" {{ form_enctype(formTask) }}>
+      {{ form_widget(formTask) }}
+      <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formTask.vars.value.correction.id }}" />
+    </form>
+  </div>
 
 {% endblock %}
 
@@ -83,7 +94,7 @@
         id   : 'elementid',
         name : 'newvalue',
         type: 'textarea',
-        cancel: 'Abbrechen',
+        cancel: 'Cancel',
         submit: 'OK',
         rows: 4,
         //indicator: '<img src="{{ asset('images/spinner.gif') }}" />',
@@ -94,11 +105,27 @@
         style: 'inherit'
       });
 
+      $('#status').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+        id   : 'elementid',
+        name : 'newvalue',
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        type: 'select',
+        data: {'unchecked': 'unchecked', 'reviewed': 'reviewed', 'finalised': 'finalised'},
+        style: 'inherit',
+        submit: 'OK'
+      });
+
       $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
         id   : 'elementid_raw',
         name : 'newvalue',
+        type: 'textarea',
+        cancel: 'Cancel',
+        submit: 'OK',
+        rows: 2,
+        cols: 100,
         submitdata: function(value, settings){
-            settings.target = settings.target.substring(0, settings.target.length - 1) + this.id.match(/^task_(\d+)_(\w+)$/)[1];
+            settings.target = settings.target.match(/^(.+\/)\d+$/)[1] + this.id.match(/^task_(\d+)_(\w+)$/)[1];
             return {elementid: this.id.match(/^task_(\d+)_(\w+)$/)[2]};
         },
         indicator : 'Speichert...',
@@ -112,18 +139,63 @@
         id   : 'elementid_raw',
         name : 'newvalue',
         submitdata: function(value, settings){
-            settings.target = settings.target.substring(0, settings.target.length - 1) + this.id.match(/^task_(\d+)_(\w+)$/)[1];
+            settings.target = settings.target.match(/^(.+\/)\d+$/)[1] + this.id.match(/^task_(\d+)_(\w+)$/)[1];
             return {elementid: this.id.match(/^task_(\d+)_(\w+)$/)[2]};
         },
         indicator : 'Speichert...',
         tooltip   : 'Klicken zum Editieren...',
         type: 'select',
-        data: {'✔': 'erledigt', '✘': 'offen'},
+        data: {'✔': '✔', '✘': '✘'},
         style: 'inherit',
         submit: 'OK'
       });
   
     //$('#correction').removeClass('ui-widget');
+      $('#newTask').dialog(
+        {
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          buttons: {
+            'OK': function(){
+
+               var taskDialog = $(this);
+               $.post('{{ path('PapyrillioBeehiveBundle_tasknew') }}', $('form#taskNew').serialize(), function(data){
+                 if(data.success){
+                   
+                   // update dom
+                   var ul = $('div#task > ul.task').first();
+                   if(!ul || !ul.length){
+                     $('div#task > p.task').replaceWith('<ul class="task"></ul>');
+                     ul = $('div#task > ul.task').first();
+                   }
+                   ul.append('<li></li>');
+                   var li = ul.find('li').last();
+                   li.load('{{ path('PapyrillioBeehiveBundle_tasksnippet', {'id': 0}) }}'.replace('0', data.data.id));
+
+                   // close dialogue
+                   $('form#taskNew')[0].reset();
+                   taskDialog.dialog('close');
+
+                 } else {
+                   //console.log('error');
+                   //console.log(data);
+                 }
+
+               }, 'json');
+
+            },
+            'Cancel': function(){
+               $('form#taskNew')[0].reset();
+               $(this).dialog('close');
+            }
+          }
+        }
+      );
+
+      $('#callDialogueTaskNew').click(function(){
+        $('#newTask').dialog('open');
+      });
       
     });
   </script>

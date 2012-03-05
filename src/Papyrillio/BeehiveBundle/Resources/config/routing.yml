@@ -72,6 +72,14 @@ PapyrillioBeehiveBundle_editionupdate:
 
 # Task
 
+PapyrillioBeehiveBundle_tasksnippet:
+    pattern:  /task/snippet/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Task:snippet }
+
+PapyrillioBeehiveBundle_tasknew:
+    pattern:  /task/new
+    defaults: { _controller: PapyrillioBeehiveBundle:Task:new }
+
 PapyrillioBeehiveBundle_taskupdate:
     pattern:  /task/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Task:update }

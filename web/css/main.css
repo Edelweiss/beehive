@@ -76,11 +76,21 @@ h3 span {
   font-weight: bold;
   color: #26B3F7;
 }
+
+.actionHolder span, 
 .actionHolder a {
   margin: 0 0 0 0.4em;
   float: right;
+  color: #0972A5;
+  text-decoration: underline;
+  cursor: hand;
+  cursor: pointer;
 }
 
+.actionHolder span:hover, 
+.actionHolder a:hover {
+  color: #26B3F7;
+}
 .ui-widget textarea,
 .ui-widget .ui-widget textarea,
 .ui-widget textarea.greek,

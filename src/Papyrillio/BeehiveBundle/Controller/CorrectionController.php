@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Papyrillio\BeehiveBundle\Entity\Correction;
 use Papyrillio\BeehiveBundle\Entity\Compilation;
 use Papyrillio\BeehiveBundle\Entity\Edition;
+use Papyrillio\BeehiveBundle\Entity\Task;
 use DateTime;
 
 class CorrectionController extends BeehiveController{
@@ -191,7 +192,14 @@ class CorrectionController extends BeehiveController{
 
     $this->retrieveCorrection($id);
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs));
+    $task = new Task();
+    $task->setCorrection($this->correction);
+    $formTask = $this->createFormBuilder($task)
+      ->add('category', 'choice', array('label' => 'Kategorie', 'choices' => array('apis' => 'APIS', 'biblio' => 'Biblio', 'bl' => 'BL', 'ddb' => 'DDB', 'hgv' => 'HGV', 'tm' => 'TM')))
+      ->add('description', 'textarea', array('label' => 'Beschreibung'))
+      ->getForm();
+
+    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs, 'formTask' => $formTask->createView()));
   }
   
   protected function retrieveCorrection($id){

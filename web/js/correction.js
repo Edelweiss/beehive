@@ -5,14 +5,11 @@ function deleteTask_click(task, event, path){
   category = category.substring(0, category.indexOf(':'));
   var description = $(task.parentNode).find('span.greek').text();
   
-  console.log(id);
-  console.log(path);
-  console.log(task.parentNode);
-  
   if(confirm('Aufgabe »' + category + ': ' + description + '« wirklich unwiederbringlich aus der Datenbank entfernen?')){
     $.post(path, function(data){
       if(data.success){
           $(task.parentNode).remove();
+          preview();
        } else {
          //console.log('error');
          //console.log(data);

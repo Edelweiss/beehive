@@ -29,8 +29,8 @@ PapyrillioBeehiveBundle_reportleiden:
     defaults: { _controller: PapyrillioBeehiveBundle:Report:leiden, compilationVolume: 13 }
 
 PapyrillioBeehiveBundle_reportsnippet:
-    pattern:  /report/snippet/leiden/{correctionId}
-    defaults: { _controller: PapyrillioBeehiveBundle:Report:leiden }
+    pattern:  /report/snippet/leiden/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:leidenSnippet }
 
 # Correction
 

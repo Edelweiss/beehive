@@ -24,4 +24,13 @@ class ReportController extends BeehiveController{
 
     return $this->render('PapyrillioBeehiveBundle:Report:leiden.html.twig', array('compilation' => $compilation, 'corrections' => $corrections));
   }
+
+  public function leidenSnippetAction($id){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+
+    $corrections = $repository->findBy(array('id' => $id));
+
+    return $this->render('PapyrillioBeehiveBundle:Report:leidenSnippet.html.twig', array('corrections' => $corrections));
+  }
 }

@@ -52,6 +52,15 @@ class TaskController extends BeehiveController{
     return $this->render('PapyrillioBeehiveBundle:Task:snippet.html.twig', array('task' => $this->task));
   }
 
+  public function deleteAction($id){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Task');
+    $task = $repository->findOneBy(array('id' => $id));
+    $entityManager->remove($task);
+    $entityManager->flush();
+    return new Response(json_encode(array('success' => true)));
+  }
+
   public function updateAction($id){
     $this->retrieveTask($id);
     

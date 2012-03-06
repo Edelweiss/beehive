@@ -127,6 +127,15 @@ class CorrectionController extends BeehiveController{
       $form->bindRequest($this->getRequest());
 
       if ($form->isValid()) {
+        foreach($this->getParameter('task') as $category => $description){
+          if(strlen(trim($description))){
+            $task = new Task();
+            $task->setCategory($category);
+            $task->setDescription(trim($description));
+            $task->setCorrection($correction);
+            $entityManager->persist($task);
+          }
+        }
         $entityManager->persist($correction);
         $entityManager->flush();
 

@@ -49,7 +49,7 @@ p {
   padding: 1em;
 }
 
-h3 {
+h3, h5 {
   text-align: center;
   width: auto;
 }

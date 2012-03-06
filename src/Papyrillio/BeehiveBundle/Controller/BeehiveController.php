@@ -7,6 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BeehiveController extends Controller{
   protected function getParameter($key){
-    return strlen($this->getRequest()->request->get($key)) ? $this->getRequest()->request->get($key) : $this->getRequest()->query->get($key);
+    $get  = $this->getRequest()->query->get($key);
+    $post = $this->getRequest()->request->get($key);
+    
+    if($post && (is_array($post) || strlen(trim($post)))){
+      return $post;
+    }
+    
+    return $get;
   }
 }

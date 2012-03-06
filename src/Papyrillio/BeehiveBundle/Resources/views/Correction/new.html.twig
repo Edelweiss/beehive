@@ -49,6 +49,14 @@
       {{ form_errors(form.description) }}
     </div>
     
+    <h5>Aufgaben definieren</h5>
+    {% for task in ['bl', 'hgv', 'tm', 'ddb', 'apis', 'biblio'] %}
+      <div class="task {{ task }} greek">
+        <label>{{ task | upper }}</label>
+        <input name="task[{{ task }}]" id="task_{{ task }}" type="text" />
+      </div>
+    {% endfor %}
+    
     <div class="idno">
     {{ form_rest(form) }}
     </div>

@@ -37,9 +37,7 @@
       {% endfor %}
     </tbody>
   </table>
-
-</rows>
-
+  <p class="actionHolder"><span id="print">Drucken</span></p>
 {% endblock %}
 
 {% block javascripts %}
@@ -49,8 +47,7 @@
 
   <script type="text/javascript">
     $(function(){
-      //console.log($('table.reportLeiden')[0]);
-      //$('table.reportLeiden')[0].corners('20px');
+      $('span#print').click(function(event){alert(1);window.print();alert(2);});
     });
   </script>
 

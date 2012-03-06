@@ -1,0 +1,10 @@
+div#header,
+div#footer,
+.actionHolder {
+  display: none
+}
+
+body {
+  color: black;
+  background-color: white;
+}

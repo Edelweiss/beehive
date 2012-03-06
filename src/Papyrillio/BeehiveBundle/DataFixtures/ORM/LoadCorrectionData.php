@@ -60,13 +60,13 @@ class LoadCorrectionData extends AbstractFixture implements OrderedFixtureInterf
           array('bl' => '603', 'edition' => 'P. L.Bat. 25', 'text' => '70', 'tm' => '18487', 'hgv' => '18487', 'ddb' => 'p.leid.inst;;70', 'biblio' => 0, 'position' => '2', 'description' => 'ἐν Ὀξυρυγχ(ιτῶν) → ἐν Ὀξυρύγχ(ων), P. Oxy. 68. 4701, Anm. zu Z. 2.', 'task' => array(
             'ddb' => array( 'd' => 'Add SoSOL: <:ἐν Ὀξυρύγχ(ων)=P. Oxy. 68. 4701, Anm. zu Z. 2 (BL 13)|ed| ἐν Ὀξυρυγχ(ιτῶν):>')
           )),
-          array('bl' => '636', 'edition' => 'P. Med. 12', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '1', 'description' => '[μετὰ τὴν ὑπατείαν (B.L. 7, S. 103): wenn geschrieben, dann fehlerhaft für ὑπατείας, P. Oxy. 68. 4688, Anm. zu Z. 2.', 'task' => array(
+          array('bl' => '636', 'edition' => 'P. Med. 1 Aufl. 2', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '1', 'description' => '[μετὰ τὴν ὑπατείαν (B.L. 7, S. 103): wenn geschrieben, dann fehlerhaft für ὑπατείας, P. Oxy. 68. 4688, Anm. zu Z. 2.', 'task' => array(
             'ddb' => array( 'd' => 'Add SoSOL: <: [ὑπατείας Φλ]= P. Oxy. 68. 4688, Anm. zu Z. 2 (BL 13)|corr|<:[μετὰ τὴν ὑπατείαν Φλ]=BL 7.103|ed|[ ca.? ὑπατείας Φλ]:>:> ugly with half word Fl, but clear')
           )),
-          array('bl' => '636', 'edition' => 'P. Med. 12', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '5', 'description' => 'Die Erg. [ἐναπόγραφος wird abgelehnt, P. Oxy. 68. 4697, Anm. zu Z. 6-7.', 'task' => array(
+          array('bl' => '636', 'edition' => 'P. Med. 1 Aufl. 2', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '5', 'description' => 'Die Erg. [ἐναπόγραφος wird abgelehnt, P. Oxy. 68. 4697, Anm. zu Z. 6-7.', 'task' => array(
             'ddb' => array( 'd' => 'Add SoSOL: <:[ ca.11 ]= P. Oxy. 68. 4697, Anm. zu Z. 6-7 (BL 13)|ed|[ἐναπόγραφος]:> misleading with 2nd bracket, probably impossible without 2nd bracket')
           )),
-          array('bl' => '636', 'edition' => 'P. Med. 12', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '9', 'description' => 'δ[ε]κ̣άτης (B.L. 7, S. 103) → ἐνάτης (wie ed.pr.) (nach dem Photo); also zu datieren: 6.12.440 n.Chr., P. Oxy. 68. 4688, Anm. zu Z. 2.', 'task' => array(
+          array('bl' => '636', 'edition' => 'P. Med. 1 Aufl. 2', 'text' => '64', 'tm' => '21289', 'hgv' => '21289', 'ddb' => 'p.mil;2;64', 'biblio' => 0, 'position' => '9', 'description' => 'δ[ε]κ̣άτης (B.L. 7, S. 103) → ἐνάτης (wie ed.pr.) (nach dem Photo); also zu datieren: 6.12.440 n.Chr., P. Oxy. 68. 4688, Anm. zu Z. 2.', 'task' => array(
             'hgv' => array('d' => 'Date HGV'),
             'ddb' => array('d' => 'Add SoSOL: <:ἐνάτης=P. Oxy. 68. 4688, Anm. zu Z. 2 (BL 13)<:δ[ε]κ̣άτης=BL 7.103|ed|ἐνάτης:>:>')
           )),

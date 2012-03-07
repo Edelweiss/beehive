@@ -1,3 +1,33 @@
+function numberWizard(id, path){
+  if(id.length){
+    $.post(path, {'id': id}, function(data){
+      if(data.success){
+
+        if(data.data.tm.length){
+          $('#form_tm').val(data.data.tm[0]);
+        }
+        if(data.data.hgv.length){
+          $('#form_hgv').val(data.data.hgv[0]);
+        }
+        if(data.data.ddb.length){
+          $('#form_ddb').val(data.data.ddb[0]);
+        }
+        if(data.data.bl.edition){
+          $('#editionSort').val(data.data.bl.edition);
+          $('#editionTitle').val(data.data.bl.edition);
+        }
+        if(data.data.bl.text){
+          $('#form_text').val(data.data.bl.text);
+        }
+
+      } else {
+         //console.log('error');
+         //console.log(data);
+      }
+    }, 'json');
+  }
+}
+
 function deleteTask_click(task, event, path){
   var id = task.id.match(/^[^\d]+(\d+)$/)[1];
   path = path.replace('0', id);

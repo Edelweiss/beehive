@@ -68,10 +68,12 @@
 
 {% block javascripts %}
   {{ parent() }}
+  
+  <script src="{{ asset('js/correction.js') }}" type="text/javascript"></script>
 
   <script type="text/javascript">
   
-  jQuery(document).ready(function(){
+  $(document).ready(function(){
     $('#editionTitle').change(function(event){
       $('#editionSort').val(this.value);
       if(this.value == 1){
@@ -96,6 +98,22 @@
         $('#form_hgv').attr('required', 'required');
         $('#form_ddb').attr('required', 'required');
       }
+    });
+    
+    $('#form_tm').change(function(event){
+      numberWizard($(this).val(), '{{ path('PapyrillioBeehiveBundle_numberwizard') }}');
+    });
+
+    $('#form_hgv').change(function(event){
+      numberWizard($(this).val(), '{{ path('PapyrillioBeehiveBundle_numberwizard') }}');
+    });
+
+    $('#form_ddb').change(function(event){
+      numberWizard($(this).val(), '{{ path('PapyrillioBeehiveBundle_numberwizard') }}');
+    });
+
+    $('#form_text').change(function(event){
+      numberWizard($(this).val(), '{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}');
     });
 
   });

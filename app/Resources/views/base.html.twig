@@ -14,7 +14,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% if app.environment %}
+        {% if app.environment == 'dev' %}
           <img src="{{ asset('images/dev.png') }}" alt="bleeding edge" width="100" style="position: fixed; z-index: 999;" />
         {% endif %}
         <div id="site">

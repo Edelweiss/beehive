@@ -33,11 +33,9 @@
           <li>Biblio <span id="source" class="edit">{{ correction.source }}</span></li>
       </ul>
       Links im Internet
-      <ul class="links">
-        {% for name,link in correction.links %}
-          <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
-        {% endfor %}
-      </ul>
+      <div id="link">
+        {% include 'PapyrillioBeehiveBundle:Correction:snippetLink.html.twig' with {'correction': correction} %}
+      </div>
     </div>
     <h4><a href="#">Versionslogbuch</a></h4>
     <div class="log">
@@ -60,7 +58,7 @@
   
   <p class="actionHolder">
     <a href="{{ path('PapyrillioBeehiveBundle_correctiondelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
-    <span id="previewAction">Vorschau neu laden</span>
+    <!--span id="previewAction">Vorschau neu laden</span-->
   </p>
 
   <div id="preview">
@@ -86,6 +84,10 @@
     function preview(){
       $('#preview').load('{{ path('PapyrillioBeehiveBundle_reportsnippet', {'id': correction.id}) }}');
     }
+
+    function updateLink(){
+      $('#link').load('{{ path('PapyrillioBeehiveBundle_correctionlinksnippet', {'id': correction.id}) }}');
+    }
     
     $(document).ready(function(){
 
@@ -102,6 +104,7 @@
         style: 'inherit',
         callback: function(value, settings){
           preview();
+          updateLink();
         }
       });
 
@@ -176,8 +179,7 @@
           preview();
         }
       });
-  
-    //$('#correction').removeClass('ui-widget');
+
       $('#newTask').dialog(
         {
           autoOpen: false,

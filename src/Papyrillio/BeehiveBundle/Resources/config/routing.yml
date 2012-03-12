@@ -64,6 +64,10 @@ PapyrillioBeehiveBundle_correctionupdate:
     pattern:  /correction/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:update }
 
+PapyrillioBeehiveBundle_correctionlinksnippet:
+    pattern:  /correction/snippet/link/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:snippetLink }
+
 # Edition
 
 PapyrillioBeehiveBundle_editionlist:

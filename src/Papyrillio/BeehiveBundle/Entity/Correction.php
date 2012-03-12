@@ -87,16 +87,15 @@ class Correction
     public function getLink($type = 'pi'){
       switch($type){
         case 'pi':
-          return 'http://www.papyri.info/ddbdp/' . $this->ddb;
+          return $this->ddb ? 'http://www.papyri.info/ddbdp/' . $this->ddb : null;
         case 'biblio':
           return $this->source ? 'http://www.papyri.info/biblio/' . $this->source : null;
         case 'githubddb':
-          return 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml';
+          return $this->collection ? 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml' : null;
         case 'githubhgv':
-          return 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml';
+          return $this->hgv && $this->folder ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml' : null;
         case 'hgv':
-          return 'http://www.papy.uni-heidelberg.de/Hauptregister/FMPro?-DB=Hauptregister_&-Format=DTableVw.htm&Publikation='. $this->collection . '&Band='. $this->volume . '&Nummer='. $this->document . '&-Max=20&-Find';
-
+          return $this->collection && $this->volume && $this->document ? 'http://www.papy.uni-heidelberg.de/Hauptregister/FMPro?-DB=Hauptregister_&-Format=DTableVw.htm&Publikation='. $this->collection . '&Band='. $this->volume . '&Nummer='. $this->document . '&-Max=20&-Find' : null;
         default:
           return null;
       }

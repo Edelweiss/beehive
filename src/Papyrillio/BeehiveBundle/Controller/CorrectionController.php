@@ -211,6 +211,18 @@ class CorrectionController extends BeehiveController{
     return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs, 'formTask' => $formTask->createView()));
   }
   
+  public function snippetLinkAction($id) {
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+
+    $correction = $repository->findOneBy(array('id' => $id));
+    
+    $this->get('logger')->info('********************');
+    $this->get('logger')->info(print_r($correction->getLinks(), TRUE));
+    
+    return $this->render('PapyrillioBeehiveBundle:Correction:snippetLink.html.twig', array('correction' => $correction));
+  }
+  
   protected function retrieveCorrection($id){
     $this->entityManager = $this->getDoctrine()->getEntityManager();
     $this->repository = $this->entityManager->getRepository('PapyrillioBeehiveBundle:Correction');

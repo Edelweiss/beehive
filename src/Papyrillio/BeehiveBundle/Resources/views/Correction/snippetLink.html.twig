@@ -1,0 +1,9 @@
+{% if correction.links | length %}
+  <ul class="links">
+    {% for name,link in correction.links %}
+      <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="links">keine</p>
+{% endif %}

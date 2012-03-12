@@ -84,6 +84,17 @@ class Correction
         $this->folder = ceil($this->tm / 1000.0);
     }
 
+    /**
+     * Set hgv
+     *
+     * @param string $hgv
+     */
+    public function setHgv($hgv)
+    {
+        $this->hgv = $hgv;
+        $this->setTm(preg_replace('/[^\d]+/', '', $hgv) * 1);
+    }
+
     public function getLink($type = 'pi'){
       switch($type){
         case 'pi':
@@ -291,16 +302,6 @@ class Correction
     public function getFolder()
     {
         return $this->folder;
-    }
-
-    /**
-     * Set hgv
-     *
-     * @param string $hgv
-     */
-    public function setHgv($hgv)
-    {
-        $this->hgv = $hgv;
     }
 
     /**

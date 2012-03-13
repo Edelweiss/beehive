@@ -6,9 +6,9 @@
   
   <div id="correction">
     <h4><a href="#">Berichtigung</a></h4>
-    <div><p id="description" class="editArea greek">{{ correction.description }}</p></div>
-    <h4><a href="#">Status und Aufgaben</a></h4>
     <div id="task">
+      <p id="description" class="editArea greek">{{ correction.description }}</p>
+
       <p>Status: <span id="status">{{ correction.status }}</span></p>
       {% if correction.tasks | length %}
         <ul class="task">

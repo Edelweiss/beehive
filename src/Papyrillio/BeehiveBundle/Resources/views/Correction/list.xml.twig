@@ -10,7 +10,7 @@
       <cell>{{ correction.hgv }}</cell>
       <cell>{{ correction.ddb }}</cell>
       <cell>{{ correction.source }}</cell>
-      <cell><![CDATA[<a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': correction.id}) }}">{{ correction.edition.sort }}={{ correction.edition.title }}</a>]]></cell>
+      <cell><![CDATA[<a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': correction.id}) }}" title="{{ correction.edition.sort }}={{ correction.edition.title }}">{{ correction.edition.title }}</a>]]></cell>
       <cell>{{ correction.text }}</cell>
       <cell>{{ correction.position }}</cell>
       <cell>{{ correction.description }}</cell>
@@ -18,7 +18,7 @@
       <cell>{{ correction.creator }}</cell>
       <cell>{{ correction.created.format('d.m.Y H:i') }}</cell>
       {% for task in ['bl', 'tm', 'hgv', 'ddb', 'apis', 'biblio'] %}
-        <cell>{% if correction.hasTask(task) %}<![CDATA[<span title="Aufgaben">{{ correction.hasOpenTask(task) ? '✘' : '✔' }}</span>]]>{% endif %}</cell>
+        <cell>{% if correction.hasTask(task) %}<![CDATA[<span title="{{ correction.taskString(task) }}">{{ correction.hasOpenTask(task) ? '✘' : '✔' }}</span>]]>{% endif %}</cell>
       {% endfor %}
     </row>
   {% endfor %}

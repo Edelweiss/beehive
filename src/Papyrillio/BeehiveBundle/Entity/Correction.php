@@ -43,7 +43,7 @@ class Correction
       }
       return $count;
     }
-    
+
     public function getTasks($category = null){
       if($category === null){
         return $this->tasks;
@@ -56,6 +56,16 @@ class Correction
         }
         return $tasks;
       }
+    }
+    
+    public function getTaskString($category = null){
+      $result = '';
+      foreach($this->getTasks($category) as $task){
+
+          $result .= ($category ? '' : $task->getCategory() . ': ') . $task->getDescription() . "; ";
+
+      }
+      return rtrim($result, '; ');
     }
 
     /**

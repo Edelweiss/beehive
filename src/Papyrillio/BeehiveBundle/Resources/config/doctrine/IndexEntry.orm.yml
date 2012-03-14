@@ -1,0 +1,25 @@
+Papyrillio\BeehiveBundle\Entity\IndexEntry:
+    type: entity
+    table: index_entry
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: string
+            length: 64
+        topic:
+            type: string
+            length: 64
+        phrase:
+            type: text
+    manyToOne:
+        correction:
+            targetEntity: Correction
+            inversedBy: indexEntry
+            joinColumn:
+                name: correction_id
+                referencedColumnName: id
+                nullable: false

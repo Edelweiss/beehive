@@ -20,6 +20,7 @@ class Correction
     public function __construct()
     {
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->indexEntries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = self::STATUS_UNCHECKED;
         $this->creator = 'system';
         $this->created = new DateTime('now');
@@ -533,5 +534,30 @@ class Correction
     public function getEdition()
     {
         return $this->edition;
+    }
+    /**
+     * @var Papyrillio\BeehiveBundle\Entity\IndexEntry
+     */
+    private $indexEntries;
+
+
+    /**
+     * Add indexEntries
+     *
+     * @param Papyrillio\BeehiveBundle\Entity\IndexEntry $indexEntries
+     */
+    public function addIndexEntry(\Papyrillio\BeehiveBundle\Entity\IndexEntry $indexEntries)
+    {
+        $this->indexEntries[] = $indexEntries;
+    }
+
+    /**
+     * Get indexEntries
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIndexEntries()
+    {
+        return $this->indexEntries;
     }
 }

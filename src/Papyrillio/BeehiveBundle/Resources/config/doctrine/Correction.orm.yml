@@ -78,4 +78,7 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         tasks:
             targetEntity: Task
             mappedBy: correction
+        indexEntries:
+            targetEntity: IndexEntry
+            mappedBy: correction
     # don't forget to init the collection in entity __construct() method

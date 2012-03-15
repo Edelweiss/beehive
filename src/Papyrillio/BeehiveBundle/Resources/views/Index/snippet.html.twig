@@ -47,7 +47,7 @@
       submit: 'OK'
     });
     
-    $('.deleteIndex').click(function(event){
+    $('#delete_index_{{ index.id }}').click(function(event){
       deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
     });
 

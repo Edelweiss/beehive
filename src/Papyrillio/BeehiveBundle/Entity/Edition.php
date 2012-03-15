@@ -43,6 +43,7 @@ class Edition
     public function setTitle($title)
     {
         $this->title = $title;
+        $this->remark = $this->volume = $this->collection = '';
         $matches = array();
         if(preg_match('/\((.+)\)/', $title, $matches)){
           $this->remark = $matches[1];

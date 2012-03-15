@@ -43,8 +43,8 @@ Papyrillio\BeehiveBundle\Entity\Edition:
         material:
             - NotBlank:
                 message: 'Bitte eines der folgenden Materialien auswählen: »Papyrus«, »Ostrakon«'
-            - Regex:
-                pattern: '/^(Papyrus|Ostrakon)$/'
+            - Choice:
+                callback: [Papyrillio\BeehiveBundle\Controller\BeehiveController, getEditionMaterials]
                 message: 'Bitte eines der folgenden Materialien auswählen: »Papyrus«, »Ostrakon«'
 
 Papyrillio\BeehiveBundle\Entity\Task:
@@ -53,9 +53,24 @@ Papyrillio\BeehiveBundle\Entity\Task:
         category:
             - NotBlank:
                 message: 'Bitte eine gültige Aufgaben-Kategorie auswählen: tm, hgv, ddb, biblio, bl oder apis.'
-            - Regex:
-                pattern: '/^(tm|hgv|ddb|apis|biblio|bl|apis)$/'
+            - Choice:
+                callback: [Papyrillio\BeehiveBundle\Controller\BeehiveController, getTaskCategoryKeys]
                 message: 'Bitte eine gültige Aufgaben-Kategorie auswählen: tm, hgv, ddb, biblio, bl oder apis.'
         description:
             - NotBlank:
                 message: 'Bitte eine Aufgabenbeschreibung angeben.'
+
+Papyrillio\BeehiveBundle\Entity\IndexEntry:
+    message: 'Ungültige Eingabe'
+    properties:
+        phrase:
+            - NotBlank:
+                message: 'Bitte ein Wort oder eine Phrase angeben.'
+        type:
+            - Choice:
+                callback: [Papyrillio\BeehiveBundle\Controller\BeehiveController, getIndexTypes]
+                message: 'Bitte eine gültige Kategorie angeben.'
+        topic:
+            - Choice:
+                callback: [Papyrillio\BeehiveBundle\Controller\BeehiveController, getIndexTopics]
+                message: 'Bitte ein gültiges Thema angeben.'

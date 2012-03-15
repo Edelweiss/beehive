@@ -23,10 +23,7 @@ class TaskController extends BeehiveController{
         $task = new Task();
         $task->setCorrection($correction);
 
-        $form = $this->createFormBuilder($task)
-          ->add('category', 'choice', array('label' => 'Kategorie', 'choices' => array('apis' => 'APIS', 'biblio' => 'Biblio', 'bl' => 'BL', 'ddb' => 'DDB', 'hgv' => 'HGV', 'tm' => 'TM')))
-          ->add('description', 'textarea', array('label' => 'Beschreibung'))
-          ->getForm();
+        $form = $this->getForm($task);
 
         $form->bindRequest($this->getRequest());
 

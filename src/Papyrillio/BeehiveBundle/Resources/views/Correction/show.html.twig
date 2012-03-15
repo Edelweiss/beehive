@@ -22,6 +22,20 @@
       <p class="actionHolder">
         <span id="callDialogueTaskNew">Neue Aufgabe anlegen</span>
       </p>
+    </div><h4><a href="#">Index</a></h4>
+    <div id="index">
+      {% if correction.indexEntries | length %}
+        <ul class="index">
+          {% for index in correction.indexEntries %}
+            <li>{% include 'PapyrillioBeehiveBundle:Index:index.html.twig' with {'index': index} %}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="index">Es sind keine Indexeinträge für diese Korrektur hinterlegt.</p>
+      {% endif %}
+      <p class="actionHolder">
+        <span id="callDialogueIndexNew">Indexeintrag vornehmen</span>
+      </p>
     </div>
     <h4><a href="#">Weitere Quellen</a></h4>
     <div>
@@ -69,6 +83,13 @@
     <form id="taskNew" class="new" action="{{ path('PapyrillioBeehiveBundle_tasknew') }}" method="post" {{ form_enctype(formTask) }}>
       {{ form_widget(formTask) }}
       <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formTask.vars.value.correction.id }}" />
+    </form>
+  </div>
+
+  <div id="newIndex" title="Indexeintrag vornehmen">
+    <form id="indexNew" class="new" action="{{ path('PapyrillioBeehiveBundle_indexnew') }}" method="post" {{ form_enctype(formIndex) }}>
+      {{ form_widget(formIndex) }}
+      <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formIndex.vars.value.correction.id }}" />
     </form>
   </div>
 
@@ -213,39 +234,10 @@
           width: 400,
           buttons: {
             'OK': function(){
-
-               var taskDialog = $(this);
-               $.post('{{ path('PapyrillioBeehiveBundle_tasknew') }}', $('form#taskNew').serialize(), function(data){
-                 if(data.success){
-                   
-                   // update dom
-                   var ul = $('div#task > ul.task').first();
-                   if(!ul || !ul.length){
-                     $('div#task > p.task').replaceWith('<ul class="task"></ul>');
-                     ul = $('div#task > ul.task').first();
-                   }
-                   ul.append('<li></li>');
-                   var li = ul.find('li').last();
-                   li.load('{{ path('PapyrillioBeehiveBundle_tasksnippet', {'id': 0}) }}'.replace('0', data.data.id));
-                   
-                   // update preview
-                   preview();
-
-                   // close dialogue
-                   $('form#taskNew')[0].reset();
-                   taskDialog.dialog('close');
-
-                 } else {
-                   //console.log('error');
-                   //console.log(data);
-                 }
-
-               }, 'json');
-
+              dialogue_ok(this, 'task', '{{ path('PapyrillioBeehiveBundle_tasknew') }}', '{{ path('PapyrillioBeehiveBundle_tasksnippet', {'id': 0}) }}');
             },
             'Cancel': function(){
-               $('form#taskNew')[0].reset();
-               $(this).dialog('close');
+              dialogue_cancel(this, 'task');
             }
           }
         }
@@ -254,9 +246,33 @@
       $('#callDialogueTaskNew').click(function(){
         $('#newTask').dialog('open');
       });
+
+      $('#newIndex').dialog(
+        {
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          buttons: {
+            'OK': function(){
+              dialogue_ok($(this), 'index', '{{ path('PapyrillioBeehiveBundle_indexnew') }}', '{{ path('PapyrillioBeehiveBundle_indexsnippet', {'id': 0}) }}');
+            },
+            'Cancel': function(){
+              dialogue_cancel(this, 'index');
+            }
+          }
+        }
+      );
+
+      $('#callDialogueIndexNew').click(function(){
+        $('#newIndex').dialog('open');
+      });
       
       $('.deleteTask').click(function(event){
-        deleteTask_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+      });
+      
+      $('.deleteIndex').click(function(event){
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
       });
       
       $('#previewAction').click(function(){

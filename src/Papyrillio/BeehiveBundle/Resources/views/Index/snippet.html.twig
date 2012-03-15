@@ -1,0 +1,54 @@
+{% include 'PapyrillioBeehiveBundle:Index:index.html.twig' with {'index': index} %}
+<script type="text/javascript">
+
+    $('.editIndex').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+      id   : 'elementid_raw',
+      name : 'newvalue',
+      type: 'textarea',
+      cancel: 'Cancel',
+      submit: 'OK',
+      rows: 2,
+      cols: 100,
+      submitdata: function(value, settings){
+        return editObject_submitdata(this, value, settings);
+      },
+      indicator : 'Speichert...',
+      tooltip   : 'Klicken zum Editieren...',
+      placeholder: '________',
+      style: 'inherit',
+      cssclass: 'greek'
+    });
+
+    $('.editIndexSelectCategory').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+      id   : 'elementid_raw',
+      name : 'newvalue',
+      submitdata: function(value, settings){
+        return editObject_submitdata(this, value, settings);
+      },
+      indicator : 'Speichert...',
+      tooltip   : 'Klicken zum Editieren...',
+      type: 'select',
+      data: {new: 'Neues Wort', ghost: 'Ghostword'},
+      style: 'inherit',
+      submit: 'OK'
+    });
+
+    $('.editIndexSelectTopic').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+      id   : 'elementid_raw',
+      name : 'newvalue',
+      submitdata: function(value, settings){
+        return editObject_submitdata(this, value, settings);
+      },
+      indicator : 'Speichert...',
+      tooltip   : 'Klicken zum Editieren...',
+      type: 'select',
+      data: {person: 'Personennamen', chieftain: 'Könige, Kaiser, Konsuln', geo: 'Geographisches und Topographisches', time: 'Monate und Tage', religion: 'Religion', administration: 'Zivil- und Militärverwaltung', tax: 'Steuern', profession: 'Berufsbezeichnungen', general: 'Allgemeier Wortindex'},
+      style: 'inherit',
+      submit: 'OK'
+    });
+    
+    $('.deleteIndex').click(function(event){
+      deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
+    });
+
+</script>

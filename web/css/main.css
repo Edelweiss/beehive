@@ -183,26 +183,24 @@ form#login input.data{
 
 /* CORRECTION SHOW */
 
-div.task{
-  height: 20em;
-}
-
 div.log{
   height: 20em;
 }
 
-ul.task {
+ul.task,
+ul.index {
   list-style: none;
 }
 
-ul.task li {
+ul.task li,
+ul.index li {
   margin-left: 0;
 }
 
 div#correction .actionHolder span,
-span.deleteTask {
+span.deleteTask,
+span.deleteIndex {
   font-size: 10px;
-  line-height: 2em;
 }
 
 div#correction p {

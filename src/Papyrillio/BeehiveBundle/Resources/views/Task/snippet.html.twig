@@ -10,7 +10,7 @@
       rows: 2,
       cols: 100,
       submitdata: function(value, settings){
-        return editTask_submitdata(this, value, settings);
+        return editObject_submitdata(this, value, settings);
       },
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
@@ -23,7 +23,7 @@
       id   : 'elementid_raw',
       name : 'newvalue',
       submitdata: function(value, settings){
-        return editTask_submitdata(this, value, settings);
+        return editObject_submitdata(this, value, settings);
       },
       indicator : 'Speichert...',
       tooltip   : 'Klicken zum Editieren...',
@@ -32,9 +32,9 @@
       style: 'inherit',
       submit: 'OK'
     });
-    
-    $('.deleteTask').click(function(event){
-      deleteTask_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+
+    $('#delete_task_{{ task.id }}').click(function(event){
+      deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
     });
 
 </script>

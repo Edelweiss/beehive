@@ -8,6 +8,7 @@ use Papyrillio\BeehiveBundle\Entity\Correction;
 use Papyrillio\BeehiveBundle\Entity\Compilation;
 use Papyrillio\BeehiveBundle\Entity\Edition;
 use Papyrillio\BeehiveBundle\Entity\Task;
+use Papyrillio\BeehiveBundle\Entity\IndexEntry;
 use DateTime;
 
 class CorrectionController extends BeehiveController{
@@ -223,12 +224,13 @@ class CorrectionController extends BeehiveController{
 
     $task = new Task();
     $task->setCorrection($this->correction);
-    $formTask = $this->createFormBuilder($task)
-      ->add('category', 'choice', array('label' => 'Kategorie', 'choices' => array('apis' => 'APIS', 'biblio' => 'Biblio', 'bl' => 'BL', 'ddb' => 'DDB', 'hgv' => 'HGV', 'tm' => 'TM')))
-      ->add('description', 'textarea', array('label' => 'Beschreibung'))
-      ->getForm();
+    $formTask = $this->getForm($task);
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs, 'formTask' => $formTask->createView()));
+    $index = new IndexEntry();
+    $index->setCorrection($this->correction);
+    $formIndex = $this->getForm($index);
+
+    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs, 'formTask' => $formTask->createView(), 'formIndex' => $formIndex->createView()));
   }
   
   public function snippetLinkAction($id) {

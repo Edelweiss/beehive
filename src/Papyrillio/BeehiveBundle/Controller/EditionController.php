@@ -71,7 +71,7 @@ class EditionController extends BeehiveController{
     $form = $this->createFormBuilder($edition)
       ->add('sort', 'text', array('label' => 'Sortierung'))
       ->add('title', 'text', array('label' => 'Titel'))
-      ->add('remark', 'text', array('required' => false, 'label' => 'Bemerkung'))
+      //->add('remark', 'text', array('required' => false, 'label' => 'Bemerkung'))
       ->add('material', 'choice', array('choices' => array('Papyrus' => 'Papyrus', 'Ostrakon' => 'Ostrakon')))
       ->getForm();
 

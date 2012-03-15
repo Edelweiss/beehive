@@ -107,3 +107,21 @@ PapyrillioBeehiveBundle_tasknew:
 PapyrillioBeehiveBundle_taskupdate:
     pattern:  /task/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Task:update }
+
+# Index
+
+PapyrillioBeehiveBundle_indexdelete:
+    pattern:  /index/delete/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Index:delete }
+
+PapyrillioBeehiveBundle_indexsnippet:
+    pattern:  /index/snippet/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Index:snippet }
+
+PapyrillioBeehiveBundle_indexnew:
+    pattern:  /index/new
+    defaults: { _controller: PapyrillioBeehiveBundle:Index:new }
+
+PapyrillioBeehiveBundle_indexupdate:
+    pattern:  /index/update/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Index:update }

@@ -12,15 +12,20 @@ class ReportController extends BeehiveController{
 
   public function leidenAction($compilationVolume = 13){
     $entityManager = $this->getDoctrine()->getEntityManager();
-    $correctionRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-    $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
 
-    $compilation = $compilationRepository->findOneBy(array('volume' => $compilationVolume));
-    if(!$compilation){
-      $compilation = $compilationRepository->findOneBy(array('volume' => 13));
+    $query = $entityManager->createQuery('
+      SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
+      LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE c2.volume = :compilationVolume ORDER BY e.sort, c.sort'
+    );
+    $query->setParameters(array('compilationVolume' => $compilationVolume));
+
+    $corrections = $query->getResult();
+
+    $compilation = new Compilation();
+    if(count($corrections)){
+      $compilation = current($corrections)->getCompilation();
     }
-
-    $corrections = $compilation->getCorrections();
 
     return $this->render('PapyrillioBeehiveBundle:Report:leiden.html.twig', array('compilation' => $compilation, 'corrections' => $corrections));
   }

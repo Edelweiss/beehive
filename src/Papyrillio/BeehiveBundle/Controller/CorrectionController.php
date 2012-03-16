@@ -21,7 +21,7 @@ class CorrectionController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
     $corrections = array();
-    
+
     if ($this->getRequest()->getMethod() == 'POST') {
       
       // REQUEST PARAMETERS

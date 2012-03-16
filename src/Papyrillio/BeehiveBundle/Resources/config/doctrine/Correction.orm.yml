@@ -58,6 +58,34 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             type: text
         created:
             type: datetime
+        sortSide:
+            name: sort_side
+            type: string
+            length: 2
+            nullable: true
+        sortFragment:
+            name: sort_fragment
+            type: string
+            length: 1
+            nullable: true
+        sortColumn:
+            name: sort_column
+            type: string
+            length: 8
+            nullable: true
+        sortLine:
+            name: sort_line
+            type: integer
+            nullable: true
+        sortSystem:
+            name: sort_system
+            type: integer
+        sortUser:
+            name: sort_user
+            type: integer
+            nullable: true
+        sort:
+            type: integer
     manyToOne:
         edition:
             targetEntity: Edition

@@ -75,7 +75,8 @@
   <script type="text/javascript">
   
   $(document).ready(function(){
-    $('#form_position').specialedit(['R°', 'V°']);
+    $('#form_position').specialedit(['R°', 'V°'], {shift: false});
+    $('#form_description').specialedit(['→'], {shift: false});
     $('#editionTitle').change(function(event){
       $('#editionSort').val(this.value);
       if(this.value == 1){

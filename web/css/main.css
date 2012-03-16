@@ -52,6 +52,7 @@ p {
 h3, h5 {
   text-align: center;
   width: auto;
+  clear: both;
 }
 
 h3 span {

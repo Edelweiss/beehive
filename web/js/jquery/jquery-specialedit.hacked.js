@@ -20,7 +20,8 @@
       buttonTextColor: '#000000',
       buttonWidth: 20,
       buttonHeight: 20,
-      buttonMargin: 3
+      buttonMargin: 3,
+      shift: true // hacked
     };
 
     if (options) {
@@ -120,7 +121,7 @@
 
       // Bind events to text input using '.specialedit' namespace.
       $this.bind('keydown.specialedit', function(event) {
-        if (event.which == KEYCODE_SHIFT) {
+        if ((event.which == KEYCODE_SHIFT) && settings.shift) {
           for (var c in buttons) {
             // The eszett doesn't play well with toUpperCase method.
             if (buttons[c].html() != htmlDecode(ESZETT)) {
@@ -131,7 +132,7 @@
       });
 
       $this.bind('keyup.specialedit', function(event) {
-        if (event.which == KEYCODE_SHIFT) {
+        if ((event.which == KEYCODE_SHIFT) && settings.shift) {
           for (var c in buttons) {
             buttons[c].html(buttons[c].html().toLowerCase());
           }

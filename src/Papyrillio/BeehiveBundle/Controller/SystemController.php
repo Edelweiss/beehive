@@ -28,6 +28,9 @@ class SystemController extends BeehiveController{
         $entityManager->clear(); // Detaches all objects from Doctrine!
       }
     }
+
+    $entityManager->flush(); // Executes all updates.
+    $entityManager->clear(); // Detaches all objects from Doctrine!
     return $this->render('PapyrillioBeehiveBundle:System:sort.html.twig', array('batchCount' => $batchCount));
   }
 }

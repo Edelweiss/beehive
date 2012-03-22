@@ -5,8 +5,7 @@
 /vendor/
 /app/config/parameters.ini
 /.project
+/.settings
 *.php~
 /src/Papyrillio/BeehiveBundle/Resources/data/idno.log
 /src/Papyrillio/BeehiveBundle/Resources/data/idno.sh
-/src/Papyrillio/BeehiveBundle/Resources/data/dump/dump.log
-/src/Papyrillio/BeehiveBundle/Resources/data/dump/dump.sh

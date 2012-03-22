@@ -4,6 +4,9 @@ namespace Papyrillio\BeehiveBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable;
+use Doctrine\ORM\Event\LifecycleEventArgs; // prePersist
+use Doctrine\ORM\Event\OnFlushEventArgs; // onFlush
+use Doctrine\ORM\Event\PreUpdateEventArgs; // preUpdate
 use DateTime;
 /**
  * Papyrillio\BeehiveBundle\Entity\Correction
@@ -18,7 +21,6 @@ class Correction
     protected static $STATUS = array('unchecked', 'reviewed', 'finalised');
     protected static $ROMAN  = array('I' => 1, 'II' => 2, 'III' => 3, 'IV' => 4, 'V' => 5, 'VI' => 6, 'VII' => 7, 'VIII' => 8, 'IX' => 9, 'X' => 10, 'XI' => 11, 'XII' => 12, 'XIII' => 13, 'XIV' => 14, 'XV' => 15, 'XVI' => 16, 'XVII' => 17, 'XVIII' => 18, 'XIX' => 19, 'XX' => 20, 'XXI' => 21, 'XXII' => 22, 'XXIII' => 23, 'XXIV' => 24, 'XXV' => 25, 'XXVI' => 26, 'XXVII' => 27, 'XXVIII' => 28, 'XXIX' => 29, 'XXX' => 30, 'XXXI' => 31, 'XXXII' => 32, 'XXXIII' => 33, 'XXXIV' => 34, 'XXXV' => 35, 'XXXVI' => 36, 'XXXVII' => 37, 'XXXIX' => 39, 'XXXVIII' => 38, 'XL' => 40, 'XLI' => 41, 'XXIX' => 29, 'XLIII' => 43, 'LIV' => 44, 'XLV' => 45, 'XLVI' => 46, 'XLVII' => 47, 'XLVIII' => 48, 'XLIX' => 49, 'L' => 50, 'LI' => 51, 'LII' => 52, 'LIII' => 53, 'LIV' => 54, 'LV' => 55, 'LVI' => 56, 'LVII' => 57, 'LVIII' => 58, 'LIX' => 59, 'LX' => 60, 'LXI' => 61, 'LXII' => 62, 'LXIII' => 63, 'LXIV' => 64, 'LXV' => 65, 'LXVI' => 66, 'LXVII' => 67, 'LXVIII' => 68, 'LXIX' => 69, 'LXX' => 70, 'LXXI' => 71, 'LXXII' => 72, 'LXXIII' => 73, 'LXXIV' => 74, 'LXXV' => 75, 'LXXVI' => 76, 'LXXVII' => 77, 'LXXVIII' => 78, 'LXXIX' => 79, 'LXXX' => 80, 'LXXXI' => 81, 'LXXXII' => 82, 'LXXXIII' => 83, 'LXXXIV' => 84, 'LXXXV' => 85, 'LXXXVI' => 86, 'LXXXVII' => 87, 'LXXXVIII' => 88, 'LXXXIX' => 89, 'XC' => 90, 'XCI' => 91, 'XCII' => 92, 'XCIII' => 93, 'XCIV' => 94, 'XCV' => 95, 'XCVI' => 96, 'XCVII' => 97, 'XCVIII' => 98, 'XCIX' => 99, 'C' => 100);
     protected static $ALPHA  = array('A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7, 'H' => 8);
-    protected static $SIDE   = array('V°' => 1, 'R°' => 2);
 
     public function __construct()
     {
@@ -26,6 +28,7 @@ class Correction
         $this->indexEntries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = self::STATUS_UNCHECKED;
         $this->creator = 'system';
+        $this->sort = $this->sortSystem = '';
         $this->created = new DateTime('now');
     }
 
@@ -140,62 +143,106 @@ class Correction
     }
 
     /**
+     * Set text
+     *
+     * @param string $text
+     */
+    public function setText($text){
+      $this->text = $text;
+      $this->setSortValues();
+    }
+
+    /**
      * Set position
-     * 
-     * fragment := A, B, C, D, E, F, G, H (up to 8 fragements)
-     * column := I, II, III, IV, V, VI, VII, ... LXXXIX (up to 89 columns)
-     * line := 1, 2, 3, 4, 5, ... ∞
      * 
      * @param text $position
      */
-    public function setPosition($position)
-    {
-        // retrieve fragment, column and line from position string
+    public function setPosition($position){
+      $this->position = $position;
+      $this->setSortValues();
+    }
 
-        $this->sortSide = $this->sortFragment = $this->sortColumn = $this->sortLine = null;
-        if(preg_match('/([RV]°)( |,|-|$)/', $position, $matches)){
+    /**
+     * Set edition
+     *
+     * @param Papyrillio\BeehiveBundle\Entity\Edition $edition
+     */
+    public function setEdition(\Papyrillio\BeehiveBundle\Entity\Edition $edition){
+        $this->edition = $edition;
+        $this->setSortValues();
+    }
+
+    public function setSortValues(){
+      if($this->getEdition()){
+
+        // retrieve page, fragment, column and line from position string
+        $this->sortPage = $this->sortSide = $this->sortFragment = $this->sortColumn = $this->sortLine = null;
+        if(preg_match('/S\. (\d+)( |,|-|\)|$)/', $this->position, $matches)){
+          $this->sortPage = $matches[1];
+        }
+        if(preg_match('/([RV]°)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortSide = $matches[1];
         }
-        if(preg_match('/([ABCDEFGH])( |,|-|$)/', $position, $matches)){
+        if(preg_match('/([ABCDEFGH])( |,|-|\)|$)/', $this->position, $matches)){
+          $this->sortFragment = $matches[1];
+        } else if(preg_match('/Fr\. (\d+)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortFragment = $matches[1];
         }
-        if(preg_match('/([IVXL]+)( |,|-|$)/', $position, $matches)){
+        if(preg_match('/([IVXL]+)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortColumn = $matches[1];
         }
-        if(preg_match('/(\d+)( |,|-|$)/', $position, $matches)){
+        if(preg_match('/(\d+)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortLine = $matches[1];
         }
-
+  
         // calculate system sort
-        $this->sortSystem = $this->generateSytemSort($this->sortSide, $this->sortFragment, $this->sortColumn, $this->sortLine);
+        $this->sortSystem = $this->generateSytemSort($this->getEdition()->getSort(), $this->text, $this->sortPage, $this->sortSide, $this->sortFragment, $this->sortColumn, $this->sortLine);
 
         // define final sort parameter
-        if($this->sortUser !== null){
-          $this->sort = $this->sortUser;
-        } else {
-          $this->sort = $this->sortSystem;
-        }
-        $this->position = $position;
+        $this->sort = $this->sortUser !== null ? $this->sortUser : $this->sortSystem;
+      }
     }
 
      /**
-     * Set generateSytemSort
+     * generate code sytem sort parameter
+     * sort by edition > text > page > side > fragment > column > line
+     * SELECT e.sort, text, position, sortPage, sortSide, sortFragment, sortColumn, sortLine, sortSystem from correction c JOIN edition e ON c.edition_id = e.id ORDER BY sortSystem;
      * 
-     * fragment := A, B, C, E, F, G, H (up to 7 fragements)
-     * column := I, II, III, IV, V, VI, VII, ... (up to 99 columns)
-     * line := 1, 2, 3, 4, 5, ...
-     * 
-     * @param $fragment, i.e. A, B, C, E, F, G or H
-     * @param $column, i.e. I, II, III, IV, V, VI, ...
-     * @param $line, i.e. 1, 2, 3, 4, 5, 6, ...
+     * @param $edition 0 (Allgemein) ... 1'300'000 (Tavolette Varie); exceptions for P.Lond P.Petr O.Tait
+     * @param $text
+     * @param $pate
+     * @param $side R°, V° (two sides)
+     * @param $fragment, A, B, C, D, E, F, G, H (up to 8 letter coded fragements) or number
+     * @param $column, i.e. I, II, III, IV, V, VI, VII, ...
+     * @param $line, i.e. 1, 2, 3, 4, 5, 6, ... ∞; e.g. p.mich/p.mich.4.1/p.mich.4.1.224.xml: <lb n='6368'/>
      */
-    protected function generateSytemSort($side, $fragment, $column, $line){
-      $s = $side != null ? self::$SIDE[$side] * 1000000 : 0;
-      $f = $fragment != null ? self::$ALPHA[$fragment] * 100000 : 0;
-      $c = $column != null ? self::$ROMAN[$column] * 1000 : 0;
-      $l = $line != null ? $line : 0;
-      
-      return $s + $f + $c + $l;
+    protected function generateSytemSort($edition, $text, $page, $side, $fragment, $column, $line){
+
+      if($column != null && array_key_exists($column, self::$ROMAN)){
+        $column = self::$ROMAN[$column];
+      }
+
+      if(in_array($edition, array('580000', '581000', '582000', '583000', '1250000'))){ // P. Lond 1 - 4 and O. Tait 1, sort by page and then by text
+        return 'e' . $this->lpad($edition) .
+               'p' . $this->lpad($page) .
+               't' . $this->lpad($text) .
+               's' . $this->lpad($side, 2) .
+               'f' . $this->lpad($fragment) .
+               'c' . $this->lpad($column) .
+               'l' . $this->lpad($line);
+      }
+
+      return 'e' . $this->lpad($edition) .
+             't' . $this->lpad($text) .
+             'p' . $this->lpad($page) .
+             's' . $this->lpad($side, 2) .
+             'f' . $this->lpad($fragment) .
+             'c' . $this->lpad($column) .
+             'l' . $this->lpad($line);
+    }
+
+    protected function lpad($string, $length = 8, $pad = '0'){
+      return str_pad($string, $length, $pad, STR_PAD_LEFT);
     }
 
     public function getLinks(){
@@ -282,20 +329,11 @@ class Correction
      */
     private $created;
 
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Task
-     */
-    private $tasks;
 
     /**
-     * @var Papyrillio\BeehiveBundle\Entity\Compilation
+     * @var integer $sortPage
      */
-    private $compilation;
-   
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Edition
-     */
-    private $edition;
+    private $sortPage;
 
     /**
      * @var string $sortSide
@@ -318,20 +356,35 @@ class Correction
     private $sortLine;
 
     /**
-     * @var integer $sortSystem
+     * @var string $sortSystem
      */
     private $sortSystem;
 
     /**
-     * @var integer $sortUser
+     * @var string $sortUser
      */
     private $sortUser;
 
     /**
-     * @var integer $sort
+     * @var string $sort
      */
     private $sort;
-    
+
+    /**
+     * @var Papyrillio\BeehiveBundle\Entity\Task
+     */
+    private $tasks;
+
+    /**
+     * @var Papyrillio\BeehiveBundle\Entity\Compilation
+     */
+    private $compilation;
+   
+    /**
+     * @var Papyrillio\BeehiveBundle\Entity\Edition
+     */
+    private $edition;
+
     /**
      * Get id
      *
@@ -340,16 +393,6 @@ class Correction
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
     }
 
     /**
@@ -573,6 +616,26 @@ class Correction
     }
 
     /**
+     * Set sortPage
+     *
+     * @param integer $sortPage
+     */
+    public function setSortPage($sortPage)
+    {
+        $this->sortPage = $sortPage;
+    }
+
+    /**
+     * Get sortPage
+     *
+     * @return integer 
+     */
+    public function getSortPage()
+    {
+        return $this->sortPage;
+    }
+
+    /**
      * Set sortSide
      *
      * @param string $sortSide
@@ -655,7 +718,7 @@ class Correction
     /**
      * Set sortSystem
      *
-     * @param integer $sortSystem
+     * @param string $sortSystem
      */
     public function setSortSystem($sortSystem)
     {
@@ -665,7 +728,7 @@ class Correction
     /**
      * Get sortSystem
      *
-     * @return integer 
+     * @return string 
      */
     public function getSortSystem()
     {
@@ -675,7 +738,7 @@ class Correction
     /**
      * Set sortUser
      *
-     * @param integer $sortUser
+     * @param string $sortUser
      */
     public function setSortUser($sortUser)
     {
@@ -685,7 +748,7 @@ class Correction
     /**
      * Get sortUser
      *
-     * @return integer 
+     * @return string 
      */
     public function getSortUser()
     {
@@ -695,7 +758,7 @@ class Correction
     /**
      * Set sort
      *
-     * @param integer $sort
+     * @param string $sort
      */
     public function setSort($sort)
     {
@@ -705,7 +768,7 @@ class Correction
     /**
      * Get sort
      *
-     * @return integer 
+     * @return string 
      */
     public function getSort()
     {
@@ -740,17 +803,6 @@ class Correction
     public function getCompilation()
     {
         return $this->compilation;
-    }
-
-
-    /**
-     * Set edition
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\Edition $edition
-     */
-    public function setEdition(\Papyrillio\BeehiveBundle\Entity\Edition $edition)
-    {
-        $this->edition = $edition;
     }
 
     /**

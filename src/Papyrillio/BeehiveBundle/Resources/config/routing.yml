@@ -125,3 +125,9 @@ PapyrillioBeehiveBundle_indexnew:
 PapyrillioBeehiveBundle_indexupdate:
     pattern:  /index/update/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Index:update }
+
+# Index
+
+PapyrillioBeehiveBundle_systemsort:
+    pattern:  /system/sort
+    defaults: { _controller: PapyrillioBeehiveBundle:System:sort }

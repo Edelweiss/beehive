@@ -28,6 +28,10 @@ PapyrillioBeehiveBundle_numberwizardlookup:
     pattern:  /numberWizard/lookup
     defaults: { _controller: PapyrillioBeehiveBundle:NumberWizard:lookup}
 
+PapyrillioBeehiveBundle_numberwizardautocompleteddb:
+    pattern:  /numberWizard/autocomplete/ddb
+    defaults: { _controller: PapyrillioBeehiveBundle:NumberWizard:autocompleteDdb}
+
 # Report
 
 PapyrillioBeehiveBundle_report:
@@ -131,3 +135,14 @@ PapyrillioBeehiveBundle_indexupdate:
 PapyrillioBeehiveBundle_systemsort:
     pattern:  /system/sort
     defaults: { _controller: PapyrillioBeehiveBundle:System:sort }
+
+# Apiary
+
+PapyrillioBeehiveBundle_apiary:
+    pattern:  /browse
+    defaults: { _controller: PapyrillioBeehiveBundle:Apiary:index, format: html}
+
+
+PapyrillioBeehiveBundle_apiaryhoney:
+    pattern:  /{type}/{id}/{format}
+    defaults: { _controller: PapyrillioBeehiveBundle:Apiary:honey, format: html}

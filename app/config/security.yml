@@ -26,6 +26,10 @@ security:
             pattern:    ^/login$
             anonymous:  ~
 
+        apiary_firewall:
+            pattern:    "^/(browse|ddb/.+;.*;.+|(bl|tm|hgv|biblio)/\d+|numberWizard/autocomplete/ddb|about|contact|help)$"
+            anonymous:  ~
+
         secured_area:
             pattern:    ^/
             #anonymous: ~
@@ -42,5 +46,6 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/(browse|bl|ddb|tm|hgv|biblio|numberWizard|about|contact|help), roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/, roles: ROLE_USER}        
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

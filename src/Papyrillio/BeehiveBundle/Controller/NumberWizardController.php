@@ -9,6 +9,23 @@ use DOMDocument;
 use DOMXPath;
 class NumberWizardController extends BeehiveController{
   
+  public function autocompleteDdbAction(){
+    $term = $this->getParameter('term');
+    
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+    
+    $query = $entityManager->createQuery('SELECT DISTINCT c.ddb FROM PapyrillioBeehiveBundle:Correction c WHERE c.ddb LIKE \'' . $term . '%\' ORDER BY c.ddb');
+
+    
+    $autocomplete = array();
+    foreach($query->getResult() as $result){
+      $autocomplete[] = $result['ddb'];
+    }
+    
+    return new Response(json_encode($autocomplete));
+  }
+  
   public function indexAction(){
     $id = $this->getParameter('id');
     $data = $this->getData($id);

@@ -296,3 +296,42 @@ div#navigation ul#menu li {
 div#header span {
   float: right;
 }
+
+/* APIARY */
+table.apiary tr td {
+  padding: 0 1em 0 1em;
+}
+
+table.apiary tr td.edition {
+  width: 8em;
+}
+
+table.apiary tr td.text {
+  width: 4em;
+  text-align: right;
+}
+
+table.apiary tr td.position {
+  width: 8em;
+  text-align: right;
+}
+
+table.apiary tr td.description {
+  width: auto;
+}
+
+table.apiary tr td.text,
+table.apiary tr td.position {
+  border-right: solid 1px;
+}
+
+div.apiary p {
+  margin: 0;
+}
+
+div.apiary p label {
+  width: 5em;
+  display: block;
+  float: left;
+  
+}

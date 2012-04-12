@@ -27,7 +27,8 @@
                   <ul id="menu" class="ui-corner-all" style="display: none;">
                     {% set navigation = {
                     'Berichtigungen': {'PapyrillioBeehiveBundle_correctionlist': {'title': 'Berichtigungen ansehen', 'parameters': {}}, 
-                                       'PapyrillioBeehiveBundle_correctionnew': {'title': 'Neue Berichtigung anlegen', 'parameters': {}}},
+                                       'PapyrillioBeehiveBundle_correctionnew': {'title': 'Neue Berichtigung anlegen', 'parameters': {}}, 
+                                       'PapyrillioBeehiveBundle_apiary': {'title': 'Bestand durchblättern', 'parameters': {}}},
                     'Editionen':      {'PapyrillioBeehiveBundle_editionlist': {'title': 'Editionen ansehen', 'parameters': {}}, 
                                        'PapyrillioBeehiveBundle_editionnew': {'title': 'Edition anlegen', 'parameters': {}}},
                     'Berichte':       {'PapyrillioBeehiveBundle_report': {'title': 'Leiden Format', 'parameters': {}}},
@@ -57,7 +58,7 @@
                   
                 </div>
 
-              {% else %}
+              {% elseif app.request.attributes.get('_route') %}
                 <a href="{{ path('login') }}">Login</a>
               {% endif %}
             </div>
@@ -74,6 +75,7 @@
                     {% if app.user %}
                       <a href="{{ path('logout') }}">Abmelden</a>
                     {% endif %}
+                    <a href="{{ path('PapyrillioBeehiveBundle_apiary') }}">Blättern</a>
                     <a href="{{ path('PapyrillioBeehiveBundle_about') }}">Info</a>
                     <a href="{{ path('PapyrillioBeehiveBundle_contact') }}">Kontakt</a>
                     <a href="{{ path('PapyrillioBeehiveBundle_help') }}">Hilfe</a>

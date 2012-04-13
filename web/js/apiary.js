@@ -7,7 +7,3 @@ function flyTo(type, id){
   }
 }
 
-
-function l(m){
-  console.log(m);
-}

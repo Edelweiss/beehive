@@ -17,6 +17,12 @@
   <button id="columnsHideShow" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
     <span class="ui-button-text">hide/show columns</span>
   </button>
+  
+  <button id="print" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+    <span class="ui-button-text">print</span>
+  </button>
+  
+  <form id="printForm" action="{{ path('PapyrillioBeehiveBundle_correctionprint') }}" method="post" style="display: none; visibility: hidden;"></form>
 
 {% endblock %}
 
@@ -24,6 +30,7 @@
   {{ parent() }}
   <script src="{{ asset('js/jquery/i18n/grid.locale-en.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/jquery/jquery-jqGrid.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/correctionList.js') }}" type="text/javascript"></script>
   <script type="text/javascript">
 
 $(function(){
@@ -68,6 +75,11 @@ $(function(){
 
     $('#columnsHideShow').click(function(){
       $('#list').jqGrid('columnChooser', {shrinkToFit: false, autowidth: false});
+      return false;
+    });
+
+    $('#print').click(function(){
+      printCorrectionList();
       return false;
     });
     

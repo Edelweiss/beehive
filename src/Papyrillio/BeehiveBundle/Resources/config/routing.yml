@@ -52,6 +52,10 @@ PapyrillioBeehiveBundle_correctionlist:
     pattern:  /correction/list
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:list }
 
+PapyrillioBeehiveBundle_correctionprint:
+    pattern:  /correction/print
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:list, print: true}
+
 PapyrillioBeehiveBundle_correctionshow:
     pattern:  /correction/show/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:show }

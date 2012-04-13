@@ -17,7 +17,7 @@ class CorrectionController extends BeehiveController{
   protected $correction = null;
   protected $logs = null;
 
-  public function listAction(){
+  public function listAction($print = false){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
     $corrections = array();
@@ -32,6 +32,20 @@ class CorrectionController extends BeehiveController{
       $offset        = $offset < 0 ? 0 : $offset;
       $sort          = $this->getParameter('sidx');
       $sortDirection = $this->getParameter('sord');
+      $visible       = explode(';', rtrim($this->getParameter('visible'), ';'));
+      
+      // SELECT
+
+      $visibleColumns = array('title');
+      foreach($visible as $column){
+        if($column != ''){
+          $visibleColumns[] = $column;
+        }
+      }
+      $visible = $visibleColumns;
+
+      $this->get('logger')->info('visible: ' . print_r($visible, true));
+      $this->get('logger')->info('visible: ' . $this->getParameter('visible'));
 
       // ODER BY
       
@@ -92,7 +106,7 @@ class CorrectionController extends BeehiveController{
       $query = $entityManager->createQuery('
         SELECT count(DISTINCT c.id) FROM PapyrillioBeehiveBundle:Correction c
         LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
-        ' . $where
+        ' . $with . ' ' . $where
       );
       $query->setParameters($parameters);
       $count = $query->getSingleScalarResult();
@@ -109,15 +123,26 @@ class CorrectionController extends BeehiveController{
       
       $query = $entityManager->createQuery('
         SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $where. ' ' . $with . ' ' . $orderBy
-      )->setFirstResult($offset)->setMaxResults($limit);
+        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $with . ' ' . $where . ' ' . $orderBy
+      );
+      if(!$print){
+        $query->setFirstResult($offset)->setMaxResults($limit);
+      }
       $query->setParameters($parameters);
 
       $corrections = $query->getResult();
 
-      return $this->render('PapyrillioBeehiveBundle:Correction:list.xml.twig', array('corrections' => $corrections, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page));
+      if($print){
+        return $this->render('PapyrillioBeehiveBundle:Correction:print.html.twig', array('corrections' => $corrections, 'visible' => $visible));
+      } else {
+        return $this->render('PapyrillioBeehiveBundle:Correction:list.xml.twig', array('corrections' => $corrections, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page));
+      }
     } else {
-      return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
+      if($print){
+        return $this->render('PapyrillioBeehiveBundle:Correction:print.html.twig', array('corrections' => $corrections, 'visible' => array()));
+      } else {
+        return $this->render('PapyrillioBeehiveBundle:Correction:list.html.twig', array('corrections' => $corrections));
+      }
     }
   }
   

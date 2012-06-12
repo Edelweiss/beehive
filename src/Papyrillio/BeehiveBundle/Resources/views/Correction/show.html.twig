@@ -196,7 +196,7 @@
         rows: 2,
         cols: 100,
         submitdata: function(value, settings){
-            return editTask_submitdata(this, value, settings);
+            return editObject_submitdata(this, value, settings);
         },
         indicator : 'Speichert...',
         tooltip   : 'Klicken zum Editieren...',
@@ -212,7 +212,7 @@
         id   : 'elementid_raw',
         name : 'newvalue',
         submitdata: function(value, settings){
-            return editTask_submitdata(this, value, settings);
+            return editObject_submitdata(this, value, settings);
             //settings.target = settings.target.match(/^(.+\/)\d+$/)[1] + this.id.match(/^task_(\d+)_(\w+)$/)[1];
             //return {elementid: this.id.match(/^task_(\d+)_(\w+)$/)[2]};
         },

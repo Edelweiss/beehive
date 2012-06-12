@@ -142,7 +142,7 @@
       });*/
 
       $('#correction').togglepanels();
-      $('#task').show();
+      $('#task').prev().click();
 
       $('.edit').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
         id   : 'elementid',

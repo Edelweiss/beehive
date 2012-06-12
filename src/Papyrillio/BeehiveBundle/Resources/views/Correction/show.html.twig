@@ -22,7 +22,8 @@
       <p class="actionHolder">
         <span id="callDialogueTaskNew">Neue Aufgabe anlegen</span>
       </p>
-    </div><h4><a href="#">Index</a></h4>
+    </div>
+    <h4><a href="#">Index</a></h4>
     <div id="index">
       {% if correction.indexEntries | length %}
         <ul class="index">
@@ -136,9 +137,12 @@
     
     $(document).ready(function(){
 
-      $('#correction').accordion({
+      /*$('#correction').accordion({
         autoHeight: true
-      });
+      });*/
+
+      $('#correction').togglepanels();
+      $('#task').show();
 
       $('.edit').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
         id   : 'elementid',

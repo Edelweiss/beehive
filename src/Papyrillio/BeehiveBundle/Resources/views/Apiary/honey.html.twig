@@ -12,6 +12,7 @@
       <th class="text">Text</th>
       <th class="position">Position</th>
       <th class="description">Description</th>
+      <th class="bl">BL</th>
     </tr>
   </thead-->
   <tbody>
@@ -33,6 +34,7 @@
         </td>
         <td class="position">{{ c.position }}</td>
         <td class="description">{{ c.description }}</td>
+        <td class="bl">→&nbsp;BL&nbsp;{{ c.compilation.title }}</td>
       </tr>
     {% endfor %}
   </tbody>

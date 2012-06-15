@@ -316,6 +316,14 @@ table.apiary tr td.position {
   text-align: right;
 }
 
+table.apiary tr td.bl {
+  width: 1em;
+  text-align: right;
+  vertical-align: bottom;
+  font-size: smaller;
+  color: gray;
+}
+
 table.apiary tr td.description {
   width: auto;
 }

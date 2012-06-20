@@ -223,7 +223,7 @@ class CorrectionController extends BeehiveController{
     $this->correction->$setter($this->getParameter('newvalue'));
     $this->entityManager->flush();
     
-    return new Response($this->correction->$getter());
+    return new Response(htmlentities($this->correction->$getter()));
   }
 
   public function deleteAction($id){

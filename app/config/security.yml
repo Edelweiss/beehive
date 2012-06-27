@@ -26,26 +26,21 @@ security:
             pattern:    ^/login$
             anonymous:  ~
 
-        apiary_firewall:
-            pattern:    "^/(browse|ddb/.+;.*;.+|(bl|tm|hgv|biblio)/\d+|numberWizard/autocomplete/ddb|about|contact|help)$"
-            anonymous:  ~
-
         secured_area:
             pattern:    ^/
-            #anonymous: ~
+            anonymous: ~
             form_login:
                 login_path:  /login
                 check_path:  /login_check
                 #use_referer: true
                 always_use_default_target_path: true
-                #default_target_path: PapyrillioBeehiveBundle_home
                 default_target_path: PapyrillioUserBundle_tadaima
             logout:
                 path:   /logout
                 target: /login
 
     access_control:
+        - { path: ^/(browse|ddb/.+;.*;.+|(bl|tm|hgv|biblio)/\d+|numberWizard/autocomplete/ddb|about|contact|help)$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/(browse|bl|ddb|tm|hgv|biblio|numberWizard|about|contact|help), roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/, roles: ROLE_USER}        
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

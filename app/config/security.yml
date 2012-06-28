@@ -12,11 +12,10 @@ security:
         user_db:
             entity: { class: Papyrillio\UserBundle\Entity\User, property: username }
 
-
     firewalls:
         #dev:
-            #pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            #security: true
+        #    pattern:  ^/(_(profiler|wdt)|css|images|js)/
+        #    security: true
 
         #login:
             #pattern:  ^/login

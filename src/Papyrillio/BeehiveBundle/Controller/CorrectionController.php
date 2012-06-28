@@ -152,7 +152,6 @@ class CorrectionController extends BeehiveController{
     $correction->setCreator($this->get('security.context')->getToken()->getUser()->getUsername());
     
     $entityManager = $this->getDoctrine()->getEntityManager();
-    $compilationRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
     $editionRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Edition');
 
     $correction->setCompilation($this->getCompilation());
@@ -189,18 +188,27 @@ class CorrectionController extends BeehiveController{
       }
     }
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilations' => $compilationRepository->findAll(), 'editions' => $editionRepository->findAll()));
+    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilations' => $this->getCompilations(), 'editions' => $editionRepository->findAll()));
   }
 
-  protected function getCompilation(){
+  protected function getCompilation($id = null){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
 
-    if($this->getRequest()->getMethod() == 'POST'){
+    if($id !== null){
+      return $repository->findOneBy(array('id' => $id));
+    } else if($this->getRequest()->getMethod() == 'POST'){
       return $repository->findOneBy(array('id' => $this->getParameter('compilation')));
-    }else{
+    } else {
       return $repository->findOneBy(array('volume' => 13));
     }
+  }
+
+  protected function getCompilations(){
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+
+    return $repository->findAll();
   }
 
   protected function getEdition(){
@@ -216,14 +224,21 @@ class CorrectionController extends BeehiveController{
 
   public function updateAction($id){
     $this->retrieveCorrection($id);
+    $elementId = $this->getParameter('elementid');
     
-    $setter = 'set' . ucfirst($this->getParameter('elementid'));
-    $getter = 'get' . ucfirst($this->getParameter('elementid'));
-    
-    $this->correction->$setter($this->getParameter('newvalue'));
-    $this->entityManager->flush();
-    
-    return new Response(htmlspecialchars($this->correction->$getter()));
+    if($elementId == 'compilation'){
+      $this->correction->setCompilation($this->getCompilation($this->getParameter('newvalue')));
+      $this->entityManager->flush();
+      return new Response(htmlspecialchars($this->correction->getCompilation()->getTitle()));
+    } else {
+      $setter = 'set' . ucfirst($elementId);
+      $getter = 'get' . ucfirst($elementId);
+      
+      $this->correction->$setter($this->getParameter('newvalue'));
+      $this->entityManager->flush();
+      
+      return new Response(htmlspecialchars($this->correction->$getter()));
+    }
   }
 
   public function deleteAction($id){
@@ -255,7 +270,7 @@ class CorrectionController extends BeehiveController{
     $index->setCorrection($this->correction);
     $formIndex = $this->getForm($index);
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'logs' => $this->logs, 'formTask' => $formTask->createView(), 'formIndex' => $formIndex->createView()));
+    return $this->render('PapyrillioBeehiveBundle:Correction:show.html.twig', array('correction' => $this->correction, 'compilations' => $this->getCompilations(), 'logs' => $this->logs, 'formTask' => $formTask->createView(), 'formIndex' => $formIndex->createView()));
   }
   
   public function snippetLinkAction($id) {

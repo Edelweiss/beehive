@@ -317,7 +317,7 @@ table.apiary tr td.position {
 }
 
 table.apiary tr td.bl {
-  width: 1em;
+  width: auto;
   vertical-align: bottom;
   font-size: smaller;
   color: gray;

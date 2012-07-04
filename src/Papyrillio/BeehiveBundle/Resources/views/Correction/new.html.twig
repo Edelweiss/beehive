@@ -14,6 +14,13 @@
         {% endfor %}
         </select>
     </div>
+
+    <div class="compilationPage">
+      <label>Seite</label>
+      {{ form_widget(form.compilationPage) }}
+      {{ form_errors(form.compilationPage) }}
+    </div>
+
     <div>
         <label>BL_Ed_Nr</label>
         <select name="editionSort" id="editionSort">        

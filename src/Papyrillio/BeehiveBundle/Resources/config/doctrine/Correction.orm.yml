@@ -50,6 +50,11 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             type: text
             gedmo:
                 - versioned
+        compilationPage:
+            name: compilation_page
+            type: string
+            length: 64
+            nullable: true
         status:
             type: text
             gedmo:

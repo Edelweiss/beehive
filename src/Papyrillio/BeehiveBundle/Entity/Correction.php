@@ -839,4 +839,29 @@ class Correction
     {
         return $this->indexEntries;
     }
+    /**
+     * @var string $compilationPage
+     */
+    private $compilationPage;
+
+
+    /**
+     * Set compilationPage
+     *
+     * @param string $compilationPage
+     */
+    public function setCompilationPage($compilationPage)
+    {
+        $this->compilationPage = $compilationPage;
+    }
+
+    /**
+     * Get compilationPage
+     *
+     * @return string 
+     */
+    public function getCompilationPage()
+    {
+        return $this->compilationPage;
+    }
 }

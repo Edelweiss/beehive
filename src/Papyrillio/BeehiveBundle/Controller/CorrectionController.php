@@ -50,7 +50,7 @@ class CorrectionController extends BeehiveController{
       // ODER BY
       
       $orderBy = '';
-      if(in_array($sort, array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status'))){
+      if(in_array($sort, array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'))){
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
       }
       if($sort == 'edition'){
@@ -158,6 +158,7 @@ class CorrectionController extends BeehiveController{
     $correction->setEdition($this->getEdition());
 
     $form = $this->createFormBuilder($correction)
+      ->add('compilationPage', 'text')
       ->add('text', 'text')
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))

@@ -120,4 +120,13 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         indexEntries:
             targetEntity: IndexEntry
             mappedBy: correction
+
+    lifecycleCallbacks:
+        prePersist: [ encode ]
+        postPersist: [ decode ]
+        preUpdate: [ encode ]
+        postUpdate: [ decode ]
+        postLoad: [ decode ]
+        onFlush: [ encode ]
+
     # don't forget to init the collection in entity __construct() method

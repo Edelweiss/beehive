@@ -54,15 +54,12 @@
     </div>
     <h4><a href="#">Versionslogbuch</a></h4>
     <div class="log">
-      <ul class="logs">
+      <ul class="logs greek">
         {% for log in logs %}
           <li>Version {{ log.version }} / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
             <ul>
-              {% for key,value in log.data %}
-                <li>{{ key }} → 
-                
-                {{ value }}
-                </li>
+              {% for key,value in log.dataDecoded %}
+                <li>{{ key }} → {{ value }}</li>
               {% endfor %}
             </ul>
           </li>

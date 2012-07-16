@@ -33,7 +33,7 @@ class CorrectionController extends BeehiveController{
       $sort          = $this->getParameter('sidx');
       $sortDirection = $this->getParameter('sord');
       $visible       = explode(';', rtrim($this->getParameter('visible'), ';'));
-      
+
       // SELECT
 
       $visibleColumns = array('title');
@@ -48,7 +48,7 @@ class CorrectionController extends BeehiveController{
       $this->get('logger')->info('visible: ' . $this->getParameter('visible'));
 
       // ODER BY
-      
+
       $orderBy = '';
       if(in_array($sort, array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'))){
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
@@ -226,7 +226,7 @@ class CorrectionController extends BeehiveController{
   public function updateAction($id){
     $this->retrieveCorrection($id);
     $elementId = $this->getParameter('elementid');
-    
+
     if($elementId == 'compilation'){
       $this->correction->setCompilation($this->getCompilation($this->getParameter('newvalue')));
       $this->entityManager->flush();
@@ -282,7 +282,7 @@ class CorrectionController extends BeehiveController{
     
     $this->get('logger')->info('********************');
     $this->get('logger')->info(print_r($correction->getLinks(), TRUE));
-    
+
     return $this->render('PapyrillioBeehiveBundle:Correction:snippetLink.html.twig', array('correction' => $correction));
   }
   
@@ -301,18 +301,8 @@ class CorrectionController extends BeehiveController{
     $this->logs = $log->getLogEntries($this->correction);
 
     foreach ($this->correction->getTasks() as $task) {
+      $this->logs = array_merge($this->logs, $log->getLogEntries($task));
+    }
 
-        $this->logs = array_merge($this->logs, $log->getLogEntries($task));
-      
-    }
-    
-    foreach($this->logs as $logEntry){
-      $dataStringified = array();
-      foreach($logEntry->getData() as $key => $value){
-        $dataStringified[$key] = ($value instanceof DateTime ? $value->format('Y-m-d H:i:s') : $value);
-      }
-      $logEntry->setData($dataStringified);
-    }
-    
   }
 }

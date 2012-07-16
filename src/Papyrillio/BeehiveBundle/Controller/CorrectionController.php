@@ -111,7 +111,33 @@ class CorrectionController extends BeehiveController{
       $query->setParameters($parameters);
       $count = $query->getSingleScalarResult();
       $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+
+      // PAGINATION
       
+      if(!$print){
+        $query = $entityManager->createQuery('
+          SELECT DISTINCT c.id FROM PapyrillioBeehiveBundle:Correction c
+          LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
+          ' . $with . ' ' . $where
+        );
+        $query->setParameters($parameters);
+        $query->setFirstResult($offset)->setMaxResults($limit);
+
+        $result = $query->getScalarResult();
+        $ids = array();
+        foreach ($result as $row) {
+          $ids[] = $row['id'];
+        }
+        if($where === ''){
+          $where = ' WHERE ';
+        } else {
+          $where .= ' AND ';
+        }
+        $where .= 'c.id IN (:id)';
+        $parameters['id'] = $ids;
+
+      }
+
       $this->get('logger')->info('limit: ' . $limit);
       $this->get('logger')->info('page: ' . $page);
       $this->get('logger')->info('offset: ' . $offset);
@@ -125,9 +151,6 @@ class CorrectionController extends BeehiveController{
         SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
         LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $with . ' ' . $where . ' ' . $orderBy
       );
-      if(!$print){
-        $query->setFirstResult($offset)->setMaxResults($limit);
-      }
       $query->setParameters($parameters);
 
       $corrections = $query->getResult();

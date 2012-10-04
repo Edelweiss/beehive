@@ -212,7 +212,7 @@ class CorrectionController extends BeehiveController{
       }
     }
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilations' => $this->getCompilations(), 'editions' => $editionRepository->findAll()));
+    return $this->render('PapyrillioBeehiveBundle:Correction:new.html.twig', array('form' => $form->createView(), 'compilations' => $this->getCompilations(), 'editions' => $editionRepository->findBy(array(), array('sort' => 'asc'))));
   }
 
   protected function getCompilation($id = null){

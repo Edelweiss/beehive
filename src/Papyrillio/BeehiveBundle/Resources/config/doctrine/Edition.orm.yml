@@ -25,6 +25,4 @@ Papyrillio\BeehiveBundle\Entity\Edition:
         corrections:
             targetEntity: Correction
             mappedBy: edition
-    options:
-        orderBy: sort ASC
     # don't forget to init the collection in entity __construct() method

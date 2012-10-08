@@ -64,9 +64,11 @@
             </div>
             <div id="content">
                 {% if app.session.hasFlash('notice') %}
-                    <div class="flashNotice">
-                        {{ app.session.flash('notice') }}
+                  <div class="ui-widget">
+                    <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
+                      <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> {{ app.session.flash('notice') }}</p>
                     </div>
+                  </div>
                 {% endif %}
                 {% block body %}{% endblock %}
             </div>

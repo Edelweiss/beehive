@@ -182,12 +182,12 @@ class CorrectionController extends BeehiveController{
 
     $form = $this->createFormBuilder($correction)
       ->add('compilationPage', 'text')
-      ->add('text', 'text')
+      ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizardlookup'))))
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))
-      ->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
-      ->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
-      ->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true))
+      ->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      ->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      ->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
       ->add('source', 'number', array('required' => false, 'label' => 'Quelle'))
       ->getForm();
 

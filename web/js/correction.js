@@ -39,6 +39,8 @@ function numberWizard(id, path){
         if(data.data.bl.text){
           $('#form_text').val(data.data.bl.text);
         }
+        
+        duplicateCheck(path.replace(/^(.+)numberWizard.*$/, '$1') + 'hgv/' + $('#form_hgv').val() + '/xml');
 
       } else {
          //console.log('error');
@@ -46,6 +48,22 @@ function numberWizard(id, path){
       }
     }, 'json');
   }
+}
+
+function duplicateCheck(path){
+  $.post(path, null, function(data){
+    if(data.success){
+      if(data.data.count){
+        var hgv = $('#form_hgv').val();
+        var a = $('#duplicateLink');
+        a.attr('href', a.attr('href').replace(/\d+$/, hgv));
+        $('#duplicateWarning').show();
+      } else {
+        $('#duplicateWarning').hide();
+      }  
+    } else {
+    }
+  }, 'json');
 }
 
 function dialogue_cancel(dialogue, type){

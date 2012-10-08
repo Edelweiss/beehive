@@ -19,16 +19,44 @@ class ApiaryController extends BeehiveController{
   public function honeyAction($type, $id, $format = 'html'){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
+    
+    // WHERE
+    
+    $where = self::$TYPES[$type] . ' = :id';
+    $parameters = array('id' => $id);
+    
+    if($this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+      $where .= ' AND c.status = :status';
+      $parameters['status'] = 'finalised';
+    }
+    
+    // QUERY
 
     $query = $entityManager->createQuery('
       SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
-      LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE c.status = :status AND ' . self::$TYPES[$type] . ' = :id ORDER BY c.sort'
+      LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY c.sort'
     );
-    $query->setParameters(array('status' => 'finalised', 'id' => $id));
+    $query->setParameters($parameters);
 
     $corrections = $query->getResult();
 
-    return $this->render('PapyrillioBeehiveBundle:Apiary:honey.html.twig', array('corrections' => $corrections));
+    if($format === 'html'){
+      return $this->render('PapyrillioBeehiveBundle:Apiary:honey.html.twig', array('corrections' => $corrections));
+    } else {
+      $data = array('corrections' => array());
+      $data = array('count' => count($corrections));
+      foreach($corrections as $correction){
+        $data['corrections'][$correction->getId()] = array(
+          'tm' => $correction->getTm(),
+          'ddb' => $correction->getDdb(),
+          'hgv' => $correction->getHgv(),
+          'description' => $correction->getDescription(),
+          'status' => $correction->getStatus()
+        );
+      }
+      return new Response(json_encode(array('success' => 'true', 'data' => $data)));
+    }
+    
   }
 
 }

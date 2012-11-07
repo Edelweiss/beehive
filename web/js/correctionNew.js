@@ -41,7 +41,7 @@ $(document).ready(function(){
   });
 
   $('#form_text').change(function(event){
-    numberWizard($(this).val(), $(this).attr('wizard-url'));
+    numberWizard({text: $(this).val(), editionId: $('#editionSort').val()}, $(this).attr('wizard-url'));
   });
 
 });

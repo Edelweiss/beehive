@@ -34,13 +34,14 @@ class NumberWizardController extends BeehiveController{
   }
   
   public function lookupAction(){
-    $text = $this->getParameter('id');
+    $text = $this->getParameter('text');
+    $editionId = $this->getParameter('editionId');
     $data = $this->getData();
 
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
     
-    $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.text = \'' . $text . '\'')->setMaxResults(1);
+    $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.edition = :edition AND c.text = :text')->setParameters(array('text' => $text, 'edition' => $editionId))->setMaxResults(1);
     $corrections = $query->getResult();
 
     if(count($corrections)){

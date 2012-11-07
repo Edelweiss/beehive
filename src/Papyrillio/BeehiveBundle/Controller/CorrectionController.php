@@ -260,7 +260,7 @@ class CorrectionController extends BeehiveController{
       
       $this->correction->$setter($this->getParameter('newvalue'));
       $this->entityManager->flush();
-      
+
       return new Response(htmlspecialchars($this->correction->$getter()));
     }
   }

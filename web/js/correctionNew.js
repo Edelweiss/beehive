@@ -39,6 +39,14 @@ $(document).ready(function(){
   $('#form_ddb').change(function(event){
     numberWizard($(this).val(), $(this).attr('wizard-url'));
   });
+  
+  $('#editionSort').change(function(event){
+    numberWizard({text: $('#form_text').val(), editionId: $(this).val()}, $(this).attr('wizard-url'));
+  });
+  
+  $('#editionTitle').change(function(event){
+    numberWizard({text: $('#form_text').val(), editionId: $(this).val()}, $(this).attr('wizard-url'));
+  });
 
   $('#form_text').change(function(event){
     numberWizard({text: $(this).val(), editionId: $('#editionSort').val()}, $(this).attr('wizard-url'));

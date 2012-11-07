@@ -40,8 +40,10 @@ function numberWizard(id, path){
       if(data.data.bl.text){
         $('#form_text').val(data.data.bl.text);
       }
-      
-      duplicateCheck(path.replace(/^(.+)numberWizard.*$/, '$1') + 'hgv/' + $('#form_hgv').val() + '/xml');
+
+      if($('#form_hgv').val().length){
+        duplicateCheck(path.replace(/^(.+)numberWizard.*$/, '$1') + 'hgv/' + $('#form_hgv').val() + '/xml');
+      }
 
     } else {
        //console.log('error');

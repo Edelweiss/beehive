@@ -23,7 +23,7 @@
 
     <div>
         <label>BL_Ed_Nr</label>
-        <select name="editionSort" id="editionSort">        
+        <select name="editionSort" id="editionSort" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">        
         {% for edi in editions %}
           <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.sort }}</option>
         {% endfor %}
@@ -31,7 +31,7 @@
     </div>
     <div>
         <label>Edition</label>
-        <select name="edition" id="editionTitle">
+        <select name="edition" id="editionTitle" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">
         {% for edi in editions %}
           <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.title }}</option>
         {% endfor %}

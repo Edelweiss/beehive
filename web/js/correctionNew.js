@@ -51,5 +51,13 @@ $(document).ready(function(){
   $('#form_text').change(function(event){
     numberWizard({text: $(this).val(), editionId: $('#editionSort').val()}, $(this).attr('wizard-url'));
   });
+  
+  $('#newAndAgain').click(function(event){
+    $('#redirectTarget').val('new');
+  });
+
+  $('#new').click(function(event){
+    $('#redirectTarget').val('show');
+  });
 
 });

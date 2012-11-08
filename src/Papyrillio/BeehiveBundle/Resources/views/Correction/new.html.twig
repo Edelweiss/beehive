@@ -5,6 +5,8 @@
 <h3>Neue Berichtigung</h3>
 <form id="correctionNew" class="new" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
+    
+    <input type="hidden" name="redirectTarget" id="redirectTarget" value="show" />
 
     <div>
         <label>Band</label>
@@ -73,7 +75,8 @@
       </div>
     </div>
 
-    <input class="submit" type="submit" name="new" value="Datensatz anlegen" />
+    <input class="submit" type="submit" name="new" id="new" value="Datensatz anlegen" />
+    <input class="submit" type="submit" name="newAndAgain" id="newAndAgain" value="Datensatz anlegen und hierher zurück springen" />
 </form>
 
 {% endblock %}

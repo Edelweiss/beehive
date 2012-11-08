@@ -208,7 +208,12 @@ class CorrectionController extends BeehiveController{
         $entityManager->persist($correction);
         $entityManager->flush();
 
-        return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionshow', array('id' => $correction->getId())));
+        if($this->getParameter('redirectTarget') === 'new'){
+          $this->get('session')->setFlash('notice', 'Der Datensatz wurde angelegt!');
+          return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionnew'));
+        } else {
+          return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionshow', array('id' => $correction->getId())));
+        }
       }
     }
 

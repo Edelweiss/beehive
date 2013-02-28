@@ -35,7 +35,7 @@
         <label>Edition</label>
         <select name="edition" id="editionTitle" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">
         {% for edi in editions %}
-          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.title }}</option>
+          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.poStrippedTitle }}</option>
         {% endfor %}
         </select>
     </div>

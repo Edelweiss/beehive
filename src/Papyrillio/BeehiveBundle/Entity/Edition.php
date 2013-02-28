@@ -56,6 +56,14 @@ class Edition
         }
     }
     
+    public function getPoStrippedTitle(){
+      $matches = array();
+      if(preg_match('/^[PO]\. (.+)$/', $this->title, $matches)){
+        return $matches[1] . ' [' . $matches[0] . ']';
+      }
+      return $this->title;
+    }
+    
     public function __toString(){
       return implode(';', array($this->id, $this->sort, $this->title, $this->collection, $this->volume, $this->remark, $this->material));
     }

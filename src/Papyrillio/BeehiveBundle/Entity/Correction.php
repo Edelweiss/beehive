@@ -24,9 +24,9 @@ class Correction
     protected static $ALPHA  = array('A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7, 'H' => 8);
 
     public static $ENCODE = array(
-      '𐅵' => 'f09085b5',
-      '𐅷' => 'f09085b7',
-      '𐅸' => 'f09085b8'
+      '𐅵' => 'f09085b5', // one half
+      '𐅷' => 'f09085b7', // two thirds
+      '𐅸' => 'f09085b8' // three quarters
     );
   
     public static $DECODE = array(

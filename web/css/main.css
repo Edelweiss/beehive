@@ -358,13 +358,19 @@ table.print {
 }
 
 table.print td.text {
-  background-color: lightsteelblue;
+  /*background-color: lightsteelblue;*/
+  width: 4em;
+  padding: 0 0 0 0.4em;
 }
 
 table.print td.position {
-  background-color: steelblue;
+  /*background-color: steelblue;*/
+  width: 4em;
+  padding: 0 0 0 0.4em;
 }
 
 table.print td.description {
-    background-color: silver;
+  /*background-color: silver;*/
+  padding: 0 0 0 0.4em;
+  border-left: solid 1px;
 }

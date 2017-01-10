@@ -8,3 +8,7 @@ body {
   color: black;
   background-color: white;
 }
+
+.noPrint {
+  display: none
+}

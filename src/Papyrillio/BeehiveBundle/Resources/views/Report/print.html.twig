@@ -18,6 +18,13 @@
     {% endfor %}
 
   <p class="actionHolder"><span id="print">Drucken</span></p>
+  <ul class="noPrint">
+    <li><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': 569}) }}">O. Tait 1</a></li>
+    <li><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': 253}) }}">P. Lond. 1</a></li>
+    <li><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': 254}) }}">P. Lond. 2</a></li>
+    <li><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': 255}) }}">P. Lond. 3</a></li>
+    <li><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': 9}) }}">P.Ammon</a></li>
+  </ul>
 {% endblock %}
 
 {% block javascripts %}

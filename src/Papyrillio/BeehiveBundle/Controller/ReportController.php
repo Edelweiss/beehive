@@ -54,6 +54,9 @@ class ReportController extends BeehiveController{
     $compilation = new Compilation();
     if(count($corrections)){
       $compilation = current($corrections)->getCompilation();
+    } else if ($compilationVolume) {
+      $repositoryCompilation = $entityManager->getRepository('PapyrillioBeehiveBundle:Compilation');
+      $compilation = $repositoryCompilation->findOneBy(array('volume' => $compilationVolume));
     }
 
     $correctionsGroupedByEdition = array();

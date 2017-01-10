@@ -1,1 +1,9 @@
 Sorting done for {{ batchCount }} objects. 
+
+{{ 'now'|date('d-m-Y H:i:s') }}
+
+<br />
+
+{% for log in logs %}
+  <b>{{ log.id }} </b><span><{{ log.message }}/span><br />
+{% endfor %}

@@ -220,8 +220,14 @@ class Correction
 
         // retrieve page, fragment, column and line from position string
         $this->sortPage = $this->sortSide = $this->sortFragment = $this->sortColumn = $this->sortLine = null;
-        if(preg_match('/S\. (\d+)( |,|-|\)|$)/', $this->position, $matches)){
-          $this->sortPage = $matches[1];
+        $sortText = $this->text;
+
+        // for text ~= (S. 147) 426 ~= 390 (S. 332) ~= 1 (S. XVIII) ~= 9604 (11), (18), (19)
+        if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $sortText, $matches)){
+        //               1         2       3             4        5              6
+          echo '1 ' . '[' . trim($matches[1]) . '][' . trim($matches[2]) . ']{' . trim($matches[3]) . '}[' . trim($matches[4]) . '][' . trim($matches[5]) . '][' . trim($matches[6]) . ']';
+          $this->sortPage = $matches[3];
+          $sortText = trim($matches[1]) . trim($matches[6]);
         }
         if(preg_match('/([RV]°)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortSide = $matches[1];
@@ -239,7 +245,7 @@ class Correction
         }
   
         // calculate system sort
-        $this->sortSystem = $this->generateSytemSort($this->getEdition()->getSort(), $this->text, $this->sortPage, $this->sortSide, $this->sortFragment, $this->sortColumn, $this->sortLine);
+        $this->sortSystem = $this->generateSytemSort($this->getEdition()->getSort(), $sortText, $this->sortPage, $this->sortSide, $this->sortFragment, $this->sortColumn, $this->sortLine);
 
         // define final sort parameter
         $this->sort = $this->sortUser !== null ? $this->sortUser : $this->sortSystem;
@@ -253,7 +259,7 @@ class Correction
      * 
      * @param $edition 0 (Allgemein) ... 1'300'000 (Tavolette Varie); exceptions for P.Lond P.Petr O.Tait
      * @param $text
-     * @param $pate
+     * @param $page
      * @param $side R°, V° (two sides)
      * @param $fragment, A, B, C, D, E, F, G, H (up to 8 letter coded fragements) or number
      * @param $column, i.e. I, II, III, IV, V, VI, VII, ...
@@ -264,8 +270,12 @@ class Correction
       if($column != null && array_key_exists($column, self::$ROMAN)){
         $column = self::$ROMAN[$column];
       }
+      
+      if($page != null && array_key_exists($page, self::$ROMAN)){
+        $page = self::$ROMAN[$page];
+      }
 
-      if(in_array($edition, array('580000', '581000', '582000', '583000', '1250000'))){ // P. Lond 1 - 4 and O. Tait 1, sort by page and then by text
+      if(in_array($edition, array('580000', '581000', '582000', '1250000'))){ // P. Lond 1 - 3 and O. Tait 1, sort by page and then by text
         return 'e' . $this->lpad($edition) .
                'p' . $this->lpad($page) .
                't' . $this->lpad($text) .

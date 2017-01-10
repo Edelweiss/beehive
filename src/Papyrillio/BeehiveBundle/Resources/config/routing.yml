@@ -46,6 +46,10 @@ PapyrillioBeehiveBundle_reportsnippet:
     pattern:  /report/snippet/leiden/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Report:leidenSnippet }
 
+PapyrillioBeehiveBundle_reportprint:
+    pattern:  /report/print/{compilationVolume}/{editionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:print, compilationVolume: 13, editionId: 0 }
+
 # Correction
 
 PapyrillioBeehiveBundle_correctionlist:
@@ -139,6 +143,10 @@ PapyrillioBeehiveBundle_indexupdate:
 PapyrillioBeehiveBundle_systemsort:
     pattern:  /system/sort
     defaults: { _controller: PapyrillioBeehiveBundle:System:sort }
+
+PapyrillioBeehiveBundle_systemchecksort:
+    pattern:  /system/checkSort/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:System:checkSort }
 
 # Apiary
 

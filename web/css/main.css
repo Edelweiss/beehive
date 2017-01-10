@@ -342,3 +342,29 @@ div.apiary p label {
   float: left;
   
 }
+
+/* CORRECTION REPORT PRINT */
+
+h4.print {
+  text-align: right;
+  font-family: serif;
+  font-size: 1.4em;
+}
+
+table.print {
+  font-family: serif;
+  font-size: 1.2em;
+  width: 100%;
+}
+
+table.print td.text {
+  background-color: lightsteelblue;
+}
+
+table.print td.position {
+  background-color: steelblue;
+}
+
+table.print td.description {
+    background-color: silver;
+}

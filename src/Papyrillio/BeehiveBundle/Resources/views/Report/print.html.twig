@@ -5,15 +5,20 @@
   <h3>Einträge für Berichtigungsliste {{ compilation.title }}</h3>
 
     {% for edition in editions %}
-      <h4 class="print" title="{{ edition[0].edition.sort }}">{{ edition[0].edition.title }}</h4>
+      <h4 class="print greekSerif" title="{{ edition[0].edition.sort }}">{{ edition[0].edition.title }}</h4>
       <table class="print">
-      {% for correction in edition %}
-        <tr>
-          <td class="text">{{ correction.text }}</td>
-          <td class="position">{{ correction.position }}</td>
-          <td class="description">{{ correction.description }}</td>
-        </tr>
-      {% endfor %}
+				{% for correction in edition %}
+					<tr>
+						{% if correction.edition.sort in [580000, 581000, 582000, 1250000] %}
+              <td class="page greekSerif">{{ correction.page ? 'S. ' ~ correction.page : ''}}</td>
+              <td class="text greekSerif">{{ correction.sortText }}</td>
+						{% else %}
+						  <td class="text greekSerif">{{ correction.text }}</td>
+						{% endif %}
+						<td class="position greekSerif">{{ correction.position }}</td>
+						<td class="description greekSerif">{{ correction.description }}</td>
+					</tr>
+				{% endfor %}
       </table>
     {% endfor %}
 

@@ -74,6 +74,20 @@ class Correction
         $this->sort = $this->sortSystem = '';
         $this->created = new DateTime('now');
     }
+    
+    public function getPage(){ // CROMULENT: should be in database as sortPage
+			if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $this->text, $matches)){
+				return $matches[3];
+			}
+			return '';
+    }
+    
+    public function getSortText(){ // CROMULENT: should be in database
+			if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $this->text, $matches)){
+				return trim($matches[1]) . trim($matches[6]);
+			}
+			return '';
+    }
 
     public function getTitle(){
       return $this->getEdition()->getSort() . ' = ' . $this->getEdition()->getTitle();

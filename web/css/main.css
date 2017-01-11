@@ -103,6 +103,11 @@ span.action:hover,
     font-family: "Lucida Grande", "Cardo", "Arial Unicode MS", "IFAO-Grec Unicode", "KadmosU", "New Athena Unicode", "Athena Unicode", "Lucida Grande", "Verdana", "Tahoma" !important;
 }
 
+.greekSerif {
+    font-family: "Cardo", "IFAO-Grec Unicode", "KadmosU", "New Athena Unicode", "Athena Unicode", "Lucida Grande", "Verdana", "Tahoma", "Lucida Grande", "Arial Unicode MS" !important;
+}
+
+
 /* CORRECTION NEW */
 
 form.new {
@@ -347,15 +352,20 @@ div.apiary p label {
 
 h4.print {
   text-align: right;
-  font-family: serif;
   font-size: 1.4em;
 }
 
 table.print {
-  font-family: serif;
   font-size: 1.2em;
   width: 100%;
 }
+
+table.print td.page {
+  /*background-color: lightsteelblue;*/
+  width: 4em;
+  padding: 0 0 0 0.4em;
+}
+
 
 table.print td.text {
   /*background-color: lightsteelblue;*/

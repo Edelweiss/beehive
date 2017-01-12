@@ -47,7 +47,7 @@ class ReportController extends BeehiveController{
       LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $where . ' ORDER BY e.sort, c.sort'
     );
     $query->setParameters($parameters);
-    $query->setFirstResult(0)->setMaxResults(100);
+    //$query->setFirstResult(0)->setMaxResults(100);
 
     $corrections = $query->getResult();
 
@@ -64,7 +64,7 @@ class ReportController extends BeehiveController{
     foreach($corrections as $correction){
       if($correction->getText() != $currentText){
         $currentText = $correction->getText();
-      } else if ($correctionsGroupedByEdition[$correction->getEdition()->getId()]){
+      } else if (isset($correctionsGroupedByEdition[$correction->getEdition()->getId()])){
         $correction->setText('');
       }
       $correctionsGroupedByEdition[$correction->getEdition()->getId()][] = $correction;

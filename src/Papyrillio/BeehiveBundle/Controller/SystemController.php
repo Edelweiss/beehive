@@ -16,7 +16,7 @@ class SystemController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
     $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c');
-    $query->setFirstResult(0)->setMaxResults(1000);
+//    $query->setFirstResult(0)->setMaxResults(1000);
     
     $batchSize = 100;
     $batchCount = 0;

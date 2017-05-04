@@ -229,7 +229,7 @@ class CorrectionController extends BeehiveController{
     } else if($this->getRequest()->getMethod() == 'POST'){
       return $repository->findOneBy(array('id' => $this->getParameter('compilation')));
     } else {
-      return $repository->findOneBy(array('volume' => 13));
+      return $repository->findOneBy(array('volume' => 14));
     }
   }
 

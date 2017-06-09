@@ -270,6 +270,11 @@ class Correction
           $this->sortPage = $matches[3];
           $sortText = trim($matches[1]) . trim($matches[6]);
         }
+        
+        if(preg_match('/^Inv\. (\d+)?$/', $sortText, $matches)){
+          $sortText = 1000000 + $matches[1];
+        }
+
         if(preg_match('/([RV]°)( |,|-|\)|$)/', $this->position, $matches)){
           $this->sortSide = $matches[1];
         }

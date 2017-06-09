@@ -251,14 +251,14 @@ class Correction
         // retrieve page, fragment, column and line from position string
         $this->sortPage = $this->sortSide = $this->sortFragment = $this->sortColumn = $this->sortLine = null;
         $sortText = $this->text;
-        
+
         if($this->getEdition()->getSort() === self::ALLGEMEINES){
           $sortText = mb_substr($sortText, 0, 8);
           while(mb_strlen($sortText) < 8){
             $sortText .= '.';
           }
         }
-        
+
         if(preg_match('/^(\d+)(-(\d+)| ?([a-zA-Z])((-|\+| |, ?)[a-zA-Z])*)?$/', $sortText, $matches)){
           $sortText = $matches[1];
           if(count($matches) > 4){
@@ -268,6 +268,11 @@ class Correction
           }
         }
 
+        if(preg_match('/^(\d+)(bis)$/', $sortText, $matches)){
+          $sortText = $matches[1];
+          $this->sortPage = $matches[2];
+        }
+
         // for text ~= (S. 147) 426 ~= 390 (S. 332) ~= 1 (S. XVIII) ~= 9604 (11), (18), (19)
         if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $sortText, $matches)){
         //               1         2       3             4        5              6
@@ -275,7 +280,7 @@ class Correction
           $this->sortPage = $matches[3];
           $sortText = trim($matches[1]) . trim($matches[6]);
         }
-        
+
         if(preg_match('/^Inv\. (\d+)?$/', $sortText, $matches)){
           $sortText = 1000000 + $matches[1];
         }

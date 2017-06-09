@@ -440,7 +440,7 @@
                     </table:table-cell>
                 </table:table-row>
                 <!-- Allgemeines -->
-                <!-- 0 -->
+                
             </table:table>
             <text:p text:style-name="P6"/>
             <table:table table:name="NachAllgemeines" table:style-name="NachAllgemeines">
@@ -464,7 +464,7 @@
                     </table:table-row>
                 </table:table-header-rows>
                 <!-- NachAllgemeines -->
-                <!-- 1 -->
+                
             </table:table>
             <text:p text:style-name="P7"/>
             <table:table table:name="Alex" table:style-name="Alex">
@@ -504,7 +504,7 @@
                     </table:table-cell>
                 </table:table-row>
                 <!-- Alex -->
-                <!-- 25000 -->
+                
             </table:table>
             <text:p text:style-name="P8"/>
             <table:table table:name="NachAlex" table:style-name="NachAlex">
@@ -525,7 +525,7 @@
                     </table:table-row>
                 </table:table-header-rows>
                 <!-- NachAlex -->
-                <!-- 25001 -->
+                
             </table:table>
             <text:p text:style-name="P9"/>
             <table:table table:name="Lond" table:style-name="Lond">
@@ -549,7 +549,7 @@
                     </table:table-row>
                 </table:table-header-rows>
                 <!-- Lond -->
-                <!-- 580000 -->
+                
             </table:table>
             <text:p text:style-name="P10"/>
             <table:table table:name="NachLond" table:style-name="NachLond">
@@ -570,7 +570,7 @@
                     </table:table-row>
                 </table:table-header-rows>
                 <!-- NachLond -->
-                <!-- 582001 -->
+                
             </table:table>
             <text:p text:style-name="P11"/>
             <table:table table:name="Tait" table:style-name="Tait">
@@ -608,7 +608,462 @@
                     </table:table-cell>
                 </table:table-row>
                 <!-- Tait -->
-                <!-- 1250000 -->
+                <table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 20</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">115</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Ψενα̣μενῶ(φις) Ἑριέως ist zu identifizieren mit Ψενεμενῶφις Ἑριέως in Z.P.E. 144 (2003), S. 181, Nr. 1, Z. 2 (vgl. viell. auch O. Tait. 1. (S. 155) 13, Z. 2), N. Gonis, Z.P.E. 144 (2003), S. 181-182.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 25</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">147</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">5</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Der Erg. ἀδ(ελφοί) (B.L. 5, S. 158) wird zugestimmt (am Original), N. Gonis, Z.P.E. 144 (2003), S. 181-182.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 29</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">166</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">5</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">εἰς τὴ̣ν (ἡμιδραχμίαν) κα̣τ̣ο̣(ίκων) ὐπὲρ τοῦ τόπ(ου) ε̣ἰ̣ς [τὸ κη (ἔτος)] → wohl  εἰς τὴν  κ̣ζ (ἔτους) ὑπὲρ τοῦ τόπου ἐπι̣[γραφήν, G. Casa, Analecta Pap. 18-20 (2006-2008), S. 160-161, Anm. 42.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 29</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">166</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">8</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">εἰς τὴν (διδραχμίαν) κα̣τ̣ο̣(ίκων) ὐπὲρ [τοῦ τόπου] → wohl εἰς τὴν κζ̣ (ἔτους) ὑπὲρ τ̣[οῦ τόπου ἐπιγραφήν, G. Casa, Analecta Pap. 18-20 (2006-2008), S. 161, Anm. 42.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 66</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">18</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">4</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">στα(τίωνος) (B.L. 3, S. 269) ist richtig (gegen B.L. 7, S. 295), R. Duttenhöfer, Aeg. 86 (2006), S. 108, Anm. 2.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 67</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">22</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Zur Datierung vgl. R. Duttenhöfer, Z.P.E. 157 (2006), S. 147-153.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 67</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">22</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2-3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">πράκ(τορες) ἀργ(υρικῶν) Ἐλε̣φαντ(ίνης) δι[ὰ - - -] |  ̣  ̣  ̣  ̣ τω  ̣  ̣  ̣  ̣ [- - -] → πράκ(τορες) ἀργ(υρικῶν) Ἐλεφαντ(ίνης) δι’ [ἐμοῦ ὑπὲρ τοῦ]| Δ̣ι̣δ̣ύμου Ἀντωνείου Ἰ̣[ουλᾶ(τος). Διέγ(ραψεν) κτλ. (nach dem Photo), R. Duttenhöfer, Z.P.E. 157 (2006), S. 155.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 75</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">72</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1-2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">[οἱ ἐπί] | παρό̣λκων (B.L. 3, S. 269) → [(οἱ) ἐπὶ τῶν] | παρό̣λκων (von πάρολκος, „Schiffsslepper, Treidler“), R. Duttenhöfer, Aeg. 86 (2006), S. 111, Anm. 7.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 83</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">36</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2-3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">̣  ̣  ̣|λ  ̣  ̣α  ̣  ̣ → τῶ̣ν̣ | λοιπῶν (nach einem Photo), F.A.J. Hoogendijk in: O. Taxes 1, S. 49, Anm. 321 und S. 163, Anm. a.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 83</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">36</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">5</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Χιβμ̣ι  ̣  ̣  ̣ → Χιβῶις γυ(νή) (nach dem Photo und bestätigt vom dem. Text), O. Taxes 1,  S. 122, Anm. 830.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 84</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">52</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Wohl zu datieren: 3.7.80 v.Chr. (gegen B.L. 11, S. 301), C. Bennet, Z.P.E. 139 (2002), S. 143-148.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 92</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">102</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">μ̣η̣τ̣(ροπόλεως) ist zu dieser Zeit ungebräuchlich, D. Hagedorn, Tyche 22 (2007), S. 38, Anm. 8.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 108</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">208</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Peteasmephis ist viell. identisch mit dem in O. Tait 1. (S. 111) 223, Z. 4 (vgl. ed.pr., Anm. zur Z.) und dem in O. Tait 1. (S. 111) 224, Z. 1, vgl. G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 72, Anm. 15.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 111</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">223</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">4</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Peteasmephis ist wohl identisch mit dem in O. Tait 1. (S. 111) 224, Z. 1, G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 72, Anm. 15.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 111</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">224</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Peteasmephis ist wohl identisch mit dem in O. Tait 1. (S. 111) 223, Z. 4 und viell. dem in O. Tait 1. 208 (S. 108), Z. 2 (vgl. ed.pr., S. 111 zu 223), G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 72, Anm. 15.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 114</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">244</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Zur Identität des Gaius Norbanus siehe die Ber. zu O. Tait 1. (S. 117) 257, Z. 3.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 117</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">257</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Νο̣ρβανοῦ [λόγ]ο[ν (B.L. 3, S. 160) → Νο̣ρβανοῦ Πτολεμαί̣ο̣υ̣ λ̣όγο(ν) (am Original), G. Messeri, Aeg. 86 (2006), S. 161, vgl. auch H. Cuvigny in: Coptos (B.L. 12, S. 337), S. 166. Gaius Norbanus Ptolemaeus ist identisch mit dem in O. Tait. 1 (S. 114). 244, B.G.U. 5. 1210, Z. 134, B.G.U. 11. 2059, Kol. II, Z. 1, P. Fouad 21, Z. 5 und P. Oxy. 45. 3250, Z. 4, vgl. G. Messeri, l.c., S. 161-162. Zu Norbanus vgl. auch A. Jördens, Z.P.E. 163 (2007), S. 195-199.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 117</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">257</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">7</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection"> ̣ ̣ ̣δώρου → Θεοδώρου (am Original), G. Messeri, Aeg. 86 (2006), S. 160, Anm. 10.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 120</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">279</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1-2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Der Lesung λ̣υβέρνου (B.L. 4, S. 115), „Kriegsschiff“, wird zugestimmt (am Original), G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 73.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 124</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">292</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Von derselben Hand geschrieben wie O. Berenike 1. 106; zu datieren 54-62 n.Chr., G. Messeri, Aeg. 86 (2006), S. 159.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 124</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">292</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Τράτου (ed.pr. und B.L. 10, S. 301) → Γράτου (nach dem Photo), G. Messeri, Aeg. 86 (2006), S. 159.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 124</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">292</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">5</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">σ̣ὺ̣ν̣ κα̣ταγωγίῳ → ἀπὸ κα̣ταγωγῆς (nach dem Photo), G. Messeri, Aeg. 86 (2006), S. 159.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 124</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">292</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">7</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Με  ̣ ̣ ̣ ̣ ̣ ̣ ̣ ̣ ̣ → Νέρ̣[ωνος] τοῦ κυ[ρίου (nach dem Photo), G. Messeri, Aeg. 86 (2006), S. 159.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 125</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">296</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Nd. (nach dem Photo): G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 71.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 125</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">296</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Τρ ̣ ̣ ̣α̣ρνως → τριη̣ρ̣αρκως, l. τριήραρχος, G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 70-71.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 125</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">296</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">3</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">γόμο̣υ̣ς̣ → γόμου(ς), G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 71.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 125</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">296</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">4</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection"> ̣ ̣ ̣ ̣ωιμε → ἐπι̣θ̣ωιμ̣ε, l. ἐπιθῶμεν, G. Messeri, Analecta Pap. 16/17 (2004/2005), S. 70-71.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 147</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">426</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Zu datieren: 1.4.626 n.Chr. (vgl. B.L. 9, S. 397), C. Foss, Z.P.E. 138 (2002), S. 171.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 151</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">464</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1-2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Φιλ( ) ο ̣γ ̣λ̣ι ̣ς | ὑ(πὲρ) προ̣σ̣θήκ̣(ης) → Ψερον̣  ̣Ἠλίας | (ὑπὲρ) προστίμ(ου) (nach dem Photo), N. Gonis, Z.P.E. 147 (2004), S. 162.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 151</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">464</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Φαρ(μοῦ)θ(ι) → Φαμ(ενώ)θ (nach dem Photo); daher zu datieren: 9.3.720 n.Chr., N. Gonis, Z.P.E. 150 (2004), S. 193.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 151</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">466</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">1</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">δέδωκε → δέδωκα l. δέδωκε (nach dem Photo), D. Hagedorn - K.A. Worp, Z.P.E. 146 (2004), S. 160, Komm. zu Z. 1.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 151</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">466</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">2</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Ψῦ̣ρος Σ̣ ̣λ ̣ ̣ → Ψερος Ἠλία̣ (nach dem Photo), N. Gonis, Z.P.E. 147 (2004), S. 162.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 152</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">468</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Ψῦρος Η ̣ ̣ ̣ς | ὑ(πὲρ)  ̣ ̣ ( ) τ(ο)ῦ συ̣μβούλ(ου)  ̣ ̣ ̣ ̣ ς’ | ἕκτον  ̣ ̣θ ̣ε ̣ ̣ ̣ ̣ ̣ → Ψυρος Ἠλί(α) | (ὑπὲρ) δ(α)π(άνης) τοῦ συμβούλ(ου) ι ἰ(ν)δ(ικτίωνος) γί(νεται) νο(μίσματος) ς | ἕκτον. Ἁθὺ(ρ) ε ἰ(ν)δ(ικτίωνος) ια, N. Gonis, Z.P.E. 147 (2004), S. 162, Anm. 22.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 152</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">468</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Zu datieren: 2.11.727 n.Chr., N. Gonis, Z.P.E. 150 (2004), S. 193.</text:p>
+                    </table:table-cell>
+                </table:table-row><table:table-row table:style-name="Tait.1">
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentPage">S. 154</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">11</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine"></text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="Tait.D3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">Datierung: 16. Juni 146 oder 13. Juni 135 v.Chr. (weiterhin unsicher), J.M.S. Cowey, Z.P.E. 151 (2005), S. 159.</text:p>
+                    </table:table-cell>
+                </table:table-row>
             </table:table>
             <text:p text:style-name="P12"/>
             <table:table table:name="NachTait" table:style-name="NachTait">
@@ -629,7 +1084,7 @@
                     </table:table-row>
                 </table:table-header-rows>
                 <!-- NachTait -->
-                <!-- 1250001 -->
+                
             </table:table>
             <text:p text:style-name="P12"/>
         </office:text>

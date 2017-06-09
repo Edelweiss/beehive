@@ -82,6 +82,13 @@ class Correction
 			return '';
     }
     
+    public function getInventoryNumber(){ // CROMULENT?! see above
+      if(preg_match('/^Inv\. (\d+)([^\d].*)?$/', $this->text, $matches)){
+        return $matches[1];
+      }
+      return '';
+    }
+    
     public function getSortText(){ // CROMULENT: should be in database
 			if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $this->text, $matches)){
 				return trim($matches[1]) . trim($matches[6]);
@@ -627,8 +634,11 @@ class Correction
      *
      * @return text 
      */
-    public function getDescription()
+    public function getDescription($xml = false)
     {
+        if($xml){
+          return str_replace(array('<', '>', '&'), array('&gt;', '&lt;', '&amp;'), $this->description);
+        }
         return $this->description;
     }
 

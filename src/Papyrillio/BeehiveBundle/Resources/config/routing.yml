@@ -50,6 +50,10 @@ PapyrillioBeehiveBundle_reportprint:
     pattern:  /report/print/{compilationVolume}/{editionId}
     defaults: { _controller: PapyrillioBeehiveBundle:Report:print, compilationVolume: 13, editionId: 0 }
 
+PapyrillioBeehiveBundle_reportpdf:
+    pattern:  /report/pdf/{compilationVolume}/{editionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:pdf, compilationVolume: 13, editionId: 0 }
+
 # Correction
 
 PapyrillioBeehiveBundle_correctionlist:

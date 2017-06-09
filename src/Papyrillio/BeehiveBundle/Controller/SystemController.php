@@ -19,7 +19,7 @@ class SystemController extends BeehiveController{
     if(is_numeric($editionId)){
       $query .= ' WHERE e.id = ' . $editionId;
     }
-    $query = $entityManager->createQuery();
+    $query = $entityManager->createQuery($query);
     // $query->setFirstResult(0)->setMaxResults(1000);
 
     $batchSize = 100;

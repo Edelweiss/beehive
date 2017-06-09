@@ -259,16 +259,20 @@ class Correction
           }
         }
 
-        if(preg_match('/^(\d+)(-(\d+)|( | Fr. )?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*)( \(S\. (\d+)\))?$/', $sortText, $matches)){
+        echo '<pre>';
+        var_dump($sortText);
+        echo '</pre>';
+        if(preg_match('/^(\d+)([\-.](\d+))?(( | Fr. )?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*)?( \(S\. (\d+)\))?$/', $sortText, $matches)){
+        //               1    2     3      45         6          78                        9      10
+        echo '<pre>';
+        var_dump($matches);
+        echo '</pre>';
           $sortText = $matches[1];
-          echo '<pre>';
-          var_dump($matches);
-          echo '</pre>';
-          if(count($matches) > 9){
-            $this->sortPage = $matches[9];
-            $this->sortFragment = $matches[5];
-          } else if(count($matches) > 5){
-            $this->sortFragment = $matches[5];
+          if(count($matches) > 10){
+            $this->sortPage = $matches[10];
+            $this->sortFragment = $matches[6];
+          } else if(count($matches) > 6){
+            $this->sortFragment = $matches[6];
           } else if(count($matches) > 3){
             $this->sortPage = $matches[3];
           }

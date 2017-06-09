@@ -262,18 +262,18 @@ class Correction
         echo '<pre>';
         var_dump($sortText);
         echo '</pre>';
-        if(preg_match('/^(\d+)([\-+ .,]*(\d+))?(( | Fr. )?\(?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*\)?)?( \((\d+)(-\d+)?\))?( ([RV]°))?( \(S\. (\d+)\))?$/', $sortText, $matches)){
-        //               1    2         3      45            6          78                           9  10    11        12 13      14       15
+        if(preg_match('/^(\d+)([\-+ .,]*(\d+))?(( | Fr. )?\(?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*\)?)?( \((\d+)(-\d+)?\)(, \(\d+\))*)?( ([RV]°))?( \(S\. (\d+)\))?$/', $sortText, $matches)){
+        //               1    2         3      45            6          78                           9  10    11       12            13 14      15       16
         echo '<pre>';
         var_dump($matches);
         echo '</pre>';
           $sortText = $matches[1];
-          if(count($matches) > 15){
-            $this->sortPage = $matches[15];
-            $this->sortSide = $matches[13];
+          if(count($matches) > 16){
+            $this->sortPage = $matches[16];
+            $this->sortSide = $matches[14];
             $this->sortFragment = $matches[6];
-          } else if(count($matches) > 13){
-            $this->sortSide = $matches[13];
+          } else if(count($matches) > 14){
+            $this->sortSide = $matches[14];
             $this->sortFragment = $matches[6];
           } else if(count($matches) > 10){
             $this->sortColumn = $matches[10];

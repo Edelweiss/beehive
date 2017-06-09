@@ -262,8 +262,8 @@ class Correction
         echo '<pre>';
         var_dump($sortText);
         echo '</pre>';
-        if(preg_match('/^(\d+)([\-.,] ?(\d+))?(( | Fr. )?\(?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*\)?)?( \((\d+)(-\d+)?\))?( ([RV]°))?( \(S\. (\d+)\))?$/', $sortText, $matches)){
-        //               1    2     3         45            6          78                           9  10    11        12 13      14       15
+        if(preg_match('/^(\d+)([\-+ .,]*(\d+))?(( | Fr. )?\(?([*a-zA-Z])((-|\+| |, ?)[*a-zA-Z])*\)?)?( \((\d+)(-\d+)?\))?( ([RV]°))?( \(S\. (\d+)\))?$/', $sortText, $matches)){
+        //               1    2         3      45            6          78                           9  10    11        12 13      14       15
         echo '<pre>';
         var_dump($matches);
         echo '</pre>';

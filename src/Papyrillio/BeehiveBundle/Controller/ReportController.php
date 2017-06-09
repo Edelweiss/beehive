@@ -197,7 +197,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Lond.D3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription() . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() >= self::NACH_LOND && $correction->getEdition()->getSort() < self::TAIT) {
@@ -209,7 +209,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="NachLond.C5" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription() . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() === self::TAIT) {
@@ -224,11 +224,21 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Tait.D3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription() . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() > self::TAIT) {
-      return '';
+      return '<table:table-row table:style-name="NachTait.1">
+                    <table:table-cell table:style-name="NachTait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentNumber">' . $correction->getText() . '</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="NachTait.A1" office:value-type="string">
+                        <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
+                    </table:table-cell>
+                    <table:table-cell table:style-name="NachTait.C3" office:value-type="string">
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                    </table:table-cell>
+                </table:table-row>';
     }
     return '';
   }
@@ -250,7 +260,7 @@ class ReportController extends BeehiveController{
       LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $where . ' ORDER BY e.sort, c.sort'
     );
     $query->setParameters($parameters);
-    $query->setFirstResult(0)->setMaxResults(300); // cl: DEBUG
+    //$query->setFirstResult(0)->setMaxResults(300); // cl: DEBUG
 
     $corrections = $query->getResult();
 

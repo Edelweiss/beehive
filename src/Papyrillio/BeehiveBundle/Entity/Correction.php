@@ -259,9 +259,11 @@ class Correction
           }
         }
         
-        if(preg_match('/^(\d+)(-\d+| ([a-z])((-|\+| |, ?)[a-z])*)?$/', $sortText, $matches)){
+        if(preg_match('/^(\d+)(-(\d+)| ([a-z])((-|\+| |, ?)[a-z])*)?$/', $sortText, $matches)){
           $sortText = $matches[1];
-          if(count($matches) > 3){
+          if(count($matches) > 4){
+            $this->sortColumn = $matches[4];
+          } else if(count($matches) > 3){
             $this->sortColumn = $matches[3];
           }
         }

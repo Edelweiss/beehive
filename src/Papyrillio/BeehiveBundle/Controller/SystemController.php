@@ -12,23 +12,27 @@ use Papyrillio\BeehiveBundle\Entity\IndexEntry;
 use DateTime;
 
 class SystemController extends BeehiveController{
-  public function sortAction(){
+  public function sortAction($editionId){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-    $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c');
-//    $query->setFirstResult(0)->setMaxResults(1000);
-    
+    $query = 'SELECT e, c FROM PapyrillioBeehiveBundle:Correction c JOIN c.edition e';
+    if(is_numeric($editionId)){
+      $query .= ' WHERE e.id = ' . $editionId;
+    }
+    $query = $entityManager->createQuery();
+    // $query->setFirstResult(0)->setMaxResults(1000);
+
     $batchSize = 100;
     $batchCount = 0;
     $logs = array();
-    
+
     foreach($query->iterate() AS $row) {
       $correction = $row[0];
       $oldSort = $correction->getSort();
       $correction->setSortValues();
-      if($oldSort !== $correction->getSort()){
-        $logs[] = array('id' => $correction->getId(), 'message' => $oldSort . ' → ' . $correction->getSort());
-      }
+      //if($oldSort !== $correction->getSort()){
+        $logs[] = array('id' => $correction->getId(), 'message' => $oldSort . ' → ' . $correction->getSort() . ' (sort key length: ' . mb_strlen($correction->getSort()) . ')');
+      //}
       if(($batchCount++ % $batchSize) == 0) {
         $entityManager->flush(); // Executes all updates.
         $entityManager->clear(); // Detaches all objects from Doctrine!

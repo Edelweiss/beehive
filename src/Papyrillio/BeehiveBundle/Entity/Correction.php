@@ -262,7 +262,7 @@ class Correction
         if(preg_match('/^(\d+)(-(\d+)| ?([a-zA-Z])((-|\+| |, ?)[a-zA-Z])*)?$/', $sortText, $matches)){
           $sortText = $matches[1];
           if(count($matches) > 4){
-            $this->sortFragment = $matches[4];
+            $this->sortPage = $matches[4];
           } else if(count($matches) > 3){
             $this->sortFragment = $matches[3];
           }

@@ -259,10 +259,10 @@ class Correction
           }
         }
 
-        if(preg_match('/^(\d+)(-(\d+)| ?([a-zA-Z])((-|\+| |, ?)[a-zA-Z])*)?$/', $sortText, $matches)){
+        if(preg_match('/^(\d+)(-(\d+)|( | Fr. )?([a-zA-Z])((-|\+| |, ?)[a-zA-Z])*)?$/', $sortText, $matches)){
           $sortText = $matches[1];
-          if(count($matches) > 4){
-            $this->sortFragment = $matches[4];
+          if(count($matches) > 5){
+            $this->sortFragment = $matches[5];
           } else if(count($matches) > 3){
             $this->sortPage = $matches[3];
           }

@@ -268,6 +268,10 @@ class Correction
           }
         }
 
+        if(preg_match('/^passim$/', $sortText, $matches)){
+          $sortText = 0;
+        }
+
         if(preg_match('/^(\d+)(bis)$/', $sortText, $matches)){
           $sortText = $matches[1];
           $this->sortPage = $matches[2];

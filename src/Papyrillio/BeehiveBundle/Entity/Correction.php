@@ -258,6 +258,10 @@ class Correction
             $sortText .= '.';
           }
         }
+        
+        if(preg_match('/^(\d+)(-\d+| [a-z])?$/', $sortText, $matches)){
+          $sortText = $matches[1];
+        }
 
         // for text ~= (S. 147) 426 ~= 390 (S. 332) ~= 1 (S. XVIII) ~= 9604 (11), (18), (19)
         if(preg_match('/^([^()]*)\((S\. +)?([\dIVXLCDM]+)(-\d+)?\)(,? \([^)]+\))*([^()]*)$/', $sortText, $matches)){

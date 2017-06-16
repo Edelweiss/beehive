@@ -143,7 +143,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getText() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Allgemeines.B2" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() > self::ALLGEMEINES && $correction->getEdition()->getSort() < self::ALEX) {
@@ -155,7 +155,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="NachAllgemeines.C3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() === self::ALEX) {
@@ -170,7 +170,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Alex.D3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() > self::ALEX && $correction->getEdition()->getSort() < self::LOND) {
@@ -182,7 +182,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="NachAlex.C3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() >= self::LOND && $correction->getEdition()->getSort() < self::NACH_LOND) {
@@ -197,7 +197,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Lond.D3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() >= self::NACH_LOND && $correction->getEdition()->getSort() < self::TAIT) {
@@ -209,7 +209,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="NachLond.C5" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() === self::TAIT) {
@@ -224,7 +224,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Tait.D3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if($correction->getEdition()->getSort() > self::TAIT) {
@@ -236,7 +236,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="NachTait.C3" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(true) . '</text:p>
+                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '</text:p>
                     </table:table-cell>
                 </table:table-row>';
     }

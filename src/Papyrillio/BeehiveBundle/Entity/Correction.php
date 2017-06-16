@@ -333,6 +333,7 @@ class Correction
      * generate code sytem sort parameter
      * sort by edition > text > page > side > fragment > column > line
      * SELECT e.sort, text, position, sortPage, sortSide, sortFragment, sortColumn, sortLine, sortSystem from correction c JOIN edition e ON c.edition_id = e.id ORDER BY sortSystem;
+     * Key  e........p........t........s..f........c........l........
      * 
      * @param $edition 0 (Allgemein) ... 1'300'000 (Tavolette Varie); exceptions for P.Lond P.Petr O.Tait
      * @param $text

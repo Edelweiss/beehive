@@ -49,7 +49,7 @@
     </office:font-face-decls>
     <office:automatic-styles>
         <style:style style:name="Allgemeines" style:family="table"
-            style:master-page-name="bl_5f_PageRight">
+            style:master-page-name="bl_5f_PageFirst">
             <style:table-properties style:width="11.7cm" style:page-number="auto"
                 table:align="margins"/>
         </style:style>
@@ -68,355 +68,195 @@
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
         </style:style>
-        <style:style style:name="Allgemeines.B2" style:family="table-cell">
+        <style:style style:name="Allgemeines.B1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
                 fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
         </style:style>
-        <style:style style:name="NachAllgemeines" style:family="table">
+        <style:style style:name="Publikation" style:family="table">
             <style:table-properties style:width="11.7cm" table:align="margins"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.A" style:family="table-column">
+        <style:style style:name="Publikation.A" style:family="table-column">
             <style:table-column-properties style:column-width="1.499cm"
                 style:rel-column-width="8398*"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.B" style:family="table-column">
+        <style:style style:name="Publikation.B" style:family="table-column">
             <style:table-column-properties style:column-width="1.55cm"
                 style:rel-column-width="8684*"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.C" style:family="table-column">
+        <style:style style:name="Publikation.C" style:family="table-column">
             <style:table-column-properties style:column-width="8.65cm"
                 style:rel-column-width="48453*"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.1" style:family="table-row">
+        <style:style style:name="Publikation.1" style:family="table-row">
             <style:table-row-properties fo:keep-together="always"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.A1" style:family="table-cell">
+        <style:style style:name="Publikation.A1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
         </style:style>
-        <style:style style:name="NachAllgemeines.C3" style:family="table-cell">
+        <style:style style:name="Publikation.C1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
                 fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
         </style:style>
-        <style:style style:name="Alex" style:family="table">
+        <style:style style:name="Spezial" style:family="table">
             <style:table-properties style:width="11.7cm" table:align="margins"/>
         </style:style>
-        <style:style style:name="Alex.A" style:family="table-column">
+        <style:style style:name="Spezial.A" style:family="table-column">
             <style:table-column-properties style:column-width="1.328cm"
                 style:rel-column-width="7439*"/>
         </style:style>
-        <style:style style:name="Alex.B" style:family="table-column">
+        <style:style style:name="Spezial.B" style:family="table-column">
             <style:table-column-properties style:column-width="1.782cm"
                 style:rel-column-width="9978*"/>
         </style:style>
-        <style:style style:name="Alex.C" style:family="table-column">
+        <style:style style:name="Spezial.C" style:family="table-column">
             <style:table-column-properties style:column-width="0.921cm"
                 style:rel-column-width="5157*"/>
         </style:style>
-        <style:style style:name="Alex.D" style:family="table-column">
+        <style:style style:name="Spezial.D" style:family="table-column">
             <style:table-column-properties style:column-width="7.669cm"
                 style:rel-column-width="42961*"/>
         </style:style>
-        <style:style style:name="Alex.1" style:family="table-row">
+        <style:style style:name="Spezial.1" style:family="table-row">
             <style:table-row-properties fo:keep-together="always"/>
         </style:style>
-        <style:style style:name="Alex.A1" style:family="table-cell">
+        <style:style style:name="Spezial.A1" style:family="table-cell">
+            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
+                fo:padding-top="0.097cm" fo:padding-bottom="0.097cm" fo:border-left="none"
+                fo:border-right="0.05pt solid #000000" fo:border-top="none" fo:border-bottom="none"
+            />
+        </style:style>
+        <style:style style:name="Spezial.B1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
         </style:style>
-        <style:style style:name="Alex.D3" style:family="table-cell">
+        <style:style style:name="Spezial.D1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
                 fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
         </style:style>
-        <style:style style:name="NachAlex" style:family="table">
+        <style:style style:name="Table1" style:family="table">
             <style:table-properties style:width="11.7cm" table:align="margins"/>
         </style:style>
-        <style:style style:name="NachAlex.A" style:family="table-column">
+        <style:style style:name="Table1.A" style:family="table-column">
             <style:table-column-properties style:column-width="1.499cm"
                 style:rel-column-width="8398*"/>
         </style:style>
-        <style:style style:name="NachAlex.B" style:family="table-column">
+        <style:style style:name="Table1.B" style:family="table-column">
             <style:table-column-properties style:column-width="1.55cm"
                 style:rel-column-width="8684*"/>
         </style:style>
-        <style:style style:name="NachAlex.C" style:family="table-column">
+        <style:style style:name="Table1.C" style:family="table-column">
             <style:table-column-properties style:column-width="8.65cm"
                 style:rel-column-width="48453*"/>
         </style:style>
-        <style:style style:name="NachAlex.1" style:family="table-row">
+        <style:style style:name="Table1.1" style:family="table-row">
             <style:table-row-properties fo:keep-together="always"/>
         </style:style>
-        <style:style style:name="NachAlex.A1" style:family="table-cell">
+        <style:style style:name="Table1.A1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
         </style:style>
-        <style:style style:name="NachAlex.C3" style:family="table-cell">
+        <style:style style:name="Table1.C1" style:family="table-cell">
             <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
                 fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
                 fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
         </style:style>
-        <style:style style:name="NachAlex.A9" style:family="table-cell" style:data-style-name="N0">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
+        <style:style style:name="P1" style:family="paragraph" style:parent-style-name="blHeader">
+            <style:paragraph-properties>
+                <style:tab-stops>
+                    <style:tab-stop style:position="3.096cm" style:type="right"/>
+                    <style:tab-stop style:position="11.7cm" style:type="right"/>
+                </style:tab-stops>
+            </style:paragraph-properties>
+            <style:text-properties officeooo:paragraph-rsid="00d11cd8"/>
         </style:style>
-        <style:style style:name="NachAlex.C10" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0.097cm" fo:padding-bottom="0.097cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="NachAlex.C27" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0.097cm" fo:padding-bottom="0.097cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="Lond" style:family="table">
-            <style:table-properties style:width="11.7cm" table:align="margins"/>
-        </style:style>
-        <style:style style:name="Lond.A" style:family="table-column">
-            <style:table-column-properties style:column-width="1.328cm"
-                style:rel-column-width="7444*"/>
-        </style:style>
-        <style:style style:name="Lond.C" style:family="table-column">
-            <style:table-column-properties style:column-width="1.374cm"
-                style:rel-column-width="7697*"/>
-        </style:style>
-        <style:style style:name="Lond.D" style:family="table-column">
-            <style:table-column-properties style:column-width="7.668cm"
-                style:rel-column-width="42950*"/>
-        </style:style>
-        <style:style style:name="Lond.1" style:family="table-row">
-            <style:table-row-properties fo:keep-together="always"/>
-        </style:style>
-        <style:style style:name="Lond.A1" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="Lond.D3" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
-                fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
-        </style:style>
-        <style:style style:name="Lond.D12" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0.097cm" fo:padding-bottom="0.097cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="NachLond" style:family="table">
-            <style:table-properties style:width="11.7cm" table:align="margins"/>
-        </style:style>
-        <style:style style:name="NachLond.A" style:family="table-column">
-            <style:table-column-properties style:column-width="1.499cm"
-                style:rel-column-width="8398*"/>
-        </style:style>
-        <style:style style:name="NachLond.B" style:family="table-column">
-            <style:table-column-properties style:column-width="1.55cm"
-                style:rel-column-width="8684*"/>
-        </style:style>
-        <style:style style:name="NachLond.C" style:family="table-column">
-            <style:table-column-properties style:column-width="8.65cm"
-                style:rel-column-width="48453*"/>
-        </style:style>
-        <style:style style:name="NachLond.1" style:family="table-row">
-            <style:table-row-properties fo:keep-together="always"/>
-        </style:style>
-        <style:style style:name="NachLond.A1" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="NachLond.C3" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0.097cm" fo:padding-bottom="0.097cm"
-                fo:border-left="0.05pt solid #000000" fo:border-right="none" fo:border-top="none"
-                fo:border-bottom="none"/>
-        </style:style>
-        <style:style style:name="NachLond.C5" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
-                fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
-        </style:style>
-        <style:style style:name="Tait" style:family="table">
-            <style:table-properties style:width="11.7cm" table:align="margins"
-                fo:keep-with-next="auto"/>
-        </style:style>
-        <style:style style:name="Tait.A" style:family="table-column">
-            <style:table-column-properties style:column-width="1.328cm"
-                style:rel-column-width="7444*"/>
-        </style:style>
-        <style:style style:name="Tait.C" style:family="table-column">
-            <style:table-column-properties style:column-width="1.374cm"
-                style:rel-column-width="7697*"/>
-        </style:style>
-        <style:style style:name="Tait.D" style:family="table-column">
-            <style:table-column-properties style:column-width="7.668cm"
-                style:rel-column-width="42950*"/>
-        </style:style>
-        <style:style style:name="Tait.1" style:family="table-row">
-            <style:table-row-properties fo:keep-together="always"/>
-        </style:style>
-        <style:style style:name="Tait.A1" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="Tait.D3" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
-                fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
-        </style:style>
-        <style:style style:name="NachTait" style:family="table">
-            <style:table-properties style:width="11.7cm" table:align="margins"/>
-        </style:style>
-        <style:style style:name="NachTait.A" style:family="table-column">
-            <style:table-column-properties style:column-width="1.499cm"
-                style:rel-column-width="8398*"/>
-        </style:style>
-        <style:style style:name="NachTait.B" style:family="table-column">
-            <style:table-column-properties style:column-width="1.55cm"
-                style:rel-column-width="8684*"/>
-        </style:style>
-        <style:style style:name="NachTait.C" style:family="table-column">
-            <style:table-column-properties style:column-width="8.65cm"
-                style:rel-column-width="48453*"/>
-        </style:style>
-        <style:style style:name="NachTait.1" style:family="table-row">
-            <style:table-row-properties fo:keep-together="always"/>
-        </style:style>
-        <style:style style:name="NachTait.A1" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border="none"/>
-        </style:style>
-        <style:style style:name="NachTait.C3" style:family="table-cell">
-            <style:table-cell-properties fo:padding-left="0.101cm" fo:padding-right="0.101cm"
-                fo:padding-top="0cm" fo:padding-bottom="0cm" fo:border-left="0.05pt solid #000000"
-                fo:border-right="none" fo:border-top="none" fo:border-bottom="none"/>
-        </style:style>
-        <style:style style:name="P1" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableContentCorrection">
-            <style:text-properties officeooo:paragraph-rsid="00353d14"/>
-        </style:style>
-        <style:style style:name="P2" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableContentCorrection">
-            <style:text-properties officeooo:rsid="003753bb" officeooo:paragraph-rsid="003753bb"/>
+        <style:style style:name="P2" style:family="paragraph" style:parent-style-name="blHeader">
+            <style:paragraph-properties fo:text-align="start" style:justify-single-word="false">
+                <style:tab-stops>
+                    <style:tab-stop style:position="2.997cm" style:type="right"/>
+                    <style:tab-stop style:position="11.7cm" style:type="right"/>
+                </style:tab-stops>
+            </style:paragraph-properties>
+            <style:text-properties officeooo:paragraph-rsid="00a4494d"/>
         </style:style>
         <style:style style:name="P3" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableContentCorrection">
-            <style:text-properties officeooo:rsid="00391585" officeooo:paragraph-rsid="00391585"/>
+            style:parent-style-name="blTableContentNumber">
+            <style:text-properties officeooo:paragraph-rsid="00c25493"/>
         </style:style>
         <style:style style:name="P4" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableContentLine">
-            <style:text-properties officeooo:rsid="003753bb" officeooo:paragraph-rsid="003753bb"/>
+            style:parent-style-name="blTableContentNumber">
+            <style:text-properties officeooo:paragraph-rsid="00c6a81a"/>
         </style:style>
         <style:style style:name="P5" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableContentLine">
-            <style:text-properties officeooo:rsid="00391585" officeooo:paragraph-rsid="00391585"/>
+            style:parent-style-name="blTableContentNumber">
+            <style:text-properties officeooo:rsid="00cb39e5" officeooo:paragraph-rsid="00cb39e5"/>
         </style:style>
-        <style:style style:name="P6" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:rsid="004bdb4a" officeooo:paragraph-rsid="00353d14"/>
+        <style:style style:name="P6" style:family="paragraph"
+            style:parent-style-name="blTableContentNumber">
+            <style:text-properties officeooo:paragraph-rsid="00d8db8f"/>
         </style:style>
-        <style:style style:name="P7" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:rsid="0050ec87" officeooo:paragraph-rsid="0050ec87"/>
+        <style:style style:name="P7" style:family="paragraph"
+            style:parent-style-name="blTableContentCorrection">
+            <style:text-properties officeooo:paragraph-rsid="00ba1d7b"/>
         </style:style>
-        <style:style style:name="P8" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:rsid="0050ec87" officeooo:paragraph-rsid="006c8e1e"/>
+        <style:style style:name="P8" style:family="paragraph"
+            style:parent-style-name="blTableContentCorrection">
+            <style:text-properties officeooo:paragraph-rsid="00c25493"/>
         </style:style>
-        <style:style style:name="P9" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:paragraph-rsid="0052705f"/>
+        <style:style style:name="P9" style:family="paragraph"
+            style:parent-style-name="blTableContentCorrection">
+            <style:text-properties officeooo:paragraph-rsid="00c6a81a"/>
         </style:style>
-        <style:style style:name="P10" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:paragraph-rsid="005e15e7"/>
+        <style:style style:name="P10" style:family="paragraph"
+            style:parent-style-name="blTableContentCorrection">
+            <style:text-properties officeooo:paragraph-rsid="00d8db8f"/>
         </style:style>
-        <style:style style:name="P11" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:paragraph-rsid="008547b2"/>
+        <style:style style:name="P11" style:family="paragraph"
+            style:parent-style-name="blTableContentLine">
+            <style:text-properties officeooo:paragraph-rsid="00ba1d7b"/>
         </style:style>
-        <style:style style:name="P12" style:family="paragraph" style:parent-style-name="Standard">
-            <style:text-properties officeooo:paragraph-rsid="008b997b"/>
+        <style:style style:name="P12" style:family="paragraph"
+            style:parent-style-name="blTableContentLine">
+            <style:text-properties officeooo:paragraph-rsid="00c25493"/>
         </style:style>
         <style:style style:name="P13" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="0052705f"/>
+            style:parent-style-name="blTableContentLine">
+            <style:text-properties officeooo:paragraph-rsid="00c6a81a"/>
         </style:style>
         <style:style style:name="P14" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="005e15e7"/>
+            style:parent-style-name="blTableContentLine">
+            <style:text-properties officeooo:paragraph-rsid="00d8db8f"/>
         </style:style>
         <style:style style:name="P15" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="0067ddd3"/>
+            style:parent-style-name="blTableContentPage">
+            <style:text-properties officeooo:paragraph-rsid="00c6a81a"/>
         </style:style>
         <style:style style:name="P16" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="006c8e1e"/>
+            style:parent-style-name="Heading_20_1">
+            <style:text-properties officeooo:rsid="00c5f295" officeooo:paragraph-rsid="00c5f295"/>
         </style:style>
         <style:style style:name="P17" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="008547b2"/>
+            style:parent-style-name="Heading_20_1">
+            <style:text-properties officeooo:rsid="00c5f295" officeooo:paragraph-rsid="00d8db8f"/>
         </style:style>
         <style:style style:name="P18" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingLine">
-            <style:text-properties officeooo:paragraph-rsid="008b997b"/>
-        </style:style>
-        <style:style style:name="P19" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="0052705f"/>
-        </style:style>
-        <style:style style:name="P20" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="005e15e7"/>
-        </style:style>
-        <style:style style:name="P21" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="0067ddd3"/>
-        </style:style>
-        <style:style style:name="P22" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="006c8e1e"/>
-        </style:style>
-        <style:style style:name="P23" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="008547b2"/>
-        </style:style>
-        <style:style style:name="P24" style:family="paragraph"
-            style:parent-style-name="bl_5f_TableHeadingNumber">
-            <style:text-properties officeooo:paragraph-rsid="008b997b"/>
-        </style:style>
-        <style:style style:name="P25" style:family="paragraph"
             style:parent-style-name="Heading_20_1">
-            <style:text-properties officeooo:rsid="005fdd9b" officeooo:paragraph-rsid="005fdd9b"/>
-        </style:style>
-        <style:style style:name="P26" style:family="paragraph"
-            style:parent-style-name="Heading_20_1">
-            <style:text-properties officeooo:rsid="0067ddd3" officeooo:paragraph-rsid="00813532"/>
-        </style:style>
-        <style:style style:name="P27" style:family="paragraph"
-            style:parent-style-name="Heading_20_1">
-            <style:text-properties officeooo:rsid="0067ddd3" officeooo:paragraph-rsid="0067ddd3"/>
-        </style:style>
-        <style:style style:name="P28" style:family="paragraph"
-            style:parent-style-name="Heading_20_1">
-            <style:text-properties officeooo:rsid="008547b2" officeooo:paragraph-rsid="008547b2"/>
-        </style:style>
-        <style:style style:name="P29" style:family="paragraph"
-            style:parent-style-name="Heading_20_1">
-            <style:text-properties officeooo:rsid="008b997b" officeooo:paragraph-rsid="008b997b"/>
+            <style:text-properties officeooo:paragraph-rsid="00d8db8f"/>
         </style:style>
         <style:style style:name="T1" style:family="text">
             <style:text-properties officeooo:rsid="0023dfc3"/>
         </style:style>
         <style:style style:name="T2" style:family="text">
-            <style:text-properties officeooo:rsid="006fd0ce"/>
+            <style:text-properties officeooo:rsid="009a8d7d"/>
         </style:style>
         <style:style style:name="T3" style:family="text">
             <style:text-properties fo:font-weight="normal" style:font-weight-asian="normal"
                 style:font-weight-complex="normal"/>
         </style:style>
-        <style:style style:name="T4" style:family="text">
-            <style:text-properties officeooo:rsid="00813532"/>
-        </style:style>
-        <style:style style:name="T5" style:family="text">
-            <style:text-properties officeooo:rsid="00873830"/>
-        </style:style>
-        <number:number-style style:name="N0">
-            <number:number number:min-integer-digits="1"/>
-        </number:number-style>
+        <!-- BLSTYLE -->
     </office:automatic-styles>
     <office:body>
         <office:text text:use-soft-page-breaks="true">
@@ -427,211 +267,7 @@
                 <text:sequence-decl text:display-outline-level="0" text:name="Text"/>
                 <text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
             </text:sequence-decls>
-            <table:table table:name="Allgemeines" table:style-name="Allgemeines">
-                <table:table-column table:style-name="Allgemeines.A"/>
-                <table:table-column table:style-name="Allgemeines.B"/>
-                <table:table-row table:style-name="Allgemeines.1">
-                    <table:table-cell table:style-name="Allgemeines.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentLine"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Allgemeines.A1" office:value-type="string">
-                        <text:h text:style-name="Heading_20_1" text:outline-level="1"
-                            >Allgemeines</text:h>
-                    </table:table-cell>
-                </table:table-row>
-                <!-- Allgemeines -->
-                <!-- 0 -->
-            </table:table>
-            <text:p text:style-name="P6"/>
-            <table:table table:name="NachAllgemeines" table:style-name="NachAllgemeines">
-                <table:table-column table:style-name="NachAllgemeines.A"/>
-                <table:table-column table:style-name="NachAllgemeines.B"/>
-                <table:table-column table:style-name="NachAllgemeines.C"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="NachAllgemeines.1">
-                        <table:table-cell table:style-name="NachAllgemeines.A1"
-                            office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachAllgemeines.A1"
-                            office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachAllgemeines.A1"
-                            office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <!-- NachAllgemeines -->
-                <!-- 1 -->
-            </table:table>
-            <text:p text:style-name="P7"/>
-            <table:table table:name="Alex" table:style-name="Alex">
-                <table:table-column table:style-name="Alex.A"/>
-                <table:table-column table:style-name="Alex.B"/>
-                <table:table-column table:style-name="Alex.C"/>
-                <table:table-column table:style-name="Alex.D"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="Alex.1">
-                        <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingPage"/>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <table:table-row table:style-name="Alex.1">
-                    <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentPage"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentNumber"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentLine"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Alex.A1" office:value-type="string">
-                        <text:h text:style-name="Heading_20_1" text:outline-level="1">P.
-                            Alex.</text:h>
-                    </table:table-cell>
-                </table:table-row>
-                <!-- Alex -->
-                <!-- 25000 -->
-            </table:table>
-            <text:p text:style-name="P8"/>
-            <table:table table:name="NachAlex" table:style-name="NachAlex">
-                <table:table-column table:style-name="NachAlex.A"/>
-                <table:table-column table:style-name="NachAlex.B"/>
-                <table:table-column table:style-name="NachAlex.C"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="NachAlex.1">
-                        <table:table-cell table:style-name="NachAlex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachAlex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachAlex.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <!-- NachAlex -->
-                <!-- 25001 -->
-            </table:table>
-            <text:p text:style-name="P9"/>
-            <table:table table:name="Lond" table:style-name="Lond">
-                <table:table-column table:style-name="Lond.A" table:number-columns-repeated="2"/>
-                <table:table-column table:style-name="Lond.C"/>
-                <table:table-column table:style-name="Lond.D"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="Lond.1">
-                        <table:table-cell table:style-name="Lond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingPage"/>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Lond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Lond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Lond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <!-- Lond -->
-                <!-- 580000 -->
-            </table:table>
-            <text:p text:style-name="P10"/>
-            <table:table table:name="NachLond" table:style-name="NachLond">
-                <table:table-column table:style-name="NachLond.A"/>
-                <table:table-column table:style-name="NachLond.B"/>
-                <table:table-column table:style-name="NachLond.C"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="NachLond.1">
-                        <table:table-cell table:style-name="NachLond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachLond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachLond.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <!-- NachLond -->
-                <!-- 582001 -->
-            </table:table>
-            <text:p text:style-name="P11"/>
-            <table:table table:name="Tait" table:style-name="Tait">
-                <table:table-column table:style-name="Tait.A" table:number-columns-repeated="2"/>
-                <table:table-column table:style-name="Tait.C"/>
-                <table:table-column table:style-name="Tait.D"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="Tait.1">
-                        <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingPage"/>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <table:table-row table:style-name="Tait.1">
-                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentPage"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentNumber"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                        <text:p text:style-name="blTableContentLine"/>
-                    </table:table-cell>
-                    <table:table-cell table:style-name="Tait.A1" office:value-type="string">
-                        <text:h text:style-name="Heading_20_1" text:outline-level="1">O.Tait.</text:h>
-                    </table:table-cell>
-                </table:table-row>
-                <!-- Tait -->
-                <!-- 1250000 -->
-            </table:table>
-            <text:p text:style-name="P12"/>
-            <table:table table:name="NachTait" table:style-name="NachTait">
-                <table:table-column table:style-name="NachTait.A"/>
-                <table:table-column table:style-name="NachTait.B"/>
-                <table:table-column table:style-name="NachTait.C"/>
-                <table:table-header-rows>
-                    <table:table-row table:style-name="NachTait.1">
-                        <table:table-cell table:style-name="NachTait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingNumber">Nr.</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachTait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingLine">Zeile</text:p>
-                        </table:table-cell>
-                        <table:table-cell table:style-name="NachTait.A1" office:value-type="string">
-                            <text:p text:style-name="blTableHeadingCorrection"/>
-                        </table:table-cell>
-                    </table:table-row>
-                </table:table-header-rows>
-                <!-- NachTait -->
-                <!-- 1250001 -->
-            </table:table>
-            <text:p text:style-name="P12"/>
+            <!-- BL -->
         </office:text>
     </office:body>
 </office:document-content>

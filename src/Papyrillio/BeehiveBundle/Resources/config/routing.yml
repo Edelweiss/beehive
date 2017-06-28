@@ -46,6 +46,10 @@ PapyrillioBeehiveBundle_reportsnippet:
     pattern:  /report/snippet/leiden/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Report:leidenSnippet }
 
+PapyrillioBeehiveBundle_reportoverview:
+    pattern:  /report/overview/{compilationVolume}
+    defaults: { _controller: PapyrillioBeehiveBundle:Report:overview, compilationVolume: 13 }
+
 PapyrillioBeehiveBundle_reportprint:
     pattern:  /report/print/{compilationVolume}/{editionId}
     defaults: { _controller: PapyrillioBeehiveBundle:Report:print, compilationVolume: 13, editionId: 0 }

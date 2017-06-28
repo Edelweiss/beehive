@@ -55,7 +55,7 @@ class Edition
           $this->collection = rtrim($matches[1], ' ');
         }
     }
-    
+
     public function getPoStrippedTitle(){
       $matches = array();
       if(preg_match('/^[PO]\. (.+)$/', $this->title, $matches)){
@@ -63,7 +63,25 @@ class Edition
       }
       return $this->title;
     }
-    
+
+    public function getCodeTitle(){
+      $arabs = array_flip(Correction::$ROMAN);
+      $code = $this->title;
+
+      mb_ereg_search_init($code, '[0-9]+');
+      $search = mb_ereg_search();
+
+      if($search){
+        $result = mb_ereg_search_getregs();
+        do {
+          $code = mb_ereg_replace($result[0], $arabs[$result[0]], $code);
+        } while($result = mb_ereg_search_regs());
+      }
+
+      $code = mb_ereg_replace('[^a-zA-z]', '', $code);
+      return $code;
+    }
+
     public function __toString(){
       return implode(';', array($this->id, $this->sort, $this->title, $this->collection, $this->volume, $this->remark, $this->material));
     }

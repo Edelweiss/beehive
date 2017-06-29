@@ -232,7 +232,7 @@ class ReportController extends BeehiveController{
   protected static function getTableEnd($edition){
     return '</table:table>';
   }
-
+    //} else if(in_array($correction->getEdition()->getSort(), array(self::ALEX))){
   protected static function getTableRow($correction){
     $code = $correction->getEdition()->getCodeTitle();
     if($correction->getEdition()->getSort() === self::ALLGEMEINES){
@@ -245,13 +245,16 @@ class ReportController extends BeehiveController{
                     </table:table-cell>
                 </table:table-row>';
     } else if(in_array($correction->getEdition()->getSort(), array(self::ALEX, self::LOND1, self::LOND2, self::LOND3, self::TAIT))){
-    //} else if(in_array($correction->getEdition()->getSort(), array(self::ALEX))){
+      $blTableContentNumber = $blTableContentNumber = $correction->getSortText();
+      if($correction->getEdition()->getSort() === self::ALEX) {
+        $blTableContentNumber = '<text:span text:style-name="T3">' . ($correction->getInventoryNumber() ? 'Inv. ' : '') . '</text:span>' . ($correction->getInventoryNumber() ? $correction->getInventoryNumber() : $correction->getText());
+      }
       return '<table:table-row table:style-name="' . $code . '.1">
                     <table:table-cell table:style-name="' . $code . '.A1" office:value-type="string">
                         <text:p text:style-name="blTableContentPage">' . ($correction->getPage() ? 'S. ' . $correction->getPage() : '') . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="' . $code . '.B1" office:value-type="string">
-                        <text:p text:style-name="blTableContentNumber"><text:span text:style-name="T3">' . ($correction->getInventoryNumber() ? 'Inv. ' : '') . '</text:span>' . ($correction->getInventoryNumber() ? $correction->getInventoryNumber() : $correction->getText()) . '</text:p>
+                        <text:p text:style-name="blTableContentNumber">' . $blTableContentNumber . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="' . $code . '.B1" office:value-type="string">
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
@@ -429,15 +432,6 @@ class ReportController extends BeehiveController{
       $where .= ' AND e.id = :editionId';
       $parameters['editionId'] = $editionId;
     }
-
-    //$where .= ' AND e.id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 22, 23, 24, 27, 251, 254, 255, 29)';
-    //$where .= ' AND e.id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 23, 24, 27, 251, 254, 255)';
-    
-    //$where .= ' AND e.id IN (:editionId1, :editionId2, :editionId3, :editionId4)';
-    //$parameters['editionId1'] = '1';
-    //$parameters['editionId2'] = '2';
-    //$parameters['editionId3'] = '6';
-    //$parameters['editionId4'] = '9';
 
     $query = $entityManager->createQuery('
       SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c

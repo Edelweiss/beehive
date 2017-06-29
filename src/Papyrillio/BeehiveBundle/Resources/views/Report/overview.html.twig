@@ -4,17 +4,25 @@
 
   <h3>Verfügbare Editionen für BL {{ compilation.title }}</h3>
 
-    <ul>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Code</th>
+        <th></th>
+        <th></th>
+      </tr>
     {% for edition in editions %}
-      
-      <li>
-        {{ edition[0].edition.title }} = {{ edition[0].edition.codeTitle }}
-        [<a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': edition[0].edition.id}) }}">PRINT</a>]
-        [<a href="{{ path('PapyrillioBeehiveBundle_reportpdf', {'compilationVolume': compilation.volume, 'editionId': edition[0].edition.id}) }}">PDF</a>]
-      </li>
+      <tr>
+        <td style="padding:0 4px 0 4px;">{{ edition[0].edition.id }}</td>
+        <td style="padding:0 4px 0 4px;">{{ edition[0].edition.title }}</td>
+        <td style="padding:0 4px 0 4px;">{{ edition[0].edition.codeTitle }}</td>
+        <td style="padding:0 4px 0 4px;"><a href="{{ path('PapyrillioBeehiveBundle_reportprint', {'compilationVolume': compilation.volume, 'editionId': edition[0].edition.id}) }}">PRINT</a> </td>
+        <td style="padding:0 4px 0 4px;"><a href="{{ path('PapyrillioBeehiveBundle_reportpdf', {'compilationVolume': compilation.volume, 'editionId': edition[0].edition.id}) }}">PDF</a></td>
+      </tr>
       
     {% endfor %}
-    </ul>
+    </table>
 
 {% endblock %}
 

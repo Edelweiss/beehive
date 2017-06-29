@@ -53,11 +53,9 @@ class ReportController extends BeehiveController{
     $data = $this->getData($compilationVolume, $editionId);
     $xml = $this->getXml($data);
 
-    //var_dump($xml);
-
     $oo = file_get_contents($this->get('kernel')->getRootDir() . '/../src/Papyrillio/BeehiveBundle/Resources/print/content_null.xml');
     foreach($xml as $key => $xmlSnippet){
-      $oo = str_replace('<!-- ' . $key . ' -->', $xmlSnippet, $oo);
+      $oo = str_replace('<!--' . $key . '-->', $xmlSnippet, $oo);
     }
 
     file_put_contents($this->get('kernel')->getRootDir() . '/../src/Papyrillio/BeehiveBundle/Resources/print/content.xml', $oo);
@@ -75,6 +73,20 @@ class ReportController extends BeehiveController{
   }
 
   protected function getXml(Array $data){
+    $xml = array();
+
+    foreach($data['editions'] as $editionSort => $corrections){
+      $edition = $corrections[0]->getEdition();
+      $xml[$edition->getCodeTitle()] = '';
+
+      foreach($corrections as $correction){
+       $xml[$edition->getCodeTitle()] .= self::getTableRow($correction);
+      }
+    }
+    return $xml;
+  }
+
+  protected function getXml2(Array $data){
     $xmlStyle = '';
     $xmlTables = '';
 
@@ -220,7 +232,7 @@ class ReportController extends BeehiveController{
   protected static function getTableEnd($edition){
     return '</table:table>';
   }
-    
+
   protected static function getTableRow($correction){
     $code = $correction->getEdition()->getCodeTitle();
     if($correction->getEdition()->getSort() === self::ALLGEMEINES){
@@ -417,7 +429,9 @@ class ReportController extends BeehiveController{
       $where .= ' AND e.id = :editionId';
       $parameters['editionId'] = $editionId;
     }
-    
+
+    //$where .= ' AND e.id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 22, 23, 24, 27, 251, 254, 255, 29)';
+    //$where .= ' AND e.id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 23, 24, 27, 251, 254, 255)';
     
     //$where .= ' AND e.id IN (:editionId1, :editionId2, :editionId3, :editionId4)';
     //$parameters['editionId1'] = '1';

@@ -232,7 +232,7 @@ class ReportController extends BeehiveController{
   protected static function getTableEnd($edition){
     return '</table:table>';
   }
-    //} else if(in_array($correction->getEdition()->getSort(), array(self::ALEX))){
+
   protected static function getTableRow($correction){
     $code = $correction->getEdition()->getCodeTitle();
     if($correction->getEdition()->getSort() === self::ALLGEMEINES){

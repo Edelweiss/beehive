@@ -9,3 +9,4 @@
 *.php~
 /src/Papyrillio/BeehiveBundle/Resources/data/idno.log
 /src/Papyrillio/BeehiveBundle/Resources/data/idno.sh
+/src/Papyrillio/BeehiveBundle/Resources/data/DDB_EpiDoc_XML

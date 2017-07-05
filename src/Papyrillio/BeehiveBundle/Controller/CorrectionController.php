@@ -277,6 +277,9 @@ class CorrectionController extends BeehiveController{
     foreach($correction->getTasks() as $task){
       $entityManager->remove($task);
     }
+    foreach($correction->getIndexEntries() as $indexEntry){
+      $entityManager->remove($indexEntry);
+    }
 
     $entityManager->remove($correction);
     $entityManager->flush();

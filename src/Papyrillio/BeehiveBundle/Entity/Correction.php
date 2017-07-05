@@ -358,7 +358,8 @@ class Correction
         $page = self::$ROMAN[$page];
       }
 
-      if(in_array($edition, array('580000', '581000', '582000', '1250000'))){ // P. Lond 1 - 3 and O. Tait 1, sort by page and then by text
+      //if(in_array($edition, array('580000', '581000', '582000', '1250000'))){ // P. Lond 1 - 3 and O. Tait 1, sort by page and then by text
+      if($edition === '1250000'){ // O. Tait 1, sort by page and then by text
         return 'e' . $this->lpad($edition) .
                'p' . $this->lpad($page) .
                't' . $this->lpad($text) .

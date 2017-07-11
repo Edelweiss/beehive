@@ -57,26 +57,31 @@
                     <tr>
                         <td><xsl:value-of select="concat('S. ', position())"/></td>
                         <td>
+                            <xsl:if test="position() &lt; 3">
+                                <xsl:text>Allgemeines</xsl:text>
+                                <xsl:if test="position() &gt; 1">
+                                    <xsl:text>; </xsl:text>
+                                </xsl:if>
+                            </xsl:if>
                             <xsl:choose>
-                                <xsl:when test="name() = 'text:soft-page-break'">
-                                    <xsl:variable name="startElement" select="if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1])"/>
-                                    <xsl:if test="position() &lt; 3">
-                                        <xsl:text>Allgemeines</xsl:text>
-                                        <xsl:if test="position() &gt; 1">
-                                            <xsl:text>; </xsl:text>
-                                        </xsl:if>
-                                    </xsl:if>
+                                <xsl:when test="name() = 'text:soft-page-break'">                                    
                                     <xsl:choose>
                                         <xsl:when test="(name(parent::element()) = 'table:table') and preceding-sibling::text:soft-page-break">
-                                            <xsl:value-of select="concat('[', normalize-space(parent::table:table/preceding-sibling::text:h[1]), ']')"/>
+                                            <!-- Tabelle wird bereits über mehrere Seiten fortgesetzt, d.h. nur die Überschrift für die aktuelle Tabelle ist relevant. -->
+                                            <xsl:value-of select="normalize-space(parent::table:table/preceding-sibling::text:h[1])"/>
+                                            [ff]
                                         </xsl:when>
                                         <xsl:otherwise>
+                                            <xsl:variable name="startElement" select="if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1])"/>
                                             <xsl:value-of select="papy:scoopHeaders($startElement)"/>
+                                            [<xsl:value-of select="name($startElement)"/>]
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    [<xsl:value-of select="name($startElement)"/>]
                                 </xsl:when>
                                 <xsl:otherwise>
+                                    <xsl:variable name="startElement" select="preceding-sibling::element()[1]"/>
+                                    <xsl:value-of select="papy:scoopHeaders($startElement)"/>
+                                    [[<xsl:value-of select="name($startElement)"/>]]
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>
@@ -145,6 +150,9 @@
         <xsl:choose>
             <xsl:when test="name($currentElement) = 'text:sequence-decls'"/> <!-- top of office:text section -->
             <xsl:when test="name($currentElement) = 'text:soft-page-break'"/> <!-- soft page break between two adjacent tables -->
+            <xsl:when test="(name($currentElement) = 'table:table') and (matches($currentElement/@table:name, 'Table\d+'))"> <!-- reached a manual page break -->
+                <xsl:value-of select="normalize-space($currentElement/preceding-sibling::text:h[1])"/>
+            </xsl:when>
             
             <xsl:when test="name($currentElement) = 'table:table' and (count($currentElement//text:soft-page-break))">
                 <xsl:value-of select="normalize-space($currentElement/preceding-sibling::text:h[1])"/>

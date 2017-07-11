@@ -64,24 +64,19 @@
                                 </xsl:if>
                             </xsl:if>
                             <xsl:choose>
-                                <xsl:when test="name() = 'text:soft-page-break'">                                    
-                                    <xsl:choose>
-                                        <xsl:when test="(name(parent::element()) = 'table:table') and preceding-sibling::text:soft-page-break">
-                                            <!-- Tabelle wird bereits über mehrere Seiten fortgesetzt, d.h. nur die Überschrift für die aktuelle Tabelle ist relevant. -->
-                                            <xsl:value-of select="normalize-space(parent::table:table/preceding-sibling::text:h[1])"/>
-                                            [ff]
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:variable name="startElement" select="if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1])"/>
-                                            <xsl:value-of select="papy:scoopHeaders($startElement)"/>
-                                            [<xsl:value-of select="name($startElement)"/>]
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                <xsl:when test="(name(parent::element()) = 'table:table') and preceding-sibling::text:soft-page-break">
+                                    <!-- Tabelle wird bereits über mehrere Seiten fortgesetzt, d.h. nur die Überschrift für die aktuelle Tabelle ist relevant. -->
+                                    <xsl:value-of select="normalize-space(parent::table:table/preceding-sibling::text:h[1])"/>
+                                </xsl:when>
+                                <xsl:when test="(name(parent::element()) = 'table:table') and matches(parent::table:table/@table:name, 'Table\d+')">
+                                    <!-- Dasselbe wie eins drüber, nur für manuell gesplittete Tabellen -->
+                                    <xsl:value-of select="normalize-space(parent::table:table/preceding-sibling::text:h[1])"/>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:variable name="startElement" select="preceding-sibling::element()[1]"/>
+                                    <xsl:variable name="startElement" select="if(name() = 'text:soft-page-break')then(if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1]))else(preceding-sibling::element()[1])"/>
+
                                     <xsl:value-of select="papy:scoopHeaders($startElement)"/>
-                                    [[<xsl:value-of select="name($startElement)"/>]]
+                                    [<xsl:value-of select="name($startElement)"/>]
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>

@@ -60,17 +60,12 @@
                             <xsl:choose>
                                 <xsl:when test="name() = 'text:soft-page-break'">
                                     <xsl:variable name="startElement" select="if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1])"/>
-                                    
                                     <xsl:if test="position() &lt; 3">
                                         <xsl:text>Allgemeines</xsl:text>
                                         <xsl:if test="position() &gt; 1">
-                                            <xsl:text>, </xsl:text>
+                                            <xsl:text>; </xsl:text>
                                         </xsl:if>
                                     </xsl:if>
-                                    
-                                    
-                                    
-                                    
                                     <xsl:choose>
                                         <xsl:when test="(name(parent::element()) = 'table:table') and preceding-sibling::text:soft-page-break">
                                             <xsl:value-of select="concat('[', normalize-space(parent::table:table/preceding-sibling::text:h[1]), ']')"/>
@@ -79,16 +74,12 @@
                                             <xsl:value-of select="papy:scoopHeaders($startElement)"/>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    
-                                    
-                                    
                                     [<xsl:value-of select="name($startElement)"/>]
                                 </xsl:when>
                                 <xsl:otherwise>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>
-                        
                         <td style="font-size: smaller; color: light-steel-blue;"><xsl:value-of select="if(name() = 'text:soft-page-break')then('auto page break')else('manual page break')"/></td>
                     </tr>
                 </xsl:for-each>
@@ -101,71 +92,50 @@
         <xsl:param name="currentElement"/>
         
         
-        <xsl:variable name="header" select="replace(papy:scoopHeadersR($currentElement), '^, ', '')"/>
-        <xsl:variable name="headerTokens" select="tokenize($header, ', ')"/>
+        <xsl:variable name="header" select="replace(papy:scoopHeadersR($currentElement), '^; ', '')"/>
+        <xsl:variable name="headerTokens" select="tokenize($header, '; ')"/>
         
         <xsl:message select="concat('----', $header, '----')"/>
-        
-        <xsl:variable name="separator">
-            <xsl:for-each select="$headerTokens">
-                <xsl:if test="position() &gt; 1">
-                    <xsl:variable name="currentPosition" select="position()"/>
-                    <xsl:variable name="previous" select="replace($headerTokens[$currentPosition - 1], ' \d+$', '')"/>
-                    <xsl:variable name="current" select="replace(., ' \d+$', '')"/>
-                    <xsl:if test="$current = $previous">
-                        <xsl:value-of select="."/>
-                        <xsl:message select="concat($previous, '=', $current)"/>
-                    </xsl:if>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
 
         <xsl:variable name="header">
-            <xsl:choose>
-                <xsl:when test="string($separator)">
-                    <xsl:for-each select="$headerTokens">
-                        
-                        <xsl:choose> <!-- Publication -->
-                            <xsl:when test="position() &gt; 1">
-                                <xsl:variable name="currentPosition" select="position()"/>
-                                <xsl:variable name="previous" select="replace($headerTokens[$currentPosition - 1], ' \d+$', '')"/>
-                                <xsl:variable name="current" select="replace(., ' \d+$', '')"/>
-                                <xsl:message select="concat($currentPosition, ':', $current, '=', $previous)"/>
-                                <xsl:choose>
-                                    <xsl:when test="$current = $previous">
-                                        <xsl:value-of select="replace(., '^.+ (\d+)$', '$1')"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="."/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
+            <xsl:for-each select="$headerTokens">
+                
+                <xsl:choose> <!-- Publication -->
+                    <xsl:when test="position() &gt; 1">
+                        <xsl:variable name="currentPosition" select="position()"/>
+                        <xsl:variable name="previous" select="replace($headerTokens[$currentPosition - 1], ' \d+$', '')"/>
+                        <xsl:variable name="current" select="replace(., ' \d+$', '')"/>
+                        <xsl:message select="concat($currentPosition, ':', $current, '=', $previous)"/>
+                        <xsl:choose>
+                            <xsl:when test="$current = $previous">
+                                <xsl:value-of select="replace(., '^.+ (\d+)$', '$1')"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="."/>
                             </xsl:otherwise>
                         </xsl:choose>
-                        
-                        <xsl:choose> <!-- Separator (, or ;) -->
-                            <xsl:when test="position() &lt; last()">
-                                <xsl:variable name="currentPosition" select="position()"/>
-                                <xsl:variable name="next" select="replace($headerTokens[$currentPosition + 1], ' \d+$', '')"/>
-                                <xsl:variable name="current" select="replace(., ' \d+$', '')"/>
-                                <xsl:choose>
-                                    <xsl:when test="$current = $next">
-                                        <xsl:text>, </xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>; </xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="."/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                
+                <xsl:choose> <!-- Separator (, or ;) -->
+                    <xsl:when test="position() &lt; last()">
+                        <xsl:variable name="currentPosition" select="position()"/>
+                        <xsl:variable name="next" select="replace($headerTokens[$currentPosition + 1], ' \d+$', '')"/>
+                        <xsl:variable name="current" select="replace(., ' \d+$', '')"/>
+                        <xsl:choose>
+                            <xsl:when test="$current = $next">
+                                <xsl:text>, </xsl:text>
                             </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>; </xsl:text>
+                            </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$header"/>
-                </xsl:otherwise>
-            </xsl:choose>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
         </xsl:variable>
         <xsl:value-of select="$header"/>
     </xsl:function>
@@ -184,7 +154,7 @@
             <xsl:when test="name($currentElement) = 'text:h'">
                 <xsl:choose>
                     <xsl:when test="not($currentElement//text:soft-page-break) and $currentElement/preceding-sibling::element()">
-                        <xsl:value-of select="concat(papy:scoopHeadersR($currentElement/preceding-sibling::element()[1]), ', ', normalize-space($currentElement))"/>
+                        <xsl:value-of select="concat(papy:scoopHeadersR($currentElement/preceding-sibling::element()[1]), '; ', normalize-space($currentElement))"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="normalize-space($currentElement)"/>

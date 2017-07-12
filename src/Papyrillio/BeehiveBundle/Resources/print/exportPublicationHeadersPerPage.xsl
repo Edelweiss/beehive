@@ -53,7 +53,7 @@
             </head>
             <body>
                 <table>
-                <xsl:for-each select="//node()[(name() = 'text:soft-page-break') or (name() = 'table:table' and matches(@table:name, 'Table\d+'))]">
+                    <xsl:for-each select="//node()[(name() = 'text:soft-page-break') or (name() = 'table:table' and matches(@table:name, 'Table\d+')) or ((name() = 'text:p') and not(string(.)) and (@text:style-name='P18'))]">
                     <tr>
                         <td><xsl:value-of select="concat('S. ', position())"/></td>
                         <td>
@@ -76,7 +76,7 @@
                                     <xsl:variable name="startElement" select="if(name() = 'text:soft-page-break')then(if(name(parent::element()) = ('table:table', 'text:h'))then(parent::element()/preceding-sibling::element()[1])else(preceding-sibling::element()[1]))else(preceding-sibling::element()[1])"/>
 
                                     <xsl:value-of select="papy:scoopHeaders($startElement)"/>
-                                    [<xsl:value-of select="name($startElement)"/>]
+                                    <!--[<xsl:value-of select="name($startElement)"/>]-->
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>
@@ -145,6 +145,8 @@
         <xsl:choose>
             <xsl:when test="name($currentElement) = 'text:sequence-decls'"/> <!-- top of office:text section -->
             <xsl:when test="name($currentElement) = 'text:soft-page-break'"/> <!-- soft page break between two adjacent tables -->
+            
+            
             <xsl:when test="(name($currentElement) = 'table:table') and (matches($currentElement/@table:name, 'Table\d+'))"> <!-- reached a manual page break -->
                 <xsl:value-of select="normalize-space($currentElement/preceding-sibling::text:h[1])"/>
             </xsl:when>

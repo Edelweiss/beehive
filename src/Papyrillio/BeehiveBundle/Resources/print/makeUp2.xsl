@@ -41,20 +41,23 @@
     xmlns="http://www.tei-c.org/ns/1.0">
 
 <!--
-    check whether cell content that has been marked for deletion can be deleted after new pagination; if not, set it in brackets 
+    check whether cell content that has been marked for deletion can be deleted after new pagination; if not, set it in brackets
     java -Xms512m -Xmx1536m net.sf.saxon.Transform -o:content.xml -s:postscript/content_intermediate.xml -xsl:makeUp2.xsl
 -->
     <xsl:output method="xml" media-type="text/xml" />
 
     <xsl:template match="table:table[not(@table:name='Allgemeines')]//table:table-cell/text:p[@text:style-name = ('blTableContentPage', 'blTableContentNumber', 'blTableContentLine')][string(.) = '☺']">
-        
-        <text:p>
-            <xsl:copy-of select="@*"/>
-            <xsl:if test="ancestor::table:row/preceding-sibling::element()[1][name() = text:soft-page-break]">
-                <xsl:message select="'☺'"/>
-                <xsl:value-of select="concat('(', '-', ')')"/>
+        <xsl:variable name="textStyleName" select="string(@text:style-name)"/>
+        <xsl:message select="$textStyleName"/>
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:if test="ancestor::table:table-row/preceding-sibling::element()[1]/name() = 'text:soft-page-break'">
+                <xsl:variable name="cellValue" select="ancestor::table:table-row/preceding-sibling::table:table-row/table:table-cell/text:p[@text:style-name = $textStyleName][not(string(.) = '☺')][1]"/>
+                <xsl:variable name="cellValue" select="string($cellValue[position() = last()])"/>
+                <xsl:message select="$cellValue"/>
+                <xsl:value-of select="concat('(', $cellValue, ')')"/>
             </xsl:if>
-        </text:p>
+        </xsl:copy>
     </xsl:template>
 
     <!-- COPY -->

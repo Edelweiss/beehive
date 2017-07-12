@@ -103,9 +103,14 @@
         <xsl:variable name="previous" select="string($p/../../preceding-sibling::table:table-row[1]/table:table-cell/text:p[@text:style-name = $styleName])"/>
         <xsl:variable name="precedingElement" select="string($p/../../preceding-sibling::element()[1]/name())"/>
         <xsl:message select="concat($styleName, ': ', $current, '/', $previous, '[', $precedingElement ,']')"/>
-        <xsl:if test="not($current = $previous) or $precedingElement = 'text:soft-page-break'">
-            <xsl:value-of select="$p"/>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="string($current) and ($current = $previous) and ($precedingElement = 'text:soft-page-break')">
+                <xsl:value-of select="concat('(', $p, ')')"/>
+            </xsl:when>
+            <xsl:when test="not($current = $previous)">
+                <xsl:value-of select="$p"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:function>
 
     <!-- COPY -->

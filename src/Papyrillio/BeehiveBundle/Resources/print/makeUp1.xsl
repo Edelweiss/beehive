@@ -119,6 +119,8 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
+    
+    <xsl:template match="text:soft-page-break"/>
 
     <!-- COPY -->
     <xsl:template match="@* | node()">

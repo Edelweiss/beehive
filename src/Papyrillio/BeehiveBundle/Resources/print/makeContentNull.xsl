@@ -498,6 +498,8 @@
         <xsl:message select="substring-before(@table:style-name, '.')"/>
         <xsl:comment select="substring-before(@table:style-name, '.')"/>
     </xsl:template>
+    
+    <xsl:template match="text:soft-page-break"/>
 
     <!-- COPY -->
     <xsl:template match="@* | node()">

@@ -47,7 +47,11 @@
     java -Xms512m -Xmx1536m net.sf.saxon.Transform -o:content.xml -s:postscript/content_release.xml -xsl:makeUp1.xsl
 -->
     <xsl:output method="xml" media-type="text/xml" />
-    
+
+    <xsl:template match="text:p[not(parent::table:table-cell)][not(following-sibling::table:table[1]/table:table-row)]"/>
+    <xsl:template match="text:h[not(following-sibling::table:table[1]/table:table-row)]"/>
+    <xsl:template match="table:table[not(table:table-row)]"/>
+
     <xsl:template match="table:table[not(@table:name='Allgemeines')]//table:table-cell[text:p/@text:style-name = 'blTableContentNumber']">
         <xsl:variable name="number" select="text:p"/>
         <xsl:variable name="line"   select="../table:table-cell/text:p[@text:style-name = 'blTableContentLine']"/>

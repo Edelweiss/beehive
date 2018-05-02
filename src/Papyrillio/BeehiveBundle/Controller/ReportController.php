@@ -241,7 +241,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getText() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="Allgemeines.B1" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '<!-- CORRECTION_ID_' . $correction->getId() . ' --></text:p>
+                        <text:p text:style-name="blTableContentCorrection"><text:bookmark-start text:name="correction' . $correction->getId() . '"/>' . $correction->getDescription(Correction::MODE_OOXML) . '<text:bookmark-end text:name="correction' . $correction->getId() . '"/></text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else if(in_array($correction->getEdition()->getSort(), array(self::ALEX, self::LOND1, self::LOND2, self::LOND3, self::TAIT))){
@@ -260,7 +260,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="' . $code . '.D1" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '<!-- CORRECTION_ID_' . $correction->getId() . ' --></text:p>
+                        <text:p text:style-name="blTableContentCorrection"><text:bookmark-start text:name="correction' . $correction->getId() . '"/>' . $correction->getDescription(Correction::MODE_OOXML) . '<text:bookmark-end text:name="correction' . $correction->getId() . '"/></text:p>
                     </table:table-cell>
                 </table:table-row>';
     } else {
@@ -272,7 +272,7 @@ class ReportController extends BeehiveController{
                         <text:p text:style-name="blTableContentLine">' . $correction->getPosition() . '</text:p>
                     </table:table-cell>
                     <table:table-cell table:style-name="' . $code . '.C1" office:value-type="string">
-                        <text:p text:style-name="blTableContentCorrection">' . $correction->getDescription(Correction::MODE_OOXML) . '<!-- CORRECTION_ID_' . $correction->getId() . ' --></text:p>
+                        <text:p text:style-name="blTableContentCorrection"><text:bookmark-start text:name="correction' . $correction->getId() . '"/>' . $correction->getDescription(Correction::MODE_OOXML) . '<text:bookmark-end text:name="correction' . $correction->getId() . '"/></text:p>
                     </table:table-cell>
                 </table:table-row>';
     }

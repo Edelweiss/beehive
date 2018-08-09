@@ -84,7 +84,7 @@ class CorrectionController extends BeehiveController{
 
         if($this->getParameter('compilation')){
           $where .= $prefix . '(c2.title = :compilation OR c2.volume = :compilation)';
-          $parameters['compilation'] = '%' . $this->getParameter('compilation') . '%';
+          $parameters['compilation'] = $this->getParameter('compilation');
           $prefix = ' AND ';
         }
 

@@ -25,7 +25,7 @@ class ApiaryController extends BeehiveController{
     $where = self::$TYPES[$type] . ' = :id';
     $parameters = array('id' => $id);
     
-    if($this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+    if($this->get('security.context')->isGranted('ROLE_USER') === false) {
       $where .= ' AND c.status = :status';
       $parameters['status'] = 'finalised';
     }

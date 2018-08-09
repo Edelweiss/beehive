@@ -57,7 +57,7 @@ class CorrectionController extends BeehiveController{
         $orderBy = ' ORDER BY e.sort, e.title ' . $sortDirection;
       }
       if($sort == 'compilation'){
-        $orderBy = ' ORDER BY c2.volume ' . $sortDirection;
+        $orderBy = ' ORDER BY c2.volume, c2.fascicle ' . $sortDirection;
       }
 
       // WHERE WITH
@@ -83,7 +83,7 @@ class CorrectionController extends BeehiveController{
         }
 
         if($this->getParameter('compilation')){
-          $where .= $prefix . '(c2.title LIKE :compilation OR c2.volume LIKE :compilation)';
+          $where .= $prefix . '(c2.title = :compilation OR c2.volume = :compilation)';
           $parameters['compilation'] = '%' . $this->getParameter('compilation') . '%';
           $prefix = ' AND ';
         }

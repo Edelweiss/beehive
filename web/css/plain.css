@@ -1,0 +1,92 @@
+/* global site structure */
+
+body {
+  color: black;
+  font-size: 66%;
+  background-color: grey;
+}
+
+div#site {
+  height: auto !important;
+  min-height: 100%;
+  position: relative;
+  margin: 0 auto;
+  color: black;
+  padding: 0 0 23em;
+  background-color: white;
+}
+
+div#content {
+  min-height: 100%;
+  padding: 1em 1em 5em;
+}
+
+div#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 0.1em solid #0972A5;
+}
+
+/* global element styling */
+
+a {
+  color: #0972A5;
+}
+
+a:hover {
+  color: #26B3F7;
+}
+
+.greek {
+    font-family: "Lucida Grande", "Cardo", "Arial Unicode MS", "IFAO-Grec Unicode", "KadmosU", "New Athena Unicode", "Athena Unicode", "Lucida Grande", "Verdana", "Tahoma" !important;
+}
+
+.greekSerif {
+    font-family: "Cardo", "IFAO-Grec Unicode", "KadmosU", "New Athena Unicode", "Athena Unicode", "Lucida Grande", "Verdana", "Tahoma", "Lucida Grande", "Arial Unicode MS" !important;
+}
+
+/* APIARY */
+table.apiary tr td {
+  padding: 0 1em 0 1em;
+}
+
+table.apiary tr td.edition {
+  width: 8em;
+}
+
+table.apiary tr td.text {
+  width: 4em;
+  text-align: right;
+}
+
+table.apiary tr td.position {
+  width: 8em;
+  text-align: right;
+}
+
+table.apiary tr td.bl {
+  width: auto;
+  vertical-align: bottom;
+  font-size: smaller;
+  color: gray;
+}
+
+table.apiary tr td.description {
+  width: auto;
+}
+
+table.apiary tr td.text,
+table.apiary tr td.position {
+  border-right: solid 1px;
+}
+
+div.apiary p {
+  margin: 0;
+}
+
+div.apiary p label {
+  width: 5em;
+  display: block;
+  float: left;
+}

@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::plain.html.twig' %}
 
 {% block body %}
 
@@ -36,6 +36,10 @@
         <td class="description">{{ c.description }}</td>
         <td class="bl">→&nbsp;BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}
         </td>
+        <td class="source">{% if c.source %}
+        
+        <a href="http://papyri.info/biblio/{{ c.source }}">Bibliography</a>
+        {% endif %}</td>
       </tr>
     {% endfor %}
   </tbody>

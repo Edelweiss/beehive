@@ -118,7 +118,7 @@ class CorrectionController extends BeehiveController{
         $query = $entityManager->createQuery('
           SELECT DISTINCT c.id FROM PapyrillioBeehiveBundle:Correction c
           LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
-          ' . $with . ' ' . $where
+          ' . $with . ' ' . $where . ' ' . $orderBy
         );
         $query->setParameters($parameters);
         $query->setFirstResult($offset)->setMaxResults($limit);

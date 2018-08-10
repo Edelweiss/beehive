@@ -54,10 +54,10 @@ class CorrectionController extends BeehiveController{
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
       }
       if($sort == 'edition'){
-        $orderBy = ' ORDER BY e.sort, e.title ' . $sortDirection;
+        $orderBy = ' ORDER BY e.sort ' . $sortDirection .  ', e.title ' . $sortDirection;
       }
       if($sort == 'compilation'){
-        $orderBy = ' ORDER BY c2.volume, c2.fascicle ' . $sortDirection;
+        $orderBy = ' ORDER BY c2.volume ' . $sortDirection . ', c2.fascicle ' . $sortDirection;
       }
 
       // WHERE WITH

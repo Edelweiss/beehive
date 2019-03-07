@@ -13,6 +13,16 @@ use DOMXPath;
 
 /*
 
+DEV
+
+cd ~/beehive.dev
+php app/console doctrine:fixtures:load --fixtures=src/Papyrillio/BeehiveBundle/DataFixtures/ORM/Import --append
+
+LIVE
+
+cd ~/beehive
+cp ../beehive.dev/src/Papyrillio/BeehiveBundle/Resources/data/idno.xml src/Papyrillio/BeehiveBundle/Resources/data/idno.xml
+cp ../beehive.dev/src/Papyrillio/BeehiveBundle/Resources/data/import.csv src/Papyrillio/BeehiveBundle/Resources/data/import.csv
 php app/console doctrine:fixtures:load --fixtures=src/Papyrillio/BeehiveBundle/DataFixtures/ORM/Import --append
 
 */
@@ -32,7 +42,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     const IMPORT_FILE = 'src/Papyrillio/BeehiveBundle/Resources/data/import.csv';
     const IDNO_FILE   = 'src/Papyrillio/BeehiveBundle/Resources/data/idno.xml';
-    
+
     const DEFAULT_STATUS = 'unchecked';
     const DEFAULT_CREATOR = 'system';
 
@@ -44,57 +54,51 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     function load(ObjectManager $manager)
     {
-       //$csv = file_get_contents('src/Papyrillio/BeehiveBundle/Resources/data/import.csv');
-       //echo $csv;
-
        $row = 1;
        if(($handle = fopen(self::IMPORT_FILE, 'r')) !== FALSE){
          while(($data = fgetcsv($handle, 1000, ',')) !== FALSE){
-           $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
-           $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
-           $hgv              = $data[self::CSV_HGV];
-           $tm               = preg_replace('/[a-z]+/', '', $hgv);
-           $folder           = ceil($tm / 1000);
-           $text1            = $data[self::CSV_TEXT1];
-           $text2            = $data[self::CSV_TEXT2];
-           $position         = $data[self::CSV_POSITION];
-           $description      = $data[self::CSV_DESCRIPTION];
-           $editionSort      = $data[self::CSV_EDITION_SORT];
-           $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
-           $creator          = $data[self::CSV_CREATOR];
-           $status           = self::DEFAULT_STATUS;
+           $hgv = $data[self::CSV_HGV];
+           if(preg_match('/\d+([a-z]+)?/', $hgv)){
+             $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
+             $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
+             $tm               = preg_replace('/[a-z]+/', '', $hgv);
+             $folder           = ceil($tm / 1000);
+             $text1            = $data[self::CSV_TEXT1];
+             $text2            = $data[self::CSV_TEXT2];
+             $position         = $data[self::CSV_POSITION];
+             $description      = $data[self::CSV_DESCRIPTION];
+             $editionSort      = $data[self::CSV_EDITION_SORT];
+             $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
+             $creator          = $data[self::CSV_CREATOR];
+             $status           = self::DEFAULT_STATUS;
 
-           $ddb = $this->getDdb($hgv);
+             $ddb = $this->getDdb($hgv);
 
-           $correction = new Correction();
-           $correction->setEdition($this->getEdition($editionSort, $manager));
-           $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
-           $correction->setText($this->formatText($text1, $text2, $editionSort));
-           $correction->setDdb($ddb['ddb']);
-           $correction->setCollection($ddb['collection']);
-           $correction->setVolume($ddb['volume']);
-           $correction->setDocument($ddb['document']);
-           $correction->setDescription($description);
-           $correction->setTm($tm);
-           $correction->setHgv($hgv);
-           $correction->setFolder($folder);
-           $correction->setPosition($position);
-           $correction->setSource($source);
-           $correction->setStatus($status);
-           $correction->setCreator($creator);
-           $correction->setCompilationPage($compilationPage);
-           
+             $correction = new Correction();
+             $correction->setEdition($this->getEdition($editionSort, $manager));
+             $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
+             $correction->setText($this->formatText($text1, $text2, $editionSort));
+             $correction->setDdb($ddb['ddb']);
+             $correction->setCollection($ddb['collection']);
+             $correction->setVolume($ddb['volume']);
+             $correction->setDocument($ddb['document']);
+             $correction->setDescription($description);
+             $correction->setTm($tm);
+             $correction->setHgv($hgv);
+             $correction->setFolder($folder);
+             $correction->setPosition($position);
+             $correction->setSource($source);
+             $correction->setStatus($status);
+             $correction->setCreator($creator);
+             $correction->setCompilationPage($compilationPage);
 
-           //echo $row . '> '. $compilation . '|' . $compilationPage . '|' . $tm . '|' . $text . '|' . $text2 . '|' . $position . '|' . $description . '|' . $editionSort . '|' . $source . '|' . $creator . "\n";
-           echo $row . '> Edition: ' . $correction->getEdition()->getId() . ' DDB: ' . $correction->getDdb() . ' (' . $correction->getCollection() . '|' . $correction->getVolume() . '|' . $correction->getDocument() . ")\n";
-           echo $row . '> Compilation: ' . $correction->getCompilation()->getId() . ' ' . $correction->getCompilation()->getTitle() . "\n";
-           echo $row . '> HGV/TM: ' . $hgv . '/' . $tm . ' (' . $folder . ")\n";
-           echo $row . '> Text: ' . $correction->getText() . "\n";
-           echo $row . "> --\n";
+             echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
+             echo $row . '> Text: ' . $correction->getText() . "\n\n";
 
-           $manager->persist($correction);
+             $manager->persist($correction);
 
-           $row++;
+             $row++;
+           }
 
        }
        $manager->flush();
@@ -106,7 +110,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     {
         return 1;
     }
-    
+
     protected function getDdb($hgv){
       if(!self::$idnoXpath){
         $doc = new DOMDocument();
@@ -115,7 +119,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
       }
 
       //$xpath->registerNamespace('fm', self::NAMESPACE_FILEMAKER);
-      
+
       $ddb = ';;';
       $ddbIdno = self::$idnoXpath->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]/idno[@type='ddb']");
 
@@ -128,10 +132,21 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     }
 
     protected function formatText($text1, $text2, $editionSort){
-      if($editionSort * 1 === 1250000){ // (S. 124) 292
+      $editionSort = $editionSort * 1;
+      if($editionSort === 1250000){ // (S. 124) 292
         return '(' . $text1 . ') ' . $text2;
+      }elseif(in_array($editionSort, array(580000, 581000, 582000))){ // 1164 h (S. 163)
+        return $text2 . ' (' . $text1 . ') ';
       }
       return $text1 . ' ' . $text2;
+    }
+
+    protected function getCompilation($title, $manager){
+      if(!isset($this->compilationList[$title])){
+        $compilation = $manager->getRepository('PapyrillioBeehiveBundle:Compilation')->findOneBy(array('title' => $title));
+        $this->compilationList[$title] = $compilation;
+      }
+      return $this->compilationList[$title];
     }
 
     protected function getEdition($sort, $manager){
@@ -157,14 +172,6 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
         $this->editionExampleCorrection[$sort] = $corrections[0];
       }
       return $this->editionExampleCorrection[$sort];
-    }
-
-    protected function getCompilation($title, $manager){
-      if(!isset($this->compilationList[$title])){
-        $compilation = $manager->getRepository('PapyrillioBeehiveBundle:Compilation')->findOneBy(array('title' => $title));
-        $this->compilationList[$title] = $compilation;
-      }
-      return $this->compilationList[$title];
     }
 
 }

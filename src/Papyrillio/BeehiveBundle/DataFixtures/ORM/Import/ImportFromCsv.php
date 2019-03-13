@@ -49,7 +49,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     protected $editionList = array();
     protected $compilationList = array();
     protected $editionExampleCorrection = array();
-    
+
     protected static $idnoXpath = null;
 
     function load(ObjectManager $manager)
@@ -57,7 +57,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
        $row = 1;
        if(($handle = fopen(self::IMPORT_FILE, 'r')) !== FALSE){
          while(($data = fgetcsv($handle, 1000, ',')) !== FALSE){
-           $hgv = $data[self::CSV_HGV];
+           $hgv = preg_replace('/[^\da-z]+.*$/', '', $data[self::CSV_HGV]);
            if(preg_match('/\d+([a-z]+)?/', $hgv)){
              $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
              $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
@@ -69,7 +69,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $description      = $data[self::CSV_DESCRIPTION];
              $editionSort      = $data[self::CSV_EDITION_SORT];
              $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
-             $creator          = $data[self::CSV_CREATOR];
+             $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
              $status           = self::DEFAULT_STATUS;
 
              $ddb = $this->getDdb($hgv);
@@ -95,13 +95,12 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
              echo $row . '> Text: ' . $correction->getText() . "\n\n";
 
-             $manager->persist($correction);
+             //$manager->persist($correction);
 
              $row++;
            }
-
        }
-       $manager->flush();
+       //$manager->flush();
        fclose($handle);
       }
     }
@@ -125,6 +124,8 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
       if($ddbIdno->length > 0){
         $ddb = $ddbIdno->item(0)->nodeValue;
+      } else {
+        throw Exception;
       }
 
       $ddbExploded = explode(';', $ddb);
@@ -133,7 +134,9 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     protected function formatText($text1, $text2, $editionSort){
       $editionSort = $editionSort * 1;
-      if($editionSort === 1250000){ // (S. 124) 292
+      if(!isset($text2) || !strlen($text2)){ // just one piece of information
+        return $text1;
+      }elseif($editionSort === 1250000){ // (S. 124) 292
         return '(' . $text1 . ') ' . $text2;
       }elseif(in_array($editionSort, array(580000, 581000, 582000))){ // 1164 h (S. 163)
         return $text2 . ' (' . $text1 . ') ';

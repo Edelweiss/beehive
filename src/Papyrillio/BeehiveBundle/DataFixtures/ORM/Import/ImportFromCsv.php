@@ -90,47 +90,50 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $text1       = self::fallback($text1, $text1Fallback);
              $text2       = self::fallback($text2, $text2Fallback);
 
-             if(preg_match('/\d+([a-z]+)?/', $hgv) && strlen($text1)){
-               $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
-               $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
-               $tm               = preg_replace('/[a-z]+/', '', $hgv);
-               $folder           = ceil($tm / 1000);
-               $position         = $data[self::CSV_POSITION];
-               $description      = $data[self::CSV_DESCRIPTION];
-               $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
-               $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
-               $status           = self::DEFAULT_STATUS;
-  
-               $ddb = $this->getDdb($hgv);
-  
-               $correction = new Correction();
-               $correction->setEdition($this->getEdition($editionSort, $manager));
-               $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
-               $correction->setText($this->formatText($text1, $text2, $editionSort));
-  
-               if($correction->getText() != self::TEXT_PASSIM){
-                 $correction->setDdb($ddb['ddb']);
-                 $correction->setCollection($ddb['collection']);
-                 $correction->setVolume($ddb['volume']);
-                 $correction->setDocument($ddb['document']);
-                 $correction->setTm($tm);
-                 $correction->setHgv($hgv);
-                 $correction->setFolder($folder);
-                 $correction->setPosition($position);
+             if((preg_match('/\d+([a-z]+)?/', $hgv) && strlen($text1)) || $text1 == self::TEXT_PASSIM){
+                 if(self::checkHgv($hgv)){
+                   $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
+                   $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
+                    
+                   $description      = $data[self::CSV_DESCRIPTION];
+                   $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
+                   $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
+                   $status           = self::DEFAULT_STATUS;
+
+                   $ddb = $this->getDdb($hgv);
+
+                   $correction = new Correction();
+                   $correction->setEdition($this->getEdition($editionSort, $manager));
+                   $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
+                   $correction->setText($this->formatText($text1, $text2, $editionSort));
+
+                   if($correction->getText() != self::TEXT_PASSIM){
+                     $correction->setDdb($ddb['ddb']);
+                     $correction->setCollection($ddb['collection']);
+                     $correction->setVolume($ddb['volume']);
+                     $correction->setDocument($ddb['document']);
+
+                     $correction->setHgv($hgv);
+                     $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
+                     $correction->setFolder(ceil($correction->getTm() / 1000));
+                     $correction->setPosition($data[self::CSV_POSITION]);
+                   }
+      
+                   $correction->setDescription($description);
+                   $correction->setSource($source);
+                   $correction->setStatus($status);
+                   $correction->setCreator($creator);
+                   $correction->setCompilationPage($compilationPage);
+
+                   echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
+                   echo $row . '> Text: ' . $correction->getText() . "\n\n";
+
+                   $manager->persist($correction);
+
+                   $row++;
+               } else {
+                 echo 'HGV-Nummer nicht gefunden (' . $hgv . ')';
                }
-  
-               $correction->setDescription($description);
-               $correction->setSource($source);
-               $correction->setStatus($status);
-               $correction->setCreator($creator);
-               $correction->setCompilationPage($compilationPage);
-  
-               echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
-               echo $row . '> Text: ' . $correction->getText() . "\n\n";
-  
-               $manager->persist($correction);
-  
-               $row++;
              } else {
                throw Exception('ungültige Zeile gefunden.');
              }
@@ -145,18 +148,27 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     {
         return 1;
     }
-
-    protected function getDdb($hgv){
+    
+    static function getIdnoXpath(){
       if(!self::$idnoXpath){
         $doc = new DOMDocument();
         $doc->load(self::IDNO_FILE);
         self::$idnoXpath = new DOMXPath($doc);
       }
+      return self::$idnoXpath;
+    }
+    
+    protected function checkHgv($hgv){
+      $idno = self::getIdnoXpath()->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]");
+      return $idno->length > 0 ? true : false;
+    }
 
+    protected function getDdb($hgv){
+      $xpath = self::getIdnoXpath();
       //$xpath->registerNamespace('fm', self::NAMESPACE_FILEMAKER);
 
       $ddb = ';;';
-      $ddbIdno = self::$idnoXpath->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]/idno[@type='ddb']");
+      $ddbIdno = $xpath->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]/idno[@type='ddb']");
 
       if($ddbIdno->length > 0){
         $ddb = $ddbIdno->item(0)->nodeValue;

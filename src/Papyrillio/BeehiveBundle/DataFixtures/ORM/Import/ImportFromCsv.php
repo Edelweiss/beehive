@@ -46,66 +46,97 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     const DEFAULT_STATUS = 'unchecked';
     const DEFAULT_CREATOR = 'system';
     const TEXT_PASSIM = 'passim';
+    const TEXT_EMPTY = 'XXX';
 
     protected $editionList = array();
     protected $compilationList = array();
     protected $editionExampleCorrection = array();
 
     protected static $idnoXpath = null;
+    
+    static function fallback($value, $fallback){
+      if(!isset($value) || $value === null || $value === '')
+      {
+        return $fallback;
+      }
+      return $value;
+    }
 
     function load(ObjectManager $manager)
     {
        $row = 1;
+
+       $editionSortFallback = '';
+       $hgvFallback = '';
+       $text1Fallback = '';
+       $text2Fallback = '';
+
        if(($handle = fopen(self::IMPORT_FILE, 'r')) !== FALSE){
          while(($data = fgetcsv($handle, 1000, ',')) !== FALSE){
-           $hgv = preg_replace('/[^\da-z]+.*$/', '', $data[self::CSV_HGV]);
-           if(preg_match('/\d+([a-z]+)?/', $hgv)){
-             $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
-             $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
-             $tm               = preg_replace('/[a-z]+/', '', $hgv);
-             $folder           = ceil($tm / 1000);
-             $text1            = $data[self::CSV_TEXT1];
-             $text2            = $data[self::CSV_TEXT2];
-             $position         = $data[self::CSV_POSITION];
-             $description      = $data[self::CSV_DESCRIPTION];
-             $editionSort      = $data[self::CSV_EDITION_SORT];
-             $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
-             $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
-             $status           = self::DEFAULT_STATUS;
+           $editionSort = $data[self::CSV_EDITION_SORT];
+           $hgv         = preg_replace('/[^\da-z]+.*$/', '', $data[self::CSV_HGV]);
+           $text1       = $data[self::CSV_TEXT1];
+           $text2       = $data[self::CSV_TEXT2];
 
-             $ddb = $this->getDdb($hgv);
+           if(strlen($editionSort) && !strlen($hgv)){ // Überschriftzeile gefunden
+             echo '------------------' . $data[self::CSV_DESCRIPTION] . "\n";
+             $editionSortFallback = $editionSort;
+             $hgvFallback         = '';
+             $text1Fallback       = '';
+             $text2Fallback       = '';
+           } else { // Datenzeile gefunden
+             $editionSort = self::fallback($editionSort, $editionSortFallback);
+             $hgv         = self::fallback($hgv, $hgvFallback);
+             $text1       = self::fallback($text1, $text1Fallback);
+             $text2       = self::fallback($text2, $text2Fallback);
 
-             $correction = new Correction();
-             $correction->setEdition($this->getEdition($editionSort, $manager));
-             $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
-             $correction->setText($this->formatText($text1, $text2, $editionSort));
-
-             if($correction->getText() != self::TEXT_PASSIM){
-               $correction->setDdb($ddb['ddb']);
-               $correction->setCollection($ddb['collection']);
-               $correction->setVolume($ddb['volume']);
-               $correction->setDocument($ddb['document']);
-               $correction->setTm($tm);
-               $correction->setHgv($hgv);
-               $correction->setFolder($folder);
-               $correction->setPosition($position);
+             if(preg_match('/\d+([a-z]+)?/', $hgv) && strlen($text1)){
+               $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
+               $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
+               $tm               = preg_replace('/[a-z]+/', '', $hgv);
+               $folder           = ceil($tm / 1000);
+               $position         = $data[self::CSV_POSITION];
+               $description      = $data[self::CSV_DESCRIPTION];
+               $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
+               $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
+               $status           = self::DEFAULT_STATUS;
+  
+               $ddb = $this->getDdb($hgv);
+  
+               $correction = new Correction();
+               $correction->setEdition($this->getEdition($editionSort, $manager));
+               $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
+               $correction->setText($this->formatText($text1, $text2, $editionSort));
+  
+               if($correction->getText() != self::TEXT_PASSIM){
+                 $correction->setDdb($ddb['ddb']);
+                 $correction->setCollection($ddb['collection']);
+                 $correction->setVolume($ddb['volume']);
+                 $correction->setDocument($ddb['document']);
+                 $correction->setTm($tm);
+                 $correction->setHgv($hgv);
+                 $correction->setFolder($folder);
+                 $correction->setPosition($position);
+               }
+  
+               $correction->setDescription($description);
+               $correction->setSource($source);
+               $correction->setStatus($status);
+               $correction->setCreator($creator);
+               $correction->setCompilationPage($compilationPage);
+  
+               echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
+               echo $row . '> Text: ' . $correction->getText() . "\n\n";
+  
+               $manager->persist($correction);
+  
+               $row++;
+             } else {
+               throw Exception('ungültige Zeile gefunden.');
              }
-             
-             $correction->setDescription($description);
-             $correction->setSource($source);
-             $correction->setStatus($status);
-             $correction->setCreator($creator);
-             $correction->setCompilationPage($compilationPage);
-
-             echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
-             echo $row . '> Text: ' . $correction->getText() . "\n\n";
-
-             //$manager->persist($correction);
-
-             $row++;
            }
        }
-       //$manager->flush();
+       $manager->flush();
        fclose($handle);
       }
     }
@@ -139,7 +170,9 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     protected function formatText($text1, $text2, $editionSort){
       $editionSort = $editionSort * 1;
-      if(!isset($text2) || !strlen($text2)){ // just one piece of information
+      if($text1 == self::TEXT_EMPTY){ // Text was flagged to be empty
+        return '';
+      } elseif(!isset($text2) || !strlen($text2)){ // just one piece of information
         return $text1;
       }elseif($editionSort === 1250000){ // (S. 124) 292
         return '(' . $text1 . ') ' . $text2;

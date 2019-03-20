@@ -45,6 +45,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     const DEFAULT_STATUS = 'unchecked';
     const DEFAULT_CREATOR = 'system';
+    const TEXT_PASSIM = 'passim';
 
     protected $editionList = array();
     protected $compilationList = array();
@@ -78,15 +79,19 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $correction->setEdition($this->getEdition($editionSort, $manager));
              $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
              $correction->setText($this->formatText($text1, $text2, $editionSort));
-             $correction->setDdb($ddb['ddb']);
-             $correction->setCollection($ddb['collection']);
-             $correction->setVolume($ddb['volume']);
-             $correction->setDocument($ddb['document']);
+
+             if($correction->getText() != self::TEXT_PASSIM){
+               $correction->setDdb($ddb['ddb']);
+               $correction->setCollection($ddb['collection']);
+               $correction->setVolume($ddb['volume']);
+               $correction->setDocument($ddb['document']);
+               $correction->setTm($tm);
+               $correction->setHgv($hgv);
+               $correction->setFolder($folder);
+               $correction->setPosition($position);
+             }
+             
              $correction->setDescription($description);
-             $correction->setTm($tm);
-             $correction->setHgv($hgv);
-             $correction->setFolder($folder);
-             $correction->setPosition($position);
              $correction->setSource($source);
              $correction->setStatus($status);
              $correction->setCreator($creator);

@@ -95,52 +95,48 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $text2Fallback = $text2;
 
              if((preg_match('/\d+([a-z]+)?/', $hgv) && strlen($text1)) || $text1 == self::TEXT_PASSIM){
+               $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
+               $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
+               $description      = $data[self::CSV_DESCRIPTION];
+               $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
+               $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
+               $status           = self::DEFAULT_STATUS;
+
+               $correction = new Correction();
+               $correction->setEdition($this->getEdition($editionSort, $manager));
+               $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
+               $correction->setText($this->formatText($text1, $text2, $editionSort));
+               if($correction->getText() != self::TEXT_PASSIM){
+                 $ddb = $this->getDdb($hgv);
+                 $correction->setDdb($ddb['ddb']);
+                 $correction->setCollection($ddb['collection']);
+                 $correction->setVolume($ddb['volume']);
+                 $correction->setDocument($ddb['document']);
                  if(self::checkHgv($hgv)){
-                   $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
-                   $compilationPage  = $data[self::CSV_COMPILATION_PAGE];
-                   $description      = $data[self::CSV_DESCRIPTION];
-                   $source           = is_numeric($data[self::CSV_SOURCE]) ? $data[self::CSV_SOURCE] : null;
-                   $creator          = isset($data[self::CSV_CREATOR]) && strlen($data[self::CSV_CREATOR]) ? $data[self::CSV_CREATOR] : self::DEFAULT_CREATOR;
-                   $status           = self::DEFAULT_STATUS;
-
-                   $ddb = $this->getDdb($hgv);
-
-                   $correction = new Correction();
-                   $correction->setEdition($this->getEdition($editionSort, $manager));
-                   $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
-                   $correction->setText($this->formatText($text1, $text2, $editionSort));
-                   if($correction->getText() != self::TEXT_PASSIM){
-                     $correction->setDdb($ddb['ddb']);
-                     $correction->setCollection($ddb['collection']);
-                     $correction->setVolume($ddb['volume']);
-                     $correction->setDocument($ddb['document']);
-
-                     $correction->setHgv($hgv);
-                     $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
-                     $correction->setFolder(ceil($correction->getTm() / 1000));
-                     $correction->setPosition($data[self::CSV_POSITION]);
-                   }
-                   $correction->setDescription($description);
-                   $correction->setSource($source);
-                   $correction->setStatus($status);
-                   $correction->setCreator($creator);
-                   $correction->setCompilationPage($compilationPage);
-
-                   echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
-                   echo $row . '> Text: ' . $correction->getText() . "\n\n";
-
-                   //$manager->persist($correction);
-
-                   $row++;
-               } else {
-                 echo 'HGV-Nummer nicht gefunden (' . $hgv . ')'. "\n";
+                   $correction->setHgv($hgv);
+                 }
+                 $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
+                 $correction->setFolder(ceil($correction->getTm() / 1000));
+                 $correction->setPosition($data[self::CSV_POSITION]);
                }
+               $correction->setDescription($description);
+               $correction->setSource($source);
+               $correction->setStatus($status);
+               $correction->setCreator($creator);
+               $correction->setCompilationPage($compilationPage);
+
+               echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
+               echo $row . '> Text: ' . $correction->getText() . "\n\n";
+
+               $manager->persist($correction);
+
+               $row++;
              } else {
                throw Exception('ungültige Zeile gefunden.');
              }
            }
        }
-       //$manager->flush();
+       $manager->flush();
        fclose($handle);
       }
     }

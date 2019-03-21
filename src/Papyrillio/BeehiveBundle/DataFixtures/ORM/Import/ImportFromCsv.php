@@ -107,13 +107,14 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
                $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
                $correction->setText($this->formatText($text1, $text2, $editionSort));
                if($correction->getText() != self::TEXT_PASSIM){
-                 $ddb = $this->getDdb($hgv);
-                 $correction->setDdb($ddb['ddb']);
-                 $correction->setCollection($ddb['collection']);
-                 $correction->setVolume($ddb['volume']);
-                 $correction->setDocument($ddb['document']);
                  if(self::checkHgv($hgv)){
                    $correction->setHgv($hgv);
+
+                   $ddb = $this->getDdb($hgv);
+                   $correction->setDdb($ddb['ddb']);
+                   $correction->setCollection($ddb['collection']);
+                   $correction->setVolume($ddb['volume']);
+                   $correction->setDocument($ddb['document']);
                  }
                  $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
                  $correction->setFolder(ceil($correction->getTm() / 1000));
@@ -170,7 +171,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
       if($ddbIdno->length > 0){
         $ddb = $ddbIdno->item(0)->nodeValue;
       } else {
-        throw Exception;
+        throw Exception();
       }
 
       $ddbExploded = explode(';', $ddb);

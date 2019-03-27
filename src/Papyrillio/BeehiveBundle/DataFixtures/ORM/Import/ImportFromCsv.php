@@ -10,6 +10,7 @@ use Papyrillio\BeehiveBundle\Entity\Task;
 use DateTime;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 
 /*
 
@@ -53,6 +54,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     protected $editionExampleCorrection = array();
 
     protected static $idnoXpath = null;
+    protected static $hgvDdb = array();
     
     static function fallback($value, $fallback){
       if(!isset($value) || $value === null || $value === '')
@@ -64,7 +66,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     function load(ObjectManager $manager)
     {
-       $row = 1;
+       $row = 0;
 
        $editionSortFallback = '';
        $hgvFallback = '';
@@ -72,14 +74,15 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
        $text2Fallback = '';
 
        if(($handle = fopen(self::IMPORT_FILE, 'r')) !== FALSE){
-         while(($data = fgetcsv($handle, 1000, ',')) !== FALSE){
+         while(($data = fgetcsv($handle, 0, ',')) !== FALSE){
+           $row++;
            $editionSort = $data[self::CSV_EDITION_SORT];
            $hgv         = preg_replace('/[^\da-z]+.*$/', '', $data[self::CSV_HGV]);
            $text1       = $data[self::CSV_TEXT1];
            $text2       = $data[self::CSV_TEXT2];
 
            if(strlen($editionSort) && !strlen($hgv)){ // Überschriftzeile gefunden
-             echo '------------------' . $data[self::CSV_DESCRIPTION] . "\n";
+             echo $row . ' -------- ' . $data[self::CSV_DESCRIPTION] . "\n";
              $editionSortFallback = $editionSort;
              $hgvFallback         = '';
              $text1Fallback       = '';
@@ -89,10 +92,12 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $hgv         = self::fallback($hgv, $hgvFallback);
              $text1       = self::fallback($text1, $text1Fallback);
              $text2       = self::fallback($text2, $text2Fallback);
-             
+
              $hgvFallback = $hgv;
              $text1Fallback = $text1;
              $text2Fallback = $text2;
+
+             echo $row . ' Ed. ' . $editionSort . "\t" . 'HGV ' . $hgv;
 
              if((preg_match('/\d+([a-z]+)?/', $hgv) && strlen($text1)) || $text1 == self::TEXT_PASSIM){
                $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
@@ -106,15 +111,16 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
                $correction->setEdition($this->getEdition($editionSort, $manager));
                $correction->setCompilation($this->getCompilation($compilationTitle, $manager));
                $correction->setText($this->formatText($text1, $text2, $editionSort));
-               if($correction->getText() != self::TEXT_PASSIM){
-                 if(self::checkHgv($hgv)){
-                   $correction->setHgv($hgv);
 
-                   $ddb = $this->getDdb($hgv);
-                   $correction->setDdb($ddb['ddb']);
-                   $correction->setCollection($ddb['collection']);
-                   $correction->setVolume($ddb['volume']);
-                   $correction->setDocument($ddb['document']);
+               if($correction->getText() != self::TEXT_PASSIM){
+                 if($this->checkHgv($hgv)){
+                   $correction->setHgv($hgv);
+                   if($ddb = $this->getDdb($hgv)){
+                     $correction->setDdb($ddb['ddb']);
+                     $correction->setCollection($ddb['collection']);
+                     $correction->setVolume($ddb['volume']);
+                     $correction->setDocument($ddb['document']);
+                   }
                  }
                  $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
                  $correction->setFolder(ceil($correction->getTm() / 1000));
@@ -126,15 +132,15 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
                $correction->setCreator($creator);
                $correction->setCompilationPage($compilationPage);
 
-               echo $row . '> [Edition #' . $correction->getEdition()->getId() . ']' . ' [Compilation #' . $correction->getCompilation()->getId() . '] ' . $correction->getHgv() . ' (' . $correction->getFolder() .  ') ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\n";
-               echo $row . '> Text: ' . $correction->getText() . "\n\n";
-
+               echo "\t" . 'DDB ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\t\t" . 'Text ' . $correction->getText() . "\n";
                $manager->persist($correction);
-
-               $row++;
              } else {
-               throw Exception('ungültige Zeile gefunden.');
+               echo "\n";
+               throw new Exception('ungültige Zeile gefunden.');
              }
+           }
+           if(($row + 0) % 400 === 0){
+             $manager->flush();
            }
        }
        $manager->flush();
@@ -146,7 +152,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     {
         return 1;
     }
-    
+
     static function getIdnoXpath(){
       if(!self::$idnoXpath){
         $doc = new DOMDocument();
@@ -155,27 +161,38 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
       }
       return self::$idnoXpath;
     }
-    
+
     protected function checkHgv($hgv){
-      $idno = self::getIdnoXpath()->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]");
-      return $idno->length > 0 ? true : false;
+      $lookupList = self::getHgvDdb();
+      return isset($lookupList[$hgv]) ? true : false;
+    }
+
+    protected static function getHgvDdb(){
+      if(!count(self::$hgvDdb)){
+        //$xpath->registerNamespace('fm', self::NAMESPACE_FILEMAKER);
+        $itemList = self::getIdnoXpath()->evaluate('/list/item');
+        for($i = 0; $i < $itemList->length; $i++){
+          $hgvIdno = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
+          $ddbIdno = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
+          $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
+          $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
+          if($hgvIdno){
+            if($ddbIdno){
+              $ddbExploded = explode(';', $ddbIdno);
+              $ddbIdno = array('ddb' => $ddbIdno, 'collection' => $ddbExploded[0], 'volume' => $ddbExploded[1], 'document' => $ddbExploded[2]);
+            }
+            self::$hgvDdb[$hgvIdno] = $ddbIdno;
+          } else {
+            throw new Exception('invalid item found in xml (hgv: ' . ($hgvIdno ? $hgvIdno : 'null') . '; ddb: ' . ($ddbIdno ? $ddbIdno : 'null') . ')');
+          }
+        }
+      }
+      return self::$hgvDdb;
     }
 
     protected function getDdb($hgv){
-      $xpath = self::getIdnoXpath();
-      //$xpath->registerNamespace('fm', self::NAMESPACE_FILEMAKER);
-
-      $ddb = ';;';
-      $ddbIdno = $xpath->evaluate("/list/item[idno[@type='hgv'][string(.)='" . $hgv . "']]/idno[@type='ddb']");
-
-      if($ddbIdno->length > 0){
-        $ddb = $ddbIdno->item(0)->nodeValue;
-      } else {
-        throw Exception();
-      }
-
-      $ddbExploded = explode(';', $ddb);
-      return array('ddb' => $ddb, 'collection' => $ddbExploded[0], 'volume' => $ddbExploded[1], 'document' => $ddbExploded[2]);
+      $lookupList = self::getHgvDdb();
+      return isset($lookupList[$hgv]) ? $lookupList[$hgv] : null;
     }
 
     protected function formatText($text1, $text2, $editionSort){

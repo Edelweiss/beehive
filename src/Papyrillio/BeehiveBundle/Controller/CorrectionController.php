@@ -68,7 +68,7 @@ class CorrectionController extends BeehiveController{
       if($this->getParameter('_search') == 'true'){
         $prefix = ' WHERE ';
 
-        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status') as $field){
+        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage') as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE :' . $field;
             $parameters[$field] = '%' . $this->getParameter($field) . '%';

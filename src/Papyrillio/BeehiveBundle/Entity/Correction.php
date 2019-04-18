@@ -80,6 +80,7 @@ class Correction
     public function __construct()
     {
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->registerEntries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->indexEntries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->status = self::STATUS_UNCHECKED;
         $this->creator = 'system';
@@ -508,6 +509,12 @@ class Correction
     private $sort;
 
     /**
+     * @var Papyrillio\BeehiveBundle\Entity\Register
+     */
+    private $registerEntries;
+    
+
+    /**
      * @var Papyrillio\BeehiveBundle\Entity\Task
      */
     private $tasks;
@@ -922,6 +929,59 @@ class Correction
     public function getSort()
     {
         return $this->sort;
+    }
+
+    /**
+     * Add registerEntries
+     *
+     * @param Papyrillio\BeehiveBundle\Entity\Register $registerEntries
+     */
+    public function addRegisterEntry(\Papyrillio\BeehiveBundle\Entity\Register $registerEntries)
+    {
+        $this->registerEntries[] = $registerEntries;
+    }
+
+    /**
+     * Get registerEntries
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getRegisterEntries()
+    {
+        return $this->registerEntries;
+    }
+    
+    public function getDistinctTm()
+    {
+        $distinctList = array();
+        foreach($this->registerEntries as $registerEntry){
+            if($registerEntry->getTm()){
+              $distinctList[$registerEntry->getTm()] = $registerEntry->getTm();
+            }
+        }
+        return $distinctList;
+    }
+    
+    public function getDistinctHgv()
+    {
+        $distinctList = array();
+        foreach($this->registerEntries as $registerEntry){
+            if($registerEntry->getHgv()){
+              $distinctList[$registerEntry->getHgv()] = $registerEntry->getHgv();
+            }
+        }
+        return $distinctList;
+    }
+    
+    public function getDistinctDdb()
+    {
+        $distinctList = array();
+        foreach($this->registerEntries as $registerEntry){
+            if($registerEntry->getDdb()){
+              $distinctList[$registerEntry->getDdb()] = $registerEntry->getDdb();
+            }
+        }
+        return $distinctList;
     }
 
     /**

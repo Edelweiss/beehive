@@ -9,6 +9,7 @@ use Papyrillio\BeehiveBundle\Entity\Compilation;
 use Papyrillio\BeehiveBundle\Entity\Edition;
 use Papyrillio\BeehiveBundle\Entity\Task;
 use Papyrillio\BeehiveBundle\Entity\IndexEntry;
+use Papyrillio\BeehiveBundle\Entity\Register;
 use DateTime;
 
 class CorrectionController extends BeehiveController{
@@ -50,8 +51,11 @@ class CorrectionController extends BeehiveController{
       // ODER BY
 
       $orderBy = '';
-      if(in_array($sort, array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'))){
+      if(in_array($sort, array('source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'))){
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
+      }
+      if(in_array($sort, array('tm', 'hgv', 'ddb'))){
+        $orderBy = ' ORDER BY r.' . $sort . ' ' . $sortDirection;
       }
       if($sort == 'edition'){
         $orderBy = ' ORDER BY e.sort ' . $sortDirection .  ', e.title ' . $sortDirection;
@@ -68,9 +72,17 @@ class CorrectionController extends BeehiveController{
       if($this->getParameter('_search') == 'true'){
         $prefix = ' WHERE ';
 
-        foreach(array('tm', 'hgv', 'ddb', 'source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage') as $field){
+        foreach(array('source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage') as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE :' . $field;
+            $parameters[$field] = '%' . $this->getParameter($field) . '%';
+            $prefix = ' AND ';
+          }
+        }
+
+        foreach(array('tm', 'hgv', 'ddb') as $field){
+          if(strlen($this->getParameter($field))){
+            $where .= $prefix . 'r.' . $field . ' LIKE :' . $field;
             $parameters[$field] = '%' . $this->getParameter($field) . '%';
             $prefix = ' AND ';
           }
@@ -105,7 +117,7 @@ class CorrectionController extends BeehiveController{
 
       $query = $entityManager->createQuery('
         SELECT count(DISTINCT c.id) FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
+        LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
         ' . $with . ' ' . $where
       );
       $query->setParameters($parameters);
@@ -113,11 +125,11 @@ class CorrectionController extends BeehiveController{
       $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
 
       // PAGINATION
-      
+
       if(!$print){
         $query = $entityManager->createQuery('
           SELECT DISTINCT c.id FROM PapyrillioBeehiveBundle:Correction c
-          LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
+          LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
           ' . $with . ' ' . $where . ' ' . $orderBy
         );
         $query->setParameters($parameters);
@@ -146,10 +158,10 @@ class CorrectionController extends BeehiveController{
       $this->get('logger')->info('totalPages: ' . $totalPages);
 
       // QUERY
-      
+
       $query = $entityManager->createQuery('
         SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
-        LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $with . ' ' . $where . ' ' . $orderBy
+        LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $with . ' ' . $where . ' ' . $orderBy
       );
       $query->setParameters($parameters);
 
@@ -306,17 +318,14 @@ class CorrectionController extends BeehiveController{
   }
   
   public function snippetLinkAction($id) {
-    $entityManager = $this->getDoctrine()->getEntityManager();
-    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-
-    $correction = $repository->findOneBy(array('id' => $id));
+    $this->retrieveCorrection($id);
     
     $this->get('logger')->info('********************');
-    $this->get('logger')->info(print_r($correction->getLinks(), TRUE));
+    $this->get('logger')->info(print_r($this->correction->getLinks(), TRUE));
 
-    return $this->render('PapyrillioBeehiveBundle:Correction:snippetLink.html.twig', array('correction' => $correction));
+    return $this->render('PapyrillioBeehiveBundle:Correction:snippetLink.html.twig', array('correction' => $this->correction));
   }
-  
+
   protected function retrieveCorrection($id){
     $this->entityManager = $this->getDoctrine()->getEntityManager();
     $this->repository = $this->entityManager->getRepository('PapyrillioBeehiveBundle:Correction');

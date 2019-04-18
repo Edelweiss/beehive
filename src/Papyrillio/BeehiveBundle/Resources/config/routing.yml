@@ -72,6 +72,10 @@ PapyrillioBeehiveBundle_correctionshow:
     pattern:  /correction/show/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:show }
 
+PapyrillioBeehiveBundle_correctiontest:
+    pattern:  /correction/test/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Correction:test }
+
 PapyrillioBeehiveBundle_correctiondelete:
     pattern:  /correction/delete/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Correction:delete }

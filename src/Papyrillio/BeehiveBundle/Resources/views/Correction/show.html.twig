@@ -1,7 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-
+<hr/>
+{% for r in correction.registerEntries %}
+<ul>
+<li>
+{{r.hgv}}, {{r.ddb}} 
+</li>
+</ul>
+{% endfor %}
+<hr/>
   <h3>{{ correction.title }}, <span id="text" class="edit">{{ correction.text }}</span>, <span id="position" class="edit">{{ correction.position }}</span> <span>(BL</span> <span id="compilation">{{ correction.compilation.title }}</span><span> S. </span><span id="compilationPage" class="edit">{{ correction.compilationPage }}</span><span>)</span></h3>
   
   <div id="correction">

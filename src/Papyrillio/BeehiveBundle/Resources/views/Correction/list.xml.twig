@@ -7,9 +7,9 @@
     <row id = '{{ correction.id }}'>
       <cell>{{ correction.compilation.title }}</cell>
       <cell>{{ correction.compilationPage }}</cell>
-      <cell>{{ correction.tm }}</cell>
-      <cell>{{ correction.hgv }}</cell>
-      <cell>{{ correction.ddb }}</cell>
+      <cell>{{ correction.distinctTm | join(', ') }}</cell>
+      <cell>{{ correction.distinctHgv | join(', ') }}</cell>
+      <cell>{{ correction.distinctDdb | join(', ') }}</cell>
       <cell>{{ correction.source }}</cell>
       <cell><![CDATA[<a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': correction.id}) }}" title="{{ correction.edition.sort }}={{ correction.edition.title }}">{{ correction.edition.title }}</a>]]></cell>
       <cell>{{ correction.text }}</cell>

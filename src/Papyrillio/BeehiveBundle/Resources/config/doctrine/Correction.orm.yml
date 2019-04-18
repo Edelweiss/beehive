@@ -120,6 +120,17 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         indexEntries:
             targetEntity: IndexEntry
             mappedBy: correction
+    manyToMany:
+        registerEntries:
+            targetEntity: Register
+            joinTable:
+              name: correction_register
+              joinColumns:
+                correction_id:
+                  referencedColumnName: id
+              inverseJoinColumns:
+                register_id:
+                  referencedColumnName: id
 
     lifecycleCallbacks:
         prePersist: [ encode ]

@@ -65,7 +65,7 @@ class CorrectionController extends BeehiveController{
       }
 
       // WHERE WITH
-      
+
       $where = '';
       $with = '';
       $parameters = array();

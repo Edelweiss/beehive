@@ -59,23 +59,28 @@ class Register
     public function getLink($type = 'pi'){
       switch($type){
         case 'pi':
-          return $this->ddb ? 'http://www.papyri.info/ddbdp/' . $this->ddb : null;
-        case 'biblio':
-          return $this->source ? 'http://www.papyri.info/biblio/' . $this->source : null;
+          return $this->ddb ? 'http://www.papyri.info/ddbdp/' . $this->ddb : ($this->hgv ? 'http://www.papyri.info/hgv/' . $this->hgv : null);
         case 'githubddb':
           return $this->collection ? 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml' : null;
         case 'githubhgv':
-          return $this->hgv && $this->folder ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml' : null;
+          return $this->hgv && $this->folder ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->calcFolder($this->hgv) . '/' . $this->hgv . '.xml' : null;
         case 'hgv':
           return $this->hgv ? 'https://aquila.zaw.uni-heidelberg.de/hgv/' . $this->hgv : null;
+        case 'tm':
+          return $this->tm ? 'https://www.trismegistos.org/dataservices/texrelations/xml/' . $this->tm : null;
         default:
           return null;
       }
     }
-
+    
+    public function calcFolder($tmOrHgv){
+      $id = preg_replace('/[a-z]+/', '', $tmOrHgv);
+      return ceil($id / 1000) . '';
+    }
+    
     public function getLinks(){
       $links = array();
-      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'biblio' => 'Biblio') as $type => $name){
+      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'tm' => 'TM') as $type => $name){
         if($this->getLink($type)){
           $links[$name] = $this->getLink($type);
         }
@@ -255,5 +260,14 @@ class Register
     public function addCorrection(\Papyrillio\BeehiveBundle\Entity\Correction $corrections)
     {
         $this->corrections[] = $corrections;
+    }
+
+    /**
+     * Get corrections
+     *
+     */
+    public function getCorrections()
+    {
+        return $this->corrections;
     }
 }

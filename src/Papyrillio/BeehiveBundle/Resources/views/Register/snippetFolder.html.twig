@@ -1,0 +1,18 @@
+<div id="registerFolder" style="min-height: 200px; overflow: auto;" class="ui-widget-content">
+  <ul class="registerFolder">
+    {% if correction %}
+      {% for registerEntry in correction.registerEntries %}
+        <li>{{registerEntry.tm}}, {{registerEntry.hgv}}, {{registerEntry.ddb}}
+        <ul class="registerLinks">
+          {% for name,link in registerEntry.links %}
+            <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+    
+        </li>
+      {% endfor %}
+    {% else %}
+      <li>nichts…</li>
+    {% endif %}
+  </ul>
+</div>

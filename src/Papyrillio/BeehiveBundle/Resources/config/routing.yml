@@ -32,6 +32,32 @@ PapyrillioBeehiveBundle_numberwizardautocompleteddb:
     pattern:  /numberWizard/autocomplete/ddb
     defaults: { _controller: PapyrillioBeehiveBundle:NumberWizard:autocompleteDdb}
 
+# Register
+
+PapyrillioBeehiveBundle_registerautocomplete:
+    pattern:  /register/autocomplete/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:autocomplete, id = 0}
+
+PapyrillioBeehiveBundle_registershowassignments:
+    pattern:  /register/showAssignments/{correctionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:showAssignments}
+    requirements:
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerrevokeassignment:
+    pattern:  /register/revokeAssignment/{registerId}/{correctionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:revokeAssignment}
+    requirements:
+      registerId: '\d+'
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerassign:
+    pattern:  /register/assign/{registerId}/{correctionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:assign}
+    requirements:
+      registerId: '\d+'
+      correctionId: '\d+'
+
 # Report
 
 PapyrillioBeehiveBundle_report:

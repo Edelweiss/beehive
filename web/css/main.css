@@ -274,6 +274,22 @@ table.reportLeiden thead th.task  {
   font-style: italic;
 }
 
+/* REGISTER */
+
+ul.registerFolder li{
+  float: left;
+  list-style-type: none;
+}
+
+ul.registerLinks{
+  float: right;
+}
+
+ul.registerLinks li{
+  float: right;
+  list-style-type: none;
+}
+
 /* MENUE */
 
 div#navigation {

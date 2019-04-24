@@ -1,15 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<hr/>
-{% for r in correction.registerEntries %}
-<ul>
-<li>
-{{r.hgv}}, {{r.ddb}} 
-</li>
-</ul>
-{% endfor %}
-<hr/>
   <h3>{{ correction.title }}, <span id="text" class="edit">{{ correction.text }}</span>, <span id="position" class="edit">{{ correction.position }}</span> <span>(BL</span> <span id="compilation">{{ correction.compilation.title }}</span><span> S. </span><span id="compilationPage" class="edit">{{ correction.compilationPage }}</span><span>)</span></h3>
   
   <div id="correction">
@@ -59,6 +50,10 @@
       <div id="link">
         {% include 'PapyrillioBeehiveBundle:Correction:snippetLink.html.twig' with {'correction': correction} %}
       </div>
+    </div>
+    <h4><a href="#">Register</a></h4>
+    <div id="register">
+      {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': correction} %}
     </div>
     <h4><a href="#">Versionslogbuch</a></h4>
     <div class="log">
@@ -147,7 +142,8 @@
       });*/
 
       $('#correction').togglepanels();
-      $('#task').prev().click();
+      //$('#task').prev().click();
+      $('#register').prev().click();
 
       $('.edit').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
         id   : 'elementid',
@@ -292,19 +288,32 @@
       $('#callDialogueIndexNew').click(function(){
         $('#newIndex').dialog('open');
       });
-      
+
       $('.deleteTask').click(function(event){
         deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
       });
-      
+
       $('.deleteIndex').click(function(event){
         deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
       });
-      
+
       $('#previewAction').click(function(){
         preview();
       });
       
+       function log(message) {
+      $("<div>").text(message).prependTo("#registerFolder");
+      $("#registerFolder").scrollTop(0);
+    }
+
+    $("#registerJuggler").autocomplete({
+      source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete', {'id': correction.id}) }}",
+      minLength: 2,
+      select: function(event, ui){
+        log(ui.item.id + ': ' + ui.item.value + " aka " + ui.item.label);
+      }
+    });
+
     });
   </script>
 {% endblock %}

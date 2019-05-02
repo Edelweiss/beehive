@@ -34,6 +34,12 @@ PapyrillioBeehiveBundle_numberwizardautocompleteddb:
 
 # Register
 
+PapyrillioBeehiveBundle_registershow:
+    pattern:  /register/show/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:show }
+    requirements:
+      id: '\d+'
+
 PapyrillioBeehiveBundle_registerautocomplete:
     pattern:  /register/autocomplete/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Register:autocomplete, id = 0}
@@ -56,6 +62,12 @@ PapyrillioBeehiveBundle_registerassign:
     defaults: { _controller: PapyrillioBeehiveBundle:Register:assign}
     requirements:
       registerId: '\d+'
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_createandassign:
+    pattern:  /register/createAndAssign/{correctionId}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:createAndAssign}
+    requirements:
       correctionId: '\d+'
 
 # Report

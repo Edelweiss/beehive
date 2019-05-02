@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+  {{ register.ddb }}, TM/HGV {{ register.tm }}/{{ register.hgv }}
+  <ul>
+    {% for correction in register.corrections %}
+      <li>{{correction.edition.title}} {{correction.text}} {{correction.position}}: {{correction.description}} ({{correction.status}}, {{correction.creator}})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,18 +1,34 @@
-<div id="registerFolder" style="min-height: 200px; overflow: auto;" class="ui-widget-content">
-  <ul class="registerFolder">
+<table class="register">
+  <thead>
+    <tr>
+      <th scope="col" class="tm">TM</th>
+      <th scope="col" class="hgv">HGV</th>
+      <th scope="col" class="ddbdp">DDB</th>
+      <th scope="col" class="link">Links</th>
+      <th scope="col" class="action"></th>
+    </tr>
+  </thead>
+  <tbody>
     {% if correction %}
       {% for registerEntry in correction.registerEntries %}
-        <li>{{registerEntry.tm}}, {{registerEntry.hgv}}, {{registerEntry.ddb}}
-        <ul class="registerLinks">
-          {% for name,link in registerEntry.links %}
-            <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
-          {% endfor %}
-        </ul>
-    
-        </li>
+        <tr>
+          <td>{{registerEntry.tm}}</td>
+          <td>{{registerEntry.hgv}}</td>
+          <td>{{registerEntry.ddb}}</td>
+          <td>
+            <ul class="registerLinks">
+              {% for name,link in registerEntry.links %}
+                <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="actionHolder">
+            <a href="{{ registerEntry.id }}" onclick="javascript: $('#registerFolder').load('{{ path('PapyrillioBeehiveBundle_registerrevokeassignment', {'registerId': registerEntry.id, 'correctionId': correction.id}) }}'); return false;" title="{{ registerEntry.id }}">Zuordnung aufheben</a>
+          </td>
+        </tr>
       {% endfor %}
     {% else %}
-      <li>nichts…</li>
+      <tr><td colspan="5">nichts…</td></tr>
     {% endif %}
-  </ul>
-</div>
+  </tbody>
+</table>

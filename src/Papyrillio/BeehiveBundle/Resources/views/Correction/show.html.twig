@@ -300,17 +300,30 @@
       $('#previewAction').click(function(){
         preview();
       });
-      
+
        function log(message) {
-      $("<div>").text(message).prependTo("#registerFolder");
+      $("<span>").text(message).prependTo("#registerFolder");
       $("#registerFolder").scrollTop(0);
     }
 
-    $("#registerJuggler").autocomplete({
+    function addRegisterAssigment(registerId){
+      var path0 = '{{ path('PapyrillioBeehiveBundle_registerassign', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path = path0.replace('/0/', '/' + registerId + '/');
+      $('#registerFolder').load(path);
+    }
+
+    function revokeRegisterAssigment(registerId){
+      var path0 = '{{ path('PapyrillioBeehiveBundle_registerrevokeassignment', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path = path0.replace('/0/', '/' + registerId + '/');
+      $('#registerFolder').load(path);
+    }
+
+    $("#registerJuggler input").autocomplete({
       source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete', {'id': correction.id}) }}",
       minLength: 2,
       select: function(event, ui){
-        log(ui.item.id + ': ' + ui.item.value + " aka " + ui.item.label);
+        //log(ui.item.id + ': ' + ui.item.value + " aka " + ui.item.label);
+        addRegisterAssigment(ui.item.id);
       }
     });
 

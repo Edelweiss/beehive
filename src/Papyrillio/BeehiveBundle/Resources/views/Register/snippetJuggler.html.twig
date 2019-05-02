@@ -1,9 +1,11 @@
-<div class="ui-widget">
-  <label for="registerJuggler">Registersuche</label>
-  <input id="registerJuggler">
+<div id="registerJuggler" class="ui-widget">
+  <label>Registersuche</label>
+  <input/>
+  <span class="actionHolder">
+    <a href="#" onclick="javascript: if(confirm('Neuen Eintrag `' + $('div#registerJuggler input').val() + '` wirklich anlegen?')){$('#registerFolder').load('{{ path('PapyrillioBeehiveBundle_createandassign', {'correctionId': correction.id}) }}', {newEntry: $('div#registerJuggler input').val()});}; return false;">Neuen Registereintrag anlegen</a>
+  </span>
 </div>
 
-<div class="ui-widget" style="margin-top:2em; font-family:Arial">
-  Registerzuordnungen
+<div id="registerFolder" class="ui-widget">
   {% include 'PapyrillioBeehiveBundle:Register:snippetFolder.html.twig' with {'correction': correction} %}
 </div>

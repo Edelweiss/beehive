@@ -5,6 +5,7 @@ namespace Papyrillio\BeehiveBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Papyrillio\BeehiveBundle\Entity\Correction;
+use Papyrillio\BeehiveBundle\Entity\Register;
 use DOMDocument;
 use DOMXPath;
 
@@ -22,7 +23,7 @@ class RegisterController extends BeehiveController{
       $query->setMaxResults(20);
 
       foreach($query->getResult() as $result){
-        $caption = ($result['ddb'] ? $result['ddb'] . ' ' : '') . ($result['hgv'] || $result['tm'] ? 'TM/HGV ' : '') . ($result['hgv'] ? $result['hgv'] : $result['tm']); 
+        $caption = ($result['ddb'] ? $result['ddb'] . ' ' : '') . ($result['hgv'] || $result['tm'] ? 'TM/HGV ' : '') . ($result['tm'] ? $result['tm'] . ($result['hgv'] != $result['tm'] ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']); 
         $autocomplete[] = array('id' => $result['id'], 'value' => $caption, 'label' => $caption);
       }
     }
@@ -60,143 +61,75 @@ class RegisterController extends BeehiveController{
     return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
   }
 
-  public function indexAction(){
-    $id = $this->getParameter('id');
-    $data = $this->getData($id);
+  public function createAndAssignAction($correctionId){
+    $newEntry = $this->getParameter('newEntry');
 
-    return new Response(json_encode(array('success' => true, 'data' => $data)));
+    $ddb = null;
+    $tm  = null;
+    $hgv = null;
+
+    $ddbParse = preg_replace('/^(.*[^\w\d])?([\w\d]+;[\w\d\.()]*;[\w\d_,+\-\/\.()]+)([^\w\d_].*)?$/', '$2', $newEntry);
+    if(preg_match('/^[\w\d]+;[\w\d\.()]*;[\w\d_,+\-\/\.()]+$/', $ddbParse)){
+      $ddb = $ddbParse;
+    }
+
+    $tmParse = preg_replace('/^(.* )?(\d+)( .*)?$/', '$2', $newEntry);
+    if(preg_match('/^\d+$/', $tmParse)){
+      $tm = $tmParse;
+    }
+
+    $hgvParse = preg_replace('/^(.* )?(\d+[a-z]+)( .*)?$/', '$2', $newEntry);
+    if(preg_match('/^\d+[a-z]+$/', $hgvParse)){
+      $hgv = $hgvParse;
+    }
+    
+    if(!$hgv && $tm && preg_match('/.*' . $tm . '.+' . $tm . '.*/', $newEntry)){
+      $hgv = $tm;
+    }
+
+    $register = $this->getOrCreate($ddb, $tm, $hgv);
+    $correction = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Correction')->findOneBy(array('id' => $correctionId));
+
+    $register->addCorrection($correction);
+    $correction->addRegisterEntry($register);
+
+    $this->getDoctrine()->getEntityManager()->persist($register);
+    $this->getDoctrine()->getEntityManager()->persist($correction);
+    $this->getDoctrine()->getEntityManager()->flush();
+
+    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
+  }
+
+  public function createAction(){
+    $register = $this->getOrCreate($this->getParameter('ddb'), $this->getParameter('tm'), $this->getParameter('hgv'));
+
+    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershow', array('id' => $register->getId())));
+  }
+
+  public function showAction($id){
+    $register = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('id' => $id));
+
+    return $this->render('PapyrillioBeehiveBundle:Register:show.html.twig', array('register' => $register));
   }
   
-  public function lookup(){
-    $text = $this->getParameter('text');
-    $editionId = $this->getParameter('editionId');
-    $data = $this->getData();
+  private function getOrCreate($ddb = null, $tm = null, $hgv = null){
+    $register = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('ddb' => $ddb, 'tm' => $tm, 'hgv' => $hgv));
 
-    $entityManager = $this->getDoctrine()->getEntityManager();
-    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-
-    $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.edition = :edition AND c.text = :text')->setParameters(array('text' => $text, 'edition' => $editionId))->setMaxResults(1);
-    $corrections = $query->getResult();
-
-    if(count($corrections)){
-      $correction = $corrections[0];
-      $data = $this->getData($correction->getHgv());
+    if(!$register && ((isset($tm) && strlen($tm)) || (isset($hgv) && strlen($hgv)) || (isset($ddb) && strlen($ddb)))){
+      $register = new Register();
+      if($ddb && strlen($ddb)){
+        $register->setDdb($ddb);
+      }
+      if($hgv && strlen($hgv)){
+        $register->setHgv($hgv);
+      }
+      if($tm && strlen($tm)){
+        $register->setTm($tm);
+      }
+      $this->getDoctrine()->getEntityManager()->persist($register);
+      $this->getDoctrine()->getEntityManager()->flush();
     }
 
-    return new Response(json_encode(array('success' => true, 'data' => $data)));
-  }
-
-  protected function getData($id = 0){
-    $data = array('tm' => array(), 'hgv' => array(), 'ddb' => array(), 'bl' => array());
-    
-    if(!$id){
-      return $data;
-    }
-    
-    // TM, HGV, DDB
-    
-    $doc = new DOMDocument;
-    $doc->load($this->get('kernel')->getRootDir() . '/../src/Papyrillio/BeehiveBundle/Resources/data/idno.xml');
-    $xpath = new DOMXPath($doc);
-
-    if($this->isHgv($id)){
-      $data['hgv'] = array($id);
-      $data['tm'] = array(preg_replace('/[^\d]+/', '', $id));
-
-      $query = '/list/item/idno[@type = "hgv"][text() = "' . $id . '"]/ancestor::item/idno[@type = "ddb"]';
-      $result = $xpath->query($query);
-
-      if($result->length){
-        $data['ddb'] = array($result->item(0)->textContent);
-      }
-
-    } else if($this->isDdb($id)){
-      $data['ddb'] = array($id);
-
-      $query = '/list/item/idno[@type = "ddb"][text() = "' . $id . '"]/ancestor::item/idno[@type = "hgv"]';
-      $result = $xpath->query($query);
-
-      if($result->length){
-        $data['hgv'] = array($result->item(0)->textContent);
-        $data['tm'] = array(preg_replace('/[^\d]+/', '', $result->item(0)->textContent));
-      }
-    }
-    
-    // BL EDITION & TEXT
-    
-    if(count($data['hgv']) and preg_match('/^\d+[A-Za-z]*$/', $data['hgv'][0])){
-
-      $entityManager = $this->getDoctrine()->getEntityManager();
-      $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-      
-      $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.hgv = \'' . $data['hgv'][0] . '\'')->setMaxResults(1);
-      $corrections = $query->getResult();
-      
-      if(count($corrections)){
-        $correction = $corrections[0];
-        $data['bl'] = array('edition' => $correction->getEdition()->getId(), 'text' => $correction->getText());
-      }
-    }
-
-    return $data;
-
-  }
-  
-  public function _indexAction(){ // old version using number server rdf
-
-    $id = $this->getParameter('id');
-    $data = array('tm' => array(), 'hgv' => array(), 'ddb' => array(), 'bl' => array());
-    
-    if($this->isHgv($id)){
-      $data['tm'] = array(preg_replace('/[^\d]+/', '', $id));
-      $data['hgv'] = array($id);
-    } else if($this->isDdb($id)){
-      $data['ddb'] = array($id);
-    }
-
-    $path = 'http://papyri.info/' . ( $this->isDdb($id) ? 'ddbdp' : 'hgv') . '/' . $id . '/rdf';
-    $rdf = file_get_contents($path);
-
-    $doc = new DOMDocument;
-    $doc->load($path);
-    $xpath = new DOMXPath($doc);
-    $query = '//dcterms:relation/@rdf:resource';
-    $relations = $xpath->query($query);
-
-    $matches = array();
-    foreach($relations as $relation){
-
-      if(preg_match('/^http:\/\/papyri\.info\/ddbdp\/(.+)\/source$/', $relation->value, $matches)){
-        if(!in_array($matches[1], $data['ddb'])){
-          if(!$this->isReprinted($matches[1])){
-            $data['ddb'][] = $matches[1];
-          }
-        }
-      }
-      if(preg_match('/^http:\/\/papyri\.info\/hgv\/(.+)\/source$/', $relation->value, $matches)){
-        if(!in_array($matches[1], $data['hgv'])){
-          $data['hgv'][] = $matches[1];
-        }
-      }
-      if(preg_match('/^http:\/\/www\.trismegistos\.org\/tm\/detail\.php\?quick=(\d+)$/', $relation->value, $matches)){
-        if(!in_array($matches[1], $data['tm'])){
-          $data['tm'][] = $matches[1];
-        }
-      }
-    }
-
-    return new Response(json_encode(array('success' => true, 'data' => $data)));
-  }
-
-  protected function isDdb($id){
-    return preg_match('/^.+;.*;.+$/', $id);
-  }
-
-  protected function isHgv($id){
-    return !$this->isDdb($id);
-  }
-  
-  protected function isReprinted($id){
-    return false;
+    return $register;
   }
 }

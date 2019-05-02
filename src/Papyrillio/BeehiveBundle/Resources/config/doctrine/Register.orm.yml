@@ -14,9 +14,6 @@ Papyrillio\BeehiveBundle\Entity\Register:
         tm:
             type: integer
             nullable: true
-        folder:
-            type: integer
-            nullable: true
         ddb:
             type: string
             length: 64

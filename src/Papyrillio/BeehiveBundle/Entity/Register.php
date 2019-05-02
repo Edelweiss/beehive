@@ -42,7 +42,6 @@ class Register
     public function setTm($tm)
     {
         $this->tm = $tm;
-        $this->folder = ceil($this->tm / 1000.0);
     }
 
     /**
@@ -63,7 +62,7 @@ class Register
         case 'githubddb':
           return $this->collection ? 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml' : null;
         case 'githubhgv':
-          return $this->hgv && $this->folder ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->calcFolder($this->hgv) . '/' . $this->hgv . '.xml' : null;
+          return $this->hgv ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->calcFolder($this->hgv) . '/' . $this->hgv . '.xml' : null;
         case 'hgv':
           return $this->hgv ? 'https://aquila.zaw.uni-heidelberg.de/hgv/' . $this->hgv : null;
         case 'tm':
@@ -97,11 +96,6 @@ class Register
      * @var integer $tm
      */
     private $tm;
-
-    /**
-     * @var integer $folder
-     */
-    private $folder;
 
     /**
      * @var string $hgv
@@ -150,26 +144,6 @@ class Register
     public function getTm()
     {
         return $this->tm;
-    }
-
-    /**
-     * Set folder
-     *
-     * @param integer $folder
-     */
-    public function setFolder($folder)
-    {
-        $this->folder = $folder;
-    }
-
-    /**
-     * Get folder
-     *
-     * @return integer 
-     */
-    public function getFolder()
-    {
-        return $this->folder;
     }
 
     /**

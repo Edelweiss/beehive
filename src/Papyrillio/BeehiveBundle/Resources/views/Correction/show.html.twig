@@ -301,11 +301,6 @@
         preview();
       });
 
-       function log(message) {
-      $("<span>").text(message).prependTo("#registerFolder");
-      $("#registerFolder").scrollTop(0);
-    }
-
     function addRegisterAssigment(registerId){
       var path0 = '{{ path('PapyrillioBeehiveBundle_registerassign', {'registerId': 0, 'correctionId': correction.id}) }}'; 
       var path = path0.replace('/0/', '/' + registerId + '/');
@@ -322,8 +317,7 @@
       source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete', {'id': correction.id}) }}",
       minLength: 2,
       select: function(event, ui){
-        //log(ui.item.id + ': ' + ui.item.value + " aka " + ui.item.label);
-        addRegisterAssigment(ui.item.id);
+        addRegisterAssigment(ui.item.id); // ui.item.value, ui.item.label
       }
     });
 

@@ -12,3 +12,5 @@
 /src/Papyrillio/BeehiveBundle/Resources/data/DDB_EpiDoc_XML
 /src/Papyrillio/BeehiveBundle/Resources/data/import.csv
 /src/Papyrillio/BeehiveBundle/Resources/data/idno.xml
+/src/Papyrillio/BeehiveBundle/Resources/data/register.csv
+/src/Papyrillio/BeehiveBundle/Resources/data/register.sql

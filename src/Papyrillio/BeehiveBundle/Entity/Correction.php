@@ -158,12 +158,7 @@ class Correction
      */
     public function setDdb($ddb)
     {
-        $this->ddb = $ddb;
-
-        $tokenList = explode(';', $this->ddb);
-        $this->collection = array_key_exists(0, $tokenList) ? $tokenList[0] : '';
-        $this->volume     = array_key_exists(1, $tokenList) ? $tokenList[1] : '';
-        $this->document   = array_key_exists(2, $tokenList) ? $tokenList[2] : '';
+        throw new Exception('setDdb() invalid function');
     }
 
     /**
@@ -173,8 +168,7 @@ class Correction
      */
     public function setTm($tm)
     {
-        $this->tm = $tm;
-        $this->folder = ceil($this->tm / 1000.0);
+        throw new Exception('setTm() invalid function');
     }
 
     /**
@@ -184,25 +178,8 @@ class Correction
      */
     public function setHgv($hgv)
     {
-        $this->hgv = $hgv;
-        $this->setTm(preg_replace('/[^\d]+/', '', $hgv) * 1);
-    }
+        throw new Exception('setHgv() invalid function');
 
-    public function getLink($type = 'pi'){
-      switch($type){
-        case 'pi':
-          return $this->ddb ? 'http://www.papyri.info/ddbdp/' . $this->ddb : null;
-        case 'biblio':
-          return $this->source ? 'http://www.papyri.info/biblio/' . $this->source : null;
-        case 'githubddb':
-          return $this->collection ? 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml' : null;
-        case 'githubhgv':
-          return $this->hgv && $this->folder ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->folder . '/' . $this->hgv . '.xml' : null;
-        case 'hgv':
-          return $this->hgv ? 'https://aquila.zaw.uni-heidelberg.de/hgv/' . $this->hgv : null;
-        default:
-          return null;
-      }
     }
 
     /**
@@ -384,13 +361,10 @@ class Correction
     }
 
     public function getLinks(){
-      $links = array();
-      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'biblio' => 'Biblio') as $type => $name){
-        if($this->getLink($type)){
-          $links[$name] = $this->getLink($type);
-        }
+      if($this->registerEntries){
+        return $this->registerEntries->first()->getLinks();
       }
-      return $links;
+      return array();
     }
 
     /**
@@ -412,11 +386,6 @@ class Correction
      * @var integer $tm
      */
     private $tm;
-
-    /**
-     * @var integer $folder
-     */
-    private $folder;
 
     /**
      * @var string $hgv
@@ -576,27 +545,9 @@ class Correction
      */
     public function getTm()
     {
-        return $this->tm;
-    }
-
-    /**
-     * Set folder
-     *
-     * @param integer $folder
-     */
-    public function setFolder($folder)
-    {
-        $this->folder = $folder;
-    }
-
-    /**
-     * Get folder
-     *
-     * @return integer 
-     */
-    public function getFolder()
-    {
-        return $this->folder;
+      if($this->registerEntries){
+        return $this->registerEntries->first()->getTm();
+      }
     }
 
     /**
@@ -606,7 +557,9 @@ class Correction
      */
     public function getHgv()
     {
-        return $this->hgv;
+      if($this->registerEntries){
+        return $this->registerEntries->first()->getHgv();
+      }
     }
 
     /**
@@ -616,7 +569,9 @@ class Correction
      */
     public function getDdb()
     {
-        return $this->ddb;
+      if($this->registerEntries){
+        return $this->registerEntries->first()->getDdb();
+      }
     }
 
     /**

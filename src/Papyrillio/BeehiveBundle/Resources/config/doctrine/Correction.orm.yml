@@ -18,9 +18,6 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         tm:
             type: integer
             nullable: true
-        folder:
-            type: integer
-            nullable: true
         hgv:
             type: string
             length: 64

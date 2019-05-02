@@ -123,7 +123,6 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
                    }
                  }
                  $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));
-                 $correction->setFolder(ceil($correction->getTm() / 1000));
                  $correction->setPosition($data[self::CSV_POSITION]);
                }
                $correction->setDescription($description);

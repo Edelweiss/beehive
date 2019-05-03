@@ -219,6 +219,10 @@ div#preview table {
   width: 100%;
 }
 
+ul.ids, div.ids, div#link {
+  float: left;
+}
+
 /* CORRECTION LIST */
 
 /* FORM DIV */

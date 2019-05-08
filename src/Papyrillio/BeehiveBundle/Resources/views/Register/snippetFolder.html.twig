@@ -1,15 +1,15 @@
-<table class="register">
-  <thead>
-    <tr>
-      <th scope="col" class="tm">TM</th>
-      <th scope="col" class="hgv">HGV</th>
-      <th scope="col" class="ddbdp">DDB</th>
-      <th scope="col" class="link">Links</th>
-      <th scope="col" class="action"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% if correction %}
+{% if correction and correction.id %}
+  <table class="register">
+    <thead>
+      <tr>
+        <th scope="col" class="tm">TM</th>
+        <th scope="col" class="hgv">HGV</th>
+        <th scope="col" class="ddbdp">DDB</th>
+        <th scope="col" class="link">Links</th>
+        <th scope="col" class="action"></th>
+      </tr>
+    </thead>
+    <tbody>    
       {% for registerEntry in correction.registerEntries %}
         <tr>
           <td>{{registerEntry.tm}}</td>
@@ -27,8 +27,9 @@
           </td>
         </tr>
       {% endfor %}
-    {% else %}
-      <tr><td colspan="5">nichts…</td></tr>
-    {% endif %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+{% else %}
+  <ul class="register">
+  </ul>
+{% endif %}

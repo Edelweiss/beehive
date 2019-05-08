@@ -19,16 +19,36 @@ class RegisterController extends BeehiveController{
       $entityManager = $this->getDoctrine()->getEntityManager();
       $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
 
-      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE r.ddb LIKE \'%' . $term . '%\' OR r.hgv LIKE \'' . $term . '%\' OR r.tm LIKE \'' . $term . '%\' ORDER BY r.collection, r.volume, r.document');
+      $search = 'r.ddb LIKE \'%' . $term . '%\'';
+      $order = 'r.collection, r.volume, r.document';
+      if(preg_match('/^\d/', $term)){
+        $search = 'r.hgv LIKE \'' . $term . '%\' OR r.tm LIKE \'' . $term . '%\'';
+        $order = 'r.tm, r.hgv';
+      }
+
+      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE ' . $search . ' ORDER BY ' . $order);
       $query->setMaxResults(20);
 
       foreach($query->getResult() as $result){
-        $caption = ($result['ddb'] ? $result['ddb'] . ' ' : '') . ($result['hgv'] || $result['tm'] ? 'TM/HGV ' : '') . ($result['tm'] ? $result['tm'] . ($result['hgv'] != $result['tm'] ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']); 
+        $caption = $this->makeCaption($result, (preg_match('/^\d/', $term)) ? 'hgv' : 'ddb');
+        
         $autocomplete[] = array('id' => $result['id'], 'value' => $caption, 'label' => $caption);
       }
     }
 
     return new Response(json_encode($autocomplete));
+  }
+
+  protected function makeCaption($result, $type = 'ddb'){
+    if($type == 'hgv'){
+      $caption = ($result['tm'] ? $result['tm'] . ($result['hgv'] && ($result['hgv'] != $result['tm']) ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']);
+      $caption .= ($result['ddb'] ? ' (' . $result['ddb'] . ')' : '');
+      return $caption;
+    }
+    $caption = ($result['ddb'] ? $result['ddb'] . '' : '');
+    $caption .= ($result['hgv'] || $result['tm'] ? ' TM/HGV ' : '');
+    $caption .= ($result['tm'] ? $result['tm'] . ($result['hgv'] && ($result['hgv'] != $result['tm']) ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']);
+    return $caption;
   }
 
   public function showAssignmentsAction($correctionId){
@@ -88,13 +108,14 @@ class RegisterController extends BeehiveController{
     }
 
     $register = $this->getOrCreate($ddb, $tm, $hgv);
+
     $correction = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Correction')->findOneBy(array('id' => $correctionId));
 
     $register->addCorrection($correction);
     $correction->addRegisterEntry($register);
 
-    $this->getDoctrine()->getEntityManager()->persist($register);
     $this->getDoctrine()->getEntityManager()->persist($correction);
+    $this->getDoctrine()->getEntityManager()->persist($register);
     $this->getDoctrine()->getEntityManager()->flush();
 
     return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));

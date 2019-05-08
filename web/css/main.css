@@ -152,7 +152,7 @@ form.new input.submit{
   margin: 0.2em;
   float: right;
 }
-
+/*
 form#correctionNew div.idno {
   position: absolute;
   width: 16em;
@@ -160,7 +160,7 @@ form#correctionNew div.idno {
   right: -16em;
 
 }
-
+*/
 form#correctionNew div input#form_position {
   width: 100%;
 }

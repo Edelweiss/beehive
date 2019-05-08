@@ -183,28 +183,30 @@ class CorrectionController extends BeehiveController{
   
   public function newAction(){
     $correction = new Correction();
-    
+
     $correction->setCreator($this->get('security.context')->getToken()->getUser()->getUsername());
-    
+
     $entityManager = $this->getDoctrine()->getEntityManager();
     $editionRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Edition');
 
     $correction->setCompilation($this->getCompilation());
     $correction->setEdition($this->getEdition());
 
+    $registerRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
+
     $form = $this->createFormBuilder($correction)
       ->add('compilationPage', 'text')
       ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizardlookup'))))
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))
-      ->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
-      ->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
-      ->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      //->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      //->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      //->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
       ->add('source', 'number', array('required' => false, 'label' => 'Quelle'))
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {
-        
+
       $form->bindRequest($this->getRequest());
 
       if ($form->isValid()) {
@@ -215,6 +217,15 @@ class CorrectionController extends BeehiveController{
             $task->setDescription(trim($description));
             $task->setCorrection($correction);
             $entityManager->persist($task);
+          }
+        }
+
+        if($this->getParameter('register')){
+          foreach($this->getParameter('register') as $registerId){
+            $register = $registerRepository->findOneBy(array('id' => $registerId));
+            if($register){
+              $correction->addRegisterEntry($register);
+            }
           }
         }
         $entityManager->persist($correction);

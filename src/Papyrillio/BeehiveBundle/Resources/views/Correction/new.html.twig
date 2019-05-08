@@ -7,6 +7,29 @@
     {{ form_errors(form) }}
     
     <input type="hidden" name="redirectTarget" id="redirectTarget" value="show" />
+    
+    <h5>Externe Quellen zuordnen</h5>
+
+    <div id="register">
+      {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': form.vars.value} %}
+    </div>
+    <div class="register">
+    
+      
+      <div class="ui-widget" id="duplicateWarning" style="display: none;">
+        <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
+          <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> Es sind bereits <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'hgv', 'id': 0}) }}" id="duplicateLink" target="_blank">Daten</a> für diese HGV Nr. vorhanden! Es könnte sich möglicherweise um ein Duplikat handeln.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">
+      <label>Quelle</label>
+      {{ form_widget(form.source) }}
+      {{ form_errors(form.source) }}
+    </div>
+
+    <h5>BL-Daten eingeben</h5>
 
     <div>
         <label>Band</label>
@@ -65,15 +88,8 @@
         <input name="task[{{ task }}]" id="task_{{ task }}" type="text" />
       </div>
     {% endfor %}
-    
-    <div class="idno">
-      {{ form_rest(form) }}
-      <div class="ui-widget" id="duplicateWarning" style="display: none;">
-        <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
-          <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> Es sind bereits <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'hgv', 'id': 0}) }}" id="duplicateLink" target="_blank">Daten</a> für diese HGV Nr. vorhanden! Es könnte sich möglicherweise um ein Duplikat handeln.</p>
-        </div>
-      </div>
-    </div>
+
+    {{ form_rest(form) }}
 
     <input class="submit" type="submit" name="new" id="new" value="Datensatz anlegen" />
     <input class="submit" type="submit" name="newAndAgain" id="newAndAgain" value="Datensatz anlegen und hierher zurück springen" />
@@ -87,5 +103,24 @@
   <script src="{{ asset('js/jquery/jquery-specialedit.hacked.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/correction.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/correctionNew.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    function addRegisterAssigment(registerId, value, label){
+      console.log($('ul.register'));
+      console.log($('ul.register li input#register_' + registerId));
+      console.log($('dkfjdk'));
+      if(!$('ul.register li input#register_' + registerId).length){
+        $('ul.register').append('<li><input type="hidden" name="register[]" id="register_' + registerId + '" value="' + registerId + '"/>' + label + '<span class="action" onclick="$(this).parent().remove();">x</span></li>');
+      }
+    }
 
+    $(document).ready(function(){
+      $("#registerJuggler input").autocomplete({
+        source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete') }}",
+        minLength: 2,
+        select: function(event, ui){
+          addRegisterAssigment(ui.item.id, ui.item.value, ui.item.label);
+        }
+      });
+    });
+  </script>
 {% endblock %}

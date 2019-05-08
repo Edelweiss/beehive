@@ -361,7 +361,7 @@ class Correction
     }
 
     public function getLinks(){
-      if($this->registerEntries){
+      if($this->registerEntries and $this->registerEntries->first()){
         return $this->registerEntries->first()->getLinks();
       }
       return array();
@@ -545,9 +545,10 @@ class Correction
      */
     public function getTm()
     {
-      if($this->registerEntries){
+      if($this->registerEntries and $this->registerEntries->first()){
         return $this->registerEntries->first()->getTm();
       }
+      return null;
     }
 
     /**
@@ -557,9 +558,10 @@ class Correction
      */
     public function getHgv()
     {
-      if($this->registerEntries){
+      if($this->registerEntries and $this->registerEntries->first()){
         return $this->registerEntries->first()->getHgv();
       }
+      return null;
     }
 
     /**
@@ -569,9 +571,10 @@ class Correction
      */
     public function getDdb()
     {
-      if($this->registerEntries){
+      if($this->registerEntries and $this->registerEntries->first()){
         return $this->registerEntries->first()->getDdb();
       }
+      return null;
     }
 
     /**

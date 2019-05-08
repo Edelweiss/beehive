@@ -235,8 +235,8 @@ div#form div {
 }
 
 
-.flashNotice,
-form div ul {
+/* form div ul,*/
+.flashNotice {
     background: #ffc73d url('jquery/dark-hive/images/ui-bg_glass_40_ffc73d_1x400.png') 50% 50% repeat-x;
 
     border: 1px solid #FFB73D;

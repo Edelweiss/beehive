@@ -244,4 +244,11 @@ class Register
     {
         return $this->corrections;
     }
+    
+    public function __toString(){
+      $caption = ($this->ddb ? $this->ddb . '' : '');
+      $caption .= ($this->hgv || $this->tm ? ' TM/HGV ' : '');
+      $caption .= ($this->tm ? $this->tm . ($this->hgv && ($this->hgv != $this->tm) ? ' (' . str_replace($this->tm, '', $this->hgv) . ')' : '') : $this->hgv);
+      return $caption;
+    }
 }

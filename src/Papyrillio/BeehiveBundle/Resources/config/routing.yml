@@ -64,7 +64,11 @@ PapyrillioBeehiveBundle_registerassign:
       registerId: '\d+'
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_createandassign:
+PapyrillioBeehiveBundle_registercreate:
+    pattern:  /register/create
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:create}
+
+PapyrillioBeehiveBundle_registercreateandassign:
     pattern:  /register/createAndAssign/{correctionId}
     defaults: { _controller: PapyrillioBeehiveBundle:Register:createAndAssign}
     requirements:

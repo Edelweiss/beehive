@@ -80,8 +80,8 @@ class RegisterController extends BeehiveController{
 
     return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
   }
-
-  public function createAndAssignAction($correctionId){
+  
+  protected function getIdnoTriplet(){
     $newEntry = $this->getParameter('newEntry');
 
     $ddb = null;
@@ -107,7 +107,13 @@ class RegisterController extends BeehiveController{
       $hgv = $tm;
     }
 
-    $register = $this->getOrCreate($ddb, $tm, $hgv);
+    return array('tm' => $tm, 'hgv' => $hgv, 'ddb' => $ddb);
+  }
+
+  public function createAndAssignAction($correctionId){
+    $idnoTriplet = $this->getIdnoTriplet(); 
+
+    $register = $this->getOrCreate($idnoTriplet['ddb'], $idnoTriplet['tm'], $idnoTriplet['hgv']);
 
     $correction = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Correction')->findOneBy(array('id' => $correctionId));
 
@@ -122,9 +128,13 @@ class RegisterController extends BeehiveController{
   }
 
   public function createAction(){
-    $register = $this->getOrCreate($this->getParameter('ddb'), $this->getParameter('tm'), $this->getParameter('hgv'));
+    $idnoTriplet = $this->getIdnoTriplet(); 
 
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershow', array('id' => $register->getId())));
+    $register = $this->getOrCreate($idnoTriplet['ddb'], $idnoTriplet['tm'], $idnoTriplet['hgv']);
+
+    return $this->render('PapyrillioBeehiveBundle:Register:snippetListEntry.html.twig', array('register' => $register));
+
+    //return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershow', array('id' => $register->getId())));
   }
 
   public function showAction($id){

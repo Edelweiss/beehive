@@ -1,0 +1,10 @@
+XII,171,,,,,S.B. 1,905000,,,,,,,,,1
+XII,171,,passim,,,"echtes passim-Beispiel (keine HGV-Nummer, passim in Text1)",,,boyer,20882,,nicht DCLP,,,ok,1639
+XII,171,"80941, 80942 +80943, 58949, 1000000",13-14,,,"mehrfache HGV und TM-Nummern",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,gibt es nicht,ok,3
+XII,171,,13-14,,,"keine eigene HGV und TM-Nummer, muss vom Datensatz davor übernommen werden",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,gibt es nicht,ok,3
+XII,171,20882 - 117595,passim,,,"kein echtes passim-Beispiel (passim in Text1, aber zusätzlich HGV-Nummer, HGV-Nummer wird ignoriert)",,,boyer,20882,,nicht DCLP,,,ok,1639
+XII,171,1000000,171,,,"nur TM, noch nicht vorhanden",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,Ordner gibt es nicht,ok,4
+XII,171,58949,171,,,"nur TM, schon vorhanden",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,Ordner gibt es nicht,ok,4
+XII,171,,,,,S.B. 3,906000,,,,,,,,,1
+XII,171,1000000,171,,,"nur TM, noch nicht vorhanden",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,Ordner gibt es nicht,ok,4
+XII,171,"80941, 80942 +80943, 58949, 1000000",13-14,,,"mehrfache HGV und TM-Nummern",,,boyer,nicht gefunden,Inscription,nicht DCLP,S.E.G.,gibt es nicht,ok,3

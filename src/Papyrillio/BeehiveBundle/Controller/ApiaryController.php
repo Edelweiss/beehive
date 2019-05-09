@@ -10,7 +10,7 @@ use DateTime;
 
 class ApiaryController extends BeehiveController{
   
-  protected static $TYPES = array('tm' => 'c.tm', 'hgv' => 'c.hgv', 'ddb' => 'c.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume');
+  protected static $TYPES = array('tm' => 'r.tm', 'hgv' => 'r.hgv', 'ddb' => 'r.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume');
   
   public function indexAction(){
     return $this->render('PapyrillioBeehiveBundle:Apiary:index.html.twig');
@@ -19,7 +19,7 @@ class ApiaryController extends BeehiveController{
   public function honeyAction($type, $id, $format = 'html'){
     $entityManager = $this->getDoctrine()->getEntityManager();
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
-    
+
     // WHERE
     
     $where = self::$TYPES[$type] . ' = :id';
@@ -34,8 +34,9 @@ class ApiaryController extends BeehiveController{
 
     $query = $entityManager->createQuery('
       SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
-      LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY c.sort'
+      LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY c.sort'
     );
+
     $query->setParameters($parameters);
 
     $corrections = $query->getResult();

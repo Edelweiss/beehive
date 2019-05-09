@@ -28,7 +28,7 @@
         </td>
         <td class="text">
           {% if c.text != text %}
-            <a href="{{ c.link }}">{{ c.text }}</a>
+            <a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': c.id}) }}">{{ c.text }}</a>
             {% set text = c.text %}
           {% endif %}
         </td>
@@ -37,7 +37,7 @@
         <td class="bl">→&nbsp;BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}
         </td>
         <td class="source">{% if c.source %}
-        
+
         <a href="http://papyri.info/biblio/{{ c.source }}">Bibliography</a>
         {% endif %}</td>
       </tr>

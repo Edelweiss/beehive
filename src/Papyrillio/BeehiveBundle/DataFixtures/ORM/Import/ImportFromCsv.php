@@ -56,7 +56,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
     protected static $idnoXpath = null;
     protected static $hgvDdb = array();
-    
+
     static function fallback($value, $fallback){
       if(!isset($value) || $value === null || $value === '')
       {
@@ -82,7 +82,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
            $hgv = $data[self::CSV_HGV];
            if(preg_match('/^\d+([a-z]+)?([^\da-z]+\d+([a-z]+)?)+$/', $hgv)){
              $hgv = preg_split('/[^\da-z]+/', $hgv, null, PREG_SPLIT_NO_EMPTY);
-           } elseif(preg_match('/^\d+([a-z]+)?([^\da-z]+\d+([a-z]+)?)+$/', $hgv)) {
+           } elseif(preg_match('/^\d+([a-z]+)?$/', $hgv)) {
              $hgv = array($hgv);
            } else {
              $hgv = null;
@@ -106,7 +106,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
              $text1Fallback = $text1;
              $text2Fallback = $text2;
 
-             echo $row . ' Ed. ' . $editionSort . "\t" . ($hgv ? 'HGV ' . implode(', ', $hgv) : '');
+             echo $row . ' Ed. ' . $editionSort;
 
              if(($hgv && strlen($text1)) || $text1 == self::TEXT_PASSIM){
                $compilationTitle = $data[self::CSV_COMPILATION_TITLE];
@@ -123,18 +123,14 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
 
                if($correction->getText() != self::TEXT_PASSIM){
                  foreach($hgv as $hgvOrTm){
-                   $correction->addRegisterEntry(self::findOrCreateRegisterByHgvOrTm($hgvOrTm));
+                   $correction->addRegisterEntry(self::findOrCreateRegisterByHgvOrTm($manager, $hgvOrTm));
                  }
-                 /*if($this->checkHgv($hgv)){
-                   $correction->setHgv($hgv);
-                   if($ddb = $this->getDdb($hgv)){
-                     $correction->setDdb($ddb['ddb']);
-                     $correction->setCollection($ddb['collection']);
-                     $correction->setVolume($ddb['volume']);
-                     $correction->setDocument($ddb['document']);
-                   }
+
+                 echo "\t";
+                 foreach($correction->getRegisterEntries() as $register){
+                   echo '[' . $register . ']';
                  }
-                 $correction->setTm(preg_replace('/[a-z]+/', '', $hgv));*/
+
                  $correction->setPosition($data[self::CSV_POSITION]);
                }
                $correction->setDescription($description);
@@ -143,7 +139,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
                $correction->setCreator($creator);
                $correction->setCompilationPage($compilationPage);
 
-               echo "\t" . 'DDB ' . $correction->getCollection() . ';' . $correction->getVolume() . ';' . $correction->getDocument() . "\t\t" . 'Text ' . $correction->getText() . "\n";
+               echo "\n";
                $manager->persist($correction);
              } else {
                echo "\n";
@@ -159,22 +155,28 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
       }
     }
 
-    protected static function findOrCreateRegisterByHgvOrTm($hgvOrTm){
-      if($register = $registerRepository->findOneBy(array('hgv' => $hgvOrTm))){
+    static $NEW_REGISTER_ENTRIES = array();
+
+    protected static function findOrCreateRegisterByHgvOrTm($manager, $hgvOrTm){
+      if(isset(self::$NEW_REGISTER_ENTRIES[$hgvOrTm])){
+        return self::$NEW_REGISTER_ENTRIES[$hgvOrTm];
+      } // check whether the number will be added to the register with just this current import
+      if($register = $manager->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('hgv' => $hgvOrTm))){
         return $register;
       } // HGV numbers are unique
-      if($register = $registerRepository->findOneBy(array('tm' => $hgvOrTm))){
+      if($register = $manager->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('tm' => $hgvOrTm))){
         return $register;
       } // If the number can’t be found in HGV try TM
 
       // TM number needs to be added to the register
-      // cl: check https://www.trismegistos.org/dataservices/texrelations/xml/9831
+      // cl: check against https://www.trismegistos.org/dataservices/texrelations/xml/9831
       $register = new Register();
       if($hgvOrTm && strlen($hgvOrTm)){
         $register->setTm($hgvOrTm);
       }
-      $this->getDoctrine()->getEntityManager()->persist($register);
-      //$this->getDoctrine()->getEntityManager()->flush();
+      $manager->persist($register);
+      //$manager->flush();
+      self::$NEW_REGISTER_ENTRIES[$hgvOrTm] = $register;
       return $register;
     }
 

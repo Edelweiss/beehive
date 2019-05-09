@@ -44,6 +44,10 @@ PapyrillioBeehiveBundle_registerautocomplete:
     pattern:  /register/autocomplete/{id}
     defaults: { _controller: PapyrillioBeehiveBundle:Register:autocomplete, id = 0}
 
+PapyrillioBeehiveBundle_registerautocompleteddb:
+    pattern:  /register/autocompleteDdb
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:autocompleteDdb}
+
 PapyrillioBeehiveBundle_registershowassignments:
     pattern:  /register/showAssignments/{correctionId}
     defaults: { _controller: PapyrillioBeehiveBundle:Register:showAssignments}

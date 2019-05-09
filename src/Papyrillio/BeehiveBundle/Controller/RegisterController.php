@@ -39,6 +39,21 @@ class RegisterController extends BeehiveController{
     return new Response(json_encode($autocomplete));
   }
 
+  public function autocompleteDdbAction(){
+    $term = $this->getParameter('term');
+
+    $entityManager = $this->getDoctrine()->getEntityManager();
+    $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
+
+    $query = $entityManager->createQuery('SELECT DISTINCT r.ddb FROM PapyrillioBeehiveBundle:Register r JOIN r.corrections c WHERE r.ddb LIKE \'' . $term . '%\' ORDER BY r.ddb');
+
+    $autocomplete = array();
+    foreach($query->getResult() as $result){
+      $autocomplete[] = $result['ddb'];
+    }
+    return new Response(json_encode($autocomplete));
+  }
+
   protected function makeCaption($result, $type = 'ddb'){
     if($type == 'hgv'){
       $caption = ($result['tm'] ? $result['tm'] . ($result['hgv'] && ($result['hgv'] != $result['tm']) ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']);

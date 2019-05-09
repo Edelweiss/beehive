@@ -180,7 +180,7 @@ class CorrectionController extends BeehiveController{
       }
     }
   }
-  
+
   public function newAction(){
     $correction = new Correction();
 
@@ -206,9 +206,7 @@ class CorrectionController extends BeehiveController{
       ->getForm();
 
     if ($this->getRequest()->getMethod() == 'POST') {
-
       $form->bindRequest($this->getRequest());
-
       if ($form->isValid()) {
         foreach($this->getParameter('task') as $category => $description){
           if(strlen(trim($description))){

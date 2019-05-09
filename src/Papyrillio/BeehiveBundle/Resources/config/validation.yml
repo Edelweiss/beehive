@@ -9,18 +9,7 @@ Papyrillio\BeehiveBundle\Entity\Correction:
             - Regex:
                 pattern: '/^\d+$/'
                 message: 'Bitte eine gültige Bilbio-Id eingeben, Bilbio-Ids sind rein numerisch wie z.B. »4066«'
-        tm:
-            - Regex:
-                pattern: '/^\d+$/'
-                message: 'TM-Nummern sind rein numerisch wie z.B. »9183«'
-        hgv:
-            - Regex:
-                pattern: '/^\d+[a-z]*$/'
-                message: 'HGV-Ids dürfen nur aus der TM-Nummer gefolgt von einem Kleinbuchstaben zur Kennzeichnung des Textschnipsels bestehen wie z.B. »9183a«'
-        ddb:
-            - Regex:
-                pattern: '/^[^;]+;[^;]*;[^;]+$/'
-                message: 'Bl Ids sind rein numerisch wie z.B. »bgu;2;452«'
+
         description:
             - NotBlank:
                 message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'

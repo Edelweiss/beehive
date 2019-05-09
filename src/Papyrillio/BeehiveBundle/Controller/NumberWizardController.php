@@ -95,7 +95,7 @@ class NumberWizardController extends BeehiveController{
       $entityManager = $this->getDoctrine()->getEntityManager();
       $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
       
-      $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.hgv = \'' . $data['hgv'][0] . '\'')->setMaxResults(1);
+      $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c LEFT JOIN c.registerEntries r WHERE r.hgv = \'' . $data['hgv'][0] . '\'')->setMaxResults(1);
       $corrections = $query->getResult();
       
       if(count($corrections)){

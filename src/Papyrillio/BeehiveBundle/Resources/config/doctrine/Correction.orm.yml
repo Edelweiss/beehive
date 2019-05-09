@@ -15,29 +15,6 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         text:
             type: string
             length: 64
-        tm:
-            type: integer
-            nullable: true
-        hgv:
-            type: string
-            length: 64
-            nullable: true
-        ddb:
-            type: string
-            length: 64
-            nullable: true
-        collection:
-            type: string
-            length: 64
-            nullable: true
-        volume:
-            type: string
-            length: 64
-            nullable: true
-        document:
-            type: string
-            length: 64
-            nullable: true
         position:
             type: text
             nullable: true

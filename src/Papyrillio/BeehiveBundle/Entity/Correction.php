@@ -383,35 +383,6 @@ class Correction
     private $text;
 
     /**
-     * @var integer $tm
-     */
-    private $tm;
-
-    /**
-     * @var string $hgv
-     */
-    private $hgv;
-
-    /**
-     * @var string $ddb
-     */
-    private $ddb;
-    /**
-     * @var string $collection
-     */
-    private $collection;
-
-    /**
-     * @var string $volume
-     */
-    private $volume;
-
-    /**
-     * @var string $document
-     */
-    private $document;
-
-    /**
      * @var text $position
      */
     private $position;
@@ -435,7 +406,6 @@ class Correction
      * @var datetime $created
      */
     private $created;
-
 
     /**
      * @var integer $sortPage

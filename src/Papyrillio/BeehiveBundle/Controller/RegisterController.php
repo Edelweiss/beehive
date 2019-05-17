@@ -178,4 +178,38 @@ class RegisterController extends BeehiveController{
 
     return $register;
   }
+
+   public function wizardAction($id){
+    $data = $this->getData($id);
+
+    return new Response(json_encode(array('success' => true, 'data' => $data)));
+  }
+
+  public function apiaryAction($id){
+    $corrections = $this->getDoctrine()->getEntityManager()->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c JOIN c.registerEntries r WHERE r.id = ' . $id . ' ORDER BY r.ddb')->getResult();
+
+    return $this->render('PapyrillioBeehiveBundle:Apiary:snippetHoney.html.twig', array('corrections' => $corrections));
+  }
+
+  protected function getData($id = 0){
+    $data = array('tm' => array(), 'hgv' => array(), 'ddb' => array(), 'bl' => array());
+
+    if(!$id){
+      return $data;
+    }
+
+    $register = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('id' => $id));
+
+    // TM, HGV, DDB    
+    $data['tm']  = $register->getTm();
+    $data['hgv'] = $register->getHgv();
+    $data['ddb'] = $register->getDdb();
+
+    // BL EDITION & TEXT
+    if(!$register->getCorrections()->isEmpty()){
+      $correction = $register->getCorrections()->first();
+      $data['bl'] = array('edition' => $correction->getEdition()->getId(), 'text' => $correction->getText());
+    }
+    return $data;
+  }
 }

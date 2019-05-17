@@ -4,18 +4,16 @@ Papyrillio\BeehiveBundle\Entity\Correction:
         text:
             - NotBlank:
                 message: 'Textbezeichner sind als Freitext einzugeben wie z.B. »16 (auf S. 17)«'
-        
         source:
             - Regex:
                 pattern: '/^\d+$/'
                 message: 'Bitte eine gültige Bilbio-Id eingeben, Bilbio-Ids sind rein numerisch wie z.B. »4066«'
-
         description:
             - NotBlank:
                 message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'
             - MinLength:
                 limit: 3
-                message: 'Bitte Beschreibung der Berichtigung angeben (Freitext).'
+                message: 'Die Beschreibung muss mindestens 3 Zeichen enthalten.'
 
 Papyrillio\BeehiveBundle\Entity\Edition:
     message: 'Ungültige Eingabe'

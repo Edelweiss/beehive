@@ -1,5 +1,22 @@
-$(document).ready(function(){
+function registerWizard(id, path){
+  $.post(path.replace('/0', '/' + id), {}, function(data){
+    if(data.success){
+      if(data.data.bl.edition){
+        $('#editionSort').val(data.data.bl.edition);
+        $('#editionTitle').val(data.data.bl.edition);
+      }
+      if(data.data.bl.text){
+        $('#form_text').val(data.data.bl.text);
+      }
+    }
+  }, 'json');
+}
 
+function registerApiary(id, path){
+  $('div.correctionList').load(path.replace('/0', '/' + id));
+}
+
+$(document).ready(function(){
   $('#form_position').specialedit(['R°', 'V°'], {shift: false});
   $('#form_description').specialedit(['→'], {shift: false});
   $('#editionTitle').change(function(event){
@@ -27,19 +44,7 @@ $(document).ready(function(){
       $('#form_ddb').attr('required', 'required');
     }
   });
-  
-  $('#form_tm').change(function(event){
-    numberWizard($(this).val(), $(this).attr('wizard-url'));
-  });
 
-  $('#form_hgv').change(function(event){
-    numberWizard($(this).val(), $(this).attr('wizard-url'));
-  });
-
-  $('#form_ddb').change(function(event){
-    numberWizard($(this).val(), $(this).attr('wizard-url'));
-  });
-  
   $('#editionSort').change(function(event){
     numberWizard({text: $('#form_text').val(), editionId: $(this).val()}, $(this).attr('wizard-url'));
   });

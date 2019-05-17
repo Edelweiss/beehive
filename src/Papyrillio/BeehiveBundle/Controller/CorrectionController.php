@@ -195,7 +195,7 @@ class CorrectionController extends BeehiveController{
     $registerRepository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
 
     $form = $this->createFormBuilder($correction)
-      ->add('compilationPage', 'text')
+      ->add('compilationPage', 'text', array('required' => false, 'label' => 'Seite'))
       ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizardlookup'))))
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))

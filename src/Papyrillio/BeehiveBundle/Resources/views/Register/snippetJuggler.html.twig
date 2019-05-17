@@ -1,13 +1,11 @@
-<div id="registerJuggler" class="ui-widget">
+<div id="registerJuggler" class="actionHolder">
   <label>Registersuche</label>
   <input/>
-  <span class="actionHolder">
     {% if correction and correction.id %}
-      <a href="#" onclick="javascript: if(confirm('Neuen Eintrag `' + $('div#registerJuggler input').val() + '` wirklich anlegen?')){$('#registerFolder').load('{{ path('PapyrillioBeehiveBundle_registercreateandassign', {'correctionId': correction.id}) }}', {newEntry: $('div#registerJuggler input').val()});}; return false;">Neuen Registereintrag anlegen</a>
+      <a class="" href="#" onclick="javascript: if(confirm('Neuen Eintrag `' + $('div#registerJuggler input').val() + '` wirklich anlegen?')){$('#registerFolder').load('{{ path('PapyrillioBeehiveBundle_registercreateandassign', {'correctionId': correction.id}) }}', {newEntry: $('div#registerJuggler input').val()});}; return false;">Neuen Registereintrag anlegen</a>
     {% else %}
-      <a href="#" onclick="javascript: if(confirm('Neuen Eintrag `' + $('div#registerJuggler input').val() + '` wirklich anlegen?')){$.post('{{ path('PapyrillioBeehiveBundle_registercreate') }}', {newEntry: $('div#registerJuggler input').val()}, function(data){ $('#registerFolder ul').append(data); })}; return false;">Neuen Registereintrag anlegen</a>
+      <a class="" href="#" onclick="javascript: if(confirm('Neuen Eintrag `' + $('div#registerJuggler input').val() + '` wirklich anlegen?')){$.post('{{ path('PapyrillioBeehiveBundle_registercreate') }}', {newEntry: $('div#registerJuggler input').val()}, function(data){ $('#registerFolder ul').append(data); })}; return false;">Neuen Registereintrag anlegen</a>
     {% endif %}
-  </span>
 </div>
 
 <div id="registerFolder">

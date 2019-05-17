@@ -78,6 +78,18 @@ PapyrillioBeehiveBundle_registercreateandassign:
     requirements:
       correctionId: '\d+'
 
+PapyrillioBeehiveBundle_registerwizard:
+    pattern:  /registerWizard/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:wizard}
+    requirements:
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerapiary:
+    pattern:  /registerApiary/{id}
+    defaults: { _controller: PapyrillioBeehiveBundle:Register:apiary}
+    requirements:
+      correctionId: '\d+'
+
 # Report
 
 PapyrillioBeehiveBundle_report:

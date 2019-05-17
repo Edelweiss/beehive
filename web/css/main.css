@@ -111,13 +111,96 @@ span.action:hover,
 
 /* CORRECTION NEW */
 
-form.new {
-  margin: 0 auto;
-  width: 26em;
-  padding: 2em;
-  position: relative;
+div.grid {
+  display: block;
+  float: left;
+  width: 100%;
 }
 
+div.grid > div {
+  display: block;
+  float: left;
+  width: 30%;
+  margin: 0;
+}
+
+div.grid div.left {
+  padding: 0 1em 0 0;
+}
+
+div.grid div.middle {
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  padding: 0 1em 0 1em;
+  width: 35%;
+}
+
+div.grid div.right {
+  padding: 0 0 0 1em;
+}
+
+div.grid div.bottom {
+  display: block;
+  clear: both;
+  float: none;
+  width: 100%;
+  padding: 2em 0 0 0;
+}
+
+div.grid div.left label,
+div.grid div.right label,
+div.grid div.middle label {
+  display: block;
+  float: left;
+  width: 15%;
+}
+
+div.grid div.left label {
+  width: 25%;
+}
+
+div.grid div.left input,
+div.grid div.left div#registerJuggler input {
+  margin: 0;
+  width: 72%;
+}
+
+div.grid div.right input,
+div.grid div.middle input,
+div.grid div.middle select,
+div.grid div.middle textarea {
+  width: 82%;
+}
+
+div.grid div.left div#registerFolder {
+  clear: both;
+  float: none;
+}
+
+div.grid ul {
+  list-style: none;
+}
+
+div.grid ul li {
+  list-style-type: none;
+  margin: 0 1em 0 1em;
+}
+
+div.grid input#form_compilationPage,
+div.grid input#form_text,
+div.grid input#form_position {
+  width: 8em;
+}
+
+div.grid div.middle textarea {
+  height: 8em;
+}
+
+div.grid div.error ul{
+  margin: 0;
+}
+
+/*
 form.new label {
   margin: 0.2em;
   width: 20%;
@@ -152,7 +235,7 @@ form.new input.submit{
   margin: 0.2em;
   float: right;
 }
-/*
+
 form#correctionNew div.idno {
   position: absolute;
   width: 16em;
@@ -160,10 +243,12 @@ form#correctionNew div.idno {
   right: -16em;
 
 }
-*/
+
 form#correctionNew div input#form_position {
   width: 100%;
 }
+*/
+
 
 /* LOGIN */
 

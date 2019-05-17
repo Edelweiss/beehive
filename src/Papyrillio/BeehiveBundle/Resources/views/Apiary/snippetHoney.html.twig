@@ -23,7 +23,7 @@
         </td>
         <td class="text">
           {% if c.text != text %}
-            <a href="{{ path('PapyrillioBeehiveBundle_correctionshow', {'id': c.id}) }}">{{ c.text }}</a>
+            {{ c.text }}
             {% set text = c.text %}
           {% endif %}
         </td>

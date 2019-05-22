@@ -17,6 +17,7 @@
         {% if app.environment == 'dev' %}
           <img src="{{ asset('images/dev.png') }}" alt="bleeding edge" width="100" style="position: fixed; right: 0; z-index: 999;" />
         {% endif %}
+        <h1 style="width: 100%; text-align: center; color: yellow;">dOWN fOr mAIntEnAncE - please come back later, next week perhaps</h1>
         <div id="site">
             <div id="header">
               {% if app.user %}
@@ -32,7 +33,9 @@
                     'Editionen':      {'PapyrillioBeehiveBundle_editionlist': {'title': 'Editionen ansehen', 'parameters': {}}, 
                                        'PapyrillioBeehiveBundle_editionnew': {'title': 'Edition anlegen', 'parameters': {}}},
                     'Berichte':       {'PapyrillioBeehiveBundle_report': {'title': 'Leiden Format', 'parameters': {}},
-                                       'PapyrillioBeehiveBundle_reportprint': {'title': 'Druckvorstufe', 'parameters': {}}},
+                                       'PapyrillioBeehiveBundle_reportoverview': {'title': 'Übersicht nach Editionen*', 'parameters': {}},
+                                       'PapyrillioBeehiveBundle_reportprint': {'title': 'Druckvorstufe', 'parameters': {}},
+                                       'PapyrillioBeehiveBundle_reportpdf': {'title': 'PDF*', 'parameters': {}}},
                     'Benutzer':       {'PapyrillioUserBundle_list': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
                                        'PapyrillioUserBundle_new': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
                                        'PapyrillioUserBundle_show': {'title': 'Profil', 'parameters': { 'id': app.user.id }},

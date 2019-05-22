@@ -66,20 +66,22 @@ class Register
         case 'hgv':
           return $this->hgv ? 'https://aquila.zaw.uni-heidelberg.de/hgv/' . $this->hgv : null;
         case 'tm':
+          return $this->tm ? 'https://www.trismegistos.org/text/' . $this->tm : null;
+        case 'tmxml':
           return $this->tm ? 'https://www.trismegistos.org/dataservices/texrelations/xml/' . $this->tm : null;
         default:
           return null;
       }
     }
-    
+
     public function calcFolder($tmOrHgv){
       $id = preg_replace('/[a-z]+/', '', $tmOrHgv);
       return ceil($id / 1000) . '';
     }
-    
+
     public function getLinks(){
       $links = array();
-      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'tm' => 'TM') as $type => $name){
+      foreach(array('pi' => 'papyri.info', 'githubddb' => 'github DDB', 'githubhgv' => 'github HGV', 'hgv' => 'HGV', 'tm' => 'TM', 'tmxml' => 'TM (XML)') as $type => $name){
         if($this->getLink($type)){
           $links[$name] = $this->getLink($type);
         }

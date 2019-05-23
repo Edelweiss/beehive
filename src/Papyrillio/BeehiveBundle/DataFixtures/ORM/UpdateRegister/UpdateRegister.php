@@ -36,7 +36,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
     {
       echo date('l jS \of F Y h:i:s A') . "\n";
       echo '----  updateRegisterFromEpiDocIdnos ----' . "\n";
-      //$this->updateRegisterFromEpiDocIdnos($manager);
+      $this->updateRegisterFromEpiDocIdnos($manager);
       echo '--' . "\n";
 
       echo date('l jS \of F Y h:i:s A') . "\n";
@@ -56,7 +56,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
           $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
           $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
           $tmIdno  = $tmIdno->length  ? $tmIdno->item(0)->nodeValue  : null;
-          
+
           // DDB split
 
           if(preg_replace('/[a-z]+/', '', $hgvIdno) == $tmIdno)
@@ -123,7 +123,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
         }
       }
 
-      // jede TM-Nummer muss über texrelations abrufbar sein
+      // cl: jede TM-Nummer muss über texrelations abrufbar sein
     }
 
     protected static function findOrCreateRegisterByHgvOrTm($hgvOrTm){

@@ -41,5 +41,5 @@ security:
     access_control:
         - { path: ^/(browse|ddb/.+;.*;.+|(bl|tm|hgv|biblio)/\d+|numberWizard/autocomplete/ddb|about|contact|help)$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/, roles: ROLE_ADMIN}        
+        - { path: ^/, roles: ROLE_USER}
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

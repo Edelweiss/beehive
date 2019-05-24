@@ -105,7 +105,10 @@
             <input name="task[{{ task }}]" id="task_{{ task }}" type="text" class="greek" />
         {% endfor %}
       </div>
+
       <div class="bottom">
+        <input class="submit" type="submit" name="new" id="new" value="Datensatz anlegen" />
+        <input class="submit" type="submit" name="newAndAgain" id="newAndAgain" value="Datensatz anlegen und hierher zurück springen" />
         <h5>Bereits vorhandene Korrekturen zu diesem Text</h5>
         <div class="correctionList"></div>
         {{ form_rest(form) }}

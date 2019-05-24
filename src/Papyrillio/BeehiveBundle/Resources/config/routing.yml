@@ -229,4 +229,4 @@ PapyrillioBeehiveBundle_apiaryhoney:
     pattern:  /{type}/{id}/{format}
     defaults: { _controller: PapyrillioBeehiveBundle:Apiary:honey, format: html}
     requirements:
-      type: '(tm|hgv|ddb|biblio|bl)'
+      type: '(tm|hgv|ddb|biblio|bl|register)'

@@ -10,7 +10,7 @@ use DateTime;
 
 class ApiaryController extends BeehiveController{
   
-  protected static $TYPES = array('tm' => 'r.tm', 'hgv' => 'r.hgv', 'ddb' => 'r.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume');
+  protected static $TYPES = array('tm' => 'r.tm', 'hgv' => 'r.hgv', 'ddb' => 'r.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume', 'register' => 'r.id');
   
   public function indexAction(){
     return $this->render('PapyrillioBeehiveBundle:Apiary:index.html.twig');
@@ -21,10 +21,10 @@ class ApiaryController extends BeehiveController{
     $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Correction');
 
     // WHERE
-    
+
     $where = self::$TYPES[$type] . ' = :id';
     $parameters = array('id' => $id);
-    
+
     if($this->get('security.context')->isGranted('ROLE_USER') === false) {
       $where .= ' AND c.status = :status';
       $parameters['status'] = 'finalised';
@@ -43,6 +43,8 @@ class ApiaryController extends BeehiveController{
 
     if($format === 'html'){
       return $this->render('PapyrillioBeehiveBundle:Apiary:honey.html.twig', array('corrections' => $corrections));
+    } elseif($format === 'plain'){
+      return $this->render('PapyrillioBeehiveBundle:Apiary:snippetHoney.html.twig', array('corrections' => $corrections));
     } else {
       $data = array('corrections' => array());
       $data = array('count' => count($corrections));

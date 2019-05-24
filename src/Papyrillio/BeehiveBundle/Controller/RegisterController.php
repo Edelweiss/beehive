@@ -186,9 +186,7 @@ class RegisterController extends BeehiveController{
   }
 
   public function apiaryAction($id){
-    $corrections = $this->getDoctrine()->getEntityManager()->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c JOIN c.registerEntries r WHERE r.id = ' . $id . ' ORDER BY r.ddb')->getResult();
-
-    return $this->render('PapyrillioBeehiveBundle:Apiary:snippetHoney.html.twig', array('corrections' => $corrections));
+    return $this->forward('PapyrillioBeehiveBundle:Apiary:honey', array('type' => 'register', 'id' => $id, 'format' => 'plain'));
   }
 
   protected function getData($id = 0){
@@ -200,7 +198,7 @@ class RegisterController extends BeehiveController{
 
     $register = $this->getDoctrine()->getEntityManager()->getRepository('PapyrillioBeehiveBundle:Register')->findOneBy(array('id' => $id));
 
-    // TM, HGV, DDB    
+    // TM, HGV, DDB
     $data['tm']  = $register->getTm();
     $data['hgv'] = $register->getHgv();
     $data['ddb'] = $register->getDdb();

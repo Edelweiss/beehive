@@ -68,7 +68,9 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
               if(count($selected)){ // UPDATE EXISTING HGV (HGV number are unique, in EpiDoc: tm = hgv - [a-z])
                 $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.tm = ' . "'" . $tmIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
                 $updated = $query->getResult();
-                echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
+                if($updated){
+                  echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
+                }
               } else {
                 $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
                 $selected = $query->getResult();
@@ -76,7 +78,9 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
                   // UPDATE EXISTING TM
                   $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.hgv = ' . "'" . $hgvIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
                   $updated = $query->getResult();
-                  echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
+                  if($updated){
+                    echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
+                  }
                 } else { // INSERT COMPLETELY NEW
                   $register = new Register();
                   $register->setTm($tmIdno);
@@ -116,14 +120,12 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
 
       $query = $manager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb FROM PapyrillioBeehiveBundle:Register r ORDER by r.id');
       foreach($query->getResult() as $result){
-        if(!in_array($result['hgv'], $hgvIdnoLookup)){
+        if(!empty($result['hgv']) && !in_array($result['hgv'], $hgvIdnoLookup)){
           echo 'ACHTUNG, ungültige HGV-Nummer!!! (' . $result['hgv'] . ')' . "\n";
-        } else {
-          echo 'alles okay' . "\n";
         }
       }
 
-      // cl: jede TM-Nummer muss über texrelations abrufbar sein
+      // cl: jede TM-Nummer muss über texrelations abrufbar sein. Nachtrag: leider nein, weil textrelations nicht vollständig ist, vgl. https://tristmegistos/texte/<TMNUMMER>
     }
 
     protected static function findOrCreateRegisterByHgvOrTm($hgvOrTm){

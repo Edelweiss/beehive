@@ -40,7 +40,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
       echo '--' . "\n";
 
       echo date('l jS \of F Y h:i:s A') . "\n";
-      echo '----  updateRegisterFromEpiDocIdnos ----' . "\n";
+      echo '----  checkRegister ----' . "\n";
       $this->checkRegister($manager);
       echo '--' . "\n";
 
@@ -50,53 +50,66 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
     protected function updateRegisterFromEpiDocIdnos($manager){
       $itemList = self::getIdnoXpath()->evaluate('/list/item');
         for($i = 0; $i < $itemList->length; $i++){
+          // get idnos from EpiDoc
           $hgvIdno = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
           $ddbIdno = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
           $tmIdno  = self::getIdnoXpath()->query("idno[@type='tm']", $itemList->item($i));
+
           $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
           $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
           $tmIdno  = $tmIdno->length  ? $tmIdno->item(0)->nodeValue  : null;
 
-          // DDB split
+          $hgvWithoutTexlett = preg_replace('/[a-z]+/', '', $hgvIdno) + 0;
 
-          if(preg_replace('/[a-z]+/', '', $hgvIdno) == $tmIdno)
-          {
-            if(!preg_match('/^sosol;/', $ddbIdno)){
-              echo ($hgvIdno ? $hgvIdno : '') . ($tmIdno ? '/' . $tmIdno : '') . ($ddbIdno ? ' ' . $ddbIdno : '') . '> ';
-              $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
-              $selected = $query->getResult();
-              if(count($selected)){ // UPDATE EXISTING HGV (HGV number are unique, in EpiDoc: tm = hgv - [a-z])
-                $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.tm = ' . "'" . $tmIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
-                $updated = $query->getResult();
-                if($updated){
-                  echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
+          if(preg_match('/^\d+[a-z]*$/', $hgvIdno) && (($hgvWithoutTexlett < 500000)) || ($hgvWithoutTexlett >= 501000)) {
+            if($hgvWithoutTexlett == $tmIdno) {
+              if(!preg_match('/^sosol;/', $ddbIdno)){
+                $idnoInfo = $hgvIdno . '/' .$tmIdno . '/' . ($ddbIdno ?  $ddbIdno : 'NO DDB') . '>';
+                $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
+                $selected = $query->getResult();
+                if(count($selected) < 2){
+                  if(count($selected) === 1){ // UPDATE EXISTING HGV (HGV numbers are unique, in EpiDoc: tm = hgv - [a-z])
+                    $setDdb = '';
+                    if($ddbIdno){
+                      $ddbIdnoSplit = $ddbIdno ? explode(';', $ddbIdno) : null;
+                      $setDdb = ',  r.ddb = ' . "'" . $ddbIdno . "'" . ',  r.collection = ' . "'" . $ddbIdnoSplit[0] . "'" . ',  r.volume = ' . "'" . $ddbIdnoSplit[1] . "'" . ',  r.document = ' . "'" . $ddbIdnoSplit[2] . "'";
+                    }
+                    $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.tm = ' . "'" . $tmIdno . "'" . $setDdb . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
+                    $updated = $query->getResult();
+                    if($updated){
+                      echo $idnoInfo . ' updated (HGV)' . "\n";
+                    }
+                  } else {
+                    $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
+                    $selected = $query->getResult();
+                    if(count($selected)){
+                      // UPDATE EXISTING TM
+                      $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.hgv = ' . "'" . $hgvIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
+                      $updated = $query->getResult();
+                      if($updated){
+                        echo $idnoInfo . ' updated (TM)' . "\n";
+                      }
+                    } else { // INSERT COMPLETELY NEW
+                      $register = new Register();
+                      $register->setTm($tmIdno);
+                      $register->setHgv($hgvIdno);
+                      $register->setDdb($ddbIdno);
+                      $manager->persist($register);
+                      $manager->flush();
+                      echo $idnoInfo . 'new register entry' . "\n";
+                    }
+                  }
+                } else {
+                  echo 'ACHTUNG: TM-Nummer in Datenbank nicht unique (' . $hgvIdno . ')' . "\n";
                 }
               } else {
-                $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
-                $selected = $query->getResult();
-                if(count($selected)){
-                  // UPDATE EXISTING TM
-                  $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.hgv = ' . "'" . $hgvIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
-                  $updated = $query->getResult();
-                  if($updated){
-                    echo $updated . ' item' . ($updated != 1 ? 's' : '' ) . ' updated' . "\n";
-                  }
-                } else { // INSERT COMPLETELY NEW
-                  $register = new Register();
-                  $register->setTm($tmIdno);
-                  $register->setHgv($hgvIdno);
-                  $register->setDdb($ddbIdno);
-                  $manager->persist($register);
-                  $manager->flush();
-                  echo 'new register entry' . "\n";
-                }
+                echo 'ACHTUNG: SoSOL-DDB-hybrid ' . ($hgvIdno ? $hgvIdno : '') . ($tmIdno ? '/' . $tmIdno : '') . ($ddbIdno ? ' ' . $ddbIdno : '') . "\n";
               }
             } else {
-              echo 'ACHTUNG, DDB-hybrid!!! ' . ($hgvIdno ? $hgvIdno : '') . ($tmIdno ? '/' . $tmIdno : '') . ($ddbIdno ? ' ' . $ddbIdno : '') . "\n";
-              //throw new Exception('Keine DDB-Hybrid');
+              echo 'ACHTUNG: TM-Nummer weicht von HGV-Nummer ab (' . $hgvIdno . '/' . $tmIdno . ')' . "\n";
             }
           } else {
-            throw new Exception('TM-Nummer weicht von HGV-Nummer ab');
+            echo 'ACHTUNG: ungültige HGV-Nummer (' . $hgvIdno . ')' . "\n";
           }
         }
     }
@@ -121,9 +134,9 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
       $query = $manager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb FROM PapyrillioBeehiveBundle:Register r ORDER by r.id');
       foreach($query->getResult() as $result){
         if(!empty($result['hgv']) && !in_array($result['hgv'], $hgvIdnoLookup)){
-          echo 'ACHTUNG, ungültige HGV-Nummer!!! (' . $result['hgv'] . ')' . "\n";
+          echo 'ACHTUNG: ungültige HGV-Nummer (' . $result['hgv'] . ')' . "\n";
         }
-      }
+      } // cl: dieser Teil ist ausbaufähig zum Beispiel für die Fälle, wo eine HGV-Nummer 1830 zu 1830a und 1830b wurde (automatische Löschung?!)
 
       // cl: jede TM-Nummer muss über texrelations abrufbar sein. Nachtrag: leider nein, weil textrelations nicht vollständig ist, vgl. https://tristmegistos/texte/<TMNUMMER>
     }

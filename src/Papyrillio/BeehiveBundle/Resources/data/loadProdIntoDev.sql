@@ -1,3 +1,11 @@
+/**
+
+mysql --user bl -p < ~/beehive.dev/src/Papyrillio/BeehiveBundle/Resources/data/loadProdIntoDev.sql
+
+**/
+
+TRUNCATE TABLE `bl_dev`.`correction_register`;
+TRUNCATE TABLE `bl_dev`.`register`;
 TRUNCATE TABLE `bl_dev`.`task`;
 TRUNCATE TABLE `bl_dev`.`index_entry`;
 TRUNCATE TABLE `bl_dev`.`ext_translations`;
@@ -6,7 +14,6 @@ TRUNCATE TABLE `bl_dev`.`correction`;
 TRUNCATE TABLE `bl_dev`.`edition`;
 TRUNCATE TABLE `bl_dev`.`compilation`;
 TRUNCATE TABLE `bl_dev`.`user`;
-
 
 SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
 
@@ -33,3 +40,9 @@ SELECT * FROM `bl`.`index_entry`;
 
 INSERT INTO `bl_dev`.`task`
 SELECT * FROM `bl`.`task`;
+
+INSERT INTO `bl_dev`.`register`
+SELECT * FROM `bl`.`register`;
+
+INSERT INTO `bl_dev`.`correction_register`
+SELECT * FROM `bl`.`correction_register`;

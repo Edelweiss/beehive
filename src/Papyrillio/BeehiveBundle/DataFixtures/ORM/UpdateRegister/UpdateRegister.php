@@ -51,30 +51,32 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
       $itemList = self::getIdnoXpath()->evaluate('/list/item');
         for($i = 0; $i < $itemList->length; $i++){
           // get idnos from EpiDoc
-          $hgvIdno = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
-          $ddbIdno = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
-          $tmIdno  = self::getIdnoXpath()->query("idno[@type='tm']", $itemList->item($i));
+          $hgvIdno  = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
+          $ddbIdno  = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
+          $dclpIdno = self::getIdnoXpath()->query("idno[@type='dclp']", $itemList->item($i));
+          $tmIdno   = self::getIdnoXpath()->query("idno[@type='tm']", $itemList->item($i));
 
-          $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
-          $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
-          $tmIdno  = $tmIdno->length  ? $tmIdno->item(0)->nodeValue  : null;
+          $hgvIdno  = $hgvIdno->length  ? $hgvIdno->item(0)->nodeValue  : null;
+          $ddbIdno  = $ddbIdno->length  ? $ddbIdno->item(0)->nodeValue  : null;
+          $dclpIdno = $dclpIdno->length ? $dclpIdno->item(0)->nodeValue : null;
+          $tmIdno   = $tmIdno->length   ? $tmIdno->item(0)->nodeValue   : null;
+
+          $sethgv  = ' r.hgv = ' . "'" . $hgvIdno . "'";
+          $setTm   = ' r.tm = ' . "'" . $tmIdno . "'";
+          $setDdb  = $ddbIdno  ? ',  r.ddb = ' . "'" . $ddbIdno . "'"   : '';
+          $setDclp = $dclpIdno ? ',  r.dclp = ' . "'" . $dclpIdno . "'" : '';
 
           $hgvWithoutTexlett = preg_replace('/[a-z]+/', '', $hgvIdno) + 0;
 
           if(preg_match('/^\d+[a-z]*$/', $hgvIdno) && (($hgvWithoutTexlett < 500000)) || ($hgvWithoutTexlett >= 501000)) {
             if($hgvWithoutTexlett == $tmIdno) {
               if(!preg_match('/^sosol;/', $ddbIdno)){
-                $idnoInfo = $hgvIdno . '/' .$tmIdno . '/' . ($ddbIdno ?  $ddbIdno : 'NO DDB') . '>';
+                $idnoInfo = $hgvIdno . '/' .$tmIdno . '/' . ($ddbIdno ?  $ddbIdno : 'NO DDB') . '/' . ($dclpIdno ?  $dclpIdno : 'NO DCLP') . '>';
                 $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
                 $selected = $query->getResult();
                 if(count($selected) < 2){
                   if(count($selected) === 1){ // UPDATE EXISTING HGV (HGV numbers are unique, in EpiDoc: tm = hgv - [a-z])
-                    $setDdb = '';
-                    if($ddbIdno){
-                      $ddbIdnoSplit = $ddbIdno ? explode(';', $ddbIdno) : null;
-                      $setDdb = ',  r.ddb = ' . "'" . $ddbIdno . "'" . ',  r.collection = ' . "'" . $ddbIdnoSplit[0] . "'" . ',  r.volume = ' . "'" . $ddbIdnoSplit[1] . "'" . ',  r.document = ' . "'" . $ddbIdnoSplit[2] . "'";
-                    }
-                    $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.tm = ' . "'" . $tmIdno . "'" . $setDdb . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
+                    $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET ' . $setTm . $setDdb . $setDclp . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
                     $updated = $query->getResult();
                     if($updated){
                       echo $idnoInfo . ' updated (HGV)' . "\n";
@@ -82,9 +84,8 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
                   } else {
                     $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
                     $selected = $query->getResult();
-                    if(count($selected)){
-                      // UPDATE EXISTING TM
-                      $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET r.hgv = ' . "'" . $hgvIdno . "'" . ',  r.ddb = ' . "'" . $ddbIdno . "'" . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
+                    if(count($selected)){ // UPDATE EXISTING TM
+                      $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET ' . $sethgv . $setDdb . $setDclp . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
                       $updated = $query->getResult();
                       if($updated){
                         echo $idnoInfo . ' updated (TM)' . "\n";
@@ -94,6 +95,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
                       $register->setTm($tmIdno);
                       $register->setHgv($hgvIdno);
                       $register->setDdb($ddbIdno);
+                      $register->setDdb($dclpIdno);
                       $manager->persist($register);
                       $manager->flush();
                       echo $idnoInfo . 'new register entry' . "\n";
@@ -167,29 +169,6 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
         self::$idnoXpath = new DOMXPath($doc);
       }
       return self::$idnoXpath;
-    }
-
-    protected static function getHgvDdb(){
-      if(!count(self::$hgvDdb)){
-        //$xpath->registerNamespace('fm', self::NAMESPACE_FILEMAKER);
-        $itemList = self::getIdnoXpath()->evaluate('/list/item');
-        for($i = 0; $i < $itemList->length; $i++){
-          $hgvIdno = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
-          $ddbIdno = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
-          $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
-          $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
-          if($hgvIdno){
-            if($ddbIdno){
-              $ddbExploded = explode(';', $ddbIdno);
-              $ddbIdno = array('ddb' => $ddbIdno, 'collection' => $ddbExploded[0], 'volume' => $ddbExploded[1], 'document' => $ddbExploded[2]);
-            }
-            self::$hgvDdb[$hgvIdno] = $ddbIdno;
-          } else {
-            throw new Exception('invalid item found in xml (hgv: ' . ($hgvIdno ? $hgvIdno : 'null') . '; ddb: ' . ($ddbIdno ? $ddbIdno : 'null') . ')');
-          }
-        }
-      }
-      return self::$hgvDdb;
     }
 
     public function getOrder()

@@ -11,6 +11,14 @@ use DOMXPath;
 
 class RegisterController extends BeehiveController{
 
+  private static function compareDdb($ddb1, $ddb2){
+    $a = explode(';', $ddb1['value']);
+    $b = explode(';', $ddb2['value']);
+    $a = (count($a) > 1 ? $a[1] : 0) * 1000000 + (count($a) > 2 ? $a[2] : 0);
+    $b = (count($b) > 1 ? $b[1] : 0) * 1000000 + (count($b) > 2 ? $b[2] : 0);
+    return $a < $b ? -1 : 1;
+  } 
+
   public function autocompleteAction($id = 0){
     $term = $this->getParameter('term');
     $autocomplete = array();
@@ -20,23 +28,27 @@ class RegisterController extends BeehiveController{
       $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
 
       $search = 'r.ddb LIKE \'%' . $term . '%\'';
-      $order = 'r.collection, r.volume, r.document';
+      $order = 'r.ddb';
+      # $order = 'r.collection, r.volume, r.document';
       if(preg_match('/^\d/', $term)){
         $search = 'r.hgv LIKE \'' . $term . '%\' OR r.tm LIKE \'' . $term . '%\'';
         $order = 'r.tm, r.hgv';
       }
 
       $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE ' . $search . ' ORDER BY ' . $order);
-      $query->setMaxResults(20);
+      $query->setMaxResults(1000);
 
       foreach($query->getResult() as $result){
         $caption = $this->makeCaption($result, (preg_match('/^\d/', $term)) ? 'hgv' : 'ddb');
-        
+
         $autocomplete[] = array('id' => $result['id'], 'value' => $caption, 'label' => $caption);
+      }
+      if(preg_match('/^[^\d]/', $term)){
+        usort($autocomplete, 'self::compareDdb');
       }
     }
 
-    return new Response(json_encode($autocomplete));
+    return new Response(json_encode(array_slice($autocomplete, 0, 20)));
   }
 
   public function autocompleteDdbAction(){

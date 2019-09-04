@@ -31,6 +31,9 @@ class Correction
     const MODE_XML         = 'xml';
     const MODE_OOXML       = 'ooxml';
 
+    const MODE_PLAIN       = 'plain';
+    const MODE_REGISTER    = 'register';
+
     public static $STATUS = array('unchecked', 'reviewed', 'finalised');
     public static $ROMAN  = array('I' => 1, 'II' => 2, 'III' => 3, 'IV' => 4, 'V' => 5, 'VI' => 6, 'VII' => 7, 'VIII' => 8, 'IX' => 9, 'X' => 10, 'XI' => 11, 'XII' => 12, 'XIII' => 13, 'XIV' => 14, 'XV' => 15, 'XVI' => 16, 'XVII' => 17, 'XVIII' => 18, 'XIX' => 19, 'XX' => 20, 'XXI' => 21, 'XXII' => 22, 'XXIII' => 23, 'XXIV' => 24, 'XXV' => 25, 'XXVI' => 26, 'XXVII' => 27, 'XXVIII' => 28, 'XXIX' => 29, 'XXX' => 30, 'XXXI' => 31, 'XXXII' => 32, 'XXXIII' => 33, 'XXXIV' => 34, 'XXXV' => 35, 'XXXVI' => 36, 'XXXVII' => 37, 'XXXIX' => 39, 'XXXVIII' => 38, 'XL' => 40, 'XLI' => 41, 'XXIX' => 42, 'XLIII' => 43, 'XLIV' => 44, 'XLV' => 45, 'XLVI' => 46, 'XLVII' => 47, 'XLVIII' => 48, 'XLIX' => 49, 'L' => 50, 'LI' => 51, 'LII' => 52, 'LIII' => 53, 'LIV' => 54, 'LV' => 55, 'LVI' => 56, 'LVII' => 57, 'LVIII' => 58, 'LIX' => 59, 'LX' => 60, 'LXI' => 61, 'LXII' => 62, 'LXIII' => 63, 'LXIV' => 64, 'LXV' => 65, 'LXVI' => 66, 'LXVII' => 67, 'LXVIII' => 68, 'LXIX' => 69, 'LXX' => 70, 'LXXI' => 71, 'LXXII' => 72, 'LXXIII' => 73, 'LXXIV' => 74, 'LXXV' => 75, 'LXXVI' => 76, 'LXXVII' => 77, 'LXXVIII' => 78, 'LXXIX' => 79, 'LXXX' => 80, 'LXXXI' => 81, 'LXXXII' => 82, 'LXXXIII' => 83, 'LXXXIV' => 84, 'LXXXV' => 85, 'LXXXVI' => 86, 'LXXXVII' => 87, 'LXXXVIII' => 88, 'LXXXIX' => 89, 'XC' => 90, 'XCI' => 91, 'XCII' => 92, 'XCIII' => 93, 'XCIV' => 94, 'XCV' => 95, 'XCVI' => 96, 'XCVII' => 97, 'XCVIII' => 98, 'XCIX' => 99, 'C' => 100);
     public static $ALPHA  = array('A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7, 'H' => 8);
@@ -535,76 +538,108 @@ class Correction
     }
 
     /**
-     * Get ddb
+     * Get DDB
      *
      * @return string 
      */
     public function getDdb()
     {
-      if($this->registerEntries and $this->registerEntries->first()){
-        return $this->registerEntries->first()->getDdb();
+      $registerList = $this->getDistinctDdb(self::MODE_REGISTER);
+      if(count($registerList)){
+        array_pop($registerList)->getDdb(); 
       }
       return null;
     }
 
     /**
-     * Set collection
-     *
-     * @param string $collection
-     */
-    public function setCollection($collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * Get collection
+     * Get DDB collection
      *
      * @return string 
      */
-    public function getCollection()
+    public function getDdbCollection()
     {
-        return $this->collection;
+      if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
+        return array_pop($registerList)->getDdbCollection(); 
+      }
+      return null;
     }
 
     /**
-     * Set volume
-     *
-     * @param string $volume
-     */
-    public function setVolume($volume)
-    {
-        $this->volume = $volume;
-    }
-
-    /**
-     * Get volume
+     * Get DDB volume
      *
      * @return string 
      */
-    public function getVolume()
+    public function getDdbVolume()
     {
-        return $this->volume;
+      if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
+        return array_pop($registerList)->getDdbVolume(); 
+      }
+      return null;
     }
 
     /**
-     * Set document
-     *
-     * @param string $document
-     */
-    public function setDocument($document)
-    {
-        $this->document = $document;
-    }
-
-    /**
-     * Get document
+     * Get DDB document
      *
      * @return string 
      */
-    public function getDocument()
+    public function getDdbDocument()
     {
-        return $this->document;
+      if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
+        return array_pop($registerList)->getDdbDocument(); 
+      }
+      return null;
+    }
+
+    /**
+     * Get DCLP
+     *
+     * @return string 
+     */
+    public function getDclp()
+    {
+      if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
+        return array_pop($registerList)->getDclp(); 
+      }
+      return null;
+    }
+
+    /**
+     * Get DCLP collection
+     *
+     * @return string 
+     */
+    public function getDclpCollection()
+    {
+      if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
+        return $registerList[0]->getDclpCollection(); 
+      }
+      return null;
+    }
+
+    /**
+     * Get DCLP volume
+     *
+     * @return string 
+     */
+    public function getDclpVolume()
+    {
+      if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
+        return $registerList[0]->getDclpVolume(); 
+      }
+      return null;
+    }
+
+    /**
+     * Get DCLP document
+     *
+     * @return string 
+     */
+    public function getDclpDocument()
+    {
+      if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
+        return $registerList[0]->getDclpDocument(); 
+      }
+      return null;
     }
 
     /**
@@ -878,35 +913,53 @@ class Correction
     {
         return $this->registerEntries;
     }
-    
-    public function getDistinctTm()
+
+    /**
+     * Get distinct XYZ (TM, HGV, DDB, DCLP)
+     * 
+     * $mode self::MODE_PLAIN or self::MODE_REGISTER
+     *
+     * @return in self::MODE_PLAIN array of strings, in self::MODE_REGISTER array of Register objects 
+     */
+    public function getDistinctTm($mode = self::MODE_PLAIN)
     {
         $distinctList = array();
         foreach($this->registerEntries as $registerEntry){
             if($registerEntry->getTm()){
-              $distinctList[$registerEntry->getTm()] = $registerEntry->getTm();
+              $distinctList[$registerEntry->getTm()] = $mode == self::MODE_PLAIN ? $registerEntry->getTm() : $registerEntry;
             }
         }
         return $distinctList;
     }
-    
-    public function getDistinctHgv()
+
+    public function getDistinctHgv($mode = self::MODE_PLAIN)
     {
         $distinctList = array();
         foreach($this->registerEntries as $registerEntry){
-            if($registerEntry->getHgv()){
-              $distinctList[$registerEntry->getHgv()] = $registerEntry->getHgv();
+            if($registerEntry->getHgv($mode = self::MODE_PLAIN)){
+              $distinctList[$registerEntry->getHgv()] = $mode == self::MODE_PLAIN ? $registerEntry->getHgv() : $registerEntry;
             }
         }
         return $distinctList;
     }
-    
-    public function getDistinctDdb()
+
+    public function getDistinctDdb($mode = self::MODE_PLAIN)
     {
         $distinctList = array();
         foreach($this->registerEntries as $registerEntry){
             if($registerEntry->getDdb()){
-              $distinctList[$registerEntry->getDdb()] = $registerEntry->getDdb();
+              $distinctList[$registerEntry->getDdb()] = $mode == self::MODE_PLAIN ? $registerEntry->getDdb() : $registerEntry;
+            }
+        }
+        return $distinctList;
+    }
+
+    public function getDistinctDclp($mode = self::MODE_PLAIN)
+    {
+        $distinctList = array();
+        foreach($this->registerEntries as $registerEntry){
+            if($registerEntry->getDclp()){
+              $distinctList[$registerEntry->getDclp()] = $mode == self::MODE_PLAIN ? $registerEntry->getDclp() : $registerEntry;
             }
         }
         return $distinctList;

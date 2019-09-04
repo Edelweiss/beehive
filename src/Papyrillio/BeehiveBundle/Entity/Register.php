@@ -29,9 +29,24 @@ class Register
         $this->ddb = $ddb;
 
         $tokenList = explode(';', $this->ddb);
-        $this->collection = array_key_exists(0, $tokenList) ? $tokenList[0] : '';
-        $this->volume     = array_key_exists(1, $tokenList) ? $tokenList[1] : '';
-        $this->document   = array_key_exists(2, $tokenList) ? $tokenList[2] : '';
+        $this->ddbCollection = array_key_exists(0, $tokenList) ? $tokenList[0] : '';
+        $this->ddbVolume     = array_key_exists(1, $tokenList) ? $tokenList[1] : '';
+        $this->ddbDocument   = array_key_exists(2, $tokenList) ? $tokenList[2] : '';
+    }
+
+    /**
+     * Set dclp
+     *
+     * @param string $dclp
+     */
+    public function setDclp($dclp)
+    {
+        $this->dclp = $dclp;
+
+        $tokenList = explode(';', $this->dclp);
+        $this->dclpCollection = array_key_exists(0, $tokenList) ? $tokenList[0] : '';
+        $this->dclpVolume     = array_key_exists(1, $tokenList) ? $tokenList[1] : '';
+        $this->dclpDocument   = array_key_exists(2, $tokenList) ? $tokenList[2] : '';
     }
 
     /**
@@ -58,9 +73,23 @@ class Register
     public function getLink($type = 'pi'){
       switch($type){
         case 'pi':
-          return $this->ddb ? 'http://www.papyri.info/ddbdp/' . $this->ddb : ($this->hgv ? 'http://www.papyri.info/hgv/' . $this->hgv : null);
+          if($this->ddb){
+            return 'https://www.papyri.info/ddbdp/' . $this->ddb;
+          } elseif($this->dclp){
+            return 'https://www.papyri.info/dclp/' . $this->dclp;
+          } elseif($this->hgv) {
+            return 'https://www.papyri.info/hgv/' . $this->hgv;
+          } else {
+            return null;
+          }
         case 'githubddb':
-          return $this->collection ? 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/'. $this->collection . '/'. $this->collection . '.'. $this->volume . '/'. $this->collection . '.'. $this->volume . '.' . $this->document . '.xml' : null;
+          if($this->ddb){
+            return 'https://github.com/papyri/idp.data/blob/master/DDB_EpiDoc_XML/' . $this->ddbCollection . '/' . $this->ddbCollection . '.' . $this->ddbVolume . '/' . $this->ddbCollection . '.' . $this->ddbVolume . '.' . $this->ddbDocument . '.xml';
+          } elseif($this->dclp && $this->tm){
+            return 'https://github.com/papyri/idp.data/blob/master/DCLP/' . $this->calcFolder($this->tm) . '/' . $this->tm . '.xml';
+          } else {
+            return null;
+          }
         case 'githubhgv':
           return $this->hgv ? 'https://github.com/papyri/idp.data/blob/master/HGV_meta_EpiDoc/HGV' . $this->calcFolder($this->hgv) . '/' . $this->hgv . '.xml' : null;
         case 'hgv':
@@ -109,19 +138,38 @@ class Register
      */
     private $ddb;
     /**
-     * @var string $collection
+     * @var string $ddbCollection
      */
-    private $collection;
+    private $ddbCollection;
 
     /**
-     * @var string $volume
+     * @var string $ddbVolume
      */
-    private $volume;
+    private $ddbVolume;
 
     /**
-     * @var string $document
+     * @var string $ddbDocument
      */
-    private $document;
+    private $ddbDocument;
+
+    /**
+     * @var string $dclp
+     */
+    private $dclp;
+    /**
+     * @var string $dclpCollection
+     */
+    private $dclpCollection;
+
+    /**
+     * @var string $dclpVolume
+     */
+    private $dclpVolume;
+
+    /**
+     * @var string $dclpDocument
+     */
+    private $dclpDocument;
 
     /**
      * @var Papyrillio\BeehiveBundle\Entity\Correction
@@ -159,7 +207,7 @@ class Register
     }
 
     /**
-     * Get ddb
+     * Get DDB
      *
      * @return string 
      */
@@ -169,63 +217,74 @@ class Register
     }
 
     /**
-     * Set collection
-     *
-     * @param string $collection
-     */
-    public function setCollection($collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * Get collection
+     * Get DDB collection
      *
      * @return string 
      */
-    public function getCollection()
+    public function getDdbCollection()
     {
-        return $this->collection;
+        return $this->ddbCollection;
     }
 
     /**
-     * Set volume
-     *
-     * @param string $volume
-     */
-    public function setVolume($volume)
-    {
-        $this->volume = $volume;
-    }
-
-    /**
-     * Get volume
+     * Get DDB volume
      *
      * @return string 
      */
-    public function getVolume()
+    public function getDdbVolume()
     {
-        return $this->volume;
+        return $this->ddbVolume;
     }
 
     /**
-     * Set document
-     *
-     * @param string $document
-     */
-    public function setDocument($document)
-    {
-        $this->document = $document;
-    }
-
-    /**
-     * Get document
+     * Get DDB document
      *
      * @return string 
      */
-    public function getDocument()
+    public function getDdbDocument()
     {
-        return $this->document;
+        return $this->ddbDocument;
+    }
+
+    /**
+     * Get DCLP
+     *
+     * @return string 
+     */
+    public function getDclp()
+    {
+        return $this->dclp;
+    }
+
+    /**
+     * Get DCLP collection
+     *
+     * @return string 
+     */
+    public function getDclpCollection()
+    {
+        return $this->dclpCollection;
+    }
+
+
+    /**
+     * Get DCLP volume
+     *
+     * @return string 
+     */
+    public function getDclpVolume()
+    {
+        return $this->dclpVolume;
+    }
+
+    /**
+     * Get DCLP document
+     *
+     * @return string 
+     */
+    public function getDclpDocument()
+    {
+        return $this->dclpDocument;
     }
 
     /**

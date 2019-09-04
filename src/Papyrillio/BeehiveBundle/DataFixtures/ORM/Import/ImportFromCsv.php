@@ -55,7 +55,7 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
     protected $editionExampleCorrection = array();
 
     protected static $idnoXpath = null;
-    protected static $hgvDdb = array();
+    protected static $hgvDdb  = array();
 
     static function fallback($value, $fallback){
       if(!isset($value) || $value === null || $value === '')
@@ -194,9 +194,9 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
       return self::$idnoXpath;
     }
 
-    protected function checkHgv($hgv){
+    protected function getDdb($hgv){
       $lookupList = self::getHgvDdb();
-      return isset($lookupList[$hgv]) ? true : false;
+      return isset($lookupList[$hgv]) ? $lookupList[$hgv] : null;
     }
 
     protected static function getHgvDdb(){
@@ -209,10 +209,6 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
           $hgvIdno = $hgvIdno->length ? $hgvIdno->item(0)->nodeValue : null;
           $ddbIdno = $ddbIdno->length ? $ddbIdno->item(0)->nodeValue : null;
           if($hgvIdno){
-            if($ddbIdno){
-              $ddbExploded = explode(';', $ddbIdno);
-              $ddbIdno = array('ddb' => $ddbIdno, 'collection' => $ddbExploded[0], 'volume' => $ddbExploded[1], 'document' => $ddbExploded[2]);
-            }
             self::$hgvDdb[$hgvIdno] = $ddbIdno;
           } else {
             throw new Exception('invalid item found in xml (hgv: ' . ($hgvIdno ? $hgvIdno : 'null') . '; ddb: ' . ($ddbIdno ? $ddbIdno : 'null') . ')');
@@ -220,11 +216,6 @@ class ImportFromCsv extends AbstractFixture implements OrderedFixtureInterface
         }
       }
       return self::$hgvDdb;
-    }
-
-    protected function getDdb($hgv){
-      $lookupList = self::getHgvDdb();
-      return isset($lookupList[$hgv]) ? $lookupList[$hgv] : null;
     }
 
     protected function formatText($text1, $text2, $editionSort){

@@ -48,7 +48,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
     }
 
     protected function updateRegisterFromEpiDocIdnos($manager){
-      $itemList = self::getIdnoXpath()->evaluate('/list/item');
+      $itemList = self::getIdnoXpath()->evaluate("/list/item[idno[@type='hgv']]");
         for($i = 0; $i < $itemList->length; $i++){
           // get idnos from EpiDoc
           $hgvIdno  = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));

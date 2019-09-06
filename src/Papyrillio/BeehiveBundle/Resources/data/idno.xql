@@ -1,4 +1,5 @@
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
+declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace hgv = "HGV";
 declare option saxon:output "method=xml";
 declare option saxon:output "indent=yes";
@@ -12,11 +13,11 @@ declare variable $idpData external;
     let $hgv := string($doc//tei:publicationStmt/tei:idno[@type = 'filename'])
     let $tm  := string($doc//tei:publicationStmt/tei:idno[@type = 'TM'])
     let $ddb := string($doc//tei:publicationStmt/tei:idno[@type = 'ddb-hybrid'])
-    
+
     let $dclpFile := concat($idpData, '/DCLP/', ceiling(number($tm) div 1000), '/', $tm, '.xml')
     let $dclpEpiDoc := if(doc-available($dclpFile))then(doc($dclpFile))else() 
     let $dclp := if($dclpEpiDoc)then(string($dclpEpiDoc//tei:publicationStmt/tei:idno[@type = 'dclp-hybrid']))else()
-    
+
     return <item>
     <idno type="hgv">{data($hgv)}</idno>
     <idno type="tm">{data($tm)}</idno>
@@ -30,7 +31,8 @@ declare variable $idpData external;
 
     let $tm   := $doc/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type = 'TM']
     let $dclp := $doc/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type = 'dclp-hybrid']
-    
-    return <item><idno type="tm">{data($tm)}</idno><idno type="dclp">{data($dclp)}</idno></item>
+    let $dclpRdf := doc(concat('http://papyri.info/dclp/', $tm, '/rdf')) (: cl: dieser Zugriff kostet ca. eine halbe Stunde :)
+
+    return if($dclpRdf//rdf:Description[starts-with(@rdf:about, 'http://papyri.info/hgv')])then(<item><idno type="tm">{data($tm)}</idno><idno type="dclp">{data($dclp)}</idno></item>)else()
     )
 }</list>

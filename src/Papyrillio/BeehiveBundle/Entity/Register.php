@@ -76,7 +76,7 @@ class Register
           if($this->ddb){
             return 'https://www.papyri.info/ddbdp/' . $this->ddb;
           } elseif($this->dclp){
-            return 'https://www.papyri.info/dclp/' . $this->dclp;
+            return 'https://www.papyri.info/dclp/' . $this->tm;
           } elseif($this->hgv) {
             return 'https://www.papyri.info/hgv/' . $this->hgv;
           } else {

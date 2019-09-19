@@ -48,72 +48,73 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
     }
 
     protected function updateRegisterFromEpiDocIdnos($manager){
-      $itemList = self::getIdnoXpath()->evaluate("/list/item[idno[@type='hgv']]");
-        for($i = 0; $i < $itemList->length; $i++){
-          // get idnos from EpiDoc
-          $hgvIdno  = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
-          $ddbIdno  = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
-          $dclpIdno = self::getIdnoXpath()->query("idno[@type='dclp']", $itemList->item($i));
-          $tmIdno   = self::getIdnoXpath()->query("idno[@type='tm']", $itemList->item($i));
+      $itemList = self::getIdnoXpath()->evaluate("/list/item[not(idno[@type='hgv']) or number(idno[@type='hgv']) < 500000 or number(idno[@type='hgv']) > 501000]");
+      for($i = 0; $i < $itemList->length; $i++){
+        // get idnos from EpiDoc
+        $hgvIdno  = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
+        $ddbIdno  = self::getIdnoXpath()->query("idno[@type='ddb']", $itemList->item($i));
+        $dclpIdno = self::getIdnoXpath()->query("idno[@type='dclp']", $itemList->item($i));
+        $tmIdno   = self::getIdnoXpath()->query("idno[@type='tm']", $itemList->item($i));
 
-          $hgvIdno  = $hgvIdno->length  ? $hgvIdno->item(0)->nodeValue  : null;
-          $ddbIdno  = $ddbIdno->length  ? $ddbIdno->item(0)->nodeValue  : null;
-          $dclpIdno = $dclpIdno->length ? $dclpIdno->item(0)->nodeValue : null;
-          $tmIdno   = $tmIdno->length   ? $tmIdno->item(0)->nodeValue   : null;
+        $hgvIdno  = $hgvIdno->length  ? $hgvIdno->item(0)->nodeValue  : null;
+        $ddbIdno  = $ddbIdno->length  ? $ddbIdno->item(0)->nodeValue  : null;
+        $dclpIdno = $dclpIdno->length ? $dclpIdno->item(0)->nodeValue : null;
+        $tmIdno   = $tmIdno->length   ? $tmIdno->item(0)->nodeValue   : null;
+        $idnoInfo = ($hgvIdno ? $hgvIdno : $tmIdno) . ($ddbIdno || $dclpIdno ? '/' . $ddbIdno . ($ddbIdno && $dclpIdno ? '/' : '') . $dclpIdno : '');
 
-          $sethgv  = ' r.hgv = ' . "'" . $hgvIdno . "'";
-          $setTm   = ' r.tm = ' . "'" . $tmIdno . "'";
-          $setDdb  = $ddbIdno  ? ',  r.ddb = ' . "'" . $ddbIdno . "'"   : '';
-          $setDclp = $dclpIdno ? ',  r.dclp = ' . "'" . $dclpIdno . "'" : '';
-
-          $hgvWithoutTexlett = preg_replace('/[a-z]+/', '', $hgvIdno) + 0;
-
-          if(preg_match('/^\d+[a-z]*$/', $hgvIdno) && (($hgvWithoutTexlett < 500000)) || ($hgvWithoutTexlett >= 501000)) {
-            if($hgvWithoutTexlett == $tmIdno) {
-              if(!preg_match('/^sosol;/', $ddbIdno)){
-                $idnoInfo = $hgvIdno . '/' .$tmIdno . '/' . ($ddbIdno ?  $ddbIdno : 'NO DDB') . '/' . ($dclpIdno ?  $dclpIdno : 'NO DCLP') . '>';
-                $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
-                $selected = $query->getResult();
-                if(count($selected) < 2){
-                  if(count($selected) === 1){ // UPDATE EXISTING HGV (HGV numbers are unique, in EpiDoc: tm = hgv - [a-z])
-                    $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET ' . $setTm . $setDdb . $setDclp . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'");
-                    $updated = $query->getResult();
-                    if($updated){
-                      echo $idnoInfo . ' updated (HGV)' . "\n";
-                    }
-                  } else {
-                    $query = $manager->createQuery('SELECT r.id FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
-                    $selected = $query->getResult();
-                    if(count($selected)){ // UPDATE EXISTING TM
-                      $query = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET ' . $sethgv . $setDdb . $setDclp . ' WHERE r.tm = ' . "'" . $tmIdno . "'");
-                      $updated = $query->getResult();
-                      if($updated){
-                        echo $idnoInfo . ' updated (TM)' . "\n";
-                      }
-                    } else { // INSERT COMPLETELY NEW
-                      $register = new Register();
-                      $register->setTm($tmIdno);
-                      $register->setHgv($hgvIdno);
-                      $register->setDdb($ddbIdno);
-                      $register->setDdb($dclpIdno);
-                      $manager->persist($register);
-                      $manager->flush();
-                      echo $idnoInfo . 'new register entry' . "\n";
-                    }
-                  }
-                } else {
-                  echo 'ACHTUNG: TM-Nummer in Datenbank nicht unique (' . $hgvIdno . ')' . "\n";
-                }
-              } else {
-                echo 'ACHTUNG: SoSOL-DDB-hybrid ' . ($hgvIdno ? $hgvIdno : '') . ($tmIdno ? '/' . $tmIdno : '') . ($ddbIdno ? ' ' . $ddbIdno : '') . "\n";
-              }
-            } else {
-              echo 'ACHTUNG: TM-Nummer weicht von HGV-Nummer ab (' . $hgvIdno . '/' . $tmIdno . ')' . "\n";
-            }
-          } else {
-            echo 'ACHTUNG: ungültige HGV-Nummer (' . $hgvIdno . ')' . "\n";
-          }
+        if($hgvIdno && !preg_match('/^\d+[a-z]*$/', $hgvIdno)){
+          echo 'ACHTUNG: ungültige HGV-Nummer (' . $hgvIdno . ')' . "\n";
+          break;
         }
+
+        if($tmIdno && !preg_match('/^\d+$/', $tmIdno)){
+          echo 'ACHTUNG: ungültige TM-Nummer (' . $tmIdno . ')' . "\n";
+          break;
+        }
+
+        if($ddbIdno && preg_match('/^sosol;/', $ddbIdno)){
+          echo 'ACHTUNG: SoSOL-DDB-hybrid (' . $ddbIdno . ')' . "\n";
+          break;
+        }
+
+        if($dclpIdno && preg_match('/^sosol;/', $dclpIdno)){
+          echo 'ACHTUNG: SoSOL-DCLP-hybrid (' . $dclpIdno . ')' . "\n";
+          break;
+        }
+
+        if($hgvIdno && $tmIdno && (preg_replace('/[a-z]+/', '', $hgvIdno) + 0 != $tmIdno)){
+          echo 'ACHTUNG: TM-Nummer weicht von HGV-Nummer ab (' . $hgvIdno . '/' . $tmIdno . ')' . "\n";
+          break;
+        }
+
+        $findMatchingRegisterEntry = $manager->createQuery('SELECT r.id, r.ddb, r.dclp FROM PapyrillioBeehiveBundle:Register r ' . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tmIdno . "'" . ')');
+        $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
+
+        if(count($matchingRegisterEntry) === 1){ // UPDATE
+          if(($matchingRegisterEntry[0]['ddb'] != $ddbIdno) OR ($matchingRegisterEntry[0]['dclp'] != $dclpIdno)){
+            $setDdb  = $ddbIdno  ? 'r.ddb = ' . "'" . $ddbIdno . "'"   : 'r.ddb = NULL';
+            $setDclp = $dclpIdno ? 'r.dclp = ' . "'" . $dclpIdno . "'" : 'r.dclp = NULL';
+
+            $updateQuery = $manager->createQuery('UPDATE PapyrillioBeehiveBundle:Register r SET ' . $setDdb . ', '  . $setDclp . ' WHERE r.hgv = ' . "'" . $hgvIdno . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tmIdno . "'" . ')');
+            $updated = $updateQuery->getResult();
+            if($updated){
+              echo $idnoInfo . ' updated' . "\n";
+            }
+          }
+        } elseif(count($matchingRegisterEntry) === 0){ // NEW
+            $register = new Register();
+            $register->setTm($tmIdno);
+            $register->setHgv($hgvIdno);
+            $register->setDdb($ddbIdno);
+            $register->setDclp($dclpIdno);
+            $manager->persist($register);
+            $manager->flush();
+            echo $idnoInfo . ' created new register entry' . "\n";
+        } else {
+          echo 'ACHTUNG: TM/HGV-Nummer in Datenbank nicht unique (' . $tmIdno . '/' . $hgvIdno . ')' . "\n";
+        }
+      }
+
     }
 
     protected function checkRegister($manager){

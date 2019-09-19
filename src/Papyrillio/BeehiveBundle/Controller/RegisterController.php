@@ -107,7 +107,7 @@ class RegisterController extends BeehiveController{
 
     return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
   }
-  
+
   protected function getIdnoTriplet(){
     $newEntry = $this->getParameter('newEntry');
 
@@ -115,8 +115,8 @@ class RegisterController extends BeehiveController{
     $tm  = null;
     $hgv = null;
 
-    $ddbParse = preg_replace('/^(.*[^\w\d])?([\w\d]+;[\w\d\.()]*;[\w\d_,+\-\/\.()]+)([^\w\d_].*)?$/', '$2', $newEntry);
-    if(preg_match('/^[\w\d]+;[\w\d\.()]*;[\w\d_,+\-\/\.()]+$/', $ddbParse)){
+    $ddbParse = preg_replace('/^([^; ]+\s+)?([\w\d\.]+;[^; ]*;[^; ]+)(\s+[^;]+)?$/', '$2', $newEntry);
+    if(preg_match('/^[\w\d\.]+;[^; ]*;[^; ]+$/', $ddbParse)){
       $ddb = $ddbParse;
     }
 
@@ -125,12 +125,12 @@ class RegisterController extends BeehiveController{
       $tm = $tmParse;
     }
 
-    $hgvParse = preg_replace('/^(.* )?(\d+[a-z]+)( .*)?$/', '$2', $newEntry);
+    $hgvParse = preg_replace('/^(.* )?(\d+[a-z]+)( .*)?$/', '$2', $newEntry); // nur was einen Buchstaben hat, kann klar als HGV-Nummer erkannt werden
     if(preg_match('/^\d+[a-z]+$/', $hgvParse)){
       $hgv = $hgvParse;
     }
     
-    if(!$hgv && $tm && preg_match('/.*' . $tm . '.+' . $tm . '.*/', $newEntry)){
+    if(!$hgv && $tm && preg_match('/.*' . $tm . '.+' . $tm . '.*/', $newEntry)){ // sind HGV- und TM-Nummer gleich, müssen beide (= die gleiche Nummer zwei Mal) angegeben werden
       $hgv = $tm;
     }
 

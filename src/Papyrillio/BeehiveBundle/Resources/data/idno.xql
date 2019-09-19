@@ -31,7 +31,8 @@ declare variable $idpData external;
 
     let $tm   := $doc/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type = 'TM']
     let $dclp := $doc/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type = 'dclp-hybrid']
-    let $dclpRdf := doc(concat('http://papyri.info/dclp/', $tm, '/rdf')) (: cl: dieser Zugriff kostet ca. eine halbe Stunde :)
+    let $numberServer := concat('http://papyri.info/dclp/', $tm, '/rdf')
+    let $dclpRdf := if(doc-available($numberServer))then(doc($numberServer))else(trace($numberServer, 'Numberserver not available')) (: cl: dieser Zugriff mit vorhergehendem Test kostet ca. eine halbe Stunde :)
 
     return if($dclpRdf//rdf:Description[starts-with(@rdf:about, 'http://papyri.info/hgv')])then(<item><idno type="tm">{data($tm)}</idno><idno type="dclp">{data($dclp)}</idno></item>)else()
     )

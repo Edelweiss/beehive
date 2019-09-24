@@ -61,13 +61,18 @@ class Register
 
     /**
      * Set hgv
+     * Setting hgv will always set tm as well
      *
      * @param string $hgv
      */
     public function setHgv($hgv)
     {
         $this->hgv = $hgv;
-        $this->setTm(preg_replace('/[^\d]+/', '', $hgv) * 1);
+        if($hgv){
+          $this->setTm(preg_replace('/[^\d]+/', '', $hgv) * 1);
+        } else {
+          $this->setTm(null);
+        }
     }
 
     public function getLink($type = 'pi'){

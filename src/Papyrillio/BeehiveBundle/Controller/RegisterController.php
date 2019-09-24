@@ -14,6 +14,12 @@ class RegisterController extends BeehiveController{
   private static function compareDdb($ddb1, $ddb2){
     $a = explode(';', $ddb1['value']);
     $b = explode(';', $ddb2['value']);
+    if(count($a) != count($b)){
+      return count($a) < count($b) ? -1 : 1;
+    }
+    if($a[0] != $b[0]){
+      return $a < $b ? -1 : 1;
+    }
     $a = (count($a) > 1 ? $a[1] : 0) * 1000000 + (count($a) > 2 ? $a[2] : 0);
     $b = (count($b) > 1 ? $b[1] : 0) * 1000000 + (count($b) > 2 ? $b[2] : 0);
     return $a < $b ? -1 : 1;
@@ -27,19 +33,19 @@ class RegisterController extends BeehiveController{
       $entityManager = $this->getDoctrine()->getEntityManager();
       $repository = $entityManager->getRepository('PapyrillioBeehiveBundle:Register');
 
-      $search = 'r.ddb LIKE \'%' . $term . '%\'';
-      $order = 'r.ddb';
-      # $order = 'r.collection, r.volume, r.document';
+      $search = 'r.ddb LIKE \'%' . $term . '%\' or r.dclp LIKE \'%' . $term . '%\'';
+      $order = 'r.ddb, r.dclp';
+
       if(preg_match('/^\d/', $term)){
         $search = 'r.hgv LIKE \'' . $term . '%\' OR r.tm LIKE \'' . $term . '%\'';
         $order = 'r.tm, r.hgv';
       }
 
-      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE ' . $search . ' ORDER BY ' . $order);
+      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.dclp, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE ' . $search . ' ORDER BY ' . $order);
       $query->setMaxResults(1000);
 
       foreach($query->getResult() as $result){
-        $caption = $this->makeCaption($result, (preg_match('/^\d/', $term)) ? 'hgv' : 'ddb');
+        $caption = $this->makeCaption($result, $term);
 
         $autocomplete[] = array('id' => $result['id'], 'value' => $caption, 'label' => $caption);
       }
@@ -66,13 +72,13 @@ class RegisterController extends BeehiveController{
     return new Response(json_encode($autocomplete));
   }
 
-  protected function makeCaption($result, $type = 'ddb'){
-    if($type == 'hgv'){
+  protected function makeCaption($result, $term){
+    if(preg_match('/^\d/', $term)){
       $caption = ($result['tm'] ? $result['tm'] . ($result['hgv'] && ($result['hgv'] != $result['tm']) ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']);
       $caption .= ($result['ddb'] ? ' (' . $result['ddb'] . ')' : '');
       return $caption;
     }
-    $caption = ($result['ddb'] ? $result['ddb'] . '' : '');
+    $caption = ($result['ddb'] && preg_match('/.*' . $term . '.*/', $result['ddb']) ? $result['ddb'] . ' ' : ($result['dclp'] && preg_match('/.*' . $term . '.*/', $result['dclp']) ? $result['dclp'] . ' ' : ''));
     $caption .= ($result['hgv'] || $result['tm'] ? ' TM/HGV ' : '');
     $caption .= ($result['tm'] ? $result['tm'] . ($result['hgv'] && ($result['hgv'] != $result['tm']) ? ' (' . str_replace($result['tm'], '', $result['hgv']) . ')' : '') : $result['hgv']);
     return $caption;

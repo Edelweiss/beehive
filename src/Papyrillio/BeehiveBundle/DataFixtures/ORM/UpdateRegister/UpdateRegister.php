@@ -49,6 +49,7 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
 
     protected function updateRegisterFromEpiDocIdnos($manager){
       $itemList = self::getIdnoXpath()->evaluate("/list/item[not(idno[@type='hgv']) or number(idno[@type='hgv']) < 500000 or number(idno[@type='hgv']) > 501000]");
+      //$itemList = self::getIdnoXpath()->evaluate("/list/item[idno[@type='hgv'] and (number(idno[@type='hgv']) < 500000 or number(idno[@type='hgv']) > 501000)]");
       for($i = 0; $i < $itemList->length; $i++){
         // get idnos from EpiDoc
         $hgvIdno  = self::getIdnoXpath()->query("idno[@type='hgv']", $itemList->item($i));
@@ -103,8 +104,8 @@ class UpdateRegister extends AbstractFixture implements OrderedFixtureInterface
           }
         } elseif(count($matchingRegisterEntry) === 0){ // NEW
             $register = new Register();
-            $register->setTm($tmIdno);
             $register->setHgv($hgvIdno);
+            $register->setTm($tmIdno);
             $register->setDdb($ddbIdno);
             $register->setDclp($dclpIdno);
             $manager->persist($register);

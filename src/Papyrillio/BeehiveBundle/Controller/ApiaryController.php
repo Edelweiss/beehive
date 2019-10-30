@@ -26,8 +26,9 @@ class ApiaryController extends BeehiveController{
     $parameters = array('id' => $id);
 
     if($this->get('security.context')->isGranted('ROLE_USER') === false) {
-      $where .= ' AND c.status = :status';
+      $where .= ' AND (c.status = :status OR c2.title = :compilationTitle)'; // cl: hardcoded BLXII hack, show unchecked BLXII corrections
       $parameters['status'] = 'finalised';
+      $parameters['compilationTitle'] = 'XII';
     }
     
     // QUERY

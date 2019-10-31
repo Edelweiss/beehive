@@ -546,7 +546,7 @@ class Correction
     {
       $registerList = $this->getDistinctDdb(self::MODE_REGISTER);
       if(count($registerList)){
-        array_pop($registerList)->getDdb(); 
+        return array_pop($registerList)->getDdb(); 
       }
       return null;
     }
@@ -948,7 +948,7 @@ class Correction
         $distinctList = array();
         foreach($this->registerEntries as $registerEntry){
             if($registerEntry->getDdb()){
-              $distinctList[$registerEntry->getDdb()] = $mode == self::MODE_PLAIN ? $registerEntry->getDdb() : $registerEntry;
+                $distinctList[$registerEntry->getDdb()] = $mode == self::MODE_PLAIN ? $registerEntry->getDdb() : $registerEntry;
             }
         }
         return $distinctList;

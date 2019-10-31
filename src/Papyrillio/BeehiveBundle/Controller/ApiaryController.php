@@ -46,6 +46,11 @@ class ApiaryController extends BeehiveController{
       return $this->render('PapyrillioBeehiveBundle:Apiary:honey.html.twig', array('corrections' => $corrections));
     } elseif($format === 'plain'){
       return $this->render('PapyrillioBeehiveBundle:Apiary:snippetHoney.html.twig', array('corrections' => $corrections));
+    } elseif ($format === 'rdf') {
+      //$response->headers->set('Content-Type', 'text/xml');
+      $response = new Response($this->renderView('PapyrillioBeehiveBundle:Apiary:honey.xml.twig', array('corrections' => $corrections)));
+      $response->headers->set('Content-Type', 'application/rdf+xml');
+      return $response;
     } else {
       $data = array('corrections' => array());
       $data = array('count' => count($corrections));

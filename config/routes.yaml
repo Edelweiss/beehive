@@ -1,0 +1,255 @@
+PapyrillioBeehiveBundle_about:
+    path:  /about
+    controller: App\Controller\DefaultController::about 
+
+PapyrillioBeehiveBundle_contact:
+    path:  /contact
+    controller: App\Controller\DefaultController::contact 
+
+PapyrillioBeehiveBundle_help:
+    path:  /help
+    controller: App\Controller\DefaultController::help 
+
+PapyrillioBeehiveBundle_home:
+    path:  /
+    controller: App\Controller\DefaultController::index 
+
+PapyrillioBeehiveBundle_homepage:
+    path:  /hello/{name}
+    controller: App\Controller\DefaultController::index 
+
+# NumberWizard
+
+PapyrillioBeehiveBundle_numberwizard:
+    path:  /numberWizard
+    controller: App\Controller\NumberWizardController::index
+
+PapyrillioBeehiveBundle_numberwizardlookup:
+    path:  /numberWizard/lookup
+    controller: App\Controller\NumberWizardController::lookup
+
+PapyrillioBeehiveBundle_numberwizardautocompleteddb:
+    path:  /numberWizard/autocomplete/ddb
+    controller: App\Controller\NumberWizardController::autocompleteDdb
+
+# Register
+
+PapyrillioBeehiveBundle_registershow:
+    path:  /register/show/{id}
+    controller: App\Controller\RegisterController::show 
+    requirements:
+      id: '\d+'
+
+PapyrillioBeehiveBundle_registerautocomplete:
+    path:  /register/autocomplete/{id}
+    controller: App\Controller\RegisterController::autocomplete
+    defaults:
+        id: 0
+
+PapyrillioBeehiveBundle_registerautocompleteddb:
+    path:  /register/autocompleteDdb
+    controller: App\Controller\RegisterController::autocompleteDdb
+
+PapyrillioBeehiveBundle_registershowassignments:
+    path:  /register/showAssignments/{correctionId}
+    controller: App\Controller\RegisterController::showAssignments
+    requirements:
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerrevokeassignment:
+    path:  /register/revokeAssignment/{registerId}/{correctionId}
+    controller: App\Controller\RegisterController::revokeAssignment
+    requirements:
+      registerId: '\d+'
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerassign:
+    path:  /register/assign/{registerId}/{correctionId}
+    controller: App\Controller\RegisterController::assign
+    requirements:
+      registerId: '\d+'
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registercreate:
+    path:  /register/create
+    controller: App\Controller\RegisterController::create
+
+PapyrillioBeehiveBundle_registercreateandassign:
+    path:  /register/createAndAssign/{correctionId}
+    controller: App\Controller\RegisterController::createAndAssign
+    requirements:
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerwizard:
+    path:  /registerWizard/{id}
+    controller: App\Controller\RegisterController::wizard
+    requirements:
+      correctionId: '\d+'
+
+PapyrillioBeehiveBundle_registerapiary:
+    path:  /registerApiary/{id}
+    controller: App\Controller\RegisterController::apiary
+    requirements:
+      correctionId: '\d+'
+
+# Report
+
+PapyrillioBeehiveBundle_report:
+    path:  /report
+    controller: App\Controller\ReportController:leiden
+    defaults:
+        compilationVolume: 13
+
+PapyrillioBeehiveBundle_reportleiden:
+    path:  /report/leiden/{compilationVolume}
+    controller: App\Controller\ReportController:leiden
+    defaults:
+        compilationVolume: 13
+
+PapyrillioBeehiveBundle_reportsnippet:
+    path:  /report/snippet/leiden/{id}
+    controller: App\Controller\ReportController::leidenSnippet 
+
+PapyrillioBeehiveBundle_reportoverview:
+    path:  /report/overview/{compilationVolume}
+    controller: App\Controller\ReportController:overview
+    defaults:
+        compilationVolume: 13
+
+PapyrillioBeehiveBundle_reportprint:
+    path:  /report/print/{compilationVolume}/{editionId}
+    controller: App\Controller\ReportController:print
+    defaults:
+        compilationVolume: 13
+        editionId: 0
+
+PapyrillioBeehiveBundle_reportpdf:
+    path:  /report/pdf/{compilationVolume}/{editionId}
+    controller: App\Controller\ReportController:pdf
+    defaults:
+        compilationVolume: 13
+        editionId: 0
+
+# Correction
+
+PapyrillioBeehiveBundle_correctionlist:
+    path:  /correction/list
+    controller: App\Controller\CorrectionController::list 
+
+PapyrillioBeehiveBundle_correctionprint:
+    path:  /correction/print
+    controller: App\Controller\CorrectionController:list
+    defaults:
+        print: true
+
+PapyrillioBeehiveBundle_correctionshow:
+    path:  /correction/show/{id}
+    controller: App\Controller\CorrectionController::show 
+
+PapyrillioBeehiveBundle_correctiontest:
+    path:  /correction/test/{id}
+    controller: App\Controller\CorrectionController::test 
+
+PapyrillioBeehiveBundle_correctiondelete:
+    path:  /correction/delete/{id}
+    controller: App\Controller\CorrectionController::delete 
+
+PapyrillioBeehiveBundle_correctionnew:
+    path:  /correction/new
+    controller: App\Controller\CorrectionController::new 
+
+PapyrillioBeehiveBundle_correctionupdate:
+    path:  /correction/update/{id}
+    controller: App\Controller\CorrectionController::update 
+
+PapyrillioBeehiveBundle_correctionlinksnippet:
+    path:  /correction/snippet/link/{id}
+    controller: App\Controller\CorrectionController::snippetLink 
+
+# Edition
+
+PapyrillioBeehiveBundle_editionlist:
+    path:  /edition/list
+    controller: App\Controller\EditionController::list 
+
+PapyrillioBeehiveBundle_editionshow:
+    path:  /edition/show/{id}
+    controller: App\Controller\EditionController::show 
+
+PapyrillioBeehiveBundle_editiondelete:
+    path:  /edition/delete/{id}
+    controller: App\Controller\EditionController::delete 
+
+PapyrillioBeehiveBundle_editionnew:
+    path:  /edition/new
+    controller: App\Controller\EditionController::new 
+
+PapyrillioBeehiveBundle_editionupdate:
+    path:  /edition/update
+    controller: App\Controller\EditionController::update 
+
+# Task
+
+PapyrillioBeehiveBundle_taskdelete:
+    path:  /task/delete/{id}
+    controller: App\Controller\TaskController::delete 
+
+PapyrillioBeehiveBundle_tasksnippet:
+    path:  /task/snippet/{id}
+    controller: App\Controller\TaskController::snippet 
+
+PapyrillioBeehiveBundle_tasknew:
+    path:  /task/new
+    controller: App\Controller\TaskController::new 
+
+PapyrillioBeehiveBundle_taskupdate:
+    path:  /task/update/{id}
+    controller: App\Controller\TaskController::update 
+
+# Index
+
+PapyrillioBeehiveBundle_indexdelete:
+    path:  /index/delete/{id}
+    controller: App\Controller\IndexController::delete 
+
+PapyrillioBeehiveBundle_indexsnippet:
+    path:  /index/snippet/{id}
+    controller: App\Controller\IndexController::snippet 
+
+PapyrillioBeehiveBundle_indexnew:
+    path:  /index/new
+    controller: App\Controller\IndexController::new 
+
+PapyrillioBeehiveBundle_indexupdate:
+    path:  /index/update/{id}
+    controller: App\Controller\IndexController::update 
+
+# System
+
+PapyrillioBeehiveBundle_systemsort:
+    path:  /system/sort/{editionId}
+    controller: App\Controller\SystemController:sort
+    defaults:
+        editionId: 0 
+
+PapyrillioBeehiveBundle_systemchecksort:
+    path:  /system/checkSort/{id}
+    controller: App\Controller\SystemController::checkSort 
+
+# Apiary
+
+PapyrillioBeehiveBundle_apiary:
+    path:  /browse
+    controller: App\Controller\ApiaryController:index
+    defaults:
+        format: html
+
+
+PapyrillioBeehiveBundle_apiaryhoney:
+    path:  /{type}/{id}/{format}
+    controller: App\Controller\ApiaryController:honey
+    defaults:
+        format: html
+    requirements:
+      type: '(tm|hgv|ddb|biblio|bl|register)'
+      format: '(plain|xml|html|rdf|json)'

@@ -1,0 +1,64 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Entity\Correction" table="correction">
+        <gedmo:loggable/>
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="source" type="integer"/>
+        <field name="text" type="string" length="64"/>
+        <field name="position" type="text" nullable="true" gedmo="versioned"/>
+        <field name="description" type="text" gedmo="versioned"/>
+        <field name="compilationPage" column="compilation_page" type="string" length="64" nullable="true"/>
+        <field name="status" type="text" gedmo="versioned"/>
+        <field name="creator" type="text"/>
+        <field name="created" type="datetime"/>
+        <field name="sortPage" column="sort_page" type="integer" nullable="true"/>
+        <field name="sortSide" column="sort_side" type="string" length="2" nullable="true"/>
+        <field name="sortFragment" column="sort_fragment" type="string" nullable="true"/>
+        <field name="sortColumn" column="sort_column" type="string" length="8" nullable="true"/>
+        <field name="sortLine" column="sort_line" type="integer" nullable="true"/>
+        <field name="sortSystem" column="sort_system" type="string" length="256" nullable="true"/>
+        <field name="sortUser" column="sort_user" type="string" length="256" nullable="true"/>
+        <field name="sort" type="string" length="256"/>
+        <many-to-one field="edition" target-entity="Edition" inversed-by="corrections">
+            <join-column name="edition_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+        <many-to-one field="compilation" target-entity="Compilation" inversed-by="corrections">
+            <join-column name="compilation_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+        <one-to-many field="tasks" target-entity="Task" mapped-by="correction" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="indexEntries" target-entity="IndexEntry" mapped-by="correction" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <many-to-many field="registerEntries" target-entity="Register">
+            <join-table name="correction_register">
+                <join-columns>
+                    <join-column name="correction_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="register_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="encode" />
+            <lifecycle-callback type="postPersist" method="decode" />
+            <lifecycle-callback type="preUpdate" method="encode" />
+            <lifecycle-callback type="postUpdate" method="decode" />
+            <lifecycle-callback type="postLoad" method="decode" />
+            <lifecycle-callback type="onFlush" method="encode" />
+        </lifecycle-callbacks>
+        <!-- don't forget to init the collection in entity __construct() method -->
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,17 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Entity\Task" table="task">
+        <gedmo:loggable/>
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="category" type="string" length="64"/>
+        <field name="description" type="text" gedmo="versioned"/>
+        <field name="cleared" type="datetime" nullable="true" gedmo="versioned"/>
+        <many-to-one field="correction" target-entity="Correction" inversed-by="tasks">
+            <join-column name="correction_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h3>Neue Berichtigung</h3>
+<form id="correctionNew" class="new" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
+    <input type="hidden" name="redirectTarget" id="redirectTarget" value="show" />
+        {% if form_errors(form) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form) }}
+          </div>
+        {% endif %}
+    
+    <div class="grid">
+      <div class="left">
+      <h5>Externe Quellen zuordnen</h5>
+        <label>Quelle</label>
+        {{ form_widget(form.source) }}
+        {% if form_errors(form.source) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.source) }}
+          </div>
+        {% endif %}
+
+        <br />
+        <br />
+
+        {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': form.vars.value} %}
+                                                                                                                                                                                                                                                                                                                                                                                                          
+      </div>
+      <div class="middle">
+        <h5>BL-Daten eingeben</h5>
+        <label>Band</label>
+        <select name="compilation">        
+          {% for compi in compilations %}
+            <option value="{{ compi.id }}" {{ compi.id == form.vars.value.compilation.id ? 'selected="selected"' : '' }}>{{ compi.title }}</option>
+          {% endfor %}
+        </select>
+
+        <label>Seite</label>
+        {{ form_widget(form.compilationPage) }}
+        {% if form_errors(form.compilationPage) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.compilationPage) }}
+          </div>
+        {% endif %}
+
+        <br/>
+        <br/>
+
+        <label>BL_Ed_Nr</label>
+        <select name="editionSort" id="editionSort" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">        
+        {% for edi in editions %}
+          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.sort }}</option>
+        {% endfor %}
+        </select>
+
+        <label>Edition</label>
+        <select name="edition" id="editionTitle" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">
+        {% for edi in editions %}
+          <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.poStrippedTitle }}</option>
+        {% endfor %}
+        </select>
+
+        {{ form_label(form.text) }}
+        {{ form_widget(form.text) }}
+        {% if form_errors(form.text) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.text) }}
+          </div>
+        {% endif %}
+
+        <br/>
+
+        {{ form_label(form.position) }}
+        {{ form_widget(form.position) }}
+        {% if form_errors(form.position) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.position) }}
+          </div>
+        {% endif %}
+
+        <br/>
+        <br/>
+
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, { 'attr': { 'class': 'greek' } }) }}
+        {% if form_errors(form.description) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.description) }}
+          </div>
+        {% endif %}
+
+      </div>
+      <div class="right">
+        <h5>Aufgaben definieren</h5>
+        {% for task in ['bl', 'hgv', 'tm', 'ddb', 'apis', 'biblio'] %}
+            <label>{{ task | upper }}</label>
+            <input name="task[{{ task }}]" id="task_{{ task }}" type="text" class="greek" />
+        {% endfor %}
+      </div>
+
+      <div class="bottom">
+        <input class="submit" type="submit" name="new" id="new" value="Datensatz anlegen" />
+        <input class="submit" type="submit" name="newAndAgain" id="newAndAgain" value="Datensatz anlegen und hierher zurück springen" />
+        <h5>Bereits vorhandene Korrekturen zu diesem Text</h5>
+        <div class="correctionList"></div>
+        {{ form_rest(form) }}
+        <div class="ui-widget" id="duplicateWarning" style="display: none;">
+          <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
+            <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> Es sind bereits <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'hgv', 'id': 0}) }}" id="duplicateLink" target="_blank">Daten</a> für diese HGV Nr. vorhanden! Es könnte sich möglicherweise um ein Duplikat handeln.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input class="submit" type="submit" name="new" id="new" value="Datensatz anlegen" />
+    <input class="submit" type="submit" name="newAndAgain" id="newAndAgain" value="Datensatz anlegen und hierher zurück springen" />
+</form>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  
+  <script src="{{ asset('js/jquery/jquery-specialedit.hacked.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/correction.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/correctionNew.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    function addRegisterAssigment(registerId, value, label){
+      if(!$('ul.register li input#register_' + registerId).length){
+        $('ul.register').append('<li><input type="hidden" name="register[]" id="register_' + registerId + '" value="' + registerId + '"/>' + label + '<span class="action" onclick="$(this).parent().remove();">x</span></li>');
+      }
+      registerWizard(registerId, '{{ path('PapyrillioBeehiveBundle_registerwizard', {'id': 0}) }}');
+      registerApiary(registerId, '{{ path('PapyrillioBeehiveBundle_registerapiary', {'id': 0}) }}');
+    }
+
+    $(document).ready(function(){
+      $("#registerJuggler input").autocomplete({
+        source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete') }}",
+        minLength: 2,
+        select: function(event, ui){
+          addRegisterAssigment(ui.item.id, ui.item.value, ui.item.label);
+        }
+      });
+    });
+  </script>
+{% endblock %}

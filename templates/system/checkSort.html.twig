@@ -1,0 +1,51 @@
+{% if correction %}
+	<b>{{ correction.edition.title }} {{ correction.text }} | {{ correction.position }}</b>
+	<br />
+	{{ correction.description }}
+	<br />
+	{{ oldSort }}
+	<br />
+	{{ correction.sort }}
+{% endif %}
+
+<h3>Test Cases</h3>
+<ul>
+  <li>
+  (S. 147) 426 ~= 390 (S. 332) ~= 1 (S. XVIII) ~= 9604 (11), (18), (19)
+    <ul>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/156">156</a> → ok</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/399">399</a> → ok</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/475">475</a> → ok</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/478">478</a> → ok</li>
+    	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/1947">1947</a> → ok</li>
+  	</ul>
+	</li>
+  <li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/1271">1271</a> 9 883 (b)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/1961">1961</a> 15537 (f+g)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/2998">2998</a> 113.8 b (S. 220)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/3716">3716</a> 42 (h) (8)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/4181">4181</a> ἐν Ἀρ( )</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/4275">4275</a> 995-996 (S. 248)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/4417">4417</a> 2416A (S. 297)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/4657">4657</a> 59 (c) (1-2)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/5736">5736</a> Inv. 132 (S. 40)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/6030">6030</a> App. 1 (S. 199)</li>
+	<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/6059">6059</a> 116 a (S. 221)</li>
+	<li>
+    Weitere Auffälligkeiten
+    <ul>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/1739">1739</a> 111 konkave Innenseite</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/4414">4414</a> 11314, 11322, 11323, 11327</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/613">613</a> 15 Fr. a + b</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/302">302</a> App. II 118</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/72">72</a> 103 ter</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/2925">2925</a> Suppl. A</li>
+			<li><a href="http://147.142.225.252/bl.dev/app_dev.php/system/checkSort/229">229</a> passim</li>
+
+  	</ul>
+	</li>
+</ul>
+
+<pre>
+SELECT id, text, position, sort  FROM `correction` WHERE compilation_id = 14 AND `text` LIKE '%(%'
+</pre>

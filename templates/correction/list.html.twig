@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link href="{{ asset('css/jquery/ui.jqgrid.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+  <h3>Liste der Berichtigungen</h3>
+  
+  <table id="list"></table>
+  <div id="pager"></div>
+  
+  <br />
+  
+  <button id="columnsHideShow" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+    <span class="ui-button-text">hide/show columns</span>
+  </button>
+  
+  <button id="print" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+    <span class="ui-button-text">print</span>
+  </button>
+  
+  <form id="printForm" action="{{ path('PapyrillioBeehiveBundle_correctionprint') }}" method="post" style="display: none; visibility: hidden;"></form>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('js/jquery/i18n/grid.locale-en.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/jquery/jquery-jqGrid.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/correctionList.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+
+$(function(){
+  $('#list').jqGrid({
+    url: '{{ path('PapyrillioBeehiveBundle_correctionlist') }}',
+    datatype: 'xml',
+    mtype: 'POST',
+    colNames:['Band', 'Seite', 'TM', 'HGV', 'DDB', 'Quelle', 'Edition', 'Text', 'Zeile', 'Eintrag', 'Status', 'Benutzer', 'Erstellt am', 'BL', 'TM', 'HGV', 'DDB', 'APIS', 'Biblio'],
+    colModel :[ 
+      {name:'compilation', index:'compilation',    width:32, resizable: false, sortable: false},
+      {name:'compilation_page', index:'compilationPage',    width:32, hidden: true},
+      {name:'tm',          index:'tm',             width:55, hidden: true},
+      {name:'hgv',         index:'hgv',            width:55},
+      {name:'ddb',         index:'ddb',            width:77, hidden: true},
+      {name:'source',      index:'source',         width:50, hidden: true},
+      {name:'edition',     index:'edition',        width:100},
+      {name:'text',        index:'text',           width:50},
+      {name:'position',    index:'position',       width:80},
+      {name:'description', index:'description',    width:250, classes: 'greek'},
+      {name:'status',      index:'status',         width:80},
+      {name:'creator',     index:'creator',        width:60},
+      {name:'created',     index:'created',        width:100, hidden: true},
+      {name:'task_bl',     index:'task_bl',        width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false},
+      {name:'task_tm',     index:'task_tm',        width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false},
+      {name:'task_hgv',    index:'task_hgv',       width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false},
+      {name:'task_ddb',    index:'task_ddb',       width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false},
+      {name:'task_apis',   index:'task_apis',      width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false},
+      {name:'task_biblio', index:'task_biblio',    width:28, align: 'center', classes: 'keyword', resizable: false, sortable: false, title: false}
+    ],
+    pager: '#pager',
+    rowNum:100,
+    height:'auto',
+    rowList:[10,20,50,100],
+    sortname: 'edition',
+    sortorder: 'asc',
+    viewrecords: true,
+    gridview: true,
+    caption: 'Liste der Berichtigungen'});
+
+    $('#list').jqGrid('filterToolbar', {});
+    
+    $('#list').jqGrid('gridResize', {});
+
+    $('#columnsHideShow').click(function(){
+      $('#list').jqGrid('columnChooser', {shrinkToFit: false, autowidth: false});
+      return false;
+    });
+
+    $('#print').click(function(){
+      printCorrectionList();
+      return false;
+    });
+    
+    /*$('#list').jqGrid ('navButtonAdd', '#columnator',
+     { caption: "", buttonicon: "ui-icon-calculator",
+       title: "Spalten auswählen",
+       onClickButton: function() {
+            grid.jqGrid('columnChooser');
+       }
+     });*/
+    
+
+  });
+
+  </script>
+{% endblock %}

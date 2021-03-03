@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="apiary">
+  <p>
+    <label for="bl">BL</label>
+    <select id="bl" class="flyTo">
+      <option value="1">I</option>
+      <option value="2">II</option>
+      <option value="3">III</option>
+      <option value="4">IV</option>
+      <option value="5">V</option>
+      <option value="6">VI</option>
+      <option value="7">VII</option>
+      <option value="8">VIII</option>
+      <option value="9">IX</option>
+      <option value="10">X</option>
+      <option value="11">XI</option>
+      <option value="12">XII</option>
+      <option value="13" selected="selected">XIII</option>
+    </select>
+  </p>
+
+  <p>
+    <label for="tm">TM</label>
+    <input id="tm" type="text" class="flyTo" />
+  </p>
+
+  <p>
+    <label for="hgv">HGV</label>
+    <input id="hgv" type="text" class="flyTo" />
+  </p>
+
+  <p>
+    <label for="biblio">Biblio</label>
+    <input id="biblio" type="text" class="flyTo" />
+  </p>
+
+  <p>
+    <label for="ddb">DDB</label>
+    <input id="ddb" type="text" />
+  </p>
+  
+  <p>
+    <br />
+    <br />
+    <br />
+    <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'tm', 'id': '19768'}) }}">TM 19768</a>, <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'hgv', 'id': '34844'}) }}">HGV 34844</a>, <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'ddb', 'id': 'p.mil;2;64'}) }}">DDB p.mil;2;64</a>, <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'biblio', 'id': '73664'}) }}">Biblio 73664</a>, <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'bl', 'id': 13}) }}">BL XIII</a><br />
+  </p>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('js/apiary.js') }}" type="text/javascript"></script>
+{% endblock %}

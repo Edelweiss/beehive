@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% set columns = {'title': 'Title', 'tm': 'TM', 'hgv': 'HGV', 'ddb': 'DDB', 'source': 'Biblio', 'edition': 'Edition', 'text': 'Text', 'position': 'Position', 'description': 'Description', 'status': 'Status', 'creator': 'Creator', 'created': 'Date', 'task_bl': 'BL', 'task_tm': 'TM', 'task_hgv': 'HGV', 'task_ddb': 'DDB', 'task_apis': 'Apis', 'task_biblio': 'Biblio'} %}
+
+{% block body %}
+<table>
+  <thead>
+    <tr>
+      {% for key, caption in columns %}
+        <th class="{{ key }}">{{ caption }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for correction in corrections %}
+      <tr id = '{{ correction.id }}'>
+        <td class="title">{{ correction.compilation.title }}</td>
+        <td class="tm">{{ correction.tm }}</td>
+        <td class="hgv">{{ correction.hgv }}</td>
+        <td class="ddb">{{ correction.ddb }}</td>
+        <td class="source">{{ correction.source }}</td>
+        <td class="title">{{ correction.edition.title }}</td>
+        <td class="text">{{ correction.text }}</td>
+        <td class="position">{{ correction.position }}</td>
+        <td class="description">{{ correction.description }}</td>
+        <td class="status">{{ correction.status }}</td>
+        <td class="creator">{{ correction.creator }}</td>
+        <td class="created">{{ correction.created.format('d.m.Y H:i') }}</td>
+        {% for key, task in {'task_bl': 'bl', 'task_tm': 'tm', 'task_hgv': 'hgv', 'task_ddb': 'ddb', 'task_apis': 'apis', 'task_biblio': 'biblio'} %}
+          <td class="{{ key }}">{% if correction.hasTask(task) %}<span title="{{ correction.taskString(task) }}">{{ correction.hasOpenTask(task) ? '✘' : '✔' }}</span>{% endif %}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+
+{{ 'now' | date('d.m.Y H:i') }} ings. <span>{{ corrections | length }}</span> Datensätze
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('js/jquery/i18n/grid.locale-en.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/jquery/jquery-jqGrid.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/correctionList.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function(){
+      window.print(); 
+    });
+  </script>
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% if visible %}
+    <style>
+      {% for key, caption in columns %}
+        {% if key not in visible %}
+          th.{{ key }}{ display: none; }
+          td.{{ key }}{ display: none; }
+        {% endif %}
+      {% endfor %}
+    </style>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,325 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h3>{{ correction.title }}, <span id="text" class="edit">{{ correction.text }}</span>, <span id="position" class="edit">{{ correction.position }}</span> <span>(BL</span> <span id="compilation">{{ correction.compilation.title }}</span><span> S. </span><span id="compilationPage" class="edit">{{ correction.compilationPage }}</span><span>)</span></h3>
+  
+  <div id="correction">
+    <h4><a href="#">Berichtigung</a></h4>
+    <div id="task">
+      <p id="description" class="editArea greek">{{ correction.description }}</p>
+
+      <p>Status: <span id="status">{{ correction.status }}</span></p>
+      {% if correction.tasks | length %}
+        <ul class="task">
+          {% for task in correction.tasks %}
+            <li>{% include 'PapyrillioBeehiveBundle:Task:task.html.twig' with {'task': task} %}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="task">Es wurden keine Aufgaben definiert.</p>
+      {% endif %}
+      <p class="actionHolder">
+        <span id="callDialogueTaskNew">Neue Aufgabe anlegen</span>
+      </p>
+    </div>
+    <h4><a href="#">Index</a></h4>
+    <div id="index">
+      {% if correction.indexEntries | length %}
+        <ul class="index">
+          {% for index in correction.indexEntries %}
+            <li>{% include 'PapyrillioBeehiveBundle:Index:index.html.twig' with {'index': index} %}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="index">Es sind keine Indexeinträge für diese Korrektur hinterlegt.</p>
+      {% endif %}
+      <p class="actionHolder">
+        <span id="callDialogueIndexNew">Indexeintrag vornehmen</span>
+      </p>
+    </div>
+    <h4><a href="#">Weitere Quellen</a></h4>
+    <div>
+      Ids
+      <ul class="ids">
+          <li>TM  <span id="tm" class="edit">{{ correction.tm }}</span></li>
+          <li>HGV <span id="hgv" class="edit">{{ correction.hgv }}</span></li>
+          <li>DDB <span id="ddb" class="edit">{{ correction.ddb }}</span></li>
+          <li>Biblio <span id="source" class="edit">{{ correction.source }}</span></li>
+      </ul>
+      <div class="ids">Links im Internet</div>
+      <div id="link">
+        {% include 'PapyrillioBeehiveBundle:Correction:snippetLink.html.twig' with {'correction': correction} %}
+      </div>
+    </div>
+    <h4><a href="#">Register</a></h4>
+    <div id="register">
+      {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': correction} %}
+    </div>
+    <h4><a href="#">Versionslogbuch</a></h4>
+    <div class="log">
+      <ul class="logs greek">
+        {% for log in logs %}
+          <li>Version {{ log.version }} / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
+            <ul>
+              {% for key,value in log.dataDecoded %}
+                <li>{{ key }} → {{ value }}</li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  
+  <p class="actionHolder">
+    <a href="{{ path('PapyrillioBeehiveBundle_correctiondelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
+    <!--span id="previewAction">Vorschau neu laden</span-->
+  </p>
+
+  <div id="preview">
+    {% include 'PapyrillioBeehiveBundle:Report:leidenData.html.twig' with {'corrections': [correction]} %}
+  </div>
+
+  <div id="newTask" title="Neue Aufgabe anlegen">
+    <form id="taskNew" class="new" action="{{ path('PapyrillioBeehiveBundle_tasknew') }}" method="post" {{ form_enctype(formTask) }}>
+      {{ form_widget(formTask) }}
+      <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formTask.vars.value.correction.id }}" />
+    </form>
+  </div>
+
+  <div id="newIndex" title="Indexeintrag vornehmen">
+    <form id="indexNew" class="new" action="{{ path('PapyrillioBeehiveBundle_indexnew') }}" method="post" {{ form_enctype(formIndex) }}>
+      {{ form_widget(formIndex) }}
+      <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formIndex.vars.value.correction.id }}" />
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  
+  <script src="{{ asset('js/jquery/jquery-jeditable.min.js') }}" type="text/javascript"></script>
+  <!--script src="{{ asset('js/jquery/jquery-specialedit.min.js') }}" type="text/javascript"></script-->
+  <script src="{{ asset('js/jquery/jquery-specialedit.hacked.js') }}" type="text/javascript"></script>
+  
+  <script src="{{ asset('js/correction.js') }}" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    function preview(){
+      $('#preview').load('{{ path('PapyrillioBeehiveBundle_reportsnippet', {'id': correction.id}) }}');
+    }
+
+    function updateLink(){
+      $('#link').load('{{ path('PapyrillioBeehiveBundle_correctionlinksnippet', {'id': correction.id}) }}');
+    }
+    
+    $.editable.addInputType('specialedit', {
+      element : function(settings, original) {
+      
+          var textarea = $('<textarea />');
+          if (settings.rows) {
+              textarea.attr('rows', settings.rows);
+          } else if (settings.height != "none") {
+              textarea.height(settings.height);
+          }
+          if (settings.cols) {
+              textarea.attr('cols', settings.cols);
+          } else if (settings.width != "none") {
+              textarea.width(settings.width);
+          }
+
+          $(this).append(textarea);
+          $(textarea).specialedit(['→']);
+          return(textarea);
+      }
+    });
+    
+    $(document).ready(function(){
+
+      /*$('#correction').accordion({
+        autoHeight: true
+      });*/
+
+      $('#correction').togglepanels();
+      $('#task').prev().click();
+
+      $('.edit').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+        id   : 'elementid',
+        name : 'newvalue',
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        placeholder: '________',
+        style: 'inherit',
+        callback: function(value, settings){
+          preview();
+          updateLink();
+        }
+      });
+
+      $('.editArea').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+        id   : 'elementid',
+        name : 'newvalue',
+        type: 'specialedit',
+        cancel: 'Cancel',
+        submit: 'OK',
+        //rows: 4,
+        height: 100,
+        //indicator: '<img src="{{ asset('images/spinner.gif') }}" />',
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        placeholder: '________',
+        cssclass: 'greek',
+        style: 'inherit',
+        callback: function(value, settings){
+          preview();
+        },
+        data: function(value, setting) {
+          return $('<div/>').html(value).text();
+        },
+        onblur: 'ignore'
+      });
+
+      $('#status').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+        id   : 'elementid',
+        name : 'newvalue',
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        type: 'select',
+        data: {'unchecked': 'unchecked', 'reviewed': 'reviewed', 'finalised': 'finalised'},
+        style: 'inherit',
+        submit: 'OK',
+        callback: function(value, settings){
+          preview();
+        }
+      });
+
+      $('#compilation').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+        id   : 'elementid',
+        name : 'newvalue',
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        type: 'select',
+        data: { {% for compilation in compilations %} '{{ compilation.id }}' : '{{ compilation.title }}' , {% endfor %} '1' : 'I' },
+        style: 'inherit',
+        submit: 'OK',
+        callback: function(value, settings){
+          preview();
+        }
+      });
+
+      $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+        id   : 'elementid_raw',
+        name : 'newvalue',
+        type: 'textarea',
+        cancel: 'Cancel',
+        submit: 'OK',
+        rows: 2,
+        cols: 100,
+        submitdata: function(value, settings){
+            return editObject_submitdata(this, value, settings);
+        },
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        placeholder: '________',
+        style: 'inherit',
+        cssclass: 'greek',
+        callback: function(value, settings){
+          preview();
+        }
+      });
+
+      $('.editTaskSelect').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+        id   : 'elementid_raw',
+        name : 'newvalue',
+        submitdata: function(value, settings){
+            return editObject_submitdata(this, value, settings);
+            //settings.target = settings.target.match(/^(.+\/)\d+$/)[1] + this.id.match(/^task_(\d+)_(\w+)$/)[1];
+            //return {elementid: this.id.match(/^task_(\d+)_(\w+)$/)[2]};
+        },
+        indicator : 'Speichert...',
+        tooltip   : 'Klicken zum Editieren...',
+        type: 'select',
+        data: {'✔': '✔', '✘': '✘'},
+        style: 'inherit',
+        submit: 'OK',
+        callback: function(value, settings){
+          preview();
+        }
+      });
+
+      $('#newTask').dialog(
+        {
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          buttons: {
+            'OK': function(){
+              dialogue_ok(this, 'task', '{{ path('PapyrillioBeehiveBundle_tasknew') }}', '{{ path('PapyrillioBeehiveBundle_tasksnippet', {'id': 0}) }}');
+            },
+            'Cancel': function(){
+              dialogue_cancel(this, 'task');
+            }
+          }
+        }
+      );
+
+      $('#callDialogueTaskNew').click(function(){
+        $('#newTask').dialog('open');
+      });
+
+      $('#newIndex').dialog(
+        {
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          buttons: {
+            'OK': function(){
+              dialogue_ok($(this), 'index', '{{ path('PapyrillioBeehiveBundle_indexnew') }}', '{{ path('PapyrillioBeehiveBundle_indexsnippet', {'id': 0}) }}');
+            },
+            'Cancel': function(){
+              dialogue_cancel(this, 'index');
+            }
+          }
+        }
+      );
+
+      $('#callDialogueIndexNew').click(function(){
+        $('#newIndex').dialog('open');
+      });
+
+      $('.deleteTask').click(function(event){
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+      });
+
+      $('.deleteIndex').click(function(event){
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
+      });
+
+      $('#previewAction').click(function(){
+        preview();
+      });
+
+    function addRegisterAssigment(registerId){
+      var path0 = '{{ path('PapyrillioBeehiveBundle_registerassign', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path = path0.replace('/0/', '/' + registerId + '/');
+      $('#registerFolder').load(path);
+    }
+
+    function revokeRegisterAssigment(registerId){
+      var path0 = '{{ path('PapyrillioBeehiveBundle_registerrevokeassignment', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path = path0.replace('/0/', '/' + registerId + '/');
+      $('#registerFolder').load(path);
+    }
+
+    $("#registerJuggler input").autocomplete({
+      source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete', {'id': correction.id}) }}",
+      minLength: 2,
+      select: function(event, ui){
+        addRegisterAssigment(ui.item.id); // ui.item.value, ui.item.label
+      }
+    });
+
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% include 'PapyrillioBeehiveBundle:Task:task.html.twig' with {'task': task} %}
+<script type="text/javascript">
+
+    $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+      id   : 'elementid_raw',
+      name : 'newvalue',
+      type: 'textarea',
+      cancel: 'Cancel',
+      submit: 'OK',
+      rows: 2,
+      cols: 100,
+      submitdata: function(value, settings){
+        return editObject_submitdata(this, value, settings);
+      },
+      indicator : 'Speichert...',
+      tooltip   : 'Klicken zum Editieren...',
+      placeholder: '________',
+      style: 'inherit',
+      cssclass: 'greek'
+    });
+
+    $('.editTaskSelect').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+      id   : 'elementid_raw',
+      name : 'newvalue',
+      submitdata: function(value, settings){
+        return editObject_submitdata(this, value, settings);
+      },
+      indicator : 'Speichert...',
+      tooltip   : 'Klicken zum Editieren...',
+      type: 'select',
+      data: {'✔': '✔', '✘': '✘'},
+      style: 'inherit',
+      submit: 'OK'
+    });
+
+    $('#delete_task_{{ task.id }}').click(function(event){
+      deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+    });
+
+</script>

@@ -1,0 +1,44 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:pi="http://papyri.info/ns"
+    xmlns:cito="http://purl.org/spar/cito/"
+    xmlns:oa="http://www.openannotation.org/ns/"
+    xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+    xmlns:olo="http://purl.org/ontology/olo/core#"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:lawd="http://lawd.info/ontology/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:prov="http://www.w3.org/TR/prov-o/#"
+    xmlns:spatial="http://geovocab.org/spatial#"
+    xmlns:dc="http://purl.org/dc/terms/"
+    xmlns:osgeo="http://data.ordnancesurvey.co.uk/ontology/geometry/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:osspatial="http://data.ordnancesurvey.co.uk/ontology/spatialrelations/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:bibo="http://purl.org/ontology/bibo/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:pleiades="https://pleiades.stoa.org/places/vocab#">
+  {% if corrections %}
+  <rdf:Description rdf:about="http://papyri.info/hgv/13265/source">
+    
+    
+    {% set ref = corrections[0] %}
+
+    <dc:identifier>hgv:{{ ref.tm }}</dc:identifier>
+    <rdfs:label>{{ ref.edition.title }} {{ ref.text }} {{ ref.position }} ({{ ref.ddb }})</rdfs:label>
+    <dc:identifier>papyri.info/hgv/{{ ref.hgv }}</dc:identifier>
+    <dc:source rdf:resource="http://papyri.info/hgv/{{ ref.hgv }}/work"/>
+
+    {% for c in corrections %}
+      <dc:relation>
+        <rdf:Description rdf:about="https://aquila.zaw.uni-heidelberg.de/bl/dev/hgv/{{ c.hgv }}">
+          <dc:relation rdf:resource="https://aquila.zaw.uni-heidelberg.de/bl/dev/corrections/{{ c.id }}"/>
+        </rdf:Description>
+      </dc:relation>
+    {% endfor %}
+ 
+  </rdf:Description>
+  
+ {% endif %}
+</rdf:RDF>

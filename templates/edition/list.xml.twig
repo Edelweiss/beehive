@@ -1,0 +1,16 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<rows>
+  <page>{{ page }}</page>
+  <total>{{ totalPages }}</total>
+  <records>{{ count }}</records>
+  {% for edition in editions %}
+    <row id = '{{ edition.id }}'>
+      <cell>{{ edition.sort }}</cell>
+      <cell>{{ edition.title }}</cell>
+      <cell>{{ edition.collection }}</cell>
+      <cell>{{ edition.volume }}</cell>
+      <cell>{{ edition.remark }}</cell>
+      <cell>{{ edition.material }}</cell>
+    </row>
+  {% endfor %}
+</rows>

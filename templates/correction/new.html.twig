@@ -3,7 +3,7 @@
 {% block body %}
 
 <h3>Neue Berichtigung</h3>
-<form id="correctionNew" class="new" action="{{ path('PapyrillioBeehiveBundle_correctionnew') }}" method="post" {{ form_enctype(form) }}>
+<form id="correctionNew" class="new" action="{{ path('PapyrillioBeehive_CorrectionNew') }}" method="post" {{ form_enctype(form) }}>
     <input type="hidden" name="redirectTarget" id="redirectTarget" value="show" />
         {% if form_errors(form) %}
           <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
@@ -52,14 +52,14 @@
         <br/>
 
         <label>BL_Ed_Nr</label>
-        <select name="editionSort" id="editionSort" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">        
+        <select name="editionSort" id="editionSort" wizard-url="{{ path('PapyrillioBeehive_NumberWizardLookup') }}">        
         {% for edi in editions %}
           <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.sort }}</option>
         {% endfor %}
         </select>
 
         <label>Edition</label>
-        <select name="edition" id="editionTitle" wizard-url="{{ path('PapyrillioBeehiveBundle_numberwizardlookup') }}">
+        <select name="edition" id="editionTitle" wizard-url="{{ path('PapyrillioBeehive_NumberWizardLookup') }}">
         {% for edi in editions %}
           <option value="{{ edi.id }}" {{ edi.id == form.vars.value.edition.id ? 'selected="selected"' : '' }}>{{ edi.poStrippedTitle }}</option>
         {% endfor %}
@@ -114,7 +114,7 @@
         {{ form_rest(form) }}
         <div class="ui-widget" id="duplicateWarning" style="display: none;">
           <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
-            <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> Es sind bereits <a href="{{ path('PapyrillioBeehiveBundle_apiaryhoney', {'type': 'hgv', 'id': 0}) }}" id="duplicateLink" target="_blank">Daten</a> für diese HGV Nr. vorhanden! Es könnte sich möglicherweise um ein Duplikat handeln.</p>
+            <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Warnung:</strong> Es sind bereits <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'hgv', 'id': 0}) }}" id="duplicateLink" target="_blank">Daten</a> für diese HGV Nr. vorhanden! Es könnte sich möglicherweise um ein Duplikat handeln.</p>
           </div>
         </div>
       </div>
@@ -137,13 +137,13 @@
       if(!$('ul.register li input#register_' + registerId).length){
         $('ul.register').append('<li><input type="hidden" name="register[]" id="register_' + registerId + '" value="' + registerId + '"/>' + label + '<span class="action" onclick="$(this).parent().remove();">x</span></li>');
       }
-      registerWizard(registerId, '{{ path('PapyrillioBeehiveBundle_registerwizard', {'id': 0}) }}');
-      registerApiary(registerId, '{{ path('PapyrillioBeehiveBundle_registerapiary', {'id': 0}) }}');
+      registerWizard(registerId, '{{ path('PapyrillioBeehive_RegisterWizard', {'id': 0}) }}');
+      registerApiary(registerId, '{{ path('PapyrillioBeehive_RegisterApiary', {'id': 0}) }}');
     }
 
     $(document).ready(function(){
       $("#registerJuggler input").autocomplete({
-        source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete') }}",
+        source: "{{ path('PapyrillioBeehive_RegisterAutocomplete') }}",
         minLength: 2,
         select: function(event, ui){
           addRegisterAssigment(ui.item.id, ui.item.value, ui.item.label);

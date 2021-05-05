@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+{{ form_start(form) }}
+    <h4>Registration Form</h4>
+
+    {{ form_row(form.username, {'attr': {'class': 'form-control'}}) }}
+    <br class="clear"/>
+    {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+    <br class="clear"/>
+    {{ form_row(form.password.first, {'attr': {'class': 'form-control'}}) }}
+    <br class="clear"/>
+    {{ form_row(form.password.second, {'attr': {'class': 'form-control'}}) }}
+    <br class="clear"/>
+    <button type="submit" class="btn btn-primary">Register</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

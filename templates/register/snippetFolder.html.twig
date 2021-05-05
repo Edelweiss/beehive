@@ -23,7 +23,7 @@
             </ul>
           </td>
           <td class="actionHolder">
-            <a href="{{ registerEntry.id }}" onclick="javascript: $('#registerFolder').load('{{ path('PapyrillioBeehiveBundle_registerrevokeassignment', {'registerId': registerEntry.id, 'correctionId': correction.id}) }}'); return false;" title="{{ registerEntry.id }}">Zuordnung aufheben</a>
+            <a href="{{ registerEntry.id }}" onclick="javascript: $('#registerFolder').load('{{ path('PapyrillioBeehive_RegisterRevokeAssignment', {'registerId': registerEntry.id, 'correctionId': correction.id}) }}'); return false;" title="{{ registerEntry.id }}">Zuordnung aufheben</a>
           </td>
         </tr>
       {% endfor %}

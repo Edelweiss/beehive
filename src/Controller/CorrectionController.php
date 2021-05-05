@@ -195,12 +195,12 @@ class CorrectionController extends BeehiveController{
 
     $form = $this->createFormBuilder($correction)
       ->add('compilationPage', 'text', array('required' => false, 'label' => 'Seite'))
-      ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizardlookup'))))
+      ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizardLookup'))))
       ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
       ->add('description', 'textarea', array('label' => 'Eintrag'))
-      //->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
-      //->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
-      //->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehiveBundle_numberwizard'))))
+      //->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
+      //->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
+      //->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
       ->add('source', 'number', array('required' => false, 'label' => 'Quelle'))
       ->getForm();
 
@@ -230,9 +230,9 @@ class CorrectionController extends BeehiveController{
 
         if($this->getParameter('redirectTarget') === 'new'){
           $this->get('session')->setFlash('notice', 'Der Datensatz wurde angelegt!');
-          return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionnew'));
+          return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionNew'));
         } else {
-          return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionshow', array('id' => $correction->getId())));
+          return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionShow', array('id' => $correction->getId())));
         }
       }
     }
@@ -303,7 +303,7 @@ class CorrectionController extends BeehiveController{
 
     $entityManager->remove($correction);
     $entityManager->flush();
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_correctionlist'));
+    return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionList'));
   }
 
   public function show($id): Response {

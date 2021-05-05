@@ -1,7 +1,7 @@
 {% include 'PapyrillioBeehiveBundle:Index:index.html.twig' with {'index': index} %}
 <script type="text/javascript">
 
-    $('.editIndex').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+    $('.editIndex').editable('{{ path('PapyrillioBeehive_IndexUpdate', {'id': 0}) }}', {
       id   : 'elementid_raw',
       name : 'newvalue',
       type: 'textarea',
@@ -19,7 +19,7 @@
       cssclass: 'greek'
     });
 
-    $('.editIndexSelectCategory').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+    $('.editIndexSelectCategory').editable('{{ path('PapyrillioBeehive_IndexUpdate', {'id': 0}) }}', {
       id   : 'elementid_raw',
       name : 'newvalue',
       submitdata: function(value, settings){
@@ -33,7 +33,7 @@
       submit: 'OK'
     });
 
-    $('.editIndexSelectTopic').editable('{{ path('PapyrillioBeehiveBundle_indexupdate', {'id': 0}) }}', {
+    $('.editIndexSelectTopic').editable('{{ path('PapyrillioBeehive_IndexUpdate', {'id': 0}) }}', {
       id   : 'elementid_raw',
       name : 'newvalue',
       submitdata: function(value, settings){
@@ -48,7 +48,7 @@
     });
     
     $('#delete_index_{{ index.id }}').click(function(event){
-      deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
+      deleteObject_click(this, event, '{{ path('PapyrillioBeehive_IndexDelete', {'id': 0}) }}');
     });
 
 </script>

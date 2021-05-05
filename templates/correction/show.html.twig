@@ -72,7 +72,7 @@
   </div>
   
   <p class="actionHolder">
-    <a href="{{ path('PapyrillioBeehiveBundle_correctiondelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
+    <a href="{{ path('PapyrillioBeehive_CorrectionDelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
     <!--span id="previewAction">Vorschau neu laden</span-->
   </p>
 
@@ -81,14 +81,14 @@
   </div>
 
   <div id="newTask" title="Neue Aufgabe anlegen">
-    <form id="taskNew" class="new" action="{{ path('PapyrillioBeehiveBundle_tasknew') }}" method="post" {{ form_enctype(formTask) }}>
+    <form id="taskNew" class="new" action="{{ path('PapyrillioBeehive_TaskNew') }}" method="post" {{ form_enctype(formTask) }}>
       {{ form_widget(formTask) }}
       <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formTask.vars.value.correction.id }}" />
     </form>
   </div>
 
   <div id="newIndex" title="Indexeintrag vornehmen">
-    <form id="indexNew" class="new" action="{{ path('PapyrillioBeehiveBundle_indexnew') }}" method="post" {{ form_enctype(formIndex) }}>
+    <form id="indexNew" class="new" action="{{ path('PapyrillioBeehive_IndexNew') }}" method="post" {{ form_enctype(formIndex) }}>
       {{ form_widget(formIndex) }}
       <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formIndex.vars.value.correction.id }}" />
     </form>
@@ -107,11 +107,11 @@
 
   <script type="text/javascript">
     function preview(){
-      $('#preview').load('{{ path('PapyrillioBeehiveBundle_reportsnippet', {'id': correction.id}) }}');
+      $('#preview').load('{{ path('PapyrillioBeehive_ReportSnippet', {'id': correction.id}) }}');
     }
 
     function updateLink(){
-      $('#link').load('{{ path('PapyrillioBeehiveBundle_correctionlinksnippet', {'id': correction.id}) }}');
+      $('#link').load('{{ path('PapyrillioBeehive_CorrectionLinkSnippet', {'id': correction.id}) }}');
     }
     
     $.editable.addInputType('specialedit', {
@@ -144,7 +144,7 @@
       $('#correction').togglepanels();
       $('#task').prev().click();
 
-      $('.edit').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+      $('.edit').editable('{{ path('PapyrillioBeehive_CorrectionUpdate', {'id': correction.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         indicator : 'Speichert...',
@@ -157,7 +157,7 @@
         }
       });
 
-      $('.editArea').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+      $('.editArea').editable('{{ path('PapyrillioBeehive_CorrectionUpdate', {'id': correction.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         type: 'specialedit',
@@ -180,7 +180,7 @@
         onblur: 'ignore'
       });
 
-      $('#status').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+      $('#status').editable('{{ path('PapyrillioBeehive_CorrectionUpdate', {'id': correction.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         indicator : 'Speichert...',
@@ -194,7 +194,7 @@
         }
       });
 
-      $('#compilation').editable('{{ path('PapyrillioBeehiveBundle_correctionupdate', {'id': correction.id}) }}', {
+      $('#compilation').editable('{{ path('PapyrillioBeehive_CorrectionUpdate', {'id': correction.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         indicator : 'Speichert...',
@@ -208,7 +208,7 @@
         }
       });
 
-      $('.editTask').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+      $('.editTask').editable('{{ path('PapyrillioBeehive_TaskUpdate', {'id': 0}) }}', {
         id   : 'elementid_raw',
         name : 'newvalue',
         type: 'textarea',
@@ -229,7 +229,7 @@
         }
       });
 
-      $('.editTaskSelect').editable('{{ path('PapyrillioBeehiveBundle_taskupdate', {'id': 0}) }}', {
+      $('.editTaskSelect').editable('{{ path('PapyrillioBeehive_TaskUpdate', {'id': 0}) }}', {
         id   : 'elementid_raw',
         name : 'newvalue',
         submitdata: function(value, settings){
@@ -255,7 +255,7 @@
           width: 400,
           buttons: {
             'OK': function(){
-              dialogue_ok(this, 'task', '{{ path('PapyrillioBeehiveBundle_tasknew') }}', '{{ path('PapyrillioBeehiveBundle_tasksnippet', {'id': 0}) }}');
+              dialogue_ok(this, 'task', '{{ path('PapyrillioBeehive_TaskNew') }}', '{{ path('PapyrillioBeehive_TaskSnippet', {'id': 0}) }}');
             },
             'Cancel': function(){
               dialogue_cancel(this, 'task');
@@ -275,7 +275,7 @@
           width: 400,
           buttons: {
             'OK': function(){
-              dialogue_ok($(this), 'index', '{{ path('PapyrillioBeehiveBundle_indexnew') }}', '{{ path('PapyrillioBeehiveBundle_indexsnippet', {'id': 0}) }}');
+              dialogue_ok($(this), 'index', '{{ path('PapyrillioBeehive_IndexNew') }}', '{{ path('PapyrillioBeehive_IndexSnippet', {'id': 0}) }}');
             },
             'Cancel': function(){
               dialogue_cancel(this, 'index');
@@ -289,11 +289,11 @@
       });
 
       $('.deleteTask').click(function(event){
-        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_taskdelete', {'id': 0}) }}');
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehive_TaskDelete', {'id': 0}) }}');
       });
 
       $('.deleteIndex').click(function(event){
-        deleteObject_click(this, event, '{{ path('PapyrillioBeehiveBundle_indexdelete', {'id': 0}) }}');
+        deleteObject_click(this, event, '{{ path('PapyrillioBeehive_IndexDelete', {'id': 0}) }}');
       });
 
       $('#previewAction').click(function(){
@@ -301,19 +301,19 @@
       });
 
     function addRegisterAssigment(registerId){
-      var path0 = '{{ path('PapyrillioBeehiveBundle_registerassign', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path0 = '{{ path('PapyrillioBeehive_RegisterAssign', {'registerId': 0, 'correctionId': correction.id}) }}'; 
       var path = path0.replace('/0/', '/' + registerId + '/');
       $('#registerFolder').load(path);
     }
 
     function revokeRegisterAssigment(registerId){
-      var path0 = '{{ path('PapyrillioBeehiveBundle_registerrevokeassignment', {'registerId': 0, 'correctionId': correction.id}) }}'; 
+      var path0 = '{{ path('PapyrillioBeehive_RegisterRevokeAssignment', {'registerId': 0, 'correctionId': correction.id}) }}'; 
       var path = path0.replace('/0/', '/' + registerId + '/');
       $('#registerFolder').load(path);
     }
 
     $("#registerJuggler input").autocomplete({
-      source: "{{ path('PapyrillioBeehiveBundle_registerautocomplete', {'id': correction.id}) }}",
+      source: "{{ path('PapyrillioBeehive_RegisterAutocomplete', {'id': correction.id}) }}",
       minLength: 2,
       select: function(event, ui){
         addRegisterAssigment(ui.item.id); // ui.item.value, ui.item.label

@@ -28,7 +28,7 @@
   
 $(function(){
   $('#list').jqGrid({
-    url: '{{ path('PapyrillioBeehiveBundle_editionlist') }}',
+    url: '{{ path('PapyrillioBeehive_EditionList') }}',
     datatype: 'xml',
     mtype: 'POST',
     colNames:['Sortierung', 'Title', 'Sammlung', 'Band', 'Bemerkung', 'Material'],
@@ -42,7 +42,7 @@ $(function(){
     ],
     cellEdit: true,
     cellsubmit: 'remote',
-    cellurl: '{{ path('PapyrillioBeehiveBundle_editionupdate') }}',
+    cellurl: '{{ path('PapyrillioBeehive_EditionUpdate') }}',
     pager: '#pager',
     rowNum:100,
     height:'auto',

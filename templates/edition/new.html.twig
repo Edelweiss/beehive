@@ -3,7 +3,7 @@
 {% block body %}
 
 <h3>Neue Edition</h3>
-<form id="editionNew" class="new" action="{{ path('PapyrillioBeehiveBundle_editionnew') }}" method="post" {{ form_enctype(form) }}>
+<form id="editionNew" class="new" action="{{ path('PapyrillioBeehive_EditionNew') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
     
     {{ form_widget(form) }}

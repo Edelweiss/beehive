@@ -22,7 +22,7 @@
     <span class="ui-button-text">print</span>
   </button>
   
-  <form id="printForm" action="{{ path('PapyrillioBeehiveBundle_correctionprint') }}" method="post" style="display: none; visibility: hidden;"></form>
+  <form id="printForm" action="{{ path('PapyrillioBeehive_CorrectionPrint') }}" method="post" style="display: none; visibility: hidden;"></form>
 
 {% endblock %}
 
@@ -35,7 +35,7 @@
 
 $(function(){
   $('#list').jqGrid({
-    url: '{{ path('PapyrillioBeehiveBundle_correctionlist') }}',
+    url: '{{ path('PapyrillioBeehive_CorrectionList') }}',
     datatype: 'xml',
     mtype: 'POST',
     colNames:['Band', 'Seite', 'TM', 'HGV', 'DDB', 'Quelle', 'Edition', 'Text', 'Zeile', 'Eintrag', 'Status', 'Benutzer', 'Erstellt am', 'BL', 'TM', 'HGV', 'DDB', 'APIS', 'Biblio'],

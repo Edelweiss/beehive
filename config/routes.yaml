@@ -1,92 +1,92 @@
-PapyrillioBeehiveBundle_about:
+PapyrillioBeehive_About:
     path:  /about
     controller: App\Controller\DefaultController::about 
 
-PapyrillioBeehiveBundle_contact:
+PapyrillioBeehive_Contact:
     path:  /contact
     controller: App\Controller\DefaultController::contact 
 
-PapyrillioBeehiveBundle_help:
+PapyrillioBeehive_Help:
     path:  /help
     controller: App\Controller\DefaultController::help 
 
-PapyrillioBeehiveBundle_home:
+PapyrillioBeehive_Home:
     path:  /
     controller: App\Controller\DefaultController::index 
 
-PapyrillioBeehiveBundle_homepage:
+PapyrillioBeehive_Homepage:
     path:  /hello/{name}
     controller: App\Controller\DefaultController::index 
 
 # NumberWizard
 
-PapyrillioBeehiveBundle_numberwizard:
+PapyrillioBeehive_NumberWizard:
     path:  /numberWizard
     controller: App\Controller\NumberWizardController::index
 
-PapyrillioBeehiveBundle_numberwizardlookup:
+PapyrillioBeehive_NumberWizardLookup:
     path:  /numberWizard/lookup
     controller: App\Controller\NumberWizardController::lookup
 
-PapyrillioBeehiveBundle_numberwizardautocompleteddb:
+PapyrillioBeehive_NumberWizardAutocompleteDdb:
     path:  /numberWizard/autocomplete/ddb
     controller: App\Controller\NumberWizardController::autocompleteDdb
 
 # Register
 
-PapyrillioBeehiveBundle_registershow:
+PapyrillioBeehive_RegisterShow:
     path:  /register/show/{id}
     controller: App\Controller\RegisterController::show 
     requirements:
       id: '\d+'
 
-PapyrillioBeehiveBundle_registerautocomplete:
+PapyrillioBeehive_RegisterAutocomplete:
     path:  /register/autocomplete/{id}
     controller: App\Controller\RegisterController::autocomplete
     defaults:
         id: 0
 
-PapyrillioBeehiveBundle_registerautocompleteddb:
+PapyrillioBeehive_RegisterautoCompleteDddb:
     path:  /register/autocompleteDdb
     controller: App\Controller\RegisterController::autocompleteDdb
 
-PapyrillioBeehiveBundle_registershowassignments:
+PapyrillioBeehive_RegisterShowAssignments:
     path:  /register/showAssignments/{correctionId}
     controller: App\Controller\RegisterController::showAssignments
     requirements:
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_registerrevokeassignment:
+PapyrillioBeehive_RegisterRevokeAssignment:
     path:  /register/revokeAssignment/{registerId}/{correctionId}
     controller: App\Controller\RegisterController::revokeAssignment
     requirements:
       registerId: '\d+'
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_registerassign:
+PapyrillioBeehive_RegisterAssign:
     path:  /register/assign/{registerId}/{correctionId}
     controller: App\Controller\RegisterController::assign
     requirements:
       registerId: '\d+'
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_registercreate:
+PapyrillioBeehive_RegisterCreate:
     path:  /register/create
     controller: App\Controller\RegisterController::create
 
-PapyrillioBeehiveBundle_registercreateandassign:
+PapyrillioBeehive_RegisterCreateAndAssign:
     path:  /register/createAndAssign/{correctionId}
     controller: App\Controller\RegisterController::createAndAssign
     requirements:
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_registerwizard:
+PapyrillioBeehive_RegisterWizard:
     path:  /registerWizard/{id}
     controller: App\Controller\RegisterController::wizard
     requirements:
       correctionId: '\d+'
 
-PapyrillioBeehiveBundle_registerapiary:
+PapyrillioBeehive_RegisterApiary:
     path:  /registerApiary/{id}
     controller: App\Controller\RegisterController::apiary
     requirements:
@@ -94,36 +94,36 @@ PapyrillioBeehiveBundle_registerapiary:
 
 # Report
 
-PapyrillioBeehiveBundle_report:
+PapyrillioBeehive_Report:
     path:  /report
     controller: App\Controller\ReportController:leiden
     defaults:
         compilationVolume: 13
 
-PapyrillioBeehiveBundle_reportleiden:
+PapyrillioBeehive_ReportLeiden:
     path:  /report/leiden/{compilationVolume}
     controller: App\Controller\ReportController:leiden
     defaults:
         compilationVolume: 13
 
-PapyrillioBeehiveBundle_reportsnippet:
+PapyrillioBeehive_ReportSnippet:
     path:  /report/snippet/leiden/{id}
     controller: App\Controller\ReportController::leidenSnippet 
 
-PapyrillioBeehiveBundle_reportoverview:
+PapyrillioBeehive_ReportOverview:
     path:  /report/overview/{compilationVolume}
     controller: App\Controller\ReportController:overview
     defaults:
         compilationVolume: 13
 
-PapyrillioBeehiveBundle_reportprint:
+PapyrillioBeehive_ReportPrint:
     path:  /report/print/{compilationVolume}/{editionId}
     controller: App\Controller\ReportController:print
     defaults:
         compilationVolume: 13
         editionId: 0
 
-PapyrillioBeehiveBundle_reportpdf:
+PapyrillioBeehive_ReportPdf:
     path:  /report/pdf/{compilationVolume}/{editionId}
     controller: App\Controller\ReportController:pdf
     defaults:
@@ -132,120 +132,120 @@ PapyrillioBeehiveBundle_reportpdf:
 
 # Correction
 
-PapyrillioBeehiveBundle_correctionlist:
+PapyrillioBeehive_CorrectionList:
     path:  /correction/list
     controller: App\Controller\CorrectionController::list 
 
-PapyrillioBeehiveBundle_correctionprint:
+PapyrillioBeehive_CorrectionPrint:
     path:  /correction/print
     controller: App\Controller\CorrectionController:list
     defaults:
         print: true
 
-PapyrillioBeehiveBundle_correctionshow:
+PapyrillioBeehive_CorrectionShow:
     path:  /correction/show/{id}
     controller: App\Controller\CorrectionController::show 
 
-PapyrillioBeehiveBundle_correctiontest:
+PapyrillioBeehive_CorrectionTest:
     path:  /correction/test/{id}
     controller: App\Controller\CorrectionController::test 
 
-PapyrillioBeehiveBundle_correctiondelete:
+PapyrillioBeehive_CorrectionDelete:
     path:  /correction/delete/{id}
     controller: App\Controller\CorrectionController::delete 
 
-PapyrillioBeehiveBundle_correctionnew:
+PapyrillioBeehive_CorrectionNew:
     path:  /correction/new
     controller: App\Controller\CorrectionController::new 
 
-PapyrillioBeehiveBundle_correctionupdate:
+PapyrillioBeehive_CorrectionUpdate:
     path:  /correction/update/{id}
     controller: App\Controller\CorrectionController::update 
 
-PapyrillioBeehiveBundle_correctionlinksnippet:
+PapyrillioBeehive_CorrectionLinkSnippet:
     path:  /correction/snippet/link/{id}
     controller: App\Controller\CorrectionController::snippetLink 
 
 # Edition
 
-PapyrillioBeehiveBundle_editionlist:
+PapyrillioBeehive_EditionList:
     path:  /edition/list
     controller: App\Controller\EditionController::list 
 
-PapyrillioBeehiveBundle_editionshow:
+PapyrillioBeehive_EditionShow:
     path:  /edition/show/{id}
     controller: App\Controller\EditionController::show 
 
-PapyrillioBeehiveBundle_editiondelete:
+PapyrillioBeehive_EditionDelete:
     path:  /edition/delete/{id}
     controller: App\Controller\EditionController::delete 
 
-PapyrillioBeehiveBundle_editionnew:
+PapyrillioBeehive_EditionNew:
     path:  /edition/new
     controller: App\Controller\EditionController::new 
 
-PapyrillioBeehiveBundle_editionupdate:
+PapyrillioBeehive_EditionUpdate:
     path:  /edition/update
     controller: App\Controller\EditionController::update 
 
 # Task
 
-PapyrillioBeehiveBundle_taskdelete:
+PapyrillioBeehive_TaskDelete:
     path:  /task/delete/{id}
     controller: App\Controller\TaskController::delete 
 
-PapyrillioBeehiveBundle_tasksnippet:
+PapyrillioBeehive_TaskSnippet:
     path:  /task/snippet/{id}
     controller: App\Controller\TaskController::snippet 
 
-PapyrillioBeehiveBundle_tasknew:
+PapyrillioBeehive_TaskNew:
     path:  /task/new
     controller: App\Controller\TaskController::new 
 
-PapyrillioBeehiveBundle_taskupdate:
+PapyrillioBeehive_TaskUpdate:
     path:  /task/update/{id}
     controller: App\Controller\TaskController::update 
 
 # Index
 
-PapyrillioBeehiveBundle_indexdelete:
+PapyrillioBeehive_IndexDelete:
     path:  /index/delete/{id}
     controller: App\Controller\IndexController::delete 
 
-PapyrillioBeehiveBundle_indexsnippet:
+PapyrillioBeehive_IndexSnippet:
     path:  /index/snippet/{id}
     controller: App\Controller\IndexController::snippet 
 
-PapyrillioBeehiveBundle_indexnew:
+PapyrillioBeehive_IndexNew:
     path:  /index/new
     controller: App\Controller\IndexController::new 
 
-PapyrillioBeehiveBundle_indexupdate:
+PapyrillioBeehive_IndexUpdate:
     path:  /index/update/{id}
     controller: App\Controller\IndexController::update 
 
 # System
 
-PapyrillioBeehiveBundle_systemsort:
+PapyrillioBeehive_SystemSort:
     path:  /system/sort/{editionId}
     controller: App\Controller\SystemController:sort
     defaults:
         editionId: 0 
 
-PapyrillioBeehiveBundle_systemchecksort:
+PapyrillioBeehive_SystemCheckSort:
     path:  /system/checkSort/{id}
     controller: App\Controller\SystemController::checkSort 
 
 # Apiary
 
-PapyrillioBeehiveBundle_apiary:
+PapyrillioBeehive_Apiary:
     path:  /browse
     controller: App\Controller\ApiaryController:index
     defaults:
         format: html
 
 
-PapyrillioBeehiveBundle_apiaryhoney:
+PapyrillioBeehive_ApiaryHoney:
     path:  /{type}/{id}/{format}
     controller: App\Controller\ApiaryController:honey
     defaults:
@@ -253,3 +253,43 @@ PapyrillioBeehiveBundle_apiaryhoney:
     requirements:
       type: '(tm|hgv|ddb|biblio|bl|register)'
       format: '(plain|xml|html|rdf|json)'
+
+# Security / User
+
+PapyrillioBeehive_Registration:
+    path: /registration
+    controller: App\Controller\RegistrationController::index
+
+PapyrillioBeehive_Logout:
+    path: /logout
+    methods: GET
+
+PapyrillioBeehive_Login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+PapyrillioBeehive_UserChangePassword:
+    path: /user/changePassword
+    controller: App\Controller\UserController::changePassword
+
+PapyrillioBeehive_UserEditProfile:
+    path: /user/editProfile
+    controller: App\Controller\UserController::editProfile
+
+PapyrillioBeehive_UserList:
+    path: /user/list
+    controller: App\Controller\UserController::list
+
+PapyrillioBeehive_UserNew:
+    path: /user/new
+    controller: App\Controller\UserController::new
+
+PapyrillioBeehive_UserShow:
+    path: /user/show/{id}
+    controller: App\Controller\UserController::show
+    requirements:
+      id: '\d+'
+
+PapyrillioBeehive_UserPassword:
+    path: /user/password
+    controller: App\Controller\UserController::password

@@ -10,7 +10,7 @@
   </div>
   
   <p class="actionHolder">
-    <a href="{{ path('PapyrillioBeehiveBundle_editiondelete', { 'id': edition.id}) }}" onclick="javascript: return confirm('Edition wirklich unwiederbringlich aus der Datenbank entfernen?');">Edition löschen</a>
+    <a href="{{ path('PapyrillioBeehive_EditionDelete', { 'id': edition.id}) }}" onclick="javascript: return confirm('Edition wirklich unwiederbringlich aus der Datenbank entfernen?');">Edition löschen</a>
   </p>
 
 {% endblock %}
@@ -27,7 +27,7 @@
         autoHeight: true
       });
 
-      $('.edit').editable('{{ path('PapyrillioBeehiveBundle_editionupdate', {'id': edition.id}) }}', {
+      $('.edit').editable('{{ path('PapyrillioBeehive_EditionUpdate', {'id': edition.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         indicator : 'Speichert...',
@@ -36,7 +36,7 @@
         style: 'inherit'
       });
 
-      $('.editArea').editable('{{ path('PapyrillioBeehiveBundle_editionupdate', {'id': edition.id}) }}', {
+      $('.editArea').editable('{{ path('PapyrillioBeehive_EditionUpdate', {'id': edition.id}) }}', {
         id   : 'elementid',
         name : 'newvalue',
         type: 'textarea',

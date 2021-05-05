@@ -79,7 +79,7 @@ class EditionController extends BeehiveController{
 
         $this->get('session')->setFlash('notice', 'Die Edition »' . $edition->getSort() . ' = ' . $edition->getTitle() . '« wurde angelegt.');
 
-        return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_editionlist'));
+        return $this->redirect($this->generateUrl('PapyrillioBeehive_EditionList'));
       }
     }
 
@@ -113,7 +113,7 @@ class EditionController extends BeehiveController{
 
     $entityManager->remove($edition);
     $entityManager->flush();
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_editionlist'));
+    return $this->redirect($this->generateUrl('PapyrillioBeehive_EditionList'));
   }
 
   public function show($id): Response {

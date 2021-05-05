@@ -25,20 +25,20 @@
                   <div>Navigation</div>
                   <ul id="menu" class="ui-corner-all" style="display: none;">
                     {% set navigation = {
-                    'Berichtigungen': {'PapyrillioBeehiveBundle_correctionlist': {'title': 'Berichtigungen ansehen', 'parameters': {}}, 
-                                       'PapyrillioBeehiveBundle_correctionnew': {'title': 'Neue Berichtigung anlegen', 'parameters': {}}, 
-                                       'PapyrillioBeehiveBundle_apiary': {'title': 'Bestand durchblättern', 'parameters': {}}},
-                    'Editionen':      {'PapyrillioBeehiveBundle_editionlist': {'title': 'Editionen ansehen', 'parameters': {}}, 
-                                       'PapyrillioBeehiveBundle_editionnew': {'title': 'Edition anlegen', 'parameters': {}}},
-                    'Berichte':       {'PapyrillioBeehiveBundle_report': {'title': 'Leiden Format', 'parameters': {}},
-                                       'PapyrillioBeehiveBundle_reportoverview': {'title': 'Übersicht nach Editionen*', 'parameters': {}},
-                                       'PapyrillioBeehiveBundle_reportpdf': {'title': 'PDF*', 'parameters': {}},
-                                       'PapyrillioBeehiveBundle_reportprint': {'title': 'Druckvorstufe', 'parameters': {}}},
-                    'Benutzer':       {'PapyrillioUserBundle_list': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
-                                       'PapyrillioUserBundle_new': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
-                                       'PapyrillioUserBundle_show': {'title': 'Profil', 'parameters': { 'id': app.user.id }},
-                                       'PapyrillioUserBundle_password': {'title': 'Passwort ändern', 'parameters': {}}, 
-                                       'logout': {'title': 'Abmelden', 'parameters': {}}}
+                    'Berichtigungen': {'PapyrillioBeehive_CorrectionList': {'title': 'Berichtigungen ansehen', 'parameters': {}}, 
+                                       'PapyrillioBeehive_CorrectionNew': {'title': 'Neue Berichtigung anlegen', 'parameters': {}}, 
+                                       'PapyrillioBeehive_Apiary': {'title': 'Bestand durchblättern', 'parameters': {}}},
+                    'Editionen':      {'PapyrillioBeehive_EditionList': {'title': 'Editionen ansehen', 'parameters': {}}, 
+                                       'PapyrillioBeehive_EditionNew': {'title': 'Edition anlegen', 'parameters': {}}},
+                    'Berichte':       {'PapyrillioBeehive_Report': {'title': 'Leiden Format', 'parameters': {}},
+                                       'PapyrillioBeehive_ReportOverview': {'title': 'Übersicht nach Editionen*', 'parameters': {}},
+                                       'PapyrillioBeehive_ReportPdf': {'title': 'PDF*', 'parameters': {}},
+                                       'PapyrillioBeehive_ReportPrint': {'title': 'Druckvorstufe', 'parameters': {}}},
+                    'Benutzer':       {'PapyrillioBeehive_List': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
+                                       'PapyrillioBeehive_New': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
+                                       'PapyrillioBeehive_Show': {'title': 'Profil', 'parameters': { 'id': app.user.id }},
+                                       'PapyrillioBeehive_Password': {'title': 'Passwort ändern', 'parameters': {}}, 
+                                       'PapyrillioBeehive_Logout': {'title': 'Abmelden', 'parameters': {}}}
                                        } %}
                     
                     {% for category, menu in navigation %}
@@ -79,10 +79,10 @@
                     {% if app.user %}
                       <a href="{{ path('logout') }}">Abmelden</a>
                     {% endif %}
-                    <a href="{{ path('PapyrillioBeehiveBundle_apiary') }}">Blättern</a>
-                    <a href="{{ path('PapyrillioBeehiveBundle_about') }}">Info</a>
-                    <a href="{{ path('PapyrillioBeehiveBundle_contact') }}">Kontakt</a>
-                    <a href="{{ path('PapyrillioBeehiveBundle_help') }}">Hilfe</a>
+                    <a href="{{ path('PapyrillioBeehive_Apiary') }}">Blättern</a>
+                    <a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
+                    <a href="{{ path('PapyrillioBeehive_Contact') }}">Kontakt</a>
+                    <a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a>
                     <a href="https://www.uni-heidelberg.de/datenschutzerklaerung_web.html" target="_zde">Zentrale Datenschutzerklärung der Universität Heidelberg</a>
                 </p>
             </div>

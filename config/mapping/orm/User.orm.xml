@@ -1,0 +1,18 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Entity\User" table="user">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="username" type="string" length="180" unique="true"/>
+        <field name="password" type="string"/>
+        <field name="roles" type="json"/>
+        <field name="email" type="string"/>
+        <field name="name" type="string"/>
+        <field name="isActive" column="isActive" type="bool"/>
+        <field name="currentLogin" column="currentLogin" type="timestamp"/>
+        <field name="lastLogin" column="lastLogin" type="timestamp"/>
+    </entity>
+</doctrine-mapping>

@@ -97,7 +97,7 @@ class RegisterController extends BeehiveController{
     $this->getDoctrine()->getManager()->persist($correction);
     $this->getDoctrine()->getManager()->flush();
 
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
+    return $this->redirect($this->generateUrl('PapyrillioBeehive_RegisterShowAssignments', array('correctionId' => $correctionId)));
   }
 
   public function revokeAssignment($registerId, $correctionId): Response {
@@ -110,7 +110,7 @@ class RegisterController extends BeehiveController{
     $this->getDoctrine()->getManager()->persist($correction);
     $this->getDoctrine()->getManager()->flush();
 
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
+    return $this->redirect($this->generateUrl('PapyrillioBeehive_RegisterShowAssignments', array('correctionId' => $correctionId)));
   }
 
   protected function getIdnoTriplet(){
@@ -156,7 +156,7 @@ class RegisterController extends BeehiveController{
     $this->getDoctrine()->getManager()->persist($register);
     $this->getDoctrine()->getManager()->flush();
 
-    return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershowassignments', array('correctionId' => $correctionId)));
+    return $this->redirect($this->generateUrl('PapyrillioBeehive_RegisterShowAssignments', array('correctionId' => $correctionId)));
   }
 
   public function create(): Response {
@@ -166,7 +166,7 @@ class RegisterController extends BeehiveController{
 
     return $this->render('register/snippetListEntry.html.twig', ['register' => $register]);
 
-    //return $this->redirect($this->generateUrl('PapyrillioBeehiveBundle_registershow', array('id' => $register->getId())));
+    //return $this->redirect($this->generateUrl('PapyrillioBeehive_RegisterShow', array('id' => $register->getId())));
   }
 
   public function show($id): Response {

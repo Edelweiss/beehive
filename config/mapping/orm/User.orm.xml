@@ -11,8 +11,8 @@
         <field name="roles" type="json"/>
         <field name="email" type="string"/>
         <field name="name" type="string"/>
-        <field name="isActive" column="isActive" type="bool"/>
-        <field name="currentLogin" column="currentLogin" type="timestamp"/>
-        <field name="lastLogin" column="lastLogin" type="timestamp"/>
+        <field name="isActive" column="isActive" type="boolean"/>
+        <field name="currentLogin" column="currentLogin" type="datetime"/>
+        <field name="lastLogin" column="lastLogin" type="datetime"/>
     </entity>
 </doctrine-mapping>

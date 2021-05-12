@@ -34,10 +34,10 @@
                                        'PapyrillioBeehive_ReportOverview': {'title': 'Übersicht nach Editionen*', 'parameters': {}},
                                        'PapyrillioBeehive_ReportPdf': {'title': 'PDF*', 'parameters': {}},
                                        'PapyrillioBeehive_ReportPrint': {'title': 'Druckvorstufe', 'parameters': {}}},
-                    'Benutzer':       {'PapyrillioBeehive_List': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
-                                       'PapyrillioBeehive_New': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
-                                       'PapyrillioBeehive_Show': {'title': 'Profil', 'parameters': { 'id': app.user.id }},
-                                       'PapyrillioBeehive_Password': {'title': 'Passwort ändern', 'parameters': {}}, 
+                    'Benutzer':       {'PapyrillioBeehive_UserList': {'title': 'Alle Benutzer anzeigen', 'parameters': {}},
+                                       'PapyrillioBeehive_UserNew': {'title': 'Neuen Benutzer anlegen', 'parameters': {}},
+                                       'PapyrillioBeehive_UserShow': {'title': 'Profil', 'parameters': { 'id': app.user.id }},
+                                       'PapyrillioBeehive_UserPassword': {'title': 'Passwort ändern', 'parameters': {}}, 
                                        'PapyrillioBeehive_Logout': {'title': 'Abmelden', 'parameters': {}}}
                                        } %}
                     
@@ -77,7 +77,7 @@
             <div id="footer">
                 <p>
                     {% if app.user %}
-                      <a href="{{ path('logout') }}">Abmelden</a>
+                      <a href="{{ path('PapyrillioBeehive_Logout') }}">Abmelden</a>
                     {% endif %}
                     <a href="{{ path('PapyrillioBeehive_Apiary') }}">Blättern</a>
                     <a href="{{ path('PapyrillioBeehive_About') }}">Info</a>

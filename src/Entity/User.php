@@ -14,11 +14,12 @@ class User implements UserInterface {
     private $roles = [];
     private $password; // hashed password
     private $email;
-    private $comments;
+    private $name;
+    private $isActive;
+    private $currentLogin;
+    private $lastLogin;
 
-    public function __construct()
-    {
-	    $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
     }
 
     public function getId(): ?int {
@@ -63,18 +64,40 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function addComment(\App\Entity\Comment $comment) {
-        $comment->setUser($this);
-        $this->comments[] = $comment;
+    public function getName(): string {
+        return (string) $this->name;
     }
 
-    public function getComments() {
-        return $this->comments;
+    public function setName(string $name): self {
+        $this->name = $name;
+        return $this;
     }
 
-    public function resetComments()
-    {
-      $this->comments->clear();
+    public function getIsActive(): bool {
+        return (bool) $this->isActive;
+    }
+
+    public function setIsActive(string $isActive): self {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function getCurrentLogin(): string {
+        return (string) $this->currentLogin;
+    }
+
+    public function setCurrentLogin(string $currentLogin): self {
+        $this->currentLogin = $currentLogin;
+        return $this;
+    }
+
+    public function getLastLogin(): string {
+        return (string) $this->lastLogin;
+    }
+
+    public function setLastLogin(string $lastLogin): self {
+        $this->lastLogin = $lastLogin;
+        return $this;
     }
 
     public function getSalt() {

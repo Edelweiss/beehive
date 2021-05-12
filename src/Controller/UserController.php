@@ -84,5 +84,172 @@ class UserController extends BeehiveController
 
         return $this->render('user/changePassword.html.twig', ['form' => $form->createView()]);
     }
+  
+    public function list(): Response {
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+
+      if ($this->request->getMethod() == 'POST') {
+
+        // PARAMETERS
+
+        $limit         = $this->getParameter('rows');
+        $page          = $this->getParameter('page');
+        $offset        = $page * $limit - $limit;
+        $offset        = $offset < 0 ? 0 : $offset;
+        $sort          = $this->getParameter('sidx');
+        $sortDirection = $this->getParameter('sord');
+
+        // ODER BY
+
+        $orderBy = ' ORDER BY u.' . $sort . ' ' . $sortDirection;
+
+        // WHERE
+
+        $where = '';
+        if($this->getParameter('_search') == 'true'){
+          $where = '';
+          $prefix = ' WHERE ';
+
+          foreach(['username', 'email', 'name', 'lastLogin'] as $field){
+            if(strlen($this->getParameter($field))){
+              $where .= $prefix . 'u.' . $field . ' LIKE \'%' . $this->getParameter($field) . '%\'';
+              $prefix = ' AND ';
+            }
+          }
+        }
+
+        // LIMIT
+
+        $query = $entityManager->createQuery('SELECT count(u.id) FROM App\Entity\User u' . $where);
+        $count = $query->getSingleScalarResult();
+        $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+
+        // QUERY
+
+        $query = $entityManager->createQuery('SELECT u FROM App\Entity\User u ' . $where . ' ' . $orderBy)->setFirstResult($offset)->setMaxResults($limit);
+
+        $users = $query->getResult();
+
+        return $this->render('user/list.xml.twig', ['users' => $users, 'count' => $count, 'totalPages' => $totalPages, 'page' => $page]);
+      } else {
+        return $this->render('user/list.html.twig');
+      }
+    }
+
+    public function show($id): Response {
+  
+      if(!$id){
+        return $this->forward('user/list');
+      }
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+      $user = $repository->findOneBy(['id' => $id]);
+  
+      return $this->render('user/show.html.twig', ['user' => $user]);
+    }
+  
+    public function update(): Response {
+      $entityManager = $this->getDoctrine()->getManager();
+      $user = $this->get('security.context')->getToken()->getUser();
+      
+      $setter = 'set' . ucfirst($this->getParameter('elementid'));
+      $getter = 'get' . ucfirst($this->getParameter('elementid'));
+      
+      $user->$setter($this->getParameter('newvalue'));
+      $entityManager->flush();
+      
+      return new Response($user->$getter());
+    }
+  
+    public function password(): Response {
+      $user = $this->get('security.context')->getToken()->getUser();
+  
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+  
+      $form = $this->createFormBuilder($user)
+        ->add('password', 'password', ['label' => 'Neues Passwort'])
+        ->getForm();
+  
+      if ($this->getRequest()->getMethod() == 'POST') {
+  
+        $form->bindRequest($this->getRequest());
+
+        if ($form->isValid()) {
+  
+          $encoder = $this->get('security.encoder_factory')->getEncoder($user);
+          $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+  
+          $entityManager->persist($user);
+          $entityManager->flush();
+  
+          $this->get('session')->setFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde geändert.');
+  
+          return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $user->getId()]));
+        }
+      }
+  
+      return $this->render('user/password.html.twig', ['form' => $form->createView()]);
+    }
+  
+    public function new(): Response {
+      $user = new User();
+      $user->setRoles(['ROLE_USER']);
+  
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+  
+      $form = $this->createFormBuilder($user)
+        ->add('name', 'text', ['label' => 'Name'])
+        ->add('username', 'text', ['label' => 'Kennung'])
+        ->add('password', 'text', ['label' => 'Passwort'])
+        ->add('email', 'text', ['label' => 'E-Mail'])
+        ->getForm();
+  
+      if ($this->getRequest()->getMethod() == 'POST') {
+          
+        $form->bindRequest($this->getRequest());
+  
+        if ($form->isValid()) {
+  
+          $encoder = $this->get('security.encoder_factory')->getEncoder($user);
+          $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+          
+          $entityManager->persist($user);
+          $entityManager->flush();
+          
+          $this->get('session')->setFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde angelegt.');
+  
+          return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $user->getId()]));
+        }
+      }
+  
+      return $this->render('user/new.html.twig', ['form' => $form->createView()]);
+    }
+  
+    public function delete($id): Response{
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+      if($user = $repository->findOneBy(['id' => $id])){
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->get('session')->setFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde gelöscht.');
+      }
+      return $this->redirect($this->generateUrl('PapyrillioBeehive_UserList'));
+    }
+  
+    public function reset($id): Response {
+      $entityManager = $this->getDoctrine()->getManager();
+      $repository = $entityManager->getRepository(User::class);
+      if($user = $repository->findOneBy(['id' => $id])){
+        $encoder = $this->get('security.encoder_factory')->getEncoder($user);
+        $user->setPassword($encoder->encodePassword('changeYourPasswordASAP', $user->getSalt()));
+        $entityManager->flush();
+        $this->get('session')->setFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde zurückgesetzt.');
+      }
+      return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $id]));
+    }
 
 }

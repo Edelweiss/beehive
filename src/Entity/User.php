@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 class User implements UserInterface {
     private $id;
     private $username; // visual identifier that represents this user
@@ -77,25 +76,25 @@ class User implements UserInterface {
         return (bool) $this->isActive;
     }
 
-    public function setIsActive(string $isActive): self {
+    public function setIsActive(bool $isActive): self {
         $this->isActive = $isActive;
         return $this;
     }
 
-    public function getCurrentLogin(): string {
-        return (string) $this->currentLogin;
+    public function getCurrentLogin(){
+        return $this->currentLogin;
     }
 
-    public function setCurrentLogin(string $currentLogin): self {
+    public function setCurrentLogin($currentLogin): self {
         $this->currentLogin = $currentLogin;
         return $this;
     }
 
-    public function getLastLogin(): string {
-        return (string) $this->lastLogin;
+    public function getLastLogin(){
+        return $this->lastLogin;
     }
 
-    public function setLastLogin(string $lastLogin): self {
+    public function setLastLogin($lastLogin): self {
         $this->lastLogin = $lastLogin;
         return $this;
     }

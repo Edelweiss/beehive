@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h3>Neuer Benutzer</h3>
+<form id="user" class="new" action="{{ path('PapyrillioUserBundle_new') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+
+    {{ form_widget(form) }}
+
+    <input class="submit" type="submit" name="new" value="Benutzer anlegen" />
+</form>
+
+{% endblock %}

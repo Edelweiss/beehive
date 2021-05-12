@@ -1,0 +1,14 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<rows>
+  <page>{{ page }}</page>
+  <total>{{ totalPages }}</total>
+  <records>{{ count }}</records>
+  {% for user in users %}
+    <row id = '{{ user.id }}'>
+      <cell><![CDATA[<a href="{{ path('PapyrillioBeehive_UserShow', {'id': user.id}) }}">{{ user.name }}</a>]]></cell>
+      <cell>{{ user.username }}</cell>
+      <cell>{{ user.email }}</cell>
+      <cell>{{ user.lastLogin.format('d.m.Y H:i') }}</cell>
+    </row>
+  {% endfor %}
+</rows>

@@ -190,7 +190,7 @@ class Compilation
      *
      * @param Papyrillio\BeehiveBundle\Entity\Correction $corrections
      */
-    public function addCorrection(\Papyrillio\BeehiveBundle\Entity\Correction $corrections)
+    public function addCorrection(\App\Entity\Correction $corrections)
     {
         $this->corrections[] = $corrections;
     }

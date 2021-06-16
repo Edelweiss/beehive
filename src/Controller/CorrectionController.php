@@ -21,8 +21,7 @@ class CorrectionController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
     $corrections = array();
-
-    if ($this->getRequest()->getMethod() == 'POST') {
+    if ($this->request->getMethod() == 'POST') {
       
       // REQUEST PARAMETERS
       
@@ -44,8 +43,8 @@ class CorrectionController extends BeehiveController{
       }
       $visible = $visibleColumns;
 
-      $this->get('logger')->info('visible: ' . print_r($visible, true));
-      $this->get('logger')->info('visible: ' . $this->getParameter('visible'));
+      $this->logger->info('visible: ' . print_r($visible, true));
+      $this->logger->info('visible: ' . $this->getParameter('visible'));
 
       // ODER BY
 
@@ -115,7 +114,7 @@ class CorrectionController extends BeehiveController{
       // LIMIT
 
       $query = $entityManager->createQuery('
-        SELECT count(DISTINCT c.id) FROM PapyrillioBeehiveBundle:Correction c
+        SELECT count(DISTINCT c.id) FROM App\Entity\Correction c
         LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
         ' . $with . ' ' . $where
       );
@@ -127,7 +126,7 @@ class CorrectionController extends BeehiveController{
 
       if(!$print){
         $query = $entityManager->createQuery('
-          SELECT DISTINCT c.id FROM PapyrillioBeehiveBundle:Correction c
+          SELECT DISTINCT c.id FROM App\Entity\Correction c
           LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2
           ' . $with . ' ' . $where . ' ' . $orderBy
         );
@@ -149,17 +148,17 @@ class CorrectionController extends BeehiveController{
 
       }
 
-      $this->get('logger')->info('limit: ' . $limit);
-      $this->get('logger')->info('page: ' . $page);
-      $this->get('logger')->info('offset: ' . $offset);
-      $this->get('logger')->info('sort: ' . $sort);
-      $this->get('logger')->info('sortDirection: ' . $sortDirection);
-      $this->get('logger')->info('totalPages: ' . $totalPages);
+      $this->logger->info('limit: ' . $limit);
+      $this->logger->info('page: ' . $page);
+      $this->logger->info('offset: ' . $offset);
+      $this->logger->info('sort: ' . $sort);
+      $this->logger->info('sortDirection: ' . $sortDirection);
+      $this->logger->info('totalPages: ' . $totalPages);
 
       // QUERY
 
       $query = $entityManager->createQuery('
-        SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
+        SELECT e, c, t FROM App\Entity\Correction c
         LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $with . ' ' . $where . ' ' . $orderBy
       );
       $query->setParameters($parameters);
@@ -173,7 +172,7 @@ class CorrectionController extends BeehiveController{
       }
     } else {
       if($print){
-        return $this->render('correction/print.html.twig', ['corrections' => $corrections, 'visible' => array()]);
+        return $this->render('correction/print.html.twig', ['corrections' => $corrections, 'visible' => []]);
       } else {
         return $this->render('correction/list.html.twig', ['corrections' => $corrections]);
       }
@@ -328,8 +327,8 @@ class CorrectionController extends BeehiveController{
   public function snippetLink($id): Response {
     $this->retrieveCorrection($id);
     
-    $this->get('logger')->info('********************');
-    $this->get('logger')->info(print_r($this->correction->getLinks(), TRUE));
+    $this->logger->info('********************');
+    $this->logger->info(print_r($this->correction->getLinks(), TRUE));
 
     return $this->render('correction/snippetLink.html.twig', ['correction' => $this->correction]);
   }

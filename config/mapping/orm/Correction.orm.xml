@@ -3,7 +3,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
     <entity name="App\Entity\Correction" table="correction">
-        <gedmo:loggable/>
+        <!--gedmo:loggable/-->
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
@@ -11,17 +11,17 @@
         <field name="text" type="string" length="64"/>
         <field name="position" type="text" nullable="true" gedmo="versioned"/>
         <field name="description" type="text" gedmo="versioned"/>
-        <field name="compilationPage" column="compilation_page" type="string" length="64" nullable="true"/>
+        <field name="compilationPage" column="compilationPage" type="string" length="64" nullable="true"/>
         <field name="status" type="text" gedmo="versioned"/>
         <field name="creator" type="text"/>
         <field name="created" type="datetime"/>
-        <field name="sortPage" column="sort_page" type="integer" nullable="true"/>
-        <field name="sortSide" column="sort_side" type="string" length="2" nullable="true"/>
-        <field name="sortFragment" column="sort_fragment" type="string" nullable="true"/>
-        <field name="sortColumn" column="sort_column" type="string" length="8" nullable="true"/>
-        <field name="sortLine" column="sort_line" type="integer" nullable="true"/>
-        <field name="sortSystem" column="sort_system" type="string" length="256" nullable="true"/>
-        <field name="sortUser" column="sort_user" type="string" length="256" nullable="true"/>
+        <field name="sortPage" column="sortPage" type="integer" nullable="true"/>
+        <field name="sortSide" column="sortSide" type="string" length="2" nullable="true"/>
+        <field name="sortFragment" column="sortFragment" type="string" nullable="true"/>
+        <field name="sortColumn" column="sortColumn" type="string" length="8" nullable="true"/>
+        <field name="sortLine" column="sortLine" type="integer" nullable="true"/>
+        <field name="sortSystem" column="sortSystem" type="string" length="256" nullable="true"/>
+        <field name="sortUser" column="sortUser" type="string" length="256" nullable="true"/>
         <field name="sort" type="string" length="256"/>
         <many-to-one field="edition" target-entity="Edition" inversed-by="corrections">
             <join-column name="edition_id" referenced-column-name="id" nullable="false"/>

@@ -14,7 +14,7 @@ class SystemController extends BeehiveController{
   public function sort($editionId): Response {
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
-    $query = 'SELECT e, c FROM PapyrillioBeehiveBundle:Correction c JOIN c.edition e';
+    $query = 'SELECT e, c FROM App\Entity\Correction c JOIN c.edition e';
     if(is_numeric($editionId)){
       $query .= ' WHERE e.id = ' . $editionId;
     }

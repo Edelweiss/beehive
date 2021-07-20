@@ -11,9 +11,7 @@ use Doctrine\ORM\Event\OnFlushEventArgs; // onFlush
 use Doctrine\ORM\Event\PreUpdateEventArgs; // preUpdate
 use DateTime;
 use Exception;
-/**
- * Papyrillio\BeehiveBundle\Entity\Correction
- */
+
 class Correction
 {
     const STATUS_UNCHECKED = 'unchecked';
@@ -156,42 +154,22 @@ class Correction
       return rtrim($result, '; ');
     }
 
-    /**
-     * Set ddb
-     *
-     * @param string $ddb
-     */
     public function setDdb($ddb)
     {
         throw new Exception('setDdb() invalid function');
     }
 
-    /**
-     * Set tm
-     *
-     * @param integer $tm
-     */
     public function setTm($tm)
     {
         throw new Exception('setTm() invalid function');
     }
 
-    /**
-     * Set hgv
-     *
-     * @param string $hgv
-     */
     public function setHgv($hgv)
     {
         throw new Exception('setHgv() invalid function');
 
     }
 
-    /**
-     * Set status
-     *
-     * @param text $status
-     */
     public function setStatus($status)
     {
         if(in_array($status, self::$STATUS)){
@@ -201,32 +179,17 @@ class Correction
         }
     }
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
     public function setText($text){
       $this->text = $text;
       $this->setSortValues();
     }
 
-    /**
-     * Set position
-     * 
-     * @param text $position
-     */
     public function setPosition($position){
       $this->position = $position;
       $this->setSortValues();
     }
 
-    /**
-     * Set edition
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\Edition $edition
-     */
-    public function setEdition(\Papyrillio\BeehiveBundle\Entity\Edition $edition){
+    public function setEdition(\App\Entity\Edition $edition){
         $this->edition = $edition;
         $this->setSortValues();
     }
@@ -372,152 +335,42 @@ class Correction
       return array();
     }
 
-    /**
-     * @var integer $id
-     */
     private $id;
-
-    /**
-     * @var integer $source
-     */
     private $source;
-
-    /**
-     * @var string $text
-     */
     private $text;
-
-    /**
-     * @var text $position
-     */
     private $position;
-
-    /**
-     * @var text $description
-     */
     private $description;
-
-    /**
-     * @var text $status
-     */
     private $status;
-
-    /**
-     * @var text $creator
-     */
     private $creator;
-
-    /**
-     * @var datetime $created
-     */
     private $created;
-
-    /**
-     * @var integer $sortPage
-     */
     private $sortPage;
-
-    /**
-     * @var string $sortSide
-     */
     private $sortSide;
-
-    /**
-     * @var string $sortFragment
-     */
     private $sortFragment;
-
-    /**
-     * @var string $sortColumn
-     */
     private $sortColumn;
-
-    /**
-     * @var integer $sortLine
-     */
     private $sortLine;
-
-    /**
-     * @var string $sortSystem
-     */
     private $sortSystem;
-
-    /**
-     * @var string $sortUser
-     */
     private $sortUser;
-
-    /**
-     * @var string $sort
-     */
     private $sort;
-
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Register
-     */
     private $registerEntries;
-    
-
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Task
-     */
     private $tasks;
-
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Compilation
-     */
     private $compilation;
-   
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\Edition
-     */
     private $edition;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
     }
-
-    /**
-     * Set source
-     *
-     * @param integer $source
-     */
     public function setSource($source)
     {
         $this->source = $source;
     }
-
-    /**
-     * Get source
-     *
-     * @return integer 
-     */
     public function getSource()
     {
         return $this->source;
     }
-
-    /**
-     * Get text
-     *
-     * @return string 
-     */
     public function getText()
     {
         return $this->text;
     }
-
-    /**
-     * Get tm
-     *
-     * @return integer 
-     */
     public function getTm()
     {
       if($this->registerEntries and $this->registerEntries->first()){
@@ -525,12 +378,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get hgv
-     *
-     * @return string 
-     */
     public function getHgv()
     {
       if($this->registerEntries and $this->registerEntries->first()){
@@ -538,12 +385,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DDB
-     *
-     * @return string 
-     */
     public function getDdb()
     {
       $registerList = $this->getDistinctDdb(self::MODE_REGISTER);
@@ -552,12 +393,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DDB collection
-     *
-     * @return string 
-     */
     public function getDdbCollection()
     {
       if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
@@ -565,12 +400,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DDB volume
-     *
-     * @return string 
-     */
     public function getDdbVolume()
     {
       if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
@@ -578,12 +407,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DDB document
-     *
-     * @return string 
-     */
     public function getDdbDocument()
     {
       if($registerList = $this->getDistinctDdb(self::MODE_REGISTER)){
@@ -591,12 +414,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DCLP
-     *
-     * @return string 
-     */
     public function getDclp()
     {
       if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
@@ -604,12 +421,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DCLP collection
-     *
-     * @return string 
-     */
     public function getDclpCollection()
     {
       if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
@@ -617,12 +428,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DCLP volume
-     *
-     * @return string 
-     */
     public function getDclpVolume()
     {
       if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
@@ -630,12 +435,6 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get DCLP document
-     *
-     * @return string 
-     */
     public function getDclpDocument()
     {
       if($registerList = $this->getDistinctDclp(self::MODE_REGISTER)){
@@ -643,32 +442,14 @@ class Correction
       }
       return null;
     }
-
-    /**
-     * Get position
-     *
-     * @return text 
-     */
     public function getPosition()
     {
         return $this->position;
     }
-
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
     public function getDescription($mode = null)
     {
         if($mode == self::MODE_XML){
@@ -685,244 +466,98 @@ class Correction
         }
         return $this->description;
     }
-
-    /**
-     * Get status
-     *
-     * @return text 
-     */
     public function getStatus()
     {
         return $this->status;
     }
-
-    /**
-     * Set creator
-     *
-     * @param text $creator
-     */
     public function setCreator($creator)
     {
         $this->creator = $creator;
     }
-
-    /**
-     * Get creator
-     *
-     * @return text 
-     */
     public function getCreator()
     {
         return $this->creator;
     }
-
-    /**
-     * Set created
-     *
-     * @param datetime $created
-     */
     public function setCreated($created)
     {
         $this->created = $created;
     }
-
-    /**
-     * Get created
-     *
-     * @return datetime 
-     */
     public function getCreated()
     {
         return $this->created;
     }
-
-    /**
-     * Set sortPage
-     *
-     * @param integer $sortPage
-     */
     public function setSortPage($sortPage)
     {
         $this->sortPage = $sortPage;
     }
-
-    /**
-     * Get sortPage
-     *
-     * @return integer 
-     */
     public function getSortPage()
     {
         return $this->sortPage;
     }
-
-    /**
-     * Set sortSide
-     *
-     * @param string $sortSide
-     */
     public function setSortSide($sortSide)
     {
         $this->sortSide = $sortSide;
     }
-
-    /**
-     * Get sortSide
-     *
-     * @return string 
-     */
     public function getSortSide()
     {
         return $this->sortSide;
     }
-
-    /**
-     * Set sortFragment
-     *
-     * @param string $sortFragment
-     */
     public function setSortFragment($sortFragment)
     {
         $this->sortFragment = $sortFragment;
     }
-
-    /**
-     * Get sortFragment
-     *
-     * @return string 
-     */
     public function getSortFragment()
     {
         return $this->sortFragment;
     }
-
-    /**
-     * Set sortColumn
-     *
-     * @param string $sortColumn
-     */
     public function setSortColumn($sortColumn)
     {
         $this->sortColumn = $sortColumn;
     }
-
-    /**
-     * Get sortColumn
-     *
-     * @return string 
-     */
     public function getSortColumn()
     {
         return $this->sortColumn;
     }
-
-    /**
-     * Set sortLine
-     *
-     * @param integer $sortLine
-     */
     public function setSortLine($sortLine)
     {
         $this->sortLine = $sortLine;
     }
-
-    /**
-     * Get sortLine
-     *
-     * @return integer 
-     */
     public function getSortLine()
     {
         return $this->sortLine;
     }
-
-    /**
-     * Set sortSystem
-     *
-     * @param string $sortSystem
-     */
     public function setSortSystem($sortSystem)
     {
         $this->sortSystem = $sortSystem;
     }
-
-    /**
-     * Get sortSystem
-     *
-     * @return string 
-     */
     public function getSortSystem()
     {
         return $this->sortSystem;
     }
-
-    /**
-     * Set sortUser
-     *
-     * @param string $sortUser
-     */
     public function setSortUser($sortUser)
     {
         $this->sortUser = $sortUser;
     }
-
-    /**
-     * Get sortUser
-     *
-     * @return string 
-     */
     public function getSortUser()
     {
         return $this->sortUser;
     }
-
-    /**
-     * Set sort
-     *
-     * @param string $sort
-     */
     public function setSort($sort)
     {
         $this->sort = $sort;
     }
-
-    /**
-     * Get sort
-     *
-     * @return string 
-     */
     public function getSort()
     {
         return $this->sort;
     }
-
-    /**
-     * Add registerEntries
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\Register $registerEntries
-     */
-    public function addRegisterEntry(\Papyrillio\BeehiveBundle\Entity\Register $registerEntries)
+    public function addRegisterEntry(\App\Entity\Register $registerEntries)
     {
         $this->registerEntries[] = $registerEntries;
     }
-
-    /**
-     * Get registerEntries
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
     public function getRegisterEntries()
     {
         return $this->registerEntries;
     }
-
-    /**
-     * Get distinct XYZ (TM, HGV, DDB, DCLP)
-     * 
-     * $mode self::MODE_PLAIN or self::MODE_REGISTER
-     *
-     * @return in self::MODE_PLAIN array of strings, in self::MODE_REGISTER array of Register objects 
-     */
     public function getDistinctTm($mode = self::MODE_PLAIN)
     {
         $distinctList = array();
@@ -966,92 +601,36 @@ class Correction
         }
         return $distinctList;
     }
-
-    /**
-     * Add tasks
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\Task $tasks
-     */
-    public function addTask(\Papyrillio\BeehiveBundle\Entity\Task $tasks)
+    public function addTask(\App\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
     }
-
-    /**
-     * Set compilation
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\Compilation $compilation
-     */
-    public function setCompilation(\Papyrillio\BeehiveBundle\Entity\Compilation $compilation)
+    public function setCompilation(\App\Entity\Compilation $compilation)
     {
         $this->compilation = $compilation;
     }
-
-    /**
-     * Get compilation
-     *
-     * @return Papyrillio\BeehiveBundle\Entity\Compilation 
-     */
     public function getCompilation()
     {
         return $this->compilation;
     }
-
-    /**
-     * Get edition
-     *
-     * @return Papyrillio\BeehiveBundle\Entity\Edition 
-     */
     public function getEdition()
     {
         return $this->edition;
     }
-    /**
-     * @var Papyrillio\BeehiveBundle\Entity\IndexEntry
-     */
     private $indexEntries;
-
-
-    /**
-     * Add indexEntries
-     *
-     * @param Papyrillio\BeehiveBundle\Entity\IndexEntry $indexEntries
-     */
-    public function addIndexEntry(\Papyrillio\BeehiveBundle\Entity\IndexEntry $indexEntries)
+    public function addIndexEntry(\App\Entity\IndexEntry $indexEntries)
     {
         $this->indexEntries[] = $indexEntries;
     }
-
-    /**
-     * Get indexEntries
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
     public function getIndexEntries()
     {
         return $this->indexEntries;
     }
-    /**
-     * @var string $compilationPage
-     */
     private $compilationPage;
-
-
-    /**
-     * Set compilationPage
-     *
-     * @param string $compilationPage
-     */
     public function setCompilationPage($compilationPage)
     {
         $this->compilationPage = $compilationPage;
     }
-
-    /**
-     * Get compilationPage
-     *
-     * @return string 
-     */
     public function getCompilationPage()
     {
         return $this->compilationPage;

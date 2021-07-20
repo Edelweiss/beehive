@@ -3,7 +3,7 @@
 {% block body %}
 
 <h3>Neue Berichtigung</h3>
-<form id="correctionNew" class="new" action="{{ path('PapyrillioBeehive_CorrectionNew') }}" method="post" {{ form_enctype(form) }}>
+{{ form_start(form, {'attr': {'id': 'correctionNew', 'class': 'new', 'action': path('PapyrillioBeehive_CorrectionNew')}}) }}
     <input type="hidden" name="redirectTarget" id="redirectTarget" value="show" />
         {% if form_errors(form) %}
           <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
@@ -27,7 +27,7 @@
         <br />
         <br />
 
-        {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': form.vars.value} %}
+        {% include 'register/snippetJuggler.html.twig' with {'correction': form.vars.value} %}
                                                                                                                                                                                                                                                                                                                                                                                                           
       </div>
       <div class="middle">

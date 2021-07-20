@@ -12,7 +12,7 @@
       {% if correction.tasks | length %}
         <ul class="task">
           {% for task in correction.tasks %}
-            <li>{% include 'PapyrillioBeehiveBundle:Task:task.html.twig' with {'task': task} %}</li>
+            <li>{% include 'task/task.html.twig' with {'task': task} %}</li>
           {% endfor %}
         </ul>
       {% else %}
@@ -48,12 +48,12 @@
       </ul>
       <div class="ids">Links im Internet</div>
       <div id="link">
-        {% include 'PapyrillioBeehiveBundle:Correction:snippetLink.html.twig' with {'correction': correction} %}
+        {% include 'correction/snippetLink.html.twig' with {'correction': correction} %}
       </div>
     </div>
     <h4><a href="#">Register</a></h4>
     <div id="register">
-      {% include 'PapyrillioBeehiveBundle:Register:snippetJuggler.html.twig' with {'correction': correction} %}
+      {% include 'register/snippetJuggler.html.twig' with {'correction': correction} %}
     </div>
     <h4><a href="#">Versionslogbuch</a></h4>
     <div class="log">
@@ -77,18 +77,18 @@
   </p>
 
   <div id="preview">
-    {% include 'PapyrillioBeehiveBundle:Report:leidenData.html.twig' with {'corrections': [correction]} %}
+    {% include 'report/leidenData.html.twig' with {'corrections': [correction]} %}
   </div>
 
   <div id="newTask" title="Neue Aufgabe anlegen">
-    <form id="taskNew" class="new" action="{{ path('PapyrillioBeehive_TaskNew') }}" method="post" {{ form_enctype(formTask) }}>
+    {{ form_start(formTask, {'attr': {'id': 'taskNew', 'class': 'new', 'action': path('PapyrillioBeehive_TaskNew')}}) }}
       {{ form_widget(formTask) }}
       <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formTask.vars.value.correction.id }}" />
     </form>
   </div>
 
   <div id="newIndex" title="Indexeintrag vornehmen">
-    <form id="indexNew" class="new" action="{{ path('PapyrillioBeehive_IndexNew') }}" method="post" {{ form_enctype(formIndex) }}>
+    {{ form_start(formIndex, {'attr': {'id': 'indexNew', 'class': 'new', 'action': path('PapyrillioBeehive_IndexNew')}}) }}
       {{ form_widget(formIndex) }}
       <input type="hidden" required="required" id="correction_id" name="correction_id" value="{{ formIndex.vars.value.correction.id }}" />
     </form>

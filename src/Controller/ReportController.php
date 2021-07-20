@@ -25,7 +25,7 @@ class ReportController extends BeehiveController{
     $repository = $entityManager->getRepository(Correction::class);
 
     $query = $entityManager->createQuery('
-      SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
+      SELECT e, c, t FROM App\Entity\Correction c
       LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE c2.volume = :compilationVolume ORDER BY e.sort, c.sort'
     );
     $query->setParameters(array('compilationVolume' => $compilationVolume));
@@ -433,7 +433,7 @@ class ReportController extends BeehiveController{
     }
 
     $query = $entityManager->createQuery('
-      SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
+      SELECT e, c, t FROM App\Entity\Correction c
       LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 ' . $where . ' ORDER BY e.sort, c.sort'
     );
     $query->setParameters($parameters);

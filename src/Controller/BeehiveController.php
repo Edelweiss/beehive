@@ -30,7 +30,7 @@ class BeehiveController extends AbstractController{
     return null;
   }
 
-  protected function getForm($object){
+  /*protected function getForm($object){
     if($object instanceof IndexEntry){
       return $this->createFormBuilder($object)
         ->add('type', 'choice', array('label' => 'Kategorie', 'choices' => self::getIndexTypes()))
@@ -44,25 +44,9 @@ class BeehiveController extends AbstractController{
         ->getForm();
     }
     return null;
-  }
+  }*/
 
   public static function getEditionMaterials(){
     return array('Ostrakon' => 'Ostrakon', 'Papyrus' => 'Papyrus');
-  }
-
-  public static function getIndexTypes(){
-    return array('Neues Wort' => 'Neues Wort', 'Ghostword' => 'Ghostword');
-  }
-
-  public static function getIndexTopics(){
-    return array('Personennamen' => 'Personennamen', 'Könige, Kaiser, Konsuln' => 'Könige, Kaiser, Konsuln', 'Geographisches und Topographisches' => 'Geographisches und Topographisches', 'Monate und Tage' => 'Monate und Tage', 'Religion' => 'Religion', 'Zivil- und Militärverwaltung' => 'Zivil- und Militärverwaltung', 'Steuern' => 'Steuern', 'Berufsbezeichnungen' => 'Berufsbezeichnungen', 'Allgemeiner Wortindex' => 'Allgemeiner Wortindex');
-  }
-
-  public static function getTaskCategories(){
-    return array('apis' => 'APIS', 'biblio' => 'Biblio', 'bl' => 'BL', 'ddb' => 'DDB', 'hgv' => 'HGV', 'tm' => 'TM');
-  }
-
-  public static function getTaskCategoryKeys(){
-    return array_keys(self::getTaskCategories());
   }
 }

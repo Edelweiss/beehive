@@ -8,6 +8,9 @@ use App\Entity\Edition;
 use App\Entity\Task;
 use App\Entity\IndexEntry;
 use App\Entity\Register;
+use App\Form\CorrectionNewType;
+use App\Form\TaskType;
+use App\Form\IndexEntryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +23,7 @@ class CorrectionController extends BeehiveController{
   public function list($print = false): Response {
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
-    $corrections = array();
+    $corrections = [];
     if ($this->request->getMethod() == 'POST') {
       
       // REQUEST PARAMETERS
@@ -35,7 +38,7 @@ class CorrectionController extends BeehiveController{
 
       // SELECT
 
-      $visibleColumns = array('title');
+      $visibleColumns = ['title'];
       foreach($visible as $column){
         if($column != ''){
           $visibleColumns[] = $column;
@@ -49,10 +52,10 @@ class CorrectionController extends BeehiveController{
       // ODER BY
 
       $orderBy = '';
-      if(in_array($sort, array('source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'))){
+      if(in_array($sort, ['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'])){
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
       }
-      if(in_array($sort, array('tm', 'hgv', 'ddb'))){
+      if(in_array($sort, ['tm', 'hgv', 'ddb'])){
         $orderBy = ' ORDER BY r.' . $sort . ' ' . $sortDirection;
       }
       if($sort == 'edition'){
@@ -66,11 +69,11 @@ class CorrectionController extends BeehiveController{
 
       $where = '';
       $with = '';
-      $parameters = array();
+      $parameters = [];
       if($this->getParameter('_search') == 'true'){
         $prefix = ' WHERE ';
 
-        foreach(array('source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage') as $field){
+        foreach(['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'] as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE :' . $field;
             $parameters[$field] = '%' . $this->getParameter($field) . '%';
@@ -78,7 +81,7 @@ class CorrectionController extends BeehiveController{
           }
         }
 
-        foreach(array('tm', 'hgv', 'ddb') as $field){
+        foreach(['tm', 'hgv', 'ddb'] as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'r.' . $field . ' LIKE :' . $field;
             $parameters[$field] = '%' . $this->getParameter($field) . '%';
@@ -99,7 +102,7 @@ class CorrectionController extends BeehiveController{
         }
 
         $prefix = ' WITH ';
-        foreach(array('task_bl', 'task_tm', 'task_hgv', 'task_ddb', 'task_apis', 'task_biblio') as $field){
+        foreach(['task_bl', 'task_tm', 'task_hgv', 'task_ddb', 'task_apis', 'task_biblio'] as $field){
           if(strlen($this->getParameter($field))){
             $with = $prefix . ' (t.category = \'' . str_replace('task_', '', $field) . '\' AND t.description LIKE \'%' . ($this->getParameter($field) != '*' ? $this->getParameter($field) : '') . '%\')';
             //$key =  ucfirst(str_replace('task_', '', $field));
@@ -134,7 +137,7 @@ class CorrectionController extends BeehiveController{
         $query->setFirstResult($offset)->setMaxResults($limit);
 
         $result = $query->getScalarResult();
-        $ids = array();
+        $ids = [];
         foreach ($result as $row) {
           $ids[] = $row['id'];
         }
@@ -182,7 +185,8 @@ class CorrectionController extends BeehiveController{
   public function new(): Response {
     $correction = new Correction();
 
-    $correction->setCreator($this->get('security.context')->getToken()->getUser()->getUsername());
+    $correction->setCreator($this->getUser()->getUsername());
+    // $this->get('security.context')->getToken()->getUser()->getUsername()
 
     $entityManager = $this->getDoctrine()->getManager();
     $editionRepository = $entityManager->getRepository(Edition::class);
@@ -192,19 +196,10 @@ class CorrectionController extends BeehiveController{
 
     $registerRepository = $entityManager->getRepository(Register::class);
 
-    $form = $this->createFormBuilder($correction)
-      ->add('compilationPage', 'text', array('required' => false, 'label' => 'Seite'))
-      ->add('text', 'text', array('attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizardLookup'))))
-      ->add('position', 'text', array('required' => false, 'label' => 'Zeile'))
-      ->add('description', 'textarea', array('label' => 'Eintrag'))
-      //->add('tm', 'number', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
-      //->add('hgv', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
-      //->add('ddb', 'text', array('required' => $correction->getEdition()->getSort() == 0 ? false : true, 'attr' => array('wizard-url' => $this->generateUrl('PapyrillioBeehive_NumberWizard'))))
-      ->add('source', 'number', array('required' => false, 'label' => 'Quelle'))
-      ->getForm();
+    $form = $this->createForm(CorrectionNewType::class, $correction, ['attr' => ['wizardUrl' => $this->generateUrl('PapyrillioBeehive_NumberWizardLookup')]]);
 
-    if ($this->getRequest()->getMethod() == 'POST') {
-      $form->bindRequest($this->getRequest());
+    if ($this->request->getMethod() == 'POST') {
+      $form->handleRequest($this->request);
       if ($form->isValid()) {
         foreach($this->getParameter('task') as $category => $description){
           if(strlen(trim($description))){
@@ -218,7 +213,7 @@ class CorrectionController extends BeehiveController{
 
         if($this->getParameter('register')){
           foreach($this->getParameter('register') as $registerId){
-            $register = $registerRepository->findOneBy(array('id' => $registerId));
+            $register = $registerRepository->findOneBy(['id' => $registerId]);
             if($register){
               $correction->addRegisterEntry($register);
             }
@@ -231,24 +226,24 @@ class CorrectionController extends BeehiveController{
           $this->get('session')->setFlash('notice', 'Der Datensatz wurde angelegt!');
           return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionNew'));
         } else {
-          return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionShow', array('id' => $correction->getId())));
+          return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionShow', ['id' => $correction->getId()]));
         }
       }
     }
 
-    return $this->render('correction/new.html.twig', ['form' => $form->createView(), 'compilations' => $this->getCompilations(), 'editions' => $editionRepository->findBy(array(), array('sort' => 'asc'))]);
+    return $this->render('correction/new.html.twig', ['form' => $form->createView(), 'compilations' => $this->getCompilations(), 'editions' => $editionRepository->findBy([], ['sort' => 'asc'])]);
   }
 
   protected function getCompilation($id = null){
-    $entityManager = $this->getDoctrine()->geManager();
+    $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Compilation::class);
 
     if($id !== null){
-      return $repository->findOneBy(array('id' => $id));
-    } else if($this->getRequest()->getMethod() == 'POST'){
-      return $repository->findOneBy(array('id' => $this->getParameter('compilation')));
+      return $repository->findOneBy(['id' => $id]);
+    } else if($this->request->getMethod() == 'POST'){
+      return $repository->findOneBy(['id' => $this->getParameter('compilation')]);
     } else {
-      return $repository->findOneBy(array('volume' => 14));
+      return $repository->findOneBy(['volume' => 14]);
     }
   }
 
@@ -263,10 +258,10 @@ class CorrectionController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Edition::class);
 
-    if($this->getRequest()->getMethod() == 'POST'){
-      return $repository->findOneBy(array('id' => $this->getParameter('edition')));
+    if($this->request->getMethod() == 'POST'){
+      return $repository->findOneBy(['id' => $this->getParameter('edition')]);
     }else{
-      return $repository->findOneBy(array('sort' => 0));
+      return $repository->findOneBy(['sort' => 0]);
     }
   }
 
@@ -292,7 +287,7 @@ class CorrectionController extends BeehiveController{
   public function delete($id): Response {
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
-    $correction = $repository->findOneBy(array('id' => $id));
+    $correction = $repository->findOneBy(['id' => $id]);
     foreach($correction->getTasks() as $task){
       $entityManager->remove($task);
     }
@@ -315,11 +310,12 @@ class CorrectionController extends BeehiveController{
 
     $task = new Task();
     $task->setCorrection($this->correction);
-    $formTask = $this->getForm($task);
+    $formTask = $this->createForm(TaskType::class, $task);
 
     $index = new IndexEntry();
     $index->setCorrection($this->correction);
-    $formIndex = $this->getForm($index);
+    $formIndex = $this->createForm(IndexEntryType::class, $index);
+    
 
     return $this->render('correction/show.html.twig', ['correction' => $this->correction, 'compilations' => $this->getCompilations(), 'logs' => $this->logs, 'formTask' => $formTask->createView(), 'formIndex' => $formIndex->createView()]);
   }
@@ -337,18 +333,18 @@ class CorrectionController extends BeehiveController{
     $this->entityManager = $this->getDoctrine()->getManager();
     $this->repository = $this->entityManager->getRepository(Correction::class);
 
-    $this->correction = $this->repository->findOneBy(array('id' => $id));
+    $this->correction = $this->repository->findOneBy(['id' => $id]);
     
     if(!$this->correction){
       throw $this->createNotFoundException('Correction #' . $id . ' does not exist');
     }
 
-    $log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
-    #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
-    $this->logs = $log->getLogEntries($this->correction);
+    //$log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
+                                  #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
+    //$this->logs = $log->getLogEntries($this->correction);
 
     foreach ($this->correction->getTasks() as $task) {
-      $this->logs = array_merge($this->logs, $log->getLogEntries($task));
+      //$this->logs = array_merge($this->logs, $log->getLogEntries($task));
     }
 
   }

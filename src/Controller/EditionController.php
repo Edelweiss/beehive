@@ -41,12 +41,12 @@ class EditionController extends BeehiveController{
       }
 
       // LIMIT
-      $query = $entityManager->createQuery('SELECT count(e.id) FROM PapyrillioBeehiveBundle:Edition e ' . $where);
+      $query = $entityManager->createQuery('SELECT count(e.id) FROM App\Entity\Edition e ' . $where);
       $count = $query->getSingleScalarResult();
       $totalPages = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
 
       // QUERY
-      $query = $entityManager->createQuery('SELECT e FROM PapyrillioBeehiveBundle:Edition e ' . $where . ' ' . $orderBy)->setFirstResult($offset)->setMaxResults($limit);
+      $query = $entityManager->createQuery('SELECT e FROM App\Entity\Edition e ' . $where . ' ' . $orderBy)->setFirstResult($offset)->setMaxResults($limit);
       
       $editions = $query->getResult();
 

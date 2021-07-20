@@ -197,35 +197,35 @@ class UserController extends BeehiveController
     public function new(): Response {
       $user = new User();
       $user->setRoles(['ROLE_USER']);
-  
+
       $entityManager = $this->getDoctrine()->getManager();
       $repository = $entityManager->getRepository(User::class);
-  
+
       $form = $this->createFormBuilder($user)
         ->add('name', 'text', ['label' => 'Name'])
         ->add('username', 'text', ['label' => 'Kennung'])
         ->add('password', 'text', ['label' => 'Passwort'])
         ->add('email', 'text', ['label' => 'E-Mail'])
         ->getForm();
-  
+
       if ($this->getRequest()->getMethod() == 'POST') {
           
         $form->bindRequest($this->getRequest());
   
         if ($form->isValid()) {
-  
+
           $encoder = $this->get('security.encoder_factory')->getEncoder($user);
           $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
-          
+
           $entityManager->persist($user);
           $entityManager->flush();
-          
+
           $this->get('session')->setFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde angelegt.');
-  
+
           return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $user->getId()]));
         }
       }
-  
+
       return $this->render('user/new.html.twig', ['form' => $form->createView()]);
     }
   

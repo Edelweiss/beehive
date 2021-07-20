@@ -27,7 +27,7 @@ class ApiaryController extends BeehiveController{
     $where = self::$TYPES[$type] . ' = :id';
     $parameters = array('id' => $id);
 
-    if($this->get('security.context')->isGranted('ROLE_USER') === false) {
+    if($this->isGranted('ROLE_USER') === false) {
       $where .= ' AND (c.status = :status OR c2.title = :compilationTitle)'; // cl: hardcoded BLXII hack, show unchecked BLXII corrections
       $parameters['status'] = 'finalised';
       $parameters['compilationTitle'] = 'XII';
@@ -36,7 +36,7 @@ class ApiaryController extends BeehiveController{
     // QUERY
 
     $query = $entityManager->createQuery('
-      SELECT e, c, t FROM PapyrillioBeehiveBundle:Correction c
+      SELECT e, c, t FROM App\Entity\Correction c
       LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY c.sort'
     );
 
@@ -49,7 +49,7 @@ class ApiaryController extends BeehiveController{
     } elseif($format === 'plain'){
       return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections]);
     } elseif ($format === 'rdf') {
-      $response = new Response($this->renderView('PapyrillioBeehiveBundle:Apiary:honey.xml.twig', array('corrections' => $corrections)));
+      $response = new Response($this->renderView('apiary/honey.xml.twig', array('corrections' => $corrections)));
       $response->headers->set('Content-Type', 'application/rdf+xml'); //$response->headers->set('Content-Type', 'text/xml');
       return $response;
     } else {

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Correction;
 use App\Entity\Register;
+use App\Controller\ApiaryController;
 use Symfony\Component\HttpFoundation\Response;
 use DOMDocument;
 use DOMXPath;
@@ -13,16 +14,22 @@ class RegisterController extends BeehiveController{
   private static function compareDdb($ddb1, $ddb2){
     $a = explode(';', $ddb1['value']);
     $b = explode(';', $ddb2['value']);
-    if(count($a) != count($b)){
+
+    if(count($a) < 3 || count($b) < 3){
       return count($a) < count($b) ? -1 : 1;
     }
+
     if($a[0] != $b[0]){
-      return $a < $b ? -1 : 1;
+      return $a[0] < $b[0] ? -1 : 1;
     }
-    $a = (count($a) > 1 ? $a[1] : 0) * 1000000 + (count($a) > 2 ? $a[2] : 0);
-    $b = (count($b) > 1 ? $b[1] : 0) * 1000000 + (count($b) > 2 ? $b[2] : 0);
-    return $a < $b ? -1 : 1;
-  } 
+
+    $a[1] = intval(preg_replace('/[^\d]+/', '', $a[1]));
+    $a[2] = intval(preg_replace('/(.+;.*;[^ ]]+).*/', '$1', $a[2]));
+    $b[1] = intval(preg_replace('/[^\d]+/', '', $b[1]));
+    $b[2] = intval(preg_replace('/(.+;.*;[^ ]]+).*/', '$1', $b[2]));
+
+    return ($a[1] * 1000000 + $a[2]) < ($b[1] * 1000000 + $b[2]) ? -1 : 1;
+  }
 
   public function autocomplete($id = 0): Response {
     $term = $this->getParameter('term');
@@ -40,7 +47,7 @@ class RegisterController extends BeehiveController{
         $order = 'r.tm, r.hgv';
       }
 
-      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.dclp, r.tm, r.hgv FROM PapyrillioBeehiveBundle:Register r WHERE ' . $search . ' ORDER BY ' . $order);
+      $query = $entityManager->createQuery('SELECT r.id, r.ddb, r.dclp, r.tm, r.hgv FROM App\Entity\Register r WHERE ' . $search . ' ORDER BY ' . $order);
       $query->setMaxResults(1000);
 
       foreach($query->getResult() as $result){
@@ -62,7 +69,7 @@ class RegisterController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Register::class);
 
-    $query = $entityManager->createQuery('SELECT DISTINCT r.ddb FROM PapyrillioBeehiveBundle:Register r JOIN r.corrections c WHERE r.ddb LIKE \'' . $term . '%\' ORDER BY r.ddb');
+    $query = $entityManager->createQuery('SELECT DISTINCT r.ddb FROM App\Entity\Register r JOIN r.corrections c WHERE r.ddb LIKE \'' . $term . '%\' ORDER BY r.ddb');
 
     $autocomplete = array();
     foreach($query->getResult() as $result){
@@ -203,7 +210,7 @@ class RegisterController extends BeehiveController{
   }
 
   public function apiary($id): Response {
-    return $this->forward('PapyrillioBeehiveBundle:Apiary:honey', array('type' => 'register', 'id' => $id, 'format' => 'plain'));
+    return $this->forward('App\Controller\ApiaryController::honey', array('type' => 'register', 'id' => $id, 'format' => 'plain'));
   }
 
   protected function getData($id = 0){

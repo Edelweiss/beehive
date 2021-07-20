@@ -15,7 +15,7 @@ class NumberWizardController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
 
-    $query = $entityManager->createQuery('SELECT DISTINCT c.ddb FROM PapyrillioBeehiveBundle:Correction c WHERE c.ddb LIKE \'' . $term . '%\' ORDER BY c.ddb');
+    $query = $entityManager->createQuery('SELECT DISTINCT c.ddb FROM App\Entity\Correction c WHERE c.ddb LIKE \'' . $term . '%\' ORDER BY c.ddb');
 
     $autocomplete = array();
     foreach($query->getResult() as $result){
@@ -40,7 +40,7 @@ class NumberWizardController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Correction::class);
 
-    $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c WHERE c.edition = :edition AND c.text = :text')->setParameters(array('text' => $text, 'edition' => $editionId))->setMaxResults(1);
+    $query = $entityManager->createQuery('SELECT c FROM App\Entity\Correction c WHERE c.edition = :edition AND c.text = :text')->setParameters(array('text' => $text, 'edition' => $editionId))->setMaxResults(1);
     $corrections = $query->getResult();
 
     if(count($corrections)){
@@ -61,7 +61,10 @@ class NumberWizardController extends BeehiveController{
     // TM, HGV, DDB
 
     $doc = new DOMDocument;
-    $doc->load($this->get('kernel')->getRootDir() . '/../src/Papyrillio/BeehiveBundle/Resources/data/idno.xml');
+    $idnoFile = \dirname(__DIR__). '/../data/idno.xml'; # cl: HACK $this->getParameter('kernel.project_dir') . '/../data/idno.xml'
+    $this->logger->info('XML FILE ' . $idnoFile);
+    $this->logger->info(file_exists($idnoFile));
+    $doc->load($idnoFile); # LIBXML_NOWARNING
     $xpath = new DOMXPath($doc);
 
     if($this->isHgv($id)){
@@ -93,7 +96,7 @@ class NumberWizardController extends BeehiveController{
       $entityManager = $this->getDoctrine()->getManager();
       $repository = $entityManager->getRepository(Correction::class);
       
-      $query = $entityManager->createQuery('SELECT c FROM PapyrillioBeehiveBundle:Correction c LEFT JOIN c.registerEntries r WHERE r.hgv = \'' . $data['hgv'][0] . '\'')->setMaxResults(1);
+      $query = $entityManager->createQuery('SELECT c FROM App\Entity\Correction c LEFT JOIN c.registerEntries r WHERE r.hgv = \'' . $data['hgv'][0] . '\'')->setMaxResults(1);
       $corrections = $query->getResult();
       
       if(count($corrections)){

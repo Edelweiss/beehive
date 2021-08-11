@@ -57,7 +57,7 @@
             <lifecycle-callback type="preUpdate" method="encode" />
             <lifecycle-callback type="postUpdate" method="decode" />
             <lifecycle-callback type="postLoad" method="decode" />
-            <lifecycle-callback type="onFlush" method="encode" />
+            <lifecycle-callback type="preFlush" method="encode" />
         </lifecycle-callbacks>
         <!-- don't forget to init the collection in entity __construct() method -->
     </entity>

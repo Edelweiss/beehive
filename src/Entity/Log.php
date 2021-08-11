@@ -9,7 +9,7 @@ class Log
 {
   private $id;
   private $action;
-  private $LoggedAt;
+  private $loggedAt;
   private $objectId;
   private $objectClass;
   private $version;

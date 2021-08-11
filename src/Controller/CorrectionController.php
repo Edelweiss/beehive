@@ -8,6 +8,7 @@ use App\Entity\Edition;
 use App\Entity\Task;
 use App\Entity\IndexEntry;
 use App\Entity\Register;
+use App\Entity\Log;
 use App\Form\CorrectionNewType;
 use App\Form\TaskType;
 use App\Form\IndexEntryType;
@@ -338,6 +339,10 @@ class CorrectionController extends BeehiveController{
     if(!$this->correction){
       throw $this->createNotFoundException('Correction #' . $id . ' does not exist');
     }
+
+    $this->logs = array_merge(
+      $this->entityManager->getRepository(Log::class)->getLogs($this->correction),
+      $this->entityManager->getRepository(Log::class)->getTaskLogs($this->correction));
 
     //$log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
                                   #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');

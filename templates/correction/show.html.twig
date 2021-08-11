@@ -59,9 +59,9 @@
     <div class="log">
       <ul class="logs greek">
         {% for log in logs %}
-          <li>Version {{ log.version }} / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
+          <li>Version {{ log.version }} ({{ log.objectClass|split('\\')[2] }}) / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
             <ul>
-              {% for key,value in log.dataDecoded %}
+              {% for key,value in log.data %}
                 <li>{{ key }} → {{ value }}</li>
               {% endfor %}
             </ul>
@@ -70,7 +70,7 @@
       </ul>
     </div>
   </div>
-  
+
   <p class="actionHolder">
     <a href="{{ path('PapyrillioBeehive_CorrectionDelete', { 'id': correction.id}) }}" onclick="javascript: return confirm('Eintrag wirklich unwiederbringlich aus der Datenbank entfernen?');">Eintrag löschen</a>
     <!--span id="previewAction">Vorschau neu laden</span-->

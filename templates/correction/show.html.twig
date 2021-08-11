@@ -62,7 +62,11 @@
           <li>Version {{ log.version }} ({{ log.objectClass|split('\\')[2] }}) / {{ log.loggedAt.format('Y-m-d H:i:s') }}: {{ log.action }} ({{ log.username }})
             <ul>
               {% for key,value in log.data %}
-                <li>{{ key }} → {{ value }}</li>
+                <li>{{ key }} →  {% if key == 'cleared' %}
+                  {{ value|date('d.m.Y') }}
+                {% else %}
+                  {{ value }}
+                {% endif %} </li>
               {% endfor %}
             </ul>
           </li>

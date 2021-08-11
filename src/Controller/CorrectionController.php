@@ -341,9 +341,9 @@ class CorrectionController extends BeehiveController{
     }
 
     $this->logs = array_merge(
-      $this->entityManager->getRepository(Log::class)->getLogs($this->correction),
+      [],
       $this->entityManager->getRepository(Log::class)->getTaskLogs($this->correction));
-
+#$this->logs = [];
     //$log = $this->entityManager->getRepository('StofDoctrineExtensionsBundle:LogEntry');
                                   #$log = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
     //$this->logs = $log->getLogEntries($this->correction);

@@ -27,7 +27,7 @@
       {% if correction.indexEntries | length %}
         <ul class="index">
           {% for index in correction.indexEntries %}
-            <li>{% include 'PapyrillioBeehiveBundle:Index:index.html.twig' with {'index': index} %}</li>
+            <li>{% include 'index/index.html.twig' with {'index': index} %}</li>
           {% endfor %}
         </ul>
       {% else %}

@@ -4,17 +4,23 @@ namespace App\Entity;
 
 use App\Repository\LogRepository;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 class Log
 {
   private $id;
-  private $action;
-  private $loggedAt;
+  private $action; # create, remove, update
+  private $loggedAt; # 2012-03-07 10:22:02
   private $objectId;
-  private $objectClass;
+  private $objectClass; # App\Entity\Correction, App\Entity\Task
   private $version;
   private $data;
   private $username;
+
+  public function __construct(){
+    $this->loggedAt = new DateTime();
+    $this->version = 1;
+  }
 
   public function getId(){ return $this->id; }
   public function getAction(){ return $this->action; }

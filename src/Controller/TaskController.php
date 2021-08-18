@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\Correction;
+use App\Form\TaskType;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends BeehiveController{
@@ -11,50 +13,50 @@ class TaskController extends BeehiveController{
   protected $task = null;
   
   public function new(): Response {
-    if($this->getRequest()->getMethod() == 'POST'){
+    if ($this->request->getMethod() == 'POST') {
       
       $entityManager = $this->getDoctrine()->getManager();
 
       $repositoryCorrection = $entityManager->getRepository(Correction::class);
-      $correction = $repositoryCorrection->findOneBy(array('id' => $this->getParameter('correction_id')));
+      $correction = $repositoryCorrection->findOneBy(['id' => $this->getParameter('correction_id')]);
       
       if($correction){
         $task = new Task();
         $task->setCorrection($correction);
+        
+        $form = $this->createForm(TaskType::class, $task);
 
-        $form = $this->getForm($task);
-
-        $form->bindRequest($this->getRequest());
+        $form->handleRequest($this->request);
 
         if($form->isValid()){
           $entityManager->persist($task);
           $entityManager->flush();
-          return new Response(json_encode(array('success' => true, 'data' => array('id' => $task->getId()))));
+          return new Response(json_encode(['success' => true, 'data' => ['id' => $task->getId()]]));
         }
 
-        $errors = array();
+        $errors = [];
         foreach($this->get('validator')->validate($task) as $error){
           $errors[$error->getPropertyPath()] = $error->getMessage();
         }
-        return new Response(json_encode(array('success' => false, 'error' => $errors)));  
+        return new Response(json_encode(['success' => false, 'error' => $errors]));  
       }
-      return new Response(json_encode(array('success' => false, 'error' => array('correction_id' => 'object not found'))));
+      return new Response(json_encode(['success' => false, 'error' => ['correction_id' => 'object not found']]));
     }
-    return new Response(json_encode(array('success' => false, 'error' => array('general' => 'no post data found'))));
+    return new Response(json_encode(['success' => false, 'error' => ['general' => 'no post data found']]));
   }
 
   public function snippet($id): Response {
     $this->retrieveTask($id);
-    return $this->render(task/snippet.html.twig, array('task' => $this->task));
+    return $this->render('task/snippet.html.twig', ['task' => $this->task]);
   }
 
   public function delete($id): Response {
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Task::class);
-    $task = $repository->findOneBy(array('id' => $id));
+    $task = $repository->findOneBy(['id' => $id]);
     $entityManager->remove($task);
     $entityManager->flush();
-    return new Response(json_encode(array('success' => true)));
+    return new Response(json_encode(['success' => true]));
   }
 
   public function update($id): Response {
@@ -85,9 +87,7 @@ class TaskController extends BeehiveController{
   protected function retrieveTask($id){
     $this->entityManager = $this->getDoctrine()->getManager();
     $this->repository = $this->entityManager->getRepository(Task::class);
-
-    $this->task = $this->repository->findOneBy(array('id' => $id));
-    
+    $this->task = $this->repository->findOneBy(['id' => $id]);
     if(!$this->task){
       throw $this->createNotFoundException('Task #' . $id . ' does not exist');
     }

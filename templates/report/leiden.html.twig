@@ -3,7 +3,7 @@
 {% block body %}
 
   <h3>Einträge für Berichtigungsliste {{ compilation.title }}</h3>
-  {% include 'PapyrillioBeehiveBundle:Report:leidenData.html.twig' with {'corrections': corrections} %}
+  {% include 'report/leidenData.html.twig' with {'corrections': corrections} %}
   <p class="actionHolder"><span id="print">Drucken</span></p>
 {% endblock %}
 

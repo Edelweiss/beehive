@@ -1,4 +1,4 @@
-{% include 'PapyrillioBeehiveBundle:Task:task.html.twig' with {'task': task} %}
+{% include 'task/task.html.twig' with {'task': task} %}
 <script type="text/javascript">
 
     $('.editTask').editable('{{ path('PapyrillioBeehive_TaskUpdate', {'id': 0}) }}', {

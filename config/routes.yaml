@@ -96,13 +96,13 @@ PapyrillioBeehive_RegisterApiary:
 
 PapyrillioBeehive_Report:
     path:  /report
-    controller: App\Controller\ReportController:leiden
+    controller: App\Controller\ReportController::leiden
     defaults:
         compilationVolume: 13
 
 PapyrillioBeehive_ReportLeiden:
     path:  /report/leiden/{compilationVolume}
-    controller: App\Controller\ReportController:leiden
+    controller: App\Controller\ReportController::leiden
     defaults:
         compilationVolume: 13
 
@@ -112,20 +112,20 @@ PapyrillioBeehive_ReportSnippet:
 
 PapyrillioBeehive_ReportOverview:
     path:  /report/overview/{compilationVolume}
-    controller: App\Controller\ReportController:overview
+    controller: App\Controller\ReportController::overview
     defaults:
         compilationVolume: 13
 
 PapyrillioBeehive_ReportPrint:
     path:  /report/print/{compilationVolume}/{editionId}
-    controller: App\Controller\ReportController:print
+    controller: App\Controller\ReportController::print
     defaults:
         compilationVolume: 13
         editionId: 0
 
 PapyrillioBeehive_ReportPdf:
     path:  /report/pdf/{compilationVolume}/{editionId}
-    controller: App\Controller\ReportController:pdf
+    controller: App\Controller\ReportController::pdf
     defaults:
         compilationVolume: 13
         editionId: 0
@@ -228,7 +228,7 @@ PapyrillioBeehive_IndexUpdate:
 
 PapyrillioBeehive_SystemSort:
     path:  /system/sort/{editionId}
-    controller: App\Controller\SystemController:sort
+    controller: App\Controller\SystemController::sort
     defaults:
         editionId: 0 
 
@@ -240,14 +240,14 @@ PapyrillioBeehive_SystemCheckSort:
 
 PapyrillioBeehive_Apiary:
     path:  /browse
-    controller: App\Controller\ApiaryController:index
+    controller: App\Controller\ApiaryController::index
     defaults:
         format: html
 
 
 PapyrillioBeehive_ApiaryHoney:
     path:  /{type}/{id}/{format}
-    controller: App\Controller\ApiaryController:honey
+    controller: App\Controller\ApiaryController::honey
     defaults:
         format: html
     requirements:

@@ -25,7 +25,6 @@ class TaskController extends BeehiveController{
         $task->setCorrection($correction);
         
         $form = $this->createForm(TaskType::class, $task);
-
         $form->handleRequest($this->request);
 
         if($form->isValid()){

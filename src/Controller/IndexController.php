@@ -4,40 +4,41 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\IndexEntry;
+use App\Entity\Correction;
+use App\Form\IndexEntryType;
 use DateTime;
 
 class IndexController extends BeehiveController{
-  
+
   public function new(): Response {
-    if($this->getRequest()->getMethod() == 'POST'){
+    if ($this->request->getMethod() == 'POST') {
       $entityManager = $this->getDoctrine()->getManager();
       $repositoryCorrection = $entityManager->getRepository(Correction::class);
 
-      $correction = $repositoryCorrection->findOneBy(array('id' => $this->getParameter('correction_id')));
+      $correction = $repositoryCorrection->findOneBy(['id' => $this->getParameter('correction_id')]);
       
       if($correction){
         $index = new IndexEntry();
         $index->setCorrection($correction);
 
-        $form = $this->getForm($index);
-
-        $form->bindRequest($this->getRequest());
+        $form = $this->createForm(IndexEntryType::class, $index);
+        $form->handleRequest($this->request);
 
         if($form->isValid()){
           $entityManager->persist($index);
           $entityManager->flush();
-          return new Response(json_encode(array('success' => true, 'data' => array('id' => $index->getId()))));
+          return new Response(json_encode(['success' => true, 'data' => ['id' => $index->getId()]]));
         }
 
-        $errors = array();
+        $errors = [];
         foreach($this->get('validator')->validate($index) as $error){
           $errors[$error->getPropertyPath()] = $error->getMessage();
         }
-        return new Response(json_encode(array('success' => false, 'error' => $errors)));  
+        return new Response(json_encode(['success' => false, 'error' => $errors]));  
       }
-      return new Response(json_encode(array('success' => false, 'error' => array('correction_id' => 'object not found'))));
+      return new Response(json_encode(['success' => false, 'error' => ['correction_id' => 'object not found']]));
     }
-    return new Response(json_encode(array('success' => false, 'error' => array('general' => 'no post data found'))));
+    return new Response(json_encode(['success' => false, 'error' => ['general' => 'no post data found']]));
   }
 
   public function snippet($id): Response {
@@ -49,7 +50,7 @@ class IndexController extends BeehiveController{
     $this->retrieveIndex($id);
     $this->getDoctrine()->getManager()->remove($this->index);
     $this->getDoctrine()->getManager()->flush();
-    return new Response(json_encode(array('success' => true)));
+    return new Response(json_encode(['success' => true]));
   }
 
   public function update($id): Response {
@@ -65,7 +66,7 @@ class IndexController extends BeehiveController{
     $this->entityManager = $this->getDoctrine()->getManager();
     $this->repository = $this->entityManager->getRepository(IndexEntry::class);
 
-    $this->index = $this->repository->findOneBy(array('id' => $id));
+    $this->index = $this->repository->findOneBy(['id' => $id]);
     
     if(!$this->index){
       throw $this->createNotFoundException('Index #' . $id . ' does not exist');

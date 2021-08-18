@@ -9,7 +9,7 @@
         <field name="type" type="string" length="64"/>
         <field name="topic" type="string" length="64"/>
         <field name="phrase" type="text"/>
-        <many-to-one field="correction" target-entity="Correction" inversed-by="indexEntry">
+        <many-to-one field="correction" target-entity="Correction" inversed-by="indexEntries">
             <join-column name="correction_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
         </many-to-one>
     </entity>

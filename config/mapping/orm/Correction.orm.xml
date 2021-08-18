@@ -3,16 +3,16 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
     <entity name="App\Entity\Correction" table="correction">
-        <!--gedmo:loggable/-->
+        <!--loggable-->
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
         <field name="source" type="integer"/>
         <field name="text" type="string" length="64"/>
-        <field name="position" type="text" nullable="true" gedmo="versioned"/>
-        <field name="description" type="text" gedmo="versioned"/>
+        <field name="position" type="text" nullable="true"/>
+        <field name="description" type="text"/>
         <field name="compilationPage" column="compilationPage" type="string" length="64" nullable="true"/>
-        <field name="status" type="text" gedmo="versioned"/>
+        <field name="status" type="text"/>
         <field name="creator" type="text"/>
         <field name="created" type="datetime"/>
         <field name="sortPage" column="sortPage" type="integer" nullable="true"/>

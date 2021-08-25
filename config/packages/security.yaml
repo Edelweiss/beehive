@@ -26,3 +26,4 @@ security:
         - { path: '^/registration', roles: ROLE_ADMIN }
         - { path: '^/admin', roles: ROLE_ADMIN }
         - { path: '^/user', roles: ROLE_USER }
+        - { path: '^/(correction|edition|task|index|system|browse|numberWizard|register|report)', roles: ROLE_USER }

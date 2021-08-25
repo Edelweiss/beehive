@@ -5,6 +5,8 @@ use App\Entity\Correction;
 use App\Entity\Task;
 use App\Entity\Log;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Loggable
 {
@@ -14,6 +16,13 @@ class Loggable
     #{
         // ... do something to notify the changes
     #}
+
+    private $security;
+    private $tokenStorage;
+    public function __construct(Security $security, TokenStorageInterface $tokenStorage){
+        $this->security = $security;
+        $this->tokenStorage = $tokenStorage;
+    }
 
     public function postCorrectionPersist(Correction $correction, LifecycleEventArgs $event): void
     {
@@ -60,12 +69,12 @@ class Loggable
         ]);
 
         $this->persistLog($log, $event->getEntityManager());
-        
     }
 
     private function getLog($objectClass, $objectId, $entityManager){
         $log = new Log();
-        $log->setUsername('xxx'); # retrieve somehow
+        $log->setUsername($this->security->getUser()->getUsername());
+        #$log->setUsername($this->tokenStorage->getToken()->getUser()->getUsername());
         $log->setObjectClass($objectClass);
         $log->setObjectId($objectId);
 
@@ -74,13 +83,13 @@ class Loggable
         $query->setParameters([$objectClass, $objectId]);
         try{
             if($v = $query->getOneOrNullResult()){
-                #dd(array_pop($v));
                 $log->setVersion(array_pop($v) + 1);
             }
         } catch (Exception $e) {
         }
         return $log;
     }
+
     private function persistLog(Log $log, $entityManager){
         $entityManager->persist($log);
         $entityManager->flush();

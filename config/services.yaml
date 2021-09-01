@@ -57,6 +57,11 @@ services:
                     method: postCorrectionUpdate
                 -
                     name: 'doctrine.orm.entity_listener'
+                    event: 'preRemove'
+                    entity: 'App\Entity\Correction'
+                    method: preCorrectionRemove
+                -
+                    name: 'doctrine.orm.entity_listener'
                     event: 'postPersist'
                     entity: 'App\Entity\Task'
                     method: postTaskPersist

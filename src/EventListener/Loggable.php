@@ -34,6 +34,11 @@ class Loggable
         $this->logCorrection('update', $correction, $event);
     }
 
+    public function preCorrectionRemove(Correction $correction, LifecycleEventArgs $event): void
+    {
+        $this->logCorrection('remove', $correction, $event);
+    }
+
     public function postTaskPersist(Task $task, LifecycleEventArgs $event): void
     {
         $this->logTask('create', $task, $event);
@@ -49,12 +54,15 @@ class Loggable
 
         $log->setAction($action);
 
-        $log->setData([
-            'position' => $correction->getPosition(),
-            'description' => $correction->getDescription(),
-            'status' => $correction->getStatus()
-        ]);
-
+        if($action === 'remove'){
+            $log->setData(null);
+        } else {
+            $log->setData([
+                'position' => $correction->getPosition(),
+                'description' => $correction->getDescription(),
+                'status' => $correction->getStatus()
+            ]);
+        }
         $this->persistLog($log, $event->getEntityManager());
     }
 

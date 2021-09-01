@@ -130,6 +130,12 @@ PapyrillioBeehive_ReportPdf:
         compilationVolume: 13
         editionId: 0
 
+# Log
+
+PapyrillioBeehive_Log:
+    path:  /log
+    controller: App\Controller\LogController::showDeletedCorrections
+
 # Correction
 
 PapyrillioBeehive_CorrectionList:

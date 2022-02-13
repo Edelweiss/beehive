@@ -298,7 +298,7 @@ class Register
      *
      * @param Papyrillio\BeehiveBundle\Entity\Correction $corrections
      */
-    public function addCorrection(\Papyrillio\BeehiveBundle\Entity\Correction $correction)
+    public function addCorrection(\App\Entity\Correction $correction)
     {
         $this->corrections[] = $correction;
     }

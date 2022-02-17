@@ -173,9 +173,9 @@ class UserController extends BeehiveController
         ->add('password', 'password', ['label' => 'Neues Passwort'])
         ->getForm();
   
-      if ($this->getRequest()->getMethod() == 'POST') {
+      if ($this->request->getMethod() == 'POST') {
   
-        $form->bindRequest($this->getRequest());
+        $form->bindRequest($this->request);
 
         if ($form->isValid()) {
   
@@ -208,7 +208,7 @@ class UserController extends BeehiveController
         ->add('email', 'text', ['label' => 'E-Mail'])
         ->getForm();
 
-      if ($this->getRequest()->getMethod() == 'POST') {
+      if ($this->request->getMethod() == 'POST') {
           
         $form->bindRequest($this->getRequest());
   

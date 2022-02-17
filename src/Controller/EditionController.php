@@ -13,7 +13,7 @@ class EditionController extends BeehiveController{
     $repository = $entityManager->getRepository(Edition::class);
     $editions = array();
     
-    if ($this->getRequest()->getMethod() == 'POST') {
+    if ($this->request->getMethod() == 'POST') {
       
       // PARAMETERS
       $limit         = $this->getParameter('rows');
@@ -69,7 +69,7 @@ class EditionController extends BeehiveController{
       ->add('material', 'choice', array('choices' => array('Papyrus' => 'Papyrus', 'Ostrakon' => 'Ostrakon')))
       ->getForm();
 
-    if ($this->getRequest()->getMethod() == 'POST') {
+    if ($this->request->getMethod() == 'POST') {
 
       $form->bindRequest($this->getRequest());
 

@@ -185,7 +185,7 @@ class UserController extends BeehiveController
           $entityManager->persist($user);
           $entityManager->flush();
   
-          $this->get('session')->setFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde geändert.');
+          $this->addFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde geändert.');
   
           return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $user->getId()]));
         }
@@ -220,7 +220,7 @@ class UserController extends BeehiveController
           $entityManager->persist($user);
           $entityManager->flush();
 
-          $this->get('session')->setFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde angelegt.');
+          $this->addFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde angelegt.');
 
           return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $user->getId()]));
         }
@@ -235,7 +235,7 @@ class UserController extends BeehiveController
       if($user = $repository->findOneBy(['id' => $id])){
         $entityManager->remove($user);
         $entityManager->flush();
-        $this->get('session')->setFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde gelöscht.');
+        $this->addFlash('notice', 'Der Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde gelöscht.');
       }
       return $this->redirect($this->generateUrl('PapyrillioBeehive_UserList'));
     }
@@ -247,7 +247,7 @@ class UserController extends BeehiveController
         $encoder = $this->get('security.encoder_factory')->getEncoder($user);
         $user->setPassword($encoder->encodePassword('changeYourPasswordASAP', $user->getSalt()));
         $entityManager->flush();
-        $this->get('session')->setFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde zurückgesetzt.');
+        $this->addFlash('notice', 'Das Passwort für Benutzer ' . $user->getName() . ' (' . $user->getUsername() . ') wurde zurückgesetzt.');
       }
       return $this->redirect($this->generateUrl('PapyrillioBeehive_UserShow', ['id' => $id]));
     }

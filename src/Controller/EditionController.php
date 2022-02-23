@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Edition;
+use App\Form\EditionNewType;
 use DateTime;
 
 class EditionController extends BeehiveController{
@@ -62,22 +63,16 @@ class EditionController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Edition::class);
 
-    $form = $this->createFormBuilder($edition)
-      ->add('sort', 'text', array('label' => 'Sortierung'))
-      ->add('title', 'text', array('label' => 'Titel'))
-      //->add('remark', 'text', array('required' => false, 'label' => 'Bemerkung'))
-      ->add('material', 'choice', array('choices' => array('Papyrus' => 'Papyrus', 'Ostrakon' => 'Ostrakon')))
-      ->getForm();
+    $form = $this->createForm(EditionNewType::class, $edition);
 
     if ($this->request->getMethod() == 'POST') {
-
-      $form->bindRequest($this->getRequest());
+      $form->handleRequest($this->request);
 
       if ($form->isValid()) {
         $entityManager->persist($edition);
         $entityManager->flush();
 
-        $this->get('session')->setFlash('notice', 'Die Edition »' . $edition->getSort() . ' = ' . $edition->getTitle() . '« wurde angelegt.');
+        $this->addFlash('notice', 'Die Edition »' . $edition->getSort() . ' = ' . $edition->getTitle() . '« wurde angelegt.');
 
         return $this->redirect($this->generateUrl('PapyrillioBeehive_EditionList'));
       }

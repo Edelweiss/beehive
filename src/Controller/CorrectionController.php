@@ -224,7 +224,7 @@ class CorrectionController extends BeehiveController{
         $entityManager->flush();
 
         if($this->getParameter('redirectTarget') === 'new'){
-          $this->get('session')->setFlash('notice', 'Der Datensatz wurde angelegt!');
+          $this->addFlash('notice', 'Der Datensatz wurde angelegt!');
           return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionNew'));
         } else {
           return $this->redirect($this->generateUrl('PapyrillioBeehive_CorrectionShow', ['id' => $correction->getId()]));

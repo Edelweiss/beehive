@@ -3,8 +3,13 @@
 {% block body %}
 
 <h3>Neue Edition</h3>
-<form id="editionNew" class="new" action="{{ path('PapyrillioBeehive_EditionNew') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_errors(form) }}
+{{ form_start(form, {'attr': {'id': 'editionNew', 'class': 'new', 'action': path('PapyrillioBeehive_EditionNew')}}) }}
+    {% if form_errors(form) %}
+        <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
     
     {{ form_widget(form) }}
 

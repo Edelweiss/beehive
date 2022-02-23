@@ -18,10 +18,14 @@
         {% endif %}
         <div id="site">
             <div id="content">
-                {% if app.session.hasFlash('notice') %}
+                {% if app.session.flashbag.peekAll() %}
                   <div class="ui-widget">
                     <div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"> 
-                      <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>Hinweis:</strong> {{ app.session.flash('notice') }}</p>
+                      {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                          <p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span> <strong>{{ label|trans }}:</strong> {{ message }}</p>
+                        {% endfor %}
+                      {% endfor %}
                     </div>
                   </div>
                 {% endif %}

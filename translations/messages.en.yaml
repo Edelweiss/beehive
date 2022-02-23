@@ -2,6 +2,11 @@ Text: Text
 Zeile: Zeile
 Eintrag: Eintrag
 
+# flash Meldungen
+notice: Hinweis
+warning: Warnung
+error: Fehler
+
 # von PapPal
 Papyrus: Papyrus
 Ostrakon: Ostrakon

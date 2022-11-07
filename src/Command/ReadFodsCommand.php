@@ -28,7 +28,7 @@ class ReadFodsCommand extends Command
     protected static $defaultName = 'app:read-fods';
 
     private $fods;
-    protected $fieldNames = ['compilation_id', 'compilation_page', 'register_id', 'edition_id', 'text', 'position', 'description', 'creator'];
+    protected $fieldNames = ['compilation_id', 'compilation_page', 'register_id', 'edition_id', 'text', 'position', 'description', 'source', 'creator'];
     protected $dataTable = [];
 
     function __construct(Fods $fods){

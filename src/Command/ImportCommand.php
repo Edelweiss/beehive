@@ -23,6 +23,14 @@ class ImportCommand extends ReadFodsCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'app:import';
 
+    static function fallback($value, $fallback){
+      if(!isset($value) || $value === null || $value === '')
+      {
+        return $fallback;
+      }
+      return $value;
+    }
+
     function __construct(Fods $fods, EntityManagerInterface $entityManager){
 	      $this->entityManager = $entityManager;
         parent::__construct($fods);
@@ -37,7 +45,7 @@ class ImportCommand extends ReadFodsCommand
         $compilationRepository = $this->entityManager->getRepository(Compilation::class);
 
         foreach($this->dataTable as $row){
-          echo implode('|',$row) . "\n";
+          
           $correction = new Correction();
 
           if($register = $registerRepository->findOneBy(['id' => $row['register_id']])){
@@ -45,15 +53,25 @@ class ImportCommand extends ReadFodsCommand
           }
           if($compilation = $compilationRepository->findOneBy(['id' => $row['compilation_id']])){
             $correction->setCompilation($compilation);
+          } else {
+            echo 'ACHTUNG: keine compilation (' . $row['compilation_id'] . ') '. implode('|',$row) . "\n";
+            continue;
           }
           if($edition = $editionRepository->findOneBy(['id' => $row['edition_id']])){
             $correction->setEdition($edition);
+          } else {
+            echo 'ACHTUNG: keine edition (' . $row['edition_id'] . ') '. implode('|',$row) . "\n";
+            continue;
           }
-          $correction->setCompilationPage($row['compilation_page']);
-          $correction->setText($row['text']);
-          $correction->setPosition($row['position']);
+
+          $correction->setCompilationPage(self::fallback($row['compilation_page'], null));
+          $correction->setText(self::fallback($row['text'], null));
+          $correction->setPosition(self::fallback($row['position'], null));
           $correction->setDescription($row['description']);
-          $correction->setCreator($row['creator']);
+          $correction->setSource(self::fallback($row['source'], null));
+          $correction->setCreator(self::fallback($row['creator'], 'system'));
+
+          echo implode('|',$row) . "\n";
 
           /*$entityManager->persist($correction);
           $entityManager->flush();*/

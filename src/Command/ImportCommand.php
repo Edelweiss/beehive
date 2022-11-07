@@ -50,9 +50,9 @@ class ImportCommand extends ReadFodsCommand
             $correction->setEdition($edition);
           }
           $correction->setCompilationPage($row['compilation_page']);
-          $correction->setCreator($row['text']);
-          $correction->setCreator($row['position']);
-          $correction->setCreator($row['description']);
+          $correction->setText($row['text']);
+          $correction->setPosition($row['position']);
+          $correction->setDescription($row['description']);
           $correction->setCreator($row['creator']);
 
           /*$entityManager->persist($correction);

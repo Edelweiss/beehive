@@ -26,7 +26,6 @@ class ReadFodsCommand extends Command
 
     private $fods;
 
-
     function __construct(Fods $fods){
 	    $this->fods = $fods;
         parent::__construct();
@@ -35,11 +34,13 @@ class ReadFodsCommand extends Command
     protected function configure(): void
     {
         // ...
+        #$this->addOption('file', 'f', InputOption::VALUE_REQUIRED, 'name of the file to be imported; provide just a name if it resides in the data directory or an absolute  path if it`s to be found somewhere else', 'import.fods');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         echo '1234 import dir: ' . self::IMPORT_DIR . "\n";
+        #if($input->getArgument('file'))
 	$importFile = '/var/www/beehive/data/import_bl_cd_ostraca.fods';
 	$tableName = 'Ostraca';
 	$headerLine = 1;

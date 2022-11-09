@@ -5,6 +5,7 @@
   <records>{{ count }}</records>
   {% for edition in editions %}
     <row id = '{{ edition.id }}'>
+      <cell>{{ edition.id }}</cell>
       <cell>{{ edition.sort }}</cell>
       <cell>{{ edition.title }}</cell>
       <cell>{{ edition.collection }}</cell>

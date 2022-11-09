@@ -31,12 +31,13 @@ $(function(){
     url: '{{ path('PapyrillioBeehive_EditionList') }}',
     datatype: 'xml',
     mtype: 'POST',
-    colNames:['Sortierung', 'Title', 'Sammlung', 'Band', 'Bemerkung', 'Material'],
+    colNames:['Id', 'Sortierung', 'Title', 'Sammlung', 'Band', 'Bemerkung', 'Material'],
     colModel :[ 
+      {name:'id',          index:'id'},
       {name:'sort',        index:'sort', editable: true},
       {name:'title',       index:'title', editable: true},
-      {name:'collection',  index:'collection'},
-      {name:'volume',      index:'volume'},
+      {name:'collection',  index:'collection', hidden: true},
+      {name:'volume',      index:'volume', hidden: true},
       {name:'remark',      index:'remark', editable: true},
       {name:'material',    index:'material', editable: true} 
     ],

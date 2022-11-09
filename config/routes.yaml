@@ -250,14 +250,13 @@ PapyrillioBeehive_Apiary:
     defaults:
         format: html
 
-
 PapyrillioBeehive_ApiaryHoney:
     path:  /{type}/{id}/{format}
     controller: App\Controller\ApiaryController::honey
     defaults:
         format: html
     requirements:
-      type: '(tm|hgv|ddb|biblio|bl|register)'
+      type: '(tm|hgv|ddb|biblio|bl|register|boep)'
       format: '(plain|xml|html|rdf|json)'
 
 # Security / User

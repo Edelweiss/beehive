@@ -73,8 +73,8 @@ class ImportCommand extends ReadFodsCommand
 
           echo implode('|',$row) . "\n";
 
-          /*$entityManager->persist($correction);
-          $entityManager->flush();*/
+          $this->entityManager->persist($correction);
+          $this->entityManager->flush();
         }
 
         return Command::SUCCESS;

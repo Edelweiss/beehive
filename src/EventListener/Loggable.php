@@ -81,7 +81,11 @@ class Loggable
 
     private function getLog($objectClass, $objectId, $entityManager){
         $log = new Log();
-        $log->setUsername($this->security->getUser()->getUsername());
+        if($this->security->getUser()){
+            $log->setUsername($this->security->getUser()->getUsername());
+        } else {
+            $log->setUsername('log');
+        }
         #$log->setUsername($this->tokenStorage->getToken()->getUser()->getUsername());
         $log->setObjectClass($objectClass);
         $log->setObjectId($objectId);

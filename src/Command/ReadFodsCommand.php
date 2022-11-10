@@ -28,6 +28,7 @@ class ReadFodsCommand extends Command
     protected static $defaultName = 'app:read-fods';
 
     private $fods;
+    protected $file = null;
     protected $fieldNames = ['compilation_id', 'compilation_page', 'register_id', 'edition_id', 'text', 'position', 'description', 'source', 'creator'];
     protected $dataTable = [];
 
@@ -46,7 +47,14 @@ class ReadFodsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-	    $this->dataTable = $this->fods->getArray($input->getOption('file'), $input->getOption('table-name'), $input->getOption('header-line'), $input->getOption('header-key'), $this->fieldNames);
+	    if(strpos($input->getOption('file'), '/') === 0){
+            $this->file = $input->getOption('file');
+            
+        } else {
+            $this->file = self::IMPORT_DIR . '/' . $input->getOption('file');
+        }
+        $this->dataTable = $this->fods->getArray($this->file, $input->getOption('table-name'), $input->getOption('header-line'), $input->getOption('header-key'), $this->fieldNames);
+        
 
 	    return Command::SUCCESS;
         // return Command::FAILURE;

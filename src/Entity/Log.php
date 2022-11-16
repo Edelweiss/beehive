@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LogRepository;
+use App\Entity\Correction;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 
@@ -20,6 +21,14 @@ class Log
   public function __construct(){
     $this->loggedAt = new DateTime();
     $this->version = 1;
+  }
+
+  public function encode(){
+    $this->data = Correction::encode4Byte($this->data);
+  }
+
+  public function decode(){
+    $this->data = Correction::decode4Byte($this->data);
   }
 
   public function getId(){ return $this->id; }

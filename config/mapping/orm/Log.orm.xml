@@ -13,5 +13,13 @@
         <field name="version" type="integer"/>
         <field name="data" type="array"/>
         <field name="username" type="string" length="255"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="encode" />
+            <lifecycle-callback type="postPersist" method="decode" />
+            <lifecycle-callback type="preUpdate" method="encode" />
+            <lifecycle-callback type="postUpdate" method="decode" />
+            <lifecycle-callback type="postLoad" method="decode" />
+            <lifecycle-callback type="preFlush" method="encode" />
+        </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>

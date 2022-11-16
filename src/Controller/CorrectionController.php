@@ -281,6 +281,7 @@ class CorrectionController extends BeehiveController{
       $this->correction->$setter($this->getParameter('newvalue'));
       $this->entityManager->flush();
 
+      $this->retrieveCorrection($id);
       return new Response(htmlspecialchars($this->correction->$getter()));
     }
   }

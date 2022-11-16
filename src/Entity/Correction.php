@@ -49,8 +49,30 @@ class Correction
       'f09085b7' => '𐅷',
       'f09085b8' => '𐅸'
     );
-    
-    public static function encode4Byte($string){
+
+    public static function encode4Byte($data){
+      if(is_array($data)){
+        foreach($data as $key => $value){
+          $data[$key] = self::encode4ByteUnicode($value);
+        }
+        return $data;
+      } else {
+        return self::encode4ByteUnicode($data);
+      }
+    }
+
+    public static function decode4Byte($data){
+      if(is_array($data)){
+        foreach($data as $key => $value){
+          $data[$key] = self::decode4ByteUnicode($value);
+        }
+        return $data;
+      } else {
+        return self::decode4ByteUnicode($data);
+      }
+    }
+
+    public static function encode4ByteUnicode($string){
       mb_internal_encoding('UTF-8');
       mb_regex_encoding('UTF-8');
       foreach(self::$ENCODE as $character => $code){
@@ -61,7 +83,7 @@ class Correction
       return $string;
     }
     
-    public static function decode4Byte($string){
+    public static function decode4ByteUnicode($string){
       mb_internal_encoding('UTF-8');
       mb_regex_encoding('UTF-8');
       foreach(self::$ENCODE as $character => $code){

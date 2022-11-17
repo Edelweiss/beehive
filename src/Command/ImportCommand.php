@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Fods;
+use App\Entity\Task;
 use App\Entity\Edition;
 use App\Entity\Compilation;
 use App\Entity\Register;
@@ -69,6 +70,18 @@ class ImportCommand extends ReadFodsCommand
           } else {
             echo $flushCounter . ': ACHTUNG: keine edition (' . $row['edition_id'] . ') '. implode('|',$row) . "\n";
             continue;
+          }
+
+          $taskList = [];
+          $taskList['ddb'] = self::fallback($row['task_ddb'], null);
+          foreach($taskList as $category => $description){
+            if($description){
+              $task = new Task();
+              $task->setCategory($category);
+              $task->setDescription($description);
+              $task->setCorrection($correction);
+              $this->entityManager->persist($task);
+            }
           }
 
           $correction->setCompilationPage(self::fallback($row['compilation_page'], null));

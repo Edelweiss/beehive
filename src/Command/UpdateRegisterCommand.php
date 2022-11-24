@@ -24,6 +24,14 @@ class UpdateRegisterCommand extends Command
     protected $entityManager;
     protected $dryRun = false;
 
+    static function fallback($value, $fallback){
+      if(!isset($value) || $value === null || $value === '')
+      {
+        return $fallback;
+      }
+      return $value;
+    }
+
     function __construct(EntityManagerInterface $entityManager){
         $this->entityManager = $entityManager;
         echo ' import dir: ' . self::IMPORT_DIR . "\n";
@@ -50,18 +58,19 @@ class UpdateRegisterCommand extends Command
             fgetcsv($idnos, 1024, $input->getOption('separator'));
         }
 
-        $row = 1;
+        $row = 0;
         $update = $new = 0;
         while (($data = fgetcsv($idnos, 1024, $input->getOption('separator'))) !== FALSE) {
+            $row++;
             if(count($data) < 3){
-                echo str_pad($row++, 6, ' ', STR_PAD_LEFT) . ': FEHLER, ungültige Zeile (' . implode('|', $data) . ')' . "\n";
+                echo str_pad($row, 6, ' ', STR_PAD_LEFT) . ': FEHLER, ungültige Zeile (' . implode('|', $data) . ')' . "\n";
                 continue;
             }
 
-            $hgv = trim($data[0]);
-            $tm = trim($data[1]);
-            $ddb = trim($data[2]);
-            $dclp = isset($data[3]) ? trim($data[3]) : null;
+            $hgv = self::fallback(trim($data[0]), null);
+            $tm = self::fallback(trim($data[1]), null);
+            $ddb = self::fallback(trim($data[2]), null);
+            $dclp = self::fallback(trim($data[3]), null);
             $idnoInfo = str_pad($row, 6, ' ', STR_PAD_LEFT) . ': ' . ($hgv ? $hgv : $tm) . ($ddb || $dclp ? '/' . $ddb . ($ddb && $dclp ? '/' : '') . $dclp : '');
 
             if($hgv && (intval($hgv) >= 500000) && (intval($hgv) <= 500100)){
@@ -95,6 +104,7 @@ class UpdateRegisterCommand extends Command
             }
 
             // SELECT * FROM `register` r WHERE r.hgv = '100111' OR (r.hgv IS NULL AND r.tm = '100111')
+#            $where = $hgv ? ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')' : 
             $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
             $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
 
@@ -132,7 +142,6 @@ class UpdateRegisterCommand extends Command
             var_dump($matchingRegisterEntry);
                 echo $idnoInfo . ' FEHLER, TM/HGV-Nummer in Datenbank nicht unique' . "\n";
             }
-            $row++;
         }
         fclose($idnos);
 

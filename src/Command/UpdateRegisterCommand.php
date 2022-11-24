@@ -35,7 +35,7 @@ class UpdateRegisterCommand extends Command
     {
         $this->addArgument('dry_run', InputArgument::OPTIONAL, 'Just simulate.');
         $this->addOption('separator', 's', InputOption::VALUE_REQUIRED, 'separator by which the individual fields in the csv file are separated', self::SEPARATOR);
-        $this->addOption('header', 'h', InputOption::VALUE_REQUIRED, 'amount of header lines which need to be skipped to access the data', self::HEADER);
+        $this->addOption('header', null, InputOption::VALUE_REQUIRED, 'amount of header lines which need to be skipped to access the data', self::HEADER);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

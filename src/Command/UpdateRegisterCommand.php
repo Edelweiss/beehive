@@ -95,7 +95,7 @@ class UpdateRegisterCommand extends Command
             }
 
             // SELECT * FROM `register` r WHERE r.hgv = '100111' OR (r.hgv IS NULL AND r.tm = '100111')
-            $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
+            $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
             $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
 
             if(count($matchingRegisterEntry) === 1){ // UPDATE

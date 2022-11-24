@@ -104,10 +104,10 @@ class UpdateRegisterCommand extends Command
             }
 
 # Neueste noch nicht verknüpfte Einträge löschen
-# DELETE FROM register WHERE id > 76933 
+# DELETE FROM register WHERE id > 76935
 
 # Crap finden
-# SELECT * FROM register WHERE tm IS NULL OR tm = '' OR tm = 0 OR hgv = '' OR hgv = 0
+# SELECT * FROM register WHERE tm IS NULL OR tm = '' OR tm = 0 OR hgv = '' OR hgv = '0'
 
             // SELECT * FROM `register` r WHERE r.hgv = '100111' OR (r.hgv IS NULL AND r.tm = '100111')
             $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');

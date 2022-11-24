@@ -15,7 +15,7 @@ ini_set('memory_limit', -1);
 
 class UpdateRegisterCommand extends Command
 {
-    const IMPORT_DIR = __DIR__ . '/../../data/';
+    const IMPORT_DIR = __DIR__ . '/../../data';
     const SEPARATOR = ',';
     const HEADER = '1';
 
@@ -41,7 +41,7 @@ class UpdateRegisterCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->dryRun = preg_match('#^dry[-_]?[rR]un$#', $input->getArgument('dry_run')) ? true : false;
-        $idnos = fopen(self::IMPORT_DIR . 'idno.csv', 'r');
+        $idnos = fopen(self::IMPORT_DIR . '/' . 'idnos.csv', 'r');
         if($idnos === FALSE) {
             return Command::INVALID;
         }
@@ -50,7 +50,8 @@ class UpdateRegisterCommand extends Command
             fgetcsv($idnos, 1024, $input->getOption('separator'));
         }
 
-        $row = $update = $new = 1;
+        $row = 1;
+        $update = $new = 0;
         while (($data = fgetcsv($idnos, 1024, $input->getOption('separator'))) !== FALSE) {
             if(count($data) < 3){
                 echo str_pad($row++, 6, ' ', STR_PAD_LEFT) . ': FEHLER, ungültige Zeile (' . implode('|', $data) . ')' . "\n";

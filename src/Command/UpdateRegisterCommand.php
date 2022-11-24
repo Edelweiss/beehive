@@ -15,6 +15,8 @@ ini_set('memory_limit', -1);
 class UpdateRegisterCommand extends Command
 {
     const IMPORT_DIR = __DIR__ . '/../../data/';
+    const SEPARATOR = ',';
+    const HEADER = '1';
 
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'app:update-register';
@@ -31,6 +33,8 @@ class UpdateRegisterCommand extends Command
     protected function configure(): void
     {
         $this->addArgument('dry_run', InputArgument::OPTIONAL, 'Just simulate.');
+        $this->addOption('separator', 's', InputOption::VALUE_REQUIRED, 'separator by which the individual fields in the csv file are separated', self::SEPARATOR);
+        $this->addOption('header', 'h', InputOption::VALUE_REQUIRED, 'amount of header lines which need to be skipped to access the data', self::HEADER);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -41,10 +45,14 @@ class UpdateRegisterCommand extends Command
             return Command::INVALID;
         }
 
+        for($header = 0; $header < $input->getOption('header'); $header++){
+            fgetcsv($idnos, 1024, $input->getOption('separator'));
+        }
+
         $row = $update = $new = 1;
-        while (($data = fgetcsv($idnos, 1024, '|')) !== FALSE) {
+        while (($data = fgetcsv($idnos, 1024, $input->getOption('separator'))) !== FALSE) {
             if(count($data) < 3){
-                echo str_pad($row, 6, ' ', STR_PAD_LEFT) . ': FEHLER, ungültige Zeile (' . implode('|', $data) . ')' . "\n";
+                echo str_pad($row++, 6, ' ', STR_PAD_LEFT) . ': FEHLER, ungültige Zeile (' . implode('|', $data) . ')' . "\n";
                 continue;
             }
 

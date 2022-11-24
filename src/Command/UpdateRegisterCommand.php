@@ -83,7 +83,7 @@ class UpdateRegisterCommand extends Command
                 continue;
             }
 
-            if($tm && !preg_match('/^\d+$/', $tm)){
+            if(!preg_match('/^\d+$/', $tm)){
                 echo $idnoInfo . ' FEHLER, ungültige TM-Nummer' . "\n";
                 continue;
             }
@@ -103,8 +103,13 @@ class UpdateRegisterCommand extends Command
                 continue;
             }
 
+# Neueste noch nicht verknüpfte Einträge löschen
+# DELETE FROM register WHERE id > 76933 
+
+# Crap finden
+# SELECT * FROM register WHERE tm IS NULL OR tm = '' OR tm = 0 OR hgv = '' OR hgv = 0
+
             // SELECT * FROM `register` r WHERE r.hgv = '100111' OR (r.hgv IS NULL AND r.tm = '100111')
-#            $where = $hgv ? ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')' : 
             $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
             $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
 

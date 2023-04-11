@@ -12,7 +12,7 @@ use DateTime;
 
 class ApiaryController extends BeehiveController{
 
-  protected static $TYPES = array('tm' => 'r.tm', 'hgv' => 'r.hgv', 'ddb' => 'r.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume', 'register' => 'r.id', 'boep' => 'c2.title');
+  protected static $TYPES = array('tm' => 'r.tm', 'hgv' => 'r.hgv', 'ddb' => 'r.ddb', 'biblio' => 'c.source', 'bl' => 'c2.volume', 'register' => 'r.id', 'boep' => 'c2.title', 'volume' => 'r.ddb');
 
   public function index(): Response{
     return $this->render('apiary/index.html.twig');
@@ -25,7 +25,10 @@ class ApiaryController extends BeehiveController{
     // WHERE
 
     $where = self::$TYPES[$type] . ' = :id';
-    if($type === 'boep'){
+    if($type === 'boep' || $type === 'volume'){
+      if($type === 'volume' && !str_ends_with($id, ';')){
+        $id .= ';';
+      }
       $where = self::$TYPES[$type] . ' LIKE :id';
       $id .= '%';
     }

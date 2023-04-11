@@ -256,7 +256,7 @@ PapyrillioBeehive_ApiaryHoney:
     defaults:
         format: html
     requirements:
-      type: '(tm|hgv|ddb|biblio|bl|register|boep)'
+      type: '(tm|hgv|ddb|biblio|bl|register|boep|volume)'
       format: '(plain|xml|html|rdf|json)'
 
 # Security / User

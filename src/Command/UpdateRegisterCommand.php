@@ -141,7 +141,7 @@ class UpdateRegisterCommand extends Command
                     $this->entityManager->persist($register);
                     $this->entityManager->flush();
                 }
-                echo $idnoInfo . ' ……… neuer Registereintrag angelegt' . "\n";
+                echo $idnoInfo . ' ……… neu' . "\n";
                 $new++;
             } else {
             var_dump($matchingRegisterEntry);

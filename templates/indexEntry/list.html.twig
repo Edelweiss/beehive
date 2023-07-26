@@ -1,0 +1,39 @@
+{% extends 'frontend.html.twig' %}
+
+{% block body %}
+
+{% set topic = '' %}
+
+<table class="indexEntry">
+  <!--thead>
+    <tr>
+      <th class="topic">Thema</th>
+      <th class="phrase">Wort</th>
+      <th class="context">Kontext</th>
+      <th class="biblio">Bibliographie</th>
+    </tr>
+  </thead-->
+  <tbody>
+    {% for i in indexEntries %}
+      <tr id="{{ i.id }}">
+        <td class="topic">
+          {% if i.topic != topic %}
+            {{ i.topic }}
+            {% set topic = i.topic %}
+          {% endif %}
+        </td>
+        <td class="phrase">
+          {{ i.phrase }}
+        </td>
+        <td class="context" title="{{ i.correction.description }}"><a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}</a></td>
+        <td class="biblio">
+          {% if i.correction.source %}
+            <a href="http://papyri.info/biblio/{{ i.correction.source }}">Bibliography</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

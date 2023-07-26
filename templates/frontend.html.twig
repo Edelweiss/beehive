@@ -21,42 +21,40 @@
 	<div id="header" class="grid_12">
 		<div id="subHeader" class="grid_10 omega">
 			<div id="tagline" class="grid_4 alpha"><h1>Berichtigungsliste</h1></div>
-			<div id="navigation" class="grid_6 omega"><a href="#">Startseite</a> <a href="#">Admin</a> <a href="#">Login</a></div>
+			<div id="navigation" class="grid_6 omega">
+			  <a href="{{ path('PapyrillioBeehive_Home')}">Startseite</a>
+			  <a href="{{ path('PapyrillioBeehive_CorrectionList')}">Admin</a>
+			  {% if app.user %}
+			    <a href="{{ path('PapyrillioBeehive_Logout') }}">Logout</a>
+			  {% else %}
+  			    <a href="{{ path('PapyrillioBeehive_Login') }}">Login</a>
+              {% endif %}
+			</div>
 		</div>
 		<div id="logo" class="grid_2 alpha"> </div>
 
 	</div>
 
 	<div id="left" class="grid_2">
-
 		<div class="sidebarSection">
-			<h2>BL I-XIII</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">BL I-XIII</a></h2>
 		</div>
-
 		<div class="sidebarSection">
-			<h2>BOEP</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">BOEP</a></h2>
 		</div>
-
 		<div class="sidebarSection">
-			<h2>Index</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Index</a></h2>
 		</div>
-
 		<div class="sidebarSection">
-			<h2>Ghostwords</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Ghostwords</a></h2>
 		</div>
-
 		<div class="sidebarSection">
-			<h2>Archive</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Archive</a></h2>
 		</div>
-
 		<div class="sidebarSection">
-			<h2>Search++</h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Search++</a></h2>
 		</div>
-
-		<div id="topic">
-
-		</div>
-
+		<div id="topic">&nbsp;</div>
 	</div>
 
 	<div id="content" class="grid_9">
@@ -64,27 +62,18 @@
 	</div>
 
 	<div id="right" class="grid_1">
-
 		<div id="quick1">
-
-			<a href="#">TM</a>
-
+			<a href="{{ path('PapyrillioBeehive_Apiary') }}">Blättern</a>
 		</div>
-
 		<div id="quick2">
-
-			<a href="#">HGV</a>
-
+			<a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
 		</div>
-
 		<div id="quick3">
-
-			<a href="#">DDB</a>
-
+			<a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a>
 		</div>
-
 	</div>
 </div>
+
 	<div id="search" class="container_12">
   	  <form autocomplete="off" method="post" action="">
 	    <input id="quicksearch_keyword" type="text" size="60" value="TM-Nummer, HGV-Nummer oder DDB-Id eingeben" onclick="this.value='';" autocomplete="false"/>
@@ -94,13 +83,13 @@
 	<div id="spacer" class="container_12 spacer">&nbsp;</div>
 	<div id="footer" class="container_12">
   	  <div id="footer_left" class="grid_6">
-      <a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
+      <!--a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
       <a href="{{ path('PapyrillioBeehive_Contact') }}">Kontakt</a>
-      <a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a>
-      <!--a href="https://www.uni-heidelberg.de/fakultaeten/philosophie/zaw" target="_blank">Institut für Papyrologie</a>
+      <a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a-->
+      <a href="https://www.uni-heidelberg.de/fakultaeten/philosophie/zaw" target="_blank">Institut für Papyrologie</a>
       <a href="mailto:papyrologie@zaw.uni-heidelberg.de">E-Mail</a>
       <a href="https://aquila.zaw.uni-heidelberg.de">HGV</a>
-      <a href="https://pappal.info">PapPal</a-->
+      <a href="https://pappal.info">PapPal</a>
       <br/>
       <a href="https://www.uni-heidelberg.de/datenschutzerklaerung_web.html" target="_blank">Datenschutzerklärung der Universität Heidelberg</a>
       </div>

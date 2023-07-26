@@ -240,7 +240,15 @@ PapyrillioBeehive_SystemSort:
 
 PapyrillioBeehive_SystemCheckSort:
     path:  /system/checkSort/{id}
-    controller: App\Controller\SystemController::checkSort 
+    controller: App\Controller\SystemController::checkSort
+
+# IndexEntry
+
+PapyrillioBeehive_IndexEntry:
+    path:  /index/{type}
+    controller: App\Controller\IndexEntryController::list
+    defaults:
+        type: 'Neues Wort'
 
 # Apiary
 

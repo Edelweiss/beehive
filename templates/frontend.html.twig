@@ -22,8 +22,8 @@
 		<div id="subHeader" class="grid_10 omega">
 			<div id="tagline" class="grid_4 alpha"><h1>Berichtigungsliste</h1></div>
 			<div id="navigation" class="grid_6 omega">
-			  <a href="{{ path('PapyrillioBeehive_Home')}">Startseite</a>
-			  <a href="{{ path('PapyrillioBeehive_CorrectionList')}">Admin</a>
+			  <a href="{{ path('PapyrillioBeehive_Home') }}">Startseite</a>
+			  <a href="{{ path('PapyrillioBeehive_CorrectionList') }}">Admin</a>
 			  {% if app.user %}
 			    <a href="{{ path('PapyrillioBeehive_Logout') }}">Logout</a>
 			  {% else %}

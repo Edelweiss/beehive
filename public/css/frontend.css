@@ -59,11 +59,27 @@ div#tagline h1 {
   position: absolute;
   top: 20px;
   left: 180px;
+  width: 760px;
+}
+
+div#tagline h2{
+  position: absolute;
+  top: 50px;
+  left: 180px;
+  width: 760px;
+}
+
+div#tagline h3{
+  position: absolute;
+  top: 80px;
+  left: 180px;
+  width: 760px;
 }
 
 div#navigation {
   font-family: Papyrus, Palatino, serif;
   text-align: right;
+  background-color: lightblue;
 }
 
 div#navigation a {

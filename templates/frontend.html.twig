@@ -10,7 +10,7 @@
             <link href="{{ asset('css/frontend.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-    {% /*include 'matomo.html'*/ %}
+    {% include 'matomo.html' %}
     </head>
     <body>
         {% if app.environment == 'dev' %}

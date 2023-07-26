@@ -30,7 +30,7 @@
         <td class="position">{{ c.position }}</td>
         <td class="description">{{ c.description }}</td>
         <td class="bl">
-          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">→&nbsp;BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}</a>
+          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}</a>
         </td>
         <td class="source">
           {% if c.source %}

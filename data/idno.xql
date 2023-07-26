@@ -10,9 +10,9 @@ declare variable $idpData external;
 <list>{
   (for $doc in collection(concat($idpData, '/HGV_meta_EpiDoc?select=*.xml;recurse=yes'))
 
-    let $hgv := string($doc//tei:publicationStmt/tei:idno[@type = 'filename'])
-    let $tm  := string($doc//tei:publicationStmt/tei:idno[@type = 'TM'])
-    let $ddb := string($doc//tei:publicationStmt/tei:idno[@type = 'ddb-hybrid'])
+    let $hgv := string($doc//tei:publicationStmt/tei:idno[@type = 'filename'][position() = 1])
+    let $tm  := string($doc//tei:publicationStmt/tei:idno[@type = 'TM'][position() = 1])
+    let $ddb := string($doc//tei:publicationStmt/tei:idno[@type = 'ddb-hybrid'][position() = 1])
 
     let $dclpFile := concat($idpData, '/DCLP/', ceiling(number($tm) div 1000), '/', $tm, '.xml')
     let $dclpEpiDoc := if(doc-available($dclpFile))then(doc($dclpFile))else() 

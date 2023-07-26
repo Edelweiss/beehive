@@ -1,0 +1,207 @@
+/*
+quasi weiß: #dcad6b
+
+hellbraun: #f3e4bf
+mittelbraun: #c3924f
+dunkelbraun: #5d4434
+noch dunkler: #503d31;
+
+topic dunkel: #dcad6b
+topic hell: #fbfaf1
+
+Suche links: #ebb05b
+Suche rechts: #e6c294
+
+*/
+
+
+body {
+  background-color: #f3e4bf;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+  background-image: url("../images/frontend/punkt.png");
+  background-size: 12px 12px;
+  background-position: left 2px;
+  background-repeat: no-repeat;
+  padding: 0 0 0 14px;
+  color: #503d31;
+  #font-family: Papyrus, Palatino, serif;
+  text-decoration: none;
+}
+
+div#navigation a, div#navigation a:link, div#navigation a:visited, div#navigation a:hover, div#navigation a:active {
+    background-image: url("../images/frontend/link.png");
+  background-size: 12px 12px;
+  background-position: left 2px;
+}
+
+div#footer a, div#footer a:link, div#footer a:visited, div#footer a:hover, div#footer a:active {
+    background-image: url("../images/frontend/eye.png");
+  background-size: 12px 12px;
+  background-position: left 2px;
+}
+
+div#logo {
+  background-image: url("../images/frontend/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 150px;
+}
+
+div#tagline {
+  text-align: left;
+  font-family: Papyrus, Palatino, serif;
+  position: relative;
+}
+
+div#tagline h1 {
+  position: absolute;
+  top: 20px;
+  left: 180px;
+}
+
+div#navigation {
+  font-family: Papyrus, Palatino, serif;
+  text-align: right;
+}
+
+div#navigation a {
+  color: black;
+}
+
+div#container {
+  background-image: url("../images/frontend/curve.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-color: #fefeff;
+}
+
+div#content {
+  background-image: url("../images/frontend/skyline_heidelberg.png");
+  background-position: bottom 80px center;
+  background-repeat: no-repeat;
+  background-color: #fefeff;
+}
+
+div#left, div#right {
+  font-family: Papyrus, Palatino, serif;
+    #background-color: #fefeff;
+    
+}
+
+div#topic {
+  background-image: url("../images/frontend/topic_frame_background.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 150px;
+}
+
+div#quick1 {
+  background-image: url("../images/frontend/quick1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100px;
+  margin: 100px 0 0 0;
+  padding: 6px 0 0 0;
+}
+
+div#quick2 {
+  background-image: url("../images/frontend/quick2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 80px;
+  padding: 6px 0 0 0;
+}
+
+div#quick3 {
+  background-image: url("../images/frontend/quick3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 60px;
+  padding: 6px 0 0 0;
+}
+
+div.sidebarSection {
+  background-color: #fefeff;
+  padding: 8px;
+  border-radius: 16px;
+  margin: 0 0 4px;
+}
+
+div.sidebarSection h2 {
+font-size: 12pt;
+text-align: left;
+font-weight: normal;
+padding: 0;
+margin: 0;
+}
+
+div#search {
+  position: fixed;
+  bottom: 44px;
+  left: 25%;
+  height: 50px;
+
+  background-color: #5d4434;
+  text-align: center;
+  vertical-align: middle;
+}
+
+div#search input {
+  font-family: Papyrus, Palatino, serif;
+  border: none;
+  color: #ffffff;
+  font-size: 11pt;
+  font-weight: normal;
+  border-radius: 16px;
+  padding: 4px 8px 3px 8px;
+  background-color: #ebb05b;
+  margin: 10px;
+  text-align: center;
+  outline: none;
+}
+
+div#search input#quicksearch_keyword {
+  background-image: linear-gradient(to right, #ebb05b , #e6c294);
+}
+
+div#search input#quicksearch_button {
+  background-color: #e6c294;
+}
+
+div#spacer{
+  position: fixed;
+  bottom: 42px;
+  left: 25%;
+
+  height: 2px;
+  background-color: #c3924f;
+  text-align: center;
+  vertical-align: middle;
+}
+
+div#footer {
+  position: fixed;
+  bottom: 2px;
+  left: 25%;
+  height: 40px;
+
+  background-color: #fefeff;
+
+}
+
+div#footer_right {
+  text-align: right;
+}
+
+div#spacer2{
+  position: fixed;
+  bottom: 0px;
+  left: 25%;
+
+  height: 2px;
+  background-color: #c3924f;
+  text-align: center;
+  vertical-align: middle;
+}

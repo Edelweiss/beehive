@@ -82,6 +82,7 @@ div#content {
   background-position: bottom 80px center;
   background-repeat: no-repeat;
   background-color: #fefeff;
+  min-height: 1000px;
 }
 
 div#left, div#right {

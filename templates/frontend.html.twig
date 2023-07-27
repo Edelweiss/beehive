@@ -113,8 +113,31 @@
         <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
         <script type="text/javascript">
           var quicksearch = function(){
-              console.log($('#quicksearch_id'));
-              console.log($('#quicksearch').attr('action'));
+              var url = window.location.href *= '/dev' ? '/dev/' : '/';
+              var id = $('#quicksearch_id').val();
+              var valid = true;
+              console.log(id);
+
+              if(id *= '^\d+$'){
+                url += 'tm';
+              } else if id *= '^\d+[a-z]+$'){
+                url = 'hgv';
+              } else if id *= '^.+;.+;.+$'){
+                url = 'ddb';
+              } else if id *= '^.+;.+;?$'){
+                url = 'volume';
+              } else if id *= '^[IVXLC]+$'){
+                url = 'bl';
+              } else {
+                valid = false;
+              }
+              if(valid){
+                url += '/' + id;
+                console.log(url);
+                window.location.href = url;
+              } else {
+                alert('I don’t know what »' . id . '« means. Try sth. like XIII (for BL) or 34844 (for TM or HGV) or p.mil;2;64 (for DDB) or p.mil;1; (for a certain volume).');
+              }
           };
 
           $(document).ready(function(){

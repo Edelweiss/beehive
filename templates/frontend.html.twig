@@ -82,8 +82,8 @@
 </div>
 
 	<div id="search" class="container_12">
-  	  <form autocomplete="off" method="post" action="">
-	    <input id="quicksearch_keyword" type="text" size="60" value="TM-Nummer, HGV-Nummer oder DDB-Id eingeben" onclick="this.value='';" autocomplete="false"/>
+  	  <form id="quicksearch" autocomplete="off" method="get" action="dev/tm/19768">
+	    <input id="quicksearch_id" type="text" size="60" value="TM-Nummer, HGV-Nummer oder DDB-Id eingeben" onclick="this.value='';" autocomplete="false"/>
 	    <input id="quicksearch_button" type="button" value="Schnellsuche" />
 	  </form>
 	</div>
@@ -107,17 +107,20 @@
       </div>
 	</div>
 
+    {% block javascripts %}
+        <script src="{{ asset('js/jquery/jquery-1.7.1.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery/jquery-ui-1.8.17.custom.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
+        <script type="text/javascript">
+          var quicksearch = function(){
+              console.log($('#quicksearch_id'));
+              console.log($('#quicksearch').attr('action'));
+          };
 
-
-        {% block javascripts %}
-            <script src="{{ asset('js/jquery/jquery-1.7.1.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('js/jquery/jquery-ui-1.8.17.custom.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
-            <script type="text/javascript">
-              $(document).ready(function(){
-               
-              });
-            </script>
-        {% endblock %}
+          $(document).ready(function(){
+           $('#quicksearch_button').click(quicksearch);
+          });
+        </script>
+    {% endblock %}
     </body>
 </html>

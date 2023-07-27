@@ -2,8 +2,7 @@
 
 {% block beta %}
   {% set c = corrections|first %}
-  {% if c is defined %}  
-    
+  {% if c is not null and c is not empty %}
     {{ c.compilation.title }}
   {% endif %}
 {% endblock %}

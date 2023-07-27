@@ -1,10 +1,10 @@
 {% extends 'frontend.html.twig' %}
 
 {% block beta %}
-{% if corrections|first is defined %}
-    {% set c = correction|first %}
+  {% set c = correction|first %}
+  {% if c is defined %}  
     BL {{ c.compilation.title }}
-{% endif %}
+  {% endif %}
 {% endblock %}
 
 

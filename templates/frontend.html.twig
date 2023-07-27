@@ -142,6 +142,11 @@
 
           $(document).ready(function(){
            $('#quicksearch_button').click(quicksearch);
+           $('#quicksearch_id').on('keypress', function(event){
+             if(event.which == 12){
+               quicksearch();
+             }
+           });
           });
         </script>
     {% endblock %}

@@ -113,11 +113,9 @@
         <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
         <script type="text/javascript">
           var quicksearch = function(){
-              console.log(window.location.href);
               var url = window.location.href.includes('/dev') ? '/dev/' : '/';
               var id = $('#quicksearch_id').val();
               var valid = true;
-              console.log(id);
 
               if(id.match(/^\d+$/)){
                 url += 'tm';
@@ -139,17 +137,16 @@
               }
               if(valid){
                 url += '/' + id;
-                console.log(url);
                 window.location.href = url;
               } else {
-                alert('Id oder Bandnummer eingeben, z. B. XIII (für BL XIII), 34844 (für TM/HGV) oder p.mil;2;64 oder p.mil;1; (für DDB-Hybrid/Band).');
+                alert('Id oder Bandnummer eingeben, z. B. XIII (für BL XIII), 34844 (für TM/HGV), p.mil;2;64 oder p.mil;1; (für DDB-Hybrid/Band).');
               }
           };
 
           $(document).ready(function(){
            $('#quicksearch_button').click(quicksearch);
            $('#quicksearch_id').on('keypress', function(event){
-             if(event.which == 12){
+             if(event.which == 13){
                quicksearch();
              }
            });

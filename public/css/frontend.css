@@ -26,6 +26,10 @@ div#container {
   background-color: #fefeff;
 }
 
+h4 {
+  font-family: Papyrus, Palatino, serif;
+}
+
 /* LINKS */
 
 a, a:link, a:visited, a:hover, a:active {

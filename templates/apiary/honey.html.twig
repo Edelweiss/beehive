@@ -1,5 +1,13 @@
 {% extends 'frontend.html.twig' %}
 
+{% block beta %}
+{% if corrections|first is defined %}
+    {% set c = correction|first %}
+    BL {{ c.compilation.title }}
+{% endif %}
+{% endblock %}
+
+
 {% block body %}
 
 {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections} %}

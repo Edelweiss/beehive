@@ -1,10 +1,10 @@
 {% extends 'frontend.html.twig' %}
 
 {% block body %}
-
+<p>Hier können die Bestände nach bestimmten Kriterien und Formaten abgerufen werden.</p>
 <div class="apiary">
   <p>
-    <label for="bl">BL</label>
+    <label for="bl">BL nach Bänden</label>
     <select id="bl" class="flyTo">
       <option value="1">I</option>
       <option value="2">II</option>
@@ -23,7 +23,7 @@
   </p>
 
   <p>
-    <label for="bl">BL Leiden</label>
+    <label for="bl">BL im Leidener Format</label>
     <select id="report/leiden" class="flyTo">
       <option value="1">I</option>
       <option value="2">II</option>
@@ -61,7 +61,7 @@
   </p>
 
   <p>
-    <label for="boep">BOEP</label>
+    <label for="boep">BOEP nach Ausgaben</label>
     <select id="boep" class="flyTo">
       <option value="Bulletin of Online Emendations to Papyri">all</option>
       <option value="Bulletin of Online Emendations to Papyri 1.1">BOEP 1.1</option>
@@ -79,22 +79,22 @@
   </p>
 
   <p>
-    <label for="tm">TM</label>
+    <label for="tm">TM-Nummer</label>
     <input id="tm" type="text" class="flyTo" />
   </p>
 
   <p>
-    <label for="hgv">HGV</label>
+    <label for="hgv">HGV-Nummer</label>
     <input id="hgv" type="text" class="flyTo" />
   </p>
 
   <p>
-    <label for="biblio">Biblio</label>
+    <label for="biblio">Papyri.info-Biblio-Id</label>
     <input id="biblio" type="text" class="flyTo" />
   </p>
 
   <p>
-    <label for="ddb">DDB</label>
+    <label for="ddb">DDB-Id</label>
     <input id="ddb" type="text" />
   </p>
 
@@ -107,12 +107,13 @@
     <br />
     <br />
     <br />
+    <h4>Beispiele für verschiedene Filter und Formate:</h4>
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'tm', 'id': '19768'}) }}">TM 19768</a>,
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'hgv', 'id': '34844'}) }}">HGV 34844</a>,
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'ddb', 'id': 'p.mil;2;64'}) }}">DDB p.mil;2;64</a>,
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'biblio', 'id': '73664'}) }}">Biblio 73664</a>,
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': 13}) }}">BL XIII</a>,
-    <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': 'Bulletin of Online Emendations to Papyri 9.1'}) }}">BOEP 9.1</a>
+    <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': 'Bulletin of Online Emendations to Papyri 9.1'}) }}">BOEP 9.1</a>,
     <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'volume', 'id': 'p.mil;1;'}) }}">p.mil;1;</a>
     <br />
   </p>

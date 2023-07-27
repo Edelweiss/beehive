@@ -157,8 +157,8 @@ margin: 0;
 div#search {
   position: fixed;
   bottom: 44px;
-  left: 25%;
   height: 50px;
+  left: 25%;
 
   background-color: #5d4434;
   text-align: center;
@@ -187,38 +187,16 @@ div#search input#quicksearch_button {
   background-color: #e6c294;
 }
 
-div#spacer{
-  position: fixed;
-  bottom: 42px;
-  left: 25%;
-
-  height: 2px;
-  background-color: #c3924f;
-  text-align: center;
-  vertical-align: middle;
-}
-
 div#footer {
   position: fixed;
-  bottom: 2px;
-  left: 25%;
+  bottom: 0;
   height: 40px;
-
+  left: 25%;
+  border-top: solid 2px #c3924f;
+  border-bottom: solid 2px #c3924f;
   background-color: #fefeff;
-
 }
 
 div#footer_right {
   text-align: right;
-}
-
-div#spacer2{
-  position: fixed;
-  bottom: 0px;
-  left: 25%;
-
-  height: 2px;
-  background-color: #c3924f;
-  text-align: center;
-  vertical-align: middle;
 }

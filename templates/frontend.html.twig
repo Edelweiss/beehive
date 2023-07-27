@@ -120,13 +120,13 @@
 
               if(id *= '^\d+$'){
                 url += 'tm';
-              } else if id *= '^\d+[a-z]+$'){
+              } else if (id *= '^\d+[a-z]+$'){
                 url = 'hgv';
-              } else if id *= '^.+;.+;.+$'){
+              } else if (id *= '^.+;.+;.+$'){
                 url = 'ddb';
-              } else if id *= '^.+;.+;?$'){
+              } else if (id *= '^.+;.+;?$'){
                 url = 'volume';
-              } else if id *= '^[IVXLC]+$'){
+              } else if (id *= '^[IVXLC]+$'){
                 url = 'bl';
               } else {
                 valid = false;

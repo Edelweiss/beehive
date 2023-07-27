@@ -120,13 +120,13 @@
 
               if(id.match(/^\d+$/){
                 url += 'tm';
-              } else if (id.match(/^\d+[a-z]+$/){
+              } else if (id.match(/^\d+[a-z]+$/)){
                 url = 'hgv';
-              } else if (id.match(/^.+;.*;.+$/){
+              } else if (id.match(/^.+;.*;.+$/)){
                 url = 'ddb';
-              } else if (id.match(/^.+;.+;?$/){
+              } else if (id.match(/^.+;.+;?$/)){
                 url = 'volume';
-              } else if (id.match(/^[IVXLC]+$/){
+              } else if (id.match(/^[IVXLC]+$/)){
                 url = 'bl';
               } else {
                 valid = false;

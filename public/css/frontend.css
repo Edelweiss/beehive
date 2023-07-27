@@ -26,6 +26,14 @@ div#container {
   background-color: #fefeff;
 }
 
+h2, h3 {
+  font-weight: normal;
+}
+
+h2 {
+  font-size: smaller;
+}
+
 h4 {
   font-family: Papyrus, Palatino, serif;
 }

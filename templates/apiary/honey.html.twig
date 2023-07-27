@@ -3,7 +3,8 @@
 {% block beta %}
   {% set c = corrections|first %}
   {% if c is defined %}  
-    BL {{ c.compilation.title }}
+    {% if not ( c.compilation.title matches '{^(Bulletin|BOEP|Konkordanz)}') %}BL {% endif %}
+    {{ c.compilation.title }}
   {% endif %}
 {% endblock %}
 

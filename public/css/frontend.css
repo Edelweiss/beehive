@@ -1,4 +1,5 @@
-/*
+/* GENERAL
+
 quasi weiß: #dcad6b
 
 hellbraun: #f3e4bf
@@ -14,10 +15,18 @@ Suche rechts: #e6c294
 
 */
 
-
 body {
   background-color: #f3e4bf;
 }
+
+div#container {
+  background-image: url("../images/frontend/curve.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-color: #fefeff;
+}
+
+/* LINKS */
 
 a, a:link, a:visited, a:hover, a:active {
   background-image: url("../images/frontend/punkt.png");
@@ -31,15 +40,39 @@ a, a:link, a:visited, a:hover, a:active {
 }
 
 div#navigation a, div#navigation a:link, div#navigation a:visited, div#navigation a:hover, div#navigation a:active {
-    background-image: url("../images/frontend/link.png");
+  background-image: url("../images/frontend/link.png");
   background-size: 12px 12px;
   background-position: left 2px;
 }
 
 div#footer a, div#footer a:link, div#footer a:visited, div#footer a:hover, div#footer a:active {
-    background-image: url("../images/frontend/eye.png");
+  background-image: url("../images/frontend/eye.png");
   background-size: 12px 12px;
   background-position: left 2px;
+}
+
+/* HEADER */
+
+div#header {
+  #background-color: grey;
+}
+
+div#navigation {
+  font-family: Papyrus, Palatino, serif;
+  text-align: right;
+  #background-color: lightblue;
+}
+
+div#alpha {
+  #background-color: lightgreen;
+}
+
+div#beta {
+  #background-color: green;
+}
+
+div#gamma {
+  #background-color: darkgreen;
 }
 
 div#logo {
@@ -47,51 +80,31 @@ div#logo {
   background-size: contain;
   background-repeat: no-repeat;
   height: 150px;
+  
+  #background-color: steelblue;
 }
 
-div#tagline {
-  text-align: left;
+div#subHeader {
   font-family: Papyrus, Palatino, serif;
-  position: relative;
+  #background-color: black;
 }
 
-div#tagline h1 {
-  position: absolute;
-  top: 20px;
-  left: 180px;
-  width: 760px;
+div#alpha h1 {
+  margin: 0 0 0 200px;
+  #background-color: red;
 }
 
-div#tagline h2{
-  position: absolute;
-  top: 50px;
-  left: 180px;
-  width: 760px;
+div#beta h2{
+  margin: 0 0 0 180px;
+  #background-color: orange;
 }
 
-div#tagline h3{
-  position: absolute;
-  top: 80px;
-  left: 180px;
-  width: 760px;
+div#gamma h3{
+  margin: 0 0 0 160px;
+  #background-color: yellow;
 }
 
-div#navigation {
-  font-family: Papyrus, Palatino, serif;
-  text-align: right;
-  background-color: lightblue;
-}
-
-div#navigation a {
-  color: black;
-}
-
-div#container {
-  background-image: url("../images/frontend/curve.png");
-  background-position: 0 0;
-  background-repeat: no-repeat;
-  background-color: #fefeff;
-}
+/* MAIN CONTENT */
 
 div#content {
   background-image: url("../images/frontend/skyline_heidelberg.png");
@@ -103,7 +116,7 @@ div#content {
 
 div#left, div#right {
   font-family: Papyrus, Palatino, serif;
-    #background-color: #fefeff;
+  #background-color: #fefeff;
     
 }
 
@@ -144,6 +157,7 @@ div.sidebarSection {
   padding: 8px;
   border-radius: 16px;
   margin: 0 0 4px;
+  border: solid 1px #5d4434;
 }
 
 div.sidebarSection h2 {
@@ -153,6 +167,8 @@ font-weight: normal;
 padding: 0;
 margin: 0;
 }
+
+/* FOOTER */
 
 div#search {
   position: fixed;

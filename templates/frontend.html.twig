@@ -18,10 +18,9 @@
         {% endif %}
 <div id="container" class="container_12">
 
-	<div id="header" class="grid_12">
-		<div id="subHeader" class="grid_10 omega">
-			<div id="tagline" class="grid_4 alpha"><h1>Berichtigungsliste</h1></div>
-			<div id="navigation" class="grid_6 omega">
+	<div id="header" class="container_12">
+		<div id="subHeader" class="grid_10">
+			<div id="navigation" class="grid_10">
 			  <a href="{{ path('PapyrillioBeehive_Home') }}">Startseite</a>
 			  <a href="{{ path('PapyrillioBeehive_CorrectionList') }}">Admin</a>
 			  {% if app.user %}
@@ -29,10 +28,18 @@
 			  {% else %}
   			    <a href="{{ path('PapyrillioBeehive_Login') }}">Login</a>
               {% endif %}
+            </div>
+			<div id="alpha" class="grid_10">
+                <h1>Berichtigungsliste – Online</h1>
+			</div>
+			<div id="beta" class="grid_10">
+                <h2>Band I</h2>
+			</div>
+			<div id="gamma" class="grid_10">
+                <h3>I, II, III…</h3>
 			</div>
 		</div>
-		<div id="logo" class="grid_2 alpha"> </div>
-
+		<div id="logo" class="grid_2">&nbsp;</div>
 	</div>
 
 	<div id="left" class="grid_2">

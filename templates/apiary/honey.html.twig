@@ -1,7 +1,7 @@
 {% extends 'frontend.html.twig' %}
 
 {% block beta %}
-  {% set c = correction|first %}
+  {% set c = corrections|first %}
   {% if c is defined %}  
     BL {{ c.compilation.title }}
   {% endif %}

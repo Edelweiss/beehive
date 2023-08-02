@@ -180,14 +180,17 @@ padding: 0;
 margin: 0;
 }
 
-/* FOOTER */
+/* FOOTER / QUICKSEARCH */
+
+div.middler {
+  position: fixed;
+  bottom: 0;
+  height: 90px;
+  width: 100%;
+}
 
 div#search {
-  position: fixed;
-  bottom: 44px;
   height: 50px;
-  left: 25%;
-
   background-color: #5d4434;
   text-align: center;
   vertical-align: middle;
@@ -216,11 +219,8 @@ div#search input#quicksearch_button {
 }
 
 div#footer {
-  position: fixed;
-  bottom: 0;
   height: 40px;
-margin-left:auto;
-margin-right:auto;
+  margin: 0px auto;
   border-top: solid 2px #c3924f;
   border-bottom: solid 2px #c3924f;
   background-color: #fefeff;

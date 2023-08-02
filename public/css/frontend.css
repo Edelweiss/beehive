@@ -219,7 +219,8 @@ div#footer {
   position: fixed;
   bottom: 0;
   height: 40px;
-  left: 25%;
+margin-left:auto;
+margin-right:auto;
   border-top: solid 2px #c3924f;
   border-bottom: solid 2px #c3924f;
   background-color: #fefeff;

@@ -137,6 +137,22 @@ div#topic {
   height: 150px;
 }
 
+div#topic.topic_PapyrillioBeehive_Apiary {
+  background-image: url("../images/frontend/topic_ghostwords.png");
+}
+
+div#topic.topic_PapyrillioBeehive_ApiaryHoney {
+  background-image: url("../images/frontend/topic_boep.png");
+}
+
+div#topic.topic_PapyrillioBeehive_About, div#topic.topic_PapyrillioBeehive_Help {
+  background-image: url("../images/frontend/topic_index.png");
+}
+
+div#topic.topic_PapyrillioBeehive_Home {
+  background-image: url("../images/frontend/topic_home.png");
+}
+
 div#quick1 {
   background-image: url("../images/frontend/quick1.png");
   background-size: contain;

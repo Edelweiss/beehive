@@ -20,10 +20,11 @@ body {
 }
 
 div#container {
-  background-image: url("../images/frontend/curve.png");
-  background-position: 0 0;
-  background-repeat: no-repeat;
+  background-image: url("../images/frontend/curve.png"), url("../images/frontend/skyline_heidelberg.png");
+  background-position: 0 0, bottom 80px center;
+  background-repeat: no-repeat, no-repeat;
   background-color: #fefeff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 h2, h3 {
@@ -119,11 +120,8 @@ div#gamma h3{
 /* MAIN CONTENT */
 
 div#content {
-  background-image: url("../images/frontend/skyline_heidelberg.png");
-  background-position: bottom 80px center;
-  background-repeat: no-repeat;
-  background-color: #fefeff;
   min-height: 1000px;
+  padding-bottom: 94px;
 }
 
 div#left, div#right {
@@ -185,7 +183,7 @@ margin: 0;
 div.middler {
   position: fixed;
   bottom: 0;
-  height: 90px;
+  height: 94px;
   width: 100%;
 }
 

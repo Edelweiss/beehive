@@ -5,7 +5,7 @@ declare option saxon:output "method=xml";
 declare option saxon:output "indent=yes";
 declare variable $idpData external;
 
-(: java -Xms512m -Xmx1536m net.sf.saxon.Query -q:idno.xql idpData=.../idp.data > idno.xml :)
+(: java -Xms512m -Xmx1536m net.sf.saxon.Query -q:idno.xql idpData=../idp.data > idno.xml :)
 
 <list>{
   (for $doc in collection(concat($idpData, '/HGV_meta_EpiDoc?select=*.xml;recurse=yes'))
@@ -26,7 +26,7 @@ declare variable $idpData external;
       <idno type="dclp">{data($dclp)}</idno>
     )else()}
     </item>
-  ,
+  (:,
   for $doc in collection(concat($idpData, '/DCLP?select=*.xml;recurse=yes'))[.//tei:div[@type = 'edition'][@xml:lang = ('grc', 'la', 'egy-Egyd', 'cop', 'ara')]]
 
     let $tm   := $doc/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type = 'TM']
@@ -34,6 +34,6 @@ declare variable $idpData external;
     let $numberServer := concat('http://papyri.info/dclp/', $tm, '/rdf') (: http://papyri.info/dclp/89508/rdf :)
     let $dclpRdf := if(doc-available($numberServer))then(doc($numberServer))else(trace($numberServer, 'Numberserver not available')) (: cl: dieser Zugriff mit vorhergehendem Test kostet ca. eine halbe Stunde :)
 
-    return if(not($dclpRdf//rdf:Description[starts-with(@rdf:about, 'http://papyri.info/hgv')]))then(<item><idno type="tm">{data($tm)}</idno><idno type="dclp">{data($dclp)}</idno></item>)else()
+    return if(not($dclpRdf//rdf:Description[starts-with(@rdf:about, 'http://papyri.info/hgv')]))then(<item><idno type="tm">{data($tm)}</idno><idno type="dclp">{data($dclp)}</idno></item>)else():)
     )
 }</list>

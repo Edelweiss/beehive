@@ -25,6 +25,7 @@ class Edition
     public function __construct()
     {
         $this->corrections = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->docketEntries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->material = self::MATERIAL_DEFAULT;
     }
 
@@ -82,6 +83,7 @@ class Edition
     private $remark;
     private $material;
     private $corrections;
+    private $docketEntries;
 
     public function getId()
     {
@@ -140,5 +142,13 @@ class Edition
     public function getCorrections()
     {
         return $this->corrections;
+    }
+    public function addDocketEntry(\App\Entity\Docket $docketEntry)
+    {
+        $this->docketEntries[] = $docketEntry;
+    }
+    public function getDocketEntries()
+    {
+        return $this->docketEntries;
     }
 }

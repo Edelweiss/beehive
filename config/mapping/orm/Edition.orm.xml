@@ -23,6 +23,16 @@
                 <order-by-field name="sortUser" direction="ASC" />
             </order-by>
         </one-to-many>
+        <many-to-many field="docketEntries" target-entity="Docket">
+            <join-table name="edition_docket">
+                <join-columns>
+                    <join-column name="edition_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="docket_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
         <!-- don't forget to init the collection in entity __construct() method -->
     </entity>
 </doctrine-mapping>

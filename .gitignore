@@ -37,4 +37,5 @@
 #NEW
 /.env
 /idp.data
+/data/*.fods
 robots.txt

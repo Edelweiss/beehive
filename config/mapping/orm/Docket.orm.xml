@@ -5,7 +5,9 @@
     <entity name="App\Entity\Docket" table="docket">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
-        </id>        
+        </id>
+        <field name="text" type="string" length="64"/>
+        <field name="position" type="text" nullable="true"/>
         <field name="info" type="string"/>
         <field name="type" type="string" length="64"/>
         <field name="sort" type="integer"/>

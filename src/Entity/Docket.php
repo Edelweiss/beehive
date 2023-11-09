@@ -26,6 +26,16 @@ class Docket
     private $id;
 
     /**
+     * @var string $text
+     */
+    private $text;
+
+    /**
+     * @var string $position
+     */
+    private $position;
+
+    /**
      * @var string $info
      */
     private $info;
@@ -53,6 +63,26 @@ class Docket
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get Text
+     *
+     * @return string 
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Get Position
+     *
+     * @return string 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**
@@ -105,6 +135,6 @@ class Docket
     }
 
     public function __toString(){
-      return $this->getInfo();
+      return $this->getText() . ' / ' . $this->getPosition() . ': ' . $this->getInfo();
     }
 }

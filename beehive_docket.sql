@@ -69,7 +69,7 @@ INSERT INTO `edition_docket` (`edition_id`, `docket_id`) VALUES
 (75, 2),
 (569, 1),
 (570, 1),
-(582, 1);
+(582, 1),
 (175, 3);
 
 --

@@ -113,6 +113,7 @@ class Correction
         $this->creator = 'system';
         $this->sort = $this->sortSystem = '';
         $this->created = new DateTime('now');
+        $this->text = '';
     }
     
     public function getPage(){ // CROMULENT: should be in database as sortPage
@@ -203,7 +204,7 @@ class Correction
         }
     }
 
-    public function setText($text){
+    public function setText($text = ''){
       $this->text = $text;
       $this->setSortValues();
     }

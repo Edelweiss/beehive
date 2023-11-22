@@ -19,7 +19,7 @@ class IndexEntryController extends BeehiveController{
 
     $query = $entityManager->createQuery('
       SELECT i, c, e, c FROM App\Entity\IndexEntry i
-      LEFT JOIN i.correction c LEFT JOIN c.edition e JOIN c.compilation c2 WHERE type = :type ORDER BY i.topic, i.phrase'
+      LEFT JOIN i.correction c LEFT JOIN c.edition e JOIN c.compilation c2 WHERE i.type = :type ORDER BY i.topic, i.phrase'
     );
 
     $parameters = array('type' => $type);

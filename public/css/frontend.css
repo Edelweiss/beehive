@@ -138,8 +138,17 @@ div#topic {
 }
 
 div#topic.topic_PapyrillioBeehive_Apiary {
+  background-image: url("../images/frontend/topic_search.png");
+}
+
+div#topic.topic_PapyrillioBeehive_IndexEntryNew {
+  background-image: url("../images/frontend/topic_index.png");
+}
+
+div#topic.topic_PapyrillioBeehive_IndexEntryGhostword {
   background-image: url("../images/frontend/topic_ghostwords.png");
 }
+
 
 div#topic.topic_PapyrillioBeehive_ApiaryHoney {
   background-image: url("../images/frontend/topic_boep.png");

@@ -15,20 +15,24 @@
   </thead-->
   <tbody>
     {% for i in indexEntries %}
-      <tr id="{{ i.id }}">
-        <td class="topic">
-          {% if i.topic != topic %}
+      {% if i.topic != topic %}
+        <tr class="topic">
+          <th class="topic" colspan="3">
             {{ i.topic }}
             {% set topic = i.topic %}
-          {% endif %}
-        </td>
+          </th>
+        </tr>
+      {% endif %}
+      <tr id="{{ i.id }}" class="phrase">
         <td class="phrase">
           {{ i.phrase }}
         </td>
-        <td class="context" title="{{ i.correction.description }}"><a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}</a></td>
+        <td class="context" title="{{ i.correction.description }}">
+           <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': i.correction.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}</a>
+        </td>
         <td class="biblio">
           {% if i.correction.source %}
-            <a href="http://papyri.info/biblio/{{ i.correction.source }}">Bibliography</a>
+            <a href="http://papyri.info/biblio/{{ i.correction.source }}">Biblio</a>
           {% endif %}
         </td>
       </tr>

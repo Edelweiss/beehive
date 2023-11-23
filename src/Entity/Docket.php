@@ -55,6 +55,17 @@ class Docket
      */
     private $editions;
 
+    private $compilation;
+
+    public function setCompilation(\App\Entity\Compilation $compilation)
+    {
+        $this->compilation = $compilation;
+    }
+    public function getCompilation()
+    {
+        return $this->compilation;
+    }
+
 /**
      * Get id
      *
@@ -136,5 +147,14 @@ class Docket
 
     public function __toString(){
       return $this->getText() . ' / ' . $this->getPosition() . ': ' . $this->getInfo();
+    }
+    private $compilationPage;
+    public function setCompilationPage($compilationPage)
+    {
+        $this->compilationPage = $compilationPage;
+    }
+    public function getCompilationPage()
+    {
+        return $this->compilationPage;
     }
 }

@@ -11,6 +11,10 @@
         <field name="info" type="string"/>
         <field name="type" type="string" length="64"/>
         <field name="sort" type="integer"/>
+        <field name="compilationPage" column="compilationPage" type="string" length="64" nullable="true"/>
+        <many-to-one field="compilation" target-entity="Compilation" inversed-by="dockets">
+            <join-column name="compilation_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
         <many-to-many field="editions" target-entity="Edition">
             <join-table name="edition_docket">
                 <join-columns>

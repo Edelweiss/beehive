@@ -14,6 +14,7 @@ class CorrectionNewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('compilationPage', TextType::class, ['required' => false, 'label' => 'Seite'])
+            ->add('compilationIndex', TextType::class, ['required' => false, 'label' => 'Nummer'])
             ->add('text', TextType::class, ['attr' => ['wizard-url' => $options['attr']['wizardUrl']]])
             ->add('position', TextType::class, ['required' => false, 'label' => 'Zeile'])
             ->add('description', TextareaType::class, ['label' => 'Eintrag'])

@@ -48,6 +48,15 @@
           </div>
         {% endif %}
 
+        <label>Nummer</label>
+        {{ form_widget(form.compilatioIndex) }}
+        {% if form_errors(form.compilatioIndex) %}
+          <div class="error ui-widget ui-state-error ui-corner-all" style="padding: 0">
+          <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 .3em 0 .3em;"></span>
+          {{ form_errors(form.compilatioIndex) }}
+          </div>
+        {% endif %}
+
         <br/>
         <br/>
 

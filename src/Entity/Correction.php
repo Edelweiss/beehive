@@ -660,4 +660,13 @@ class Correction
     {
         return $this->compilationPage;
     }
+    private $compilationIndex;
+    public function setCompilationIndex($compilationIndex)
+    {
+        $this->compilationIndex = $compilationIndex;
+    }
+    public function getCompilationIndex()
+    {
+        return $this->compilationIndex;
+    }
 }

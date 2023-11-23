@@ -191,6 +191,7 @@ div.grid ul li {
 }
 
 div.grid input#form_compilationPage,
+div.grid input#form_compilationIndex,
 div.grid input#form_text,
 div.grid input#form_position {
     width: 8em;

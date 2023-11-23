@@ -12,6 +12,7 @@
         <field name="position" type="text" nullable="true"/>
         <field name="description" type="text"/>
         <field name="compilationPage" column="compilationPage" type="string" length="64" nullable="true"/>
+        <field name="compilationIndex" column="compilationIndex" type="integer" nullable="true"/>
         <field name="status" type="text"/>
         <field name="creator" type="text"/>
         <field name="created" type="datetime"/>

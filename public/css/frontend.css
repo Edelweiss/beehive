@@ -16,239 +16,296 @@ Suche rechts: #e6c294
 */
 
 body {
-  background-color: #f3e4bf;
+    background-color: #f3e4bf;
 }
 
 div#container {
-  background-image: url("../images/frontend/curve.png"), url("../images/frontend/skyline_heidelberg.png");
-  background-position: 0 0, bottom 80px center;
-  background-repeat: no-repeat, no-repeat;
-  background-color: #fefeff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-image: url("../images/frontend/curve.png"), url("../images/frontend/skyline_heidelberg.png");
+    background-position: 0 0, bottom 80px center;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #fefeff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-h2, h3 {
-  font-weight: normal;
+h2,
+h3 {
+    font-weight: normal;
 }
 
 h2 {
-  font-size: smaller;
+    font-size: smaller;
 }
 
 h4 {
-  font-family: Papyrus, Palatino, serif;
+    font-family: Papyrus, Palatino, serif;
 }
+
 
 /* LINKS */
 
-a, a:link, a:visited, a:hover, a:active {
-  background-image: url("../images/frontend/punkt.png");
-  background-size: 12px 12px;
-  background-position: left 2px;
-  background-repeat: no-repeat;
-  padding: 0 0 0 14px;
-  color: #503d31;
-  #font-family: Papyrus, Palatino, serif;
-  text-decoration: none;
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    background-image: url("../images/frontend/punkt.png");
+    background-size: 12px 12px;
+    background-position: left 2px;
+    background-repeat: no-repeat;
+    padding: 0 0 0 14px;
+    color: #503d31;
+    #font-family: Papyrus, Palatino, serif;
+    text-decoration: none;
 }
 
-div#navigation a, div#navigation a:link, div#navigation a:visited, div#navigation a:hover, div#navigation a:active {
-  background-image: url("../images/frontend/link.png");
-  background-size: 12px 12px;
-  background-position: left 2px;
+div#navigation a,
+div#navigation a:link,
+div#navigation a:visited,
+div#navigation a:hover,
+div#navigation a:active {
+    background-image: url("../images/frontend/link.png");
+    background-size: 12px 12px;
+    background-position: left 2px;
 }
 
-div#footer a, div#footer a:link, div#footer a:visited, div#footer a:hover, div#footer a:active {
-  background-image: url("../images/frontend/eye.png");
-  background-size: 12px 12px;
-  background-position: left 2px;
+div#footer a,
+div#footer a:link,
+div#footer a:visited,
+div#footer a:hover,
+div#footer a:active {
+    background-image: url("../images/frontend/eye.png");
+    background-size: 12px 12px;
+    background-position: left 2px;
 }
+
 
 /* HEADER */
 
 div#header {
-  #background-color: grey;
+    #background-color: grey;
 }
 
 div#navigation {
-  font-family: Papyrus, Palatino, serif;
-  text-align: right;
-  #background-color: lightblue;
+    font-family: Papyrus, Palatino, serif;
+    text-align: right;
+    #background-color: lightblue;
 }
 
 div#alpha {
-  #background-color: lightgreen;
+    #background-color: lightgreen;
 }
 
 div#beta {
-  #background-color: green;
+    #background-color: green;
 }
 
 div#gamma {
-  #background-color: darkgreen;
+    #background-color: darkgreen;
 }
 
 div#logo {
-  background-image: url("../images/frontend/logo.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 150px;
-  
-  #background-color: steelblue;
+    background-image: url("../images/frontend/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    #background-color: steelblue;
 }
 
 div#subHeader {
-  font-family: Papyrus, Palatino, serif;
-  #background-color: black;
+    font-family: Papyrus, Palatino, serif;
+    #background-color: black;
 }
 
 div#alpha h1 {
-  margin: 0 0 0 200px;
-  #background-color: red;
+    margin: 0 0 0 200px;
+    #background-color: red;
 }
 
-div#beta h2{
-  margin: 0 0 0 180px;
-  #background-color: orange;
+div#beta h2 {
+    margin: 0 0 0 180px;
+    #background-color: orange;
 }
 
-div#gamma h3{
-  margin: 0 0 0 160px;
-  #background-color: yellow;
+div#gamma h3 {
+    margin: 0 0 0 160px;
+    #background-color: yellow;
 }
+
 
 /* MAIN CONTENT */
 
 div#content {
-  min-height: 1000px;
-  padding-bottom: 94px;
+    min-height: 1000px;
+    padding-bottom: 94px;
 }
 
-div#left, div#right {
-  font-family: Papyrus, Palatino, serif;
-  #background-color: #fefeff;
-    
+div#left,
+div#right {
+    font-family: Papyrus, Palatino, serif;
+    #background-color: #fefeff;
 }
 
 div#topic {
-  background-image: url("../images/frontend/topic_frame_background.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 150px;
+    background-image: url("../images/frontend/topic_frame_background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
 }
 
 div#topic.topic_PapyrillioBeehive_Apiary {
-  background-image: url("../images/frontend/topic_search.png");
+    background-image: url("../images/frontend/topic_search.png");
 }
 
 div#topic.topic_PapyrillioBeehive_IndexEntryNew {
-  background-image: url("../images/frontend/topic_index.png");
+    background-image: url("../images/frontend/topic_index.png");
 }
 
 div#topic.topic_PapyrillioBeehive_IndexEntryGhostword {
-  background-image: url("../images/frontend/topic_ghostwords.png");
+    background-image: url("../images/frontend/topic_ghostwords.png");
 }
-
 
 div#topic.topic_PapyrillioBeehive_ApiaryHoney {
-  background-image: url("../images/frontend/topic_boep.png");
+    background-image: url("../images/frontend/topic_boep.png");
 }
 
-div#topic.topic_PapyrillioBeehive_About, div#topic.topic_PapyrillioBeehive_Help {
-  background-image: url("../images/frontend/topic_index.png");
+div#topic.topic_PapyrillioBeehive_About,
+div#topic.topic_PapyrillioBeehive_Help {
+    background-image: url("../images/frontend/topic_index.png");
 }
 
 div#topic.topic_PapyrillioBeehive_Home {
-  background-image: url("../images/frontend/topic_home.png");
+    background-image: url("../images/frontend/topic_home.png");
 }
 
 div#quick1 {
-  background-image: url("../images/frontend/quick1.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 100px;
-  margin: 100px 0 0 0;
-  padding: 6px 0 0 0;
+    background-image: url("../images/frontend/quick1.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100px;
+    margin: 100px 0 0 0;
+    padding: 6px 0 0 0;
 }
 
 div#quick2 {
-  background-image: url("../images/frontend/quick2.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 80px;
-  padding: 6px 0 0 0;
+    background-image: url("../images/frontend/quick2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 80px;
+    padding: 6px 0 0 0;
 }
 
 div#quick3 {
-  background-image: url("../images/frontend/quick3.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 60px;
-  padding: 6px 0 0 0;
+    background-image: url("../images/frontend/quick3.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 60px;
+    padding: 6px 0 0 0;
 }
 
 div.sidebarSection {
-  background-color: #fefeff;
-  padding: 8px;
-  border-radius: 16px;
-  margin: 0 0 4px;
-  border: solid 1px #5d4434;
+    background-color: #fefeff;
+    padding: 8px;
+    border-radius: 16px;
+    margin: 0 0 4px;
+    border: solid 1px #5d4434;
 }
 
 div.sidebarSection h2 {
-font-size: 12pt;
-text-align: left;
-font-weight: normal;
-padding: 0;
-margin: 0;
+    font-size: 12pt;
+    text-align: left;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
 }
+
 
 /* FOOTER / QUICKSEARCH */
 
 div.middler {
-  position: fixed;
-  bottom: 0;
-  height: 94px;
-  width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 94px;
+    width: 100%;
 }
 
 div#search {
-  height: 50px;
-  background-color: #5d4434;
-  text-align: center;
-  vertical-align: middle;
+    height: 50px;
+    background-color: #5d4434;
+    text-align: center;
+    vertical-align: middle;
 }
 
 div#search input {
-  font-family: Papyrus, Palatino, serif;
-  border: none;
-  color: #ffffff;
-  font-size: 11pt;
-  font-weight: normal;
-  border-radius: 16px;
-  padding: 4px 8px 3px 8px;
-  background-color: #ebb05b;
-  margin: 10px;
-  text-align: center;
-  outline: none;
+    font-family: Papyrus, Palatino, serif;
+    border: none;
+    color: #ffffff;
+    font-size: 11pt;
+    font-weight: normal;
+    border-radius: 16px;
+    padding: 4px 8px 3px 8px;
+    background-color: #ebb05b;
+    margin: 10px;
+    text-align: center;
+    outline: none;
 }
 
 div#search input#quicksearch_keyword {
-  background-image: linear-gradient(to right, #ebb05b , #e6c294);
+    background-image: linear-gradient(to right, #ebb05b, #e6c294);
 }
 
 div#search input#quicksearch_button {
-  background-color: #e6c294;
+    background-color: #e6c294;
 }
 
 div#footer {
-  height: 40px;
-  margin: 0px auto;
-  border-top: solid 2px #c3924f;
-  border-bottom: solid 2px #c3924f;
-  background-color: #fefeff;
+    height: 40px;
+    margin: 0px auto;
+    border-top: solid 2px #c3924f;
+    border-bottom: solid 2px #c3924f;
+    background-color: #fefeff;
 }
 
 div#footer_right {
-  text-align: right;
+    text-align: right;
+}
+
+
+/* Apiary */
+
+div.apiary {
+    display: table
+}
+
+div.apiary div.docket,
+div.apiary div.correction {
+    display: table-row
+}
+
+div.apiary div.docket div,
+div.apiary div.correction div {
+    display: table-cell;
+    #border: 1px solid silver;
+}
+
+div.apiary div.docket p {
+    overflow: scroll;
+}
+
+div.apiary div.correction div.text {
+    border-right: 1px solid grey;
+}
+
+div.apiary div.correction div.position {
+    border-right: 1px solid grey;
+    text-align: right;
+    padding: 0 4px 0 0;
+}
+
+div.apiary div.correction div.description {
+    padding: 0 0 0 4px;
+}
+
+div.apiary h4 {
+    display: table-row;
+    background-color: lightyellow;
 }

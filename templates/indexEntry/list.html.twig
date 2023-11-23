@@ -28,7 +28,7 @@
           {{ i.phrase }}
         </td>
         <td class="context" title="{{ i.correction.description }}">
-           <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': i.correction.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}</a>
+           <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': i.correction.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}{% if i.correction.compilationIndex %}&nbsp;#&nbsp;{{ i.correction.compilationIndex }}{% endif %}</a>
         </td>
         <td class="biblio">
           {% if i.correction.source %}

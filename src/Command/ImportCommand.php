@@ -85,6 +85,7 @@ class ImportCommand extends ReadFodsCommand
           }
 
           $correction->setCompilationPage(self::fallback($row['compilation_page'], null));
+          $correction->setCompilationIndex(self::fallback($row['compilation_index'], null));
           $correction->setText(self::fallback($row['text'], null));
           $correction->setPosition(self::fallback($row['position'], null));
           $correction->setDescription($row['description']);

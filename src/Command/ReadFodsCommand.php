@@ -29,7 +29,7 @@ class ReadFodsCommand extends Command
 
     private $fods;
     protected $file = null;
-    protected $fieldNames = ['compilation_id', 'compilation_page', 'register_id', 'edition_id', 'text', 'position', 'description', 'source', 'creator', 'task_ddb'];
+    protected $fieldNames = ['compilation_id', 'compilation_page', 'compilation_index', 'register_id', 'edition_id', 'text', 'position', 'description', 'source', 'creator', 'task_ddb'];
     protected $dataTable = [];
 
     function __construct(Fods $fods){

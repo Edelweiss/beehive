@@ -53,7 +53,7 @@ class CorrectionController extends BeehiveController{
       // ODER BY
 
       $orderBy = '';
-      if(in_array($sort, ['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'])){
+      if(in_array($sort, ['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage', 'compilationIndex'])){
         $orderBy = ' ORDER BY c.' . $sort . ' ' . $sortDirection;
       }
       if(in_array($sort, ['tm', 'hgv', 'ddb'])){
@@ -74,7 +74,7 @@ class CorrectionController extends BeehiveController{
       if($this->getParameter('_search') == 'true'){
         $prefix = ' WHERE ';
 
-        foreach(['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage'] as $field){
+        foreach(['source', 'text', 'position', 'description', 'creator', 'created', 'status', 'compilationPage', 'compilationIndex'] as $field){
           if(strlen($this->getParameter($field))){
             $where .= $prefix . 'c.' . $field . ' LIKE :' . $field;
             $parameters[$field] = '%' . $this->getParameter($field) . '%';

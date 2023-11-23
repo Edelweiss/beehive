@@ -1,6 +1,47 @@
 {% set edition = '' %}
 {% set text = '' %}
 
+<div class="apiary">
+  {% for c in corrections %}
+    {% if c.edition.title != edition %}
+      <h4 class="edition">
+        {{ c.edition.title }}
+        {% set edition = c.edition.title %}
+        {% set text = '' %}
+      </h4>
+      
+      {% for d in c.edition.docketEntries %}
+      <div class="docket">
+        {% if d.position or d.text %}
+          <div class="text">{{ d.text }}</div>
+          <div class="position">{{ c.position }}</div>
+          <div class="info">{{ d.info }}</div>
+        {% else %}
+          <p class="info">{{ d.info }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% endif %}
+    <div class="correction">
+        <div class="text">
+          {% if c.text != text %}
+            {{ c.text }}
+            {% set text = c.text %}
+          {% endif %}
+        </div>
+        <div class="position">{{ c.position }}</div>
+        <div class="description">{{ c.description }}</div>
+        <div class="bl">
+          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+          <br />
+          {% if c.source %}
+            <a href="http://papyri.info/biblio/{{ c.source }}">Biblio</a>
+          {% endif %}
+        </div>
+    </div>
+  {% endfor %}
+</div>
+
 <table class="apiary">
   <!--thead>
     <tr>
@@ -30,7 +71,7 @@
         <td class="position">{{ c.position }}</td>
         <td class="description">{{ c.description }}</td>
         <td class="bl">
-          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}</a>
+          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
         </td>
         <td class="source">
           {% if c.source %}

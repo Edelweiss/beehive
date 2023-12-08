@@ -1,15 +1,17 @@
 {% extends 'frontend.html.twig' %}
-
+{% set c = corrections|first %}
 {% block beta %}
-  {% set c = corrections|first %}
   {% if c is not null and c is not empty %}
     {{ c.compilation.title }}
   {% endif %}
 {% endblock %}
 
-
 {% block body %}
 
-{% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections} %}
+  {% if c is not null and c is not empty and c.compilation.collection == 'BOEP' %}
+    {% include 'apiary/snippetBoep.html.twig' with {'corrections': corrections} %}
+  {% else %}
+    {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections} %}
+  {% endif %}
 
 {% endblock %}

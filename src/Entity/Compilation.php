@@ -51,6 +51,21 @@ class Compilation
     private $title;
 
     /**
+     * @var text $collection
+     */
+    private $collection;
+
+    /**
+     * @var text $item
+     */
+    private $item;
+
+    /**
+     * @var text $short
+     */
+    private $short;
+
+    /**
      * @var date $start
      */
     private $start;
@@ -113,6 +128,66 @@ class Compilation
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set collection
+     *
+     * @param text $collection
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
+    }
+
+    /**
+     * Get collection
+     *
+     * @return text 
+     */
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
+     * Set item
+     *
+     * @param text $item
+     */
+    public function setItem($item)
+    {
+        $this->item = $item;
+    }
+
+    /**
+     * Get item
+     *
+     * @return text 
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+    /**
+     * Set short
+     *
+     * @param text $short
+     */
+    public function setShort($short)
+    {
+        $this->short = $short;
+    }
+
+    /**
+     * Get short
+     *
+     * @return text 
+     */
+    public function getShort()
+    {
+        return $this->short;
     }
 
     /**

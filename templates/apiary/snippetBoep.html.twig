@@ -1,0 +1,38 @@
+{% set edition = '' %}
+{% set text = '' %}
+
+<table class="apiary">
+  <!--thead>
+    <tr>
+      <th class="edition">Edition</th>
+      <th class="text">Text</th>
+      <th class="position">Position</th>
+      <th class="description">Description</th>
+      <th class="bl">BL</th>
+    </tr>
+  </thead-->
+  <tbody>
+    {% for c in corrections %}
+      <tr id="{{ c.id }}">
+        <td class="edition">
+          {% if c.edition.title != edition %}
+            {{ c.edition.title }}
+            {% set edition = c.edition.title %}
+            {% set text = '' %}
+          {% endif %}
+        </td>
+        <td class="text">
+          {% if c.text != text %}
+            {{ c.text }}
+            {% set text = c.text %}
+          {% endif %}
+        </td>
+        <td class="position">{{ c.position }}</td>
+        <td class="description">{{ c.description }}</td>
+        <td class="bl">
+          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">{{ c.compilation.short }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

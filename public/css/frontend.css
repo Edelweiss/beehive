@@ -309,3 +309,52 @@ div.apiary h4 {
     display: table-row;
     background-color: lightyellow;
 }
+
+
+/* APIARY BOEP TABLE */
+
+table.apiary tr td {
+    padding: 0 1em 0 1em;
+}
+
+table.apiary tr td.edition {
+    width: 8em;
+}
+
+table.apiary tr td.text {
+    width: 4em;
+    text-align: right;
+}
+
+table.apiary tr td.position {
+    width: 8em;
+    text-align: right;
+}
+
+table.apiary tr td.bl {
+    width: auto;
+    vertical-align: bottom;
+    font-size: smaller;
+    color: gray;
+}
+
+table.apiary tr td.description {
+    width: auto;
+    border-bottom: solid 1px lightgrey;
+}
+
+table.apiary tr td.text,
+table.apiary tr td.position {
+    border-right: solid 1px;
+    border-bottom: solid 1px lightgrey;
+}
+
+div.apiary p {
+    margin: 0;
+}
+
+div.apiary p label {
+    width: 5em;
+    display: block;
+    float: left;
+}

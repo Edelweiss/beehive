@@ -9,6 +9,9 @@
         <field name="volume" type="integer"/>
         <field name="fascicle" type="integer" nullable="true"/>
         <field name="title" type="text"/>
+        <field name="collection" type="text"/>
+        <field name="item" type="text"/>
+        <field name="short" type="text"/>
         <field name="start" type="date" nullable="true" />
         <field name="end" type="date" nullable="true" />
         <field name="publication" type="date" nullable="true" />

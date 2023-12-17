@@ -7,7 +7,8 @@
             <link href="{{ asset('css/960/reset.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/960/text.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/960/960.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('css/frontend.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/frontend.css') }}?8" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/print.css') }}?3" type="text/css" rel="stylesheet" media="print" /><!--  media="print" -->
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     {% include 'matomo.html' %}
@@ -36,7 +37,7 @@
                 <h2>{% block beta %}{% endblock %}</h2>
 			</div>
 			<div id="gamma" class="grid_10">
-                <h3>{% block gamma %}{% endblock %}</h3>
+                <p>{% block gamma %}{% endblock %}</p>
 			</div>
 		</div>
 		<div id="logo" class="grid_2">&nbsp;</div>
@@ -56,12 +57,15 @@
 			<h2><a href="{{ path('PapyrillioBeehive_IndexEntryGhostword') }}">Ghostwords</a></h2>
 		</div>
 		<div class="sidebarSection">
-			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Archive</a></h2>
+			<h2><a href="{{ path('PapyrillioBeehive_Archive') }}">Archive</a></h2>
 		</div>
 		<div class="sidebarSection">
 			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Search++</a></h2>
 		</div>
 		<div id="topic" class="topic_{{ app.request.attributes.get('_route') }}">&nbsp;</div>
+    <div id="lefty" class="grid_2">
+      {% block lefty %}{% endblock %}
+		</div>
 	</div>
 
 	<div id="content" class="grid_9">
@@ -77,6 +81,9 @@
 		</div>
 		<div id="quick3">
 			<a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a>
+		</div>
+    <div id="righty" class="grid_1">
+      {% block righty %}{% endblock %}
 		</div>
 	</div>
 </div>

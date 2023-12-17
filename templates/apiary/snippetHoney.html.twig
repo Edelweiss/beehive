@@ -4,7 +4,7 @@
 <div class="apiary">
   {% for c in corrections %}
     {% if c.edition.title != edition %}
-      <h4 class="edition">
+      <h4 {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">
         {{ c.edition.title }}
         {% set edition = c.edition.title %}
         {% set text = '' %}

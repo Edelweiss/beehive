@@ -1,14 +1,57 @@
-div#header,
-div#footer,
+#div#header,
+div#navigation,
+div#left,
+div#right,
+#div.middler,
+div#search,
+#div#footer,
 .actionHolder {
-  display: none
+    display: none
+}
+
+div#alpha h1,
+div#beta h2 {
+    margin: 20px 0 0 0;
+}
+
+.container_12,
+.container_16,
+.container_16 .grid_8 .grid_9,
+.grid_10,
+div#content,
+div#subHeader {
+    width: 100%;
+}
+
+.container_12 .grid_6 {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+div#subHeader {
+    height: 160px;
+}
+
+div#logo {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+div#container {
+    background-image: none;
+}
+
+div.middler {
+    position: relative;
 }
 
 body {
-  color: black;
-  background-color: white;
+    color: black;
+    background-color: white;
 }
 
 .noPrint {
-  display: none
+    display: none
 }

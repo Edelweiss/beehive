@@ -1,9 +1,51 @@
 {% extends 'frontend.html.twig' %}
 {% set c = corrections|first %}
+
 {% block beta %}
   {% if c is not null and c is not empty %}
-    {{ c.compilation.title }}
+
+    {% if c.compilation.collection starts with 'BL' %}
+      {{ c.compilation.short }}
+    {% elseif c.compilation.collection == 'BOEP' %}
+      {{ c.compilation.title }}
+    {% endif %}
   {% endif %}
+{% endblock %}
+
+{% block gamma %}
+  Achtung der Inhalt der angezeigten {{ c is not null and c is not empty ? c.compilation.collection : 'Editionen' }} bla bla bla…
+  <br />
+  Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus commodo mattis sapien et ultricies.
+{% endblock %}
+
+{% set edition = '' %}
+
+{% block lefty %}
+<ul>
+  {% for c in corrections %}
+      {% if c.edition.title != edition %}
+        <li><a href="#{{ c.edition.title != edition ? 'e' ~ c.edition.sort : '2' }}" class="edition">
+            {{ c.edition.title }}
+            </a>
+            </li>
+            {% set edition = c.edition.title %}
+      {% endif %}
+  {% endfor %}
+</ul>
+{% endblock %}
+
+{% block righty %}
+<ul>
+  {% for c in compilations %}
+    <li>
+    {% if c.collection == 'BOEP' %}
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': c.title }) }}">{{ c.short}}</a>
+    {% else %}
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}">{{ c.short}}</a>
+    {% endif %}
+    </li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
 {% block body %}

@@ -14,7 +14,7 @@
   <tbody>
     {% for c in corrections %}
       <tr id="{{ c.id }}">
-        <td class="edition">
+        <td {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">
           {% if c.edition.title != edition %}
             {{ c.edition.title }}
             {% set edition = c.edition.title %}

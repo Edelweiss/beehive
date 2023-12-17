@@ -32,7 +32,7 @@ h3 {
     font-weight: normal;
 }
 
-h2 {
+h3 {
     font-size: smaller;
 }
 
@@ -62,8 +62,25 @@ div#navigation a,
 div#navigation a:link,
 div#navigation a:visited,
 div#navigation a:hover,
-div#navigation a:active {
+div#navigation a:active,
+div#lefty a,
+div#righty a {
     background-image: url("../images/frontend/link.png");
+    background-size: 12px 12px;
+    background-position: left 2px;
+}
+
+div#lefty a,
+div#lefty a:link,
+div#lefty a:visited,
+div#lefty a:hover,
+div#lefty a:active,
+div#righty a,
+div#righty a:link,
+div#righty a:visited,
+div#righty a:hover,
+div#righty a:active {
+    background-image: url("../images/frontend/tree.png");
     background-size: 12px 12px;
     background-position: left 2px;
 }
@@ -122,11 +139,14 @@ div#alpha h1 {
 }
 
 div#beta h2 {
+    font-size: 1.2em;
     margin: 0 0 0 180px;
+    font-weight: bold;
     #background-color: orange;
 }
 
-div#gamma h3 {
+div#gamma p {
+    font-size: 1em;
     margin: 0 0 0 160px;
     #background-color: yellow;
 }
@@ -171,6 +191,10 @@ div#topic.topic_PapyrillioBeehive_ApiaryHoney {
 div#topic.topic_PapyrillioBeehive_About,
 div#topic.topic_PapyrillioBeehive_Help {
     background-image: url("../images/frontend/topic_index.png");
+}
+
+div#topic.topic_PapyrillioBeehive_Archive {
+    background-image: url("../images/frontend/topic_archive.png");
 }
 
 div#topic.topic_PapyrillioBeehive_Home {
@@ -307,7 +331,7 @@ div.apiary div.correction div.description {
 
 div.apiary h4 {
     display: table-row;
-    background-color: lightyellow;
+    #background-color: lightyellow;
 }
 
 
@@ -329,10 +353,11 @@ table.apiary tr td.text {
 table.apiary tr td.position {
     width: 8em;
     text-align: right;
+    border-bottom: solid 1px lightgrey;
 }
 
 table.apiary tr td.bl {
-    width: auto;
+    width: 12em;
     vertical-align: bottom;
     font-size: smaller;
     color: gray;
@@ -346,15 +371,38 @@ table.apiary tr td.description {
 table.apiary tr td.text,
 table.apiary tr td.position {
     border-right: solid 1px;
-    border-bottom: solid 1px lightgrey;
 }
 
 div.apiary p {
     margin: 0;
+    clear: both;
 }
 
 div.apiary p label {
-    width: 5em;
+    width: 14em;
     display: block;
+    float: left;
+}
+
+div#lefty ul,
+div#lefty ul li {
+    list-style: none;
+    list-style-type: none;
+    margin: 0;
+}
+
+div#righty ul,
+div#righty ul li {
+    list-style: none;
+    list-style-type: none;
+    margin: 0;
+}
+
+
+/* ARCHIVE */
+
+ul.archive span {
+    display: block;
+    width: 80px;
     float: left;
 }

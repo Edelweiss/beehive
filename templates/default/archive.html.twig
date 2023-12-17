@@ -1,0 +1,58 @@
+{% extends 'frontend.html.twig' %}
+
+{% block beta %}
+  Archiv vergangener Editionen
+{% endblock %}
+
+{% block lefty %}
+  <ul>
+    <li><a href="#bl" title="zu BL springen">BL</a></li>
+    <li><a href="#blKonk" title="zu BL Konk. springen">BL Konk.</a></li>
+    <li><a href="#boep" title="zu BOEP springen">BOEP</a></li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+  <p>Hier finden Sie Zugang zu sämtlichen Einträgen der BL, BL-Konkordanz und BOEP der vergangenen Jahre sowie die einzelnen Bände gebündelt nach Erscheinungsdatum.</p>
+  <h4 id="bl">BL – Berichtigungsliste</h4>
+  <ul class="archive">
+    {% for c in bl %}
+      <li>
+        <span><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.id}) }}" title="BL online">{{ c.short }}</a></span>
+        <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
+        <!--a href="" title="{{ c.short }} als LaTex">LaTex</a>
+        <a href="" title="{{ c.short }} als PDF">online</a-->
+      </li>
+    {% endfor %}
+    <li>
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BL'}) }}" title="BL online">alle</a> BL-Einträge in einem
+      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BL.pdf" href="alle Einträge in einem PDF">PDF</a>
+    </li>
+  </ul>
+  <h4 id="blKonk">BL Konkordanz</h4>
+  <ul class="archive">
+    {% for c in konk %}
+      <li>
+        <span>{{ c.short }}</span>
+        <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
+      </li>
+    {% endfor %}
+    <li>
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BL Konk.'}) }}" title="BL Konkordanz online">alle</a> Konkordanzeinträge in einem
+      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BL_Konkordanz.pdf" href="alle Einträge in einem PDF">PDF</a>
+    </li>
+  </ul>
+  <h4 id="boep">BOEP – Bulletin of Online Emendations to Papyri</h4>
+  <ul class="archive">
+    {% for c in boep %}
+      <li>
+        <span><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': 'Bulletin of Online Emendations to Papyri ' ~ c.item}) }}" title="BOEP online">{{ c.short }}</a></span>
+        <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
+      </li>
+    {% endfor %}
+    <li>
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP'}) }}" title="BOEP online">alle</a> BOEP-Korrekturen in einem
+      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BOEP.pdf" href="alle Einträge in einem PDF">PDF</a>
+    </li>
+  </ul>
+{% endblock %}

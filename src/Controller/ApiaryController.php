@@ -45,7 +45,9 @@ class ApiaryController extends BeehiveController{
       if($id == 2){
         return 'BL II 1 + 2';
       }
-      return $corrections[0]->getCompilation()->getShort();
+      if(count($corrections)){
+        return $corrections[0]->getCompilation()->getShort();
+      }
     }
     if(\in_array($type, ['tm', 'hgv', 'ddb', 'biblio', 'volume', 'register'])){
       return strtoupper($type) . ' ' . $id;

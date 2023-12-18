@@ -45,22 +45,22 @@
 
 	<div id="left" class="grid_2">
 		<div class="sidebarSection">
-			<h2><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': 13}) }}">BL I-XIII</a></h2>
+			<h2><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': 13}) }}">BL Online</a></h2>
 		</div>
 		<div class="sidebarSection">
 			<h2><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': 'Bulletin of Online Emendations to Papyri 9.1'}) }}">BOEP</a></h2>
+		</div>
+		<div class="sidebarSection">
+			<h2><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'ddb'}) }}">DDB</a></h2>
+		</div>
+		<div class="sidebarSection">
+			<h2><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'dclp'}) }}">DCLP</a></h2>
 		</div>
 		<div class="sidebarSection">
 			<h2><a href="{{ path('PapyrillioBeehive_IndexEntryNew') }}">Neue Wörter</a></h2>
 		</div>
 		<div class="sidebarSection">
 			<h2><a href="{{ path('PapyrillioBeehive_IndexEntryGhostword') }}">Ghostwords</a></h2>
-		</div>
-		<div class="sidebarSection">
-			<h2><a href="{{ path('PapyrillioBeehive_Archive') }}">Archive</a></h2>
-		</div>
-		<div class="sidebarSection">
-			<h2><a href="{{ path('PapyrillioBeehive_Apiary') }}">Search++</a></h2>
 		</div>
 		<div id="topic" class="topic_{{ app.request.attributes.get('_route') }}">&nbsp;</div>
     <div id="lefty" class="grid_2">
@@ -74,13 +74,13 @@
 
 	<div id="right" class="grid_1">
 		<div id="quick1">
-			<a href="{{ path('PapyrillioBeehive_Apiary') }}">Blättern</a>
+			<a href="{{ path('PapyrillioBeehive_Archive') }}">Archiv</a>
 		</div>
 		<div id="quick2">
-			<a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
+			<a href="{{ path('PapyrillioBeehive_Apiary') }}">Suche</a>
 		</div>
 		<div id="quick3">
-			<a href="{{ path('PapyrillioBeehive_Help') }}">Hilfe</a>
+      <a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
 		</div>
     <div id="righty" class="grid_1">
       {% block righty %}{% endblock %}

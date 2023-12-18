@@ -2,14 +2,7 @@
 {% set c = corrections|first %}
 
 {% block beta %}
-  {% if c is not null and c is not empty %}
-
-    {% if c.compilation.collection starts with 'BL' %}
-      {{ c.compilation.short }}
-    {% elseif c.compilation.collection == 'BOEP' %}
-      {{ c.compilation.title }}
-    {% endif %}
-  {% endif %}
+  {{ title }}
 {% endblock %}
 
 {% block gamma %}

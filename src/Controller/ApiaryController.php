@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Correction;
 use App\Entity\Compilation;
+use App\Entity\Register;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,18 +23,44 @@ class ApiaryController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Compilation::class);
     $result = [];
-    if($type === 'collection'){
-      $result = $repository->findBy(['collection' => $id], ['collection' => 'DESC', 'volume' => 'ASC']);
+    if($type === 'collection' && in_array($id, ['BL', 'BL Konk.', 'BOEP'])){
+      $result = $repository->findBy(['collection' => $id], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BL') {
-      $result = $repository->findBy(['collection' => 'BL'], ['collection' => 'DESC', 'volume' => 'ASC']);
+      $result = $repository->findBy(['collection' => 'BL'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BOEP') {
-      $result = $repository->findBy(['collection' => 'BOEP'], ['collection' => 'DESC', 'volume' => 'ASC']);
+      $result = $repository->findBy(['collection' => 'BOEP'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BL Konk.') {
-      $result = $repository->findBy(['collection' => 'BL Konk.'], ['collection' => 'DESC', 'volume' => 'ASC']);
+      $result = $repository->findBy(['collection' => 'BL Konk.'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } else {
-      $result = $repository->findBy([], ['volume' => 'ASC']);
+      $result = $repository->findBy([], ['collection' => 'ASC', 'volume' => 'ASC']);
     }
     return $result;
+  }
+
+  private function makeTitle ($type, $id, $corrections){
+    if($type === 'boep'){
+      return $id;
+    }
+    if($type === 'bl'){
+      return $corrections[0]->getCompilation()->getShort();
+    }
+    if(\in_array($type, ['tm', 'hgv', 'ddb', 'biblio', 'volume', 'register'])){
+      return strtoupper($type) . ' ' . $id;
+    }
+    if($type === 'collection'){
+      if($id ===  'ddb') {
+        return 'DDB-Einträge in der Berichtigungsliste';
+      } elseif ($id ===  'dclp') {
+        return 'DCLP-Einträge in der Berichtigungsliste';
+      } elseif ($id ===  'BL') {
+        return 'Berichtigungsliste Online';
+      } elseif ($id ===  'BL Konk.') {
+        return 'Konkordanz der Berichtigungsliste Online';
+      } elseif ($id ===  'BOEP') {
+        return 'Bulletin of Online Emendations to Papyri';
+      }
+    }
+    return $id;
   }
 
   public function honey($type, $id, $format = 'html'): Response{
@@ -72,18 +99,26 @@ class ApiaryController extends BeehiveController{
       SELECT e, c, t FROM App\Entity\Correction c
       LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY ' . $sort
     );
-
     $query->setParameters($parameters);
+    if($type === 'collection' && in_array($id, ['ddb', 'dclp'])){
+      $query = $entityManager->createQuery('
+        SELECT e, c, t FROM App\Entity\Correction c
+        JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE r.' . $id . ' IS NOT NULL ORDER BY c.sort'
+      );
+      $query->setParameters([]);
+      $query->setMaxResults(2000);
+    }
 
     $corrections = $query->getResult();
     $compilations = $this->getCompilations($type, $id);
+    $title = $this->makeTitle($type, trim($id, '%'), $corrections);
 
     if($format === 'html'){
-      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations]);
+      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]);
     } elseif($format === 'plain'){
-      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations]);
+      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]);
     } elseif ($format === 'rdf') {
-      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations]));
+      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]));
       $response->headers->set('Content-Type', 'application/rdf+xml'); //$response->headers->set('Content-Type', 'text/xml');
       return $response;
     } else {

@@ -1,5 +1,6 @@
 {% set edition = '' %}
 {% set text = '' %}
+{% set ddb = true %}
 
 <table class="apiary">
   <!--thead>
@@ -12,7 +13,12 @@
     </tr>
   </thead-->
   <tbody>
+    <tr><td colspan="5"><h3>DDB</h3></td></tr>
     {% for c in corrections %}
+      {% if ddb and c.registerEntries|first.dclp|length %}
+        <tr><td colspan="5"><h3>DCLP</h3></td></tr>
+        {% set ddb = false %}
+      {% endif %}
       <tr id="{{ c.id }}">
         <td {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">
           {% if c.edition.title != edition %}

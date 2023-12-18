@@ -96,7 +96,7 @@ class ApiaryController extends BeehiveController{
     // QUERY
 
     $query = $entityManager->createQuery('
-      SELECT e, c, t FROM App\Entity\Correction c
+      SELECT e, c, t, r FROM App\Entity\Correction c
       LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY ' . $sort
     );
     $query->setParameters($parameters);

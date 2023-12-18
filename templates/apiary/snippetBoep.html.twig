@@ -1,6 +1,6 @@
 {% set edition = '' %}
 {% set text = '' %}
-{% set ddb = true %}
+{% set collection = '' %}
 
 <table class="apiary">
   <!--thead>
@@ -13,11 +13,14 @@
     </tr>
   </thead-->
   <tbody>
-    <tr><td colspan="5"><h3>DDB</h3></td></tr>
+
     {% for c in corrections %}
-      {% if ddb and c.registerEntries|first.dclp|length %}
-        <tr><td colspan="5"><h3>DCLP</h3></td></tr>
-        {% set ddb = false %}
+      {% if type == 'boep' and id != 'Bulletin of Online Emendations to Papyri' %}
+        {% set currentCollection = c.registerEntries|length and c.registerEntries|first.dclp|length ? 'DCLP' : 'DDB' %}
+        {% if currentCollection != collection %}
+          <tr><th colspan="5"><h3 id="{{ currentCollection }}">{{ currentCollection }}</h3></th></tr>
+          {% set collection = currentCollection %}
+        {% endif %}
       {% endif %}
       <tr id="{{ c.id }}">
         <td {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">

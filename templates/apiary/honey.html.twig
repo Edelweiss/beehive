@@ -12,9 +12,21 @@
 {% endblock %}
 
 {% set edition = '' %}
+{% set collection = '' %}
 
 {% block lefty %}
 <ul>
+
+  {% if type == 'boep' and id != 'Bulletin of Online Emendations to Papyri' %}
+    {% for c in corrections %}
+      {% set currentCollection = c.registerEntries|length and c.registerEntries|first.dclp|length ? 'DCLP' : 'DDB' %}
+          {% if currentCollection != collection %}
+          <li><a href="#{{ currentCollection }}">{{ currentCollection }}</a></li>
+          {% set collection = currentCollection %}
+          {% endif %}
+    {% endfor %}
+    <hr />
+  {% endif %}
   {% for c in corrections %}
       {% if c.edition.title != edition %}
         <li><a href="#{{ c.edition.title != edition ? 'e' ~ c.edition.sort : '2' }}" class="edition">
@@ -30,13 +42,15 @@
 {% block righty %}
 <ul>
   {% for c in compilations %}
-    <li>
+    
     {% if c.collection == 'BOEP' %}
-      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': c.title }) }}">{{ c.short}}</a>
+      <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': c.title }) }}">{{ c.short}}</a></li>
     {% else %}
-      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}">{{ c.short}}</a>
+      {% if c.volume < 14 or c.volume > 100 %}
+        <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}">{{ c.short}}</a></li>
+      {% endif %}
     {% endif %}
-    </li>
+    
   {% endfor %}
 </ul>
 {% endblock %}
@@ -44,9 +58,9 @@
 {% block body %}
 
   {% if c is not null and c is not empty and c.compilation.collection == 'BOEP' %}
-    {% include 'apiary/snippetBoep.html.twig' with {'corrections': corrections} %}
+    {% include 'apiary/snippetBoep.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
   {% else %}
-    {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections} %}
+    {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
   {% endif %}
 
 {% endblock %}

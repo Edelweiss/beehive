@@ -42,6 +42,9 @@ class ApiaryController extends BeehiveController{
       return $id;
     }
     if($type === 'bl'){
+      if($id == 2){
+        return 'BL II 1 + 2';
+      }
       return $corrections[0]->getCompilation()->getShort();
     }
     if(\in_array($type, ['tm', 'hgv', 'ddb', 'biblio', 'volume', 'register'])){
@@ -103,9 +106,9 @@ class ApiaryController extends BeehiveController{
     if($type === 'collection' && in_array($id, ['ddb', 'dclp'])){
       $query = $entityManager->createQuery('
         SELECT e, c, t FROM App\Entity\Correction c
-        JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE r.' . $id . ' IS NOT NULL ORDER BY c.sort'
+        JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE c2.collection = :collection AND  r.' . $id . ' IS NOT NULL ORDER BY c.sort'
       );
-      $query->setParameters([]);
+      $query->setParameters(['collection' => 'BOEP']);
       $query->setMaxResults(2000);
     }
 
@@ -114,11 +117,11 @@ class ApiaryController extends BeehiveController{
     $title = $this->makeTitle($type, trim($id, '%'), $corrections);
 
     if($format === 'html'){
-      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]);
+      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
     } elseif($format === 'plain'){
-      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]);
+      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
     } elseif ($format === 'rdf') {
-      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title]));
+      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
       $response->headers->set('Content-Type', 'application/rdf+xml'); //$response->headers->set('Content-Type', 'text/xml');
       return $response;
     } else {

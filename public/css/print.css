@@ -55,3 +55,7 @@ body {
 .noPrint {
     display: none
 }
+
+div.apiary div.correction div.text a {
+    text-decoration: none;
+}

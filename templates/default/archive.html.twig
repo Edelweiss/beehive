@@ -17,30 +17,24 @@
   <h4 id="bl">BL – Berichtigungsliste</h4>
   <ul class="archive">
     {% for c in bl %}
-      <li>
-        <span><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.id}) }}" title="BL online">{{ c.short }}</a></span>
-        <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
-        <!--a href="" title="{{ c.short }} als LaTex">LaTex</a>
-        <a href="" title="{{ c.short }} als PDF">online</a-->
-      </li>
+      {% if c.volume < 14 %}
+        <li>
+          <span><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume}) }}" title="BL online">{{ c.short }}</a></span>
+          <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
+          <!--a href="" title="{{ c.short }} als LaTex">LaTex</a>
+          <a href="" title="{{ c.short }} als PDF">online</a-->
+        </li>
+      {% endif %}
     {% endfor %}
-    <li>
-      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BL'}) }}" title="BL online">alle</a> BL-Einträge in einem
-      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BL.pdf" href="alle Einträge in einem PDF">PDF</a>
-    </li>
   </ul>
   <h4 id="blKonk">BL Konkordanz</h4>
   <ul class="archive">
     {% for c in konk %}
       <li>
-        <span>{{ c.short }}</span>
+        <span><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume}) }}" title="BL online">{{ c.short }}</a></span>
         <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
       </li>
     {% endfor %}
-    <li>
-      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BL Konk.'}) }}" title="BL Konkordanz online">alle</a> Konkordanzeinträge in einem
-      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BL_Konkordanz.pdf" href="alle Einträge in einem PDF">PDF</a>
-    </li>
   </ul>
   <h4 id="boep">BOEP – Bulletin of Online Emendations to Papyri</h4>
   <ul class="archive">
@@ -50,6 +44,14 @@
         <a href="https://papy.zaw.uni-heidelberg.de/beehive/{{ c.short | replace({' ': '_'}) }}.pdf" title="{{ c.short }} als PDF">PDF</a>
       </li>
     {% endfor %}
+    <li>
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'ddb'}) }}" title="BOEP doc. online">alle dokumentarischen</a> BOEP-Korrekturen in einem
+      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BOEP_doc.pdf" href="alle dokumentarischen Einträge in einem PDF">PDF</a>
+    </li>
+    <li>
+      <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'dclp'}) }}" title="BOEP lit. online">alle literarischen</a> BOEP-Korrekturen in einem
+      <a href="https://papy.zaw.uni-heidelberg.de/beehive/BOEP_lit.pdf" href="alle literarischen Einträge in einem PDF">PDF</a>
+    </li>
     <li>
       <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP'}) }}" title="BOEP online">alle</a> BOEP-Korrekturen in einem
       <a href="https://papy.zaw.uni-heidelberg.de/beehive/BOEP.pdf" href="alle Einträge in einem PDF">PDF</a>

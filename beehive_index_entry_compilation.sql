@@ -1,4 +1,4 @@
-ALTER TABLE `index_entry` ADD `tab` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `topic`, ADD `papy_new` BOOLEAN NULL AFTER `tab`, ADD `greek_new` BOOLEAN NULL AFTER `papy_new`, ADD `lemma` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `greek_new`,  ADD INDEX `index_entry_type` (`type`), ADD INDEX `index_entry_topic` (`topic`), ADD INDEX `index_entry_tab` (`tab`), ADD UNIQUE `index_entry_lemma` (`type`, `topic`, `lemma`); 
+ALTER TABLE `index_entry` ADD `tab` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `topic`, ADD `papy_new` BOOLEAN NULL AFTER `tab`, ADD `greek_new` BOOLEAN NULL AFTER `papy_new`, ADD `lemma` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `greek_new`,  ADD INDEX `index_entry_type` (`type`), ADD INDEX `index_entry_topic` (`topic`), ADD INDEX `index_entry_tab` (`tab`), ADD UNIQUE `index_entry_lemma` (`type`, `topic`, `lemma`);
 
 UPDATE index_entry SET papy_new = TRUE WHERE `phrase` LIKE '%*%'; /* 11 */
 UPDATE index_entry SET papy_new = FALSE WHERE `phrase` NOT LIKE '%*%';
@@ -17,8 +17,9 @@ UPDATE index_entry SET phrase = REPLACE(phrase, '† ',  '') WHERE `phrase` LIKE
 UPDATE index_entry SET phrase = REPLACE(phrase, '* ',  '') WHERE `phrase` LIKE '%* %';
 UPDATE index_entry SET phrase = REPLACE(phrase, '  *', '') WHERE `phrase` LIKE '%  *%'; /* DOESN'T WORK?!?! */
 
-CREATE TABLE `beehive`.`correction_index_entry` ( `correction_id` INT NOT NULL , `index_entry_id` INT NOT NULL ) ENGINE = InnoDB;
-ALTER TABLE `correction_index_entry` ADD CONSTRAINT `correction_index_entry_correction` FOREIGN KEY (`correction_id`) REFERENCES `correction`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `correction_index_entry` ADD CONSTRAINT `correction_index_entry_index_entry` FOREIGN KEY (`index_entry_id`) REFERENCES `index_entry`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; 
+CREATE TABLE `correction_index_entry` ( `correction_id` INT NOT NULL , `index_entry_id` INT NOT NULL ) ENGINE = InnoDB;
+ALTER TABLE `correction_index_entry` ADD CONSTRAINT `correction_index_entry_correction` FOREIGN KEY (`correction_id`) REFERENCES `correction`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `correction_index_entry` ADD CONSTRAINT `correction_index_entry_index_entry` FOREIGN KEY (`index_entry_id`) REFERENCES `index_entry`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 INSERT INTO correction_index_entry (correction_id, index_entry_id) VALUES
 (1689, 50),
@@ -28,10 +29,10 @@ INSERT INTO correction_index_entry (correction_id, index_entry_id) VALUES
 (1701, 50),
 (1703, 50),
 (1702, 50),
-(460, 21),
-(462, 21),
-(464, 21),
-(466, 21),
+(460, 19),
+(462, 19),
+(464, 19),
+(466, 19),
 (720, 30),
 (721, 30),
 (722, 30),
@@ -142,7 +143,14 @@ INSERT INTO correction_index_entry (correction_id, index_entry_id) VALUES
 (648, 28),
 (3999, 91);
 
-DELETE FROM index_entry WHERE id IN (64,71,72,61,70,73,56,59,65,31,32,33,22,23,24,52,53,62,66,68,69,109,20,130,127,120,27,125,42,44,38);
+
+/* compilations abgreifen vorm Löschen, oder halt später über Kreuzprodukt, siehe unten
+
+SELECT c.compilation_id, i.id FROM `index_entry` i JOIN correction c ON i.correction_id = c.id;
+
+*/
+
+DELETE FROM index_entry WHERE id IN (64,71,72,61,70,73,56,59,65,31,32,33,21,22,23,24,52,53,62,66,68,69,109,20,130,127,120,27,125,42,44,38);
 
 UPDATE index_entry SET lemma = phrase;
 
@@ -152,11 +160,35 @@ ALTER TABLE `index_entry` CHANGE `tab` `tab` VARCHAR(255) CHARACTER SET utf8 COL
 ALTER TABLE `index_entry` CHANGE `papy_new` `papy_new` TINYINT(1) NOT NULL;
 ALTER TABLE `index_entry` CHANGE `greek_new` `greek_new` TINYINT(1) NOT NULL;
 
+
+CREATE TABLE `compilation_index_entry` ( `compilation_id` INT NOT NULL , `index_entry_id` INT NOT NULL ) ENGINE = InnoDB;
+ALTER TABLE `compilation_index_entry` ADD CONSTRAINT `compilation_index_entry_compilation` FOREIGN KEY (`compilation_id`) REFERENCES `compilation`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `compilation_index_entry` ADD CONSTRAINT `compilation_index_entry_index_entry` FOREIGN KEY (`index_entry_id`) REFERENCES `index_entry`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+INSERT INTO compilation_index_entry (compilation_id, index_entry_id) SELECT c.compilation_id, i.id FROM `index_entry` i JOIN correction_index_entry x ON x.index_entry_id = i.id JOIN correction c ON x.correction_id = c.id ORDER BY c.compilation_id, c.sort;
+
+/* ACHTUNG – Dublette wegen Leerzeichen - ist aber inzwischen ins Skript integriert.
+
+πάρολκον
+
+index_entry. id 19 behalten, 21 löschen
+
+*/
+
+/* Report */
+
+SELECT c.short, type, topic, tab, lemma, IF(papy_new, '[papy*]', '') AS 'papy_new', IF(greek_new, '[greek*]', '') AS 'greek_new'
+FROM `index_entry` i JOIN compilation_index_entry x ON x.index_entry_id = i.id JOIN compilation c ON x.compilation_id = c.id
+ORDER BY c.id, type DESC, topic, tab, lemma;
+
+
 /*
 
 compilation_index_entry
 
 alte Daten darin verewigen
+
+ersten Test-Report erstellen
 
 Dann weiter im Excel-Sheet mit den neuen index_entry-Daten
 

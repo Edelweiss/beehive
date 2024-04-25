@@ -1,0 +1,1 @@
+CREATE VIEW vBeehive AS SELECT c2.id as compilation_id, c2.short, c2.volume, c.compilationPage as page, e.id as edition_id, e.title, c.text, c.position, c.id as correction_id, c.description FROM `correction` c JOIN edition e ON c.edition_id = e.id JOIN compilation c2 ON c.compilation_id = c2.id WHERE e.title LIKE '%B.G.U.%' ORDER BY e.sort

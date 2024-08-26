@@ -14,6 +14,8 @@
 {% set edition = '' %}
 {% set collection = '' %}
 
+{% block lefty_title %}Editionen{% endblock %}
+
 {% block lefty %}
 <ul>
 
@@ -37,6 +39,10 @@
       {% endif %}
   {% endfor %}
 </ul>
+{% endblock %}
+
+{% block righty_title %}weitere
+{{ c.compilation.collection }}
 {% endblock %}
 
 {% block righty %}

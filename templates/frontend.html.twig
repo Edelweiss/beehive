@@ -31,10 +31,10 @@
               {% endif %}
             </div>
 			<div id="alpha" class="grid_10">
-                <h1>Berichtigungsliste – Online</h1>
+        <h1>Berichtigungsliste – Online</h1>
 			</div>
 			<div id="beta" class="grid_10">
-                <h2>{% block beta %}{% endblock %}</h2>
+        <h2>{% block beta %}{% endblock %}</h2>
 			</div>
 			<div id="gamma" class="grid_10">
                 <p>{% block gamma %}{% endblock %}</p>
@@ -64,6 +64,7 @@
 		</div>
 		<div id="topic" class="topic_{{ app.request.attributes.get('_route') }}">&nbsp;</div>
     <div id="lefty" class="grid_2">
+      <h5>{% block lefty_title %}{% endblock %}</h5>
       {% block lefty %}{% endblock %}
 		</div>
 	</div>
@@ -83,6 +84,7 @@
       <a href="{{ path('PapyrillioBeehive_About') }}">Info</a>
 		</div>
     <div id="righty" class="grid_1">
+      <h5>{% block righty_title %}{% endblock %}</h5>
       {% block righty %}{% endblock %}
 		</div>
 	</div>

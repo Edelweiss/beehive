@@ -84,13 +84,8 @@ class ApiaryController extends BeehiveController{
     }
     $parameters = array('id' => $id);
 
-    if($this->isGranted('ROLE_USER') === false) {
-      $where .= ' AND (c.status = :status OR c2.title = :compilationTitle)'; // cl: hardcoded BLXII hack, show unchecked BLXII corrections
-      $parameters['status'] = 'finalised';
-      $parameters['compilationTitle'] = 'XII';
-    }
-  
     // SORT
+
     $sort = 'c.sort';
     if(($type === 'collection' && $id === 'BOEP') || ($type === 'boep' && $id === 'Bulletin of Online Emendations to Papyri')){
       $sort = 'c.sort';

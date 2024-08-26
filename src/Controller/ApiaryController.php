@@ -25,8 +25,12 @@ class ApiaryController extends BeehiveController{
     $result = [];
     if($type === 'collection' && in_array($id, ['BL', 'BL Konk.', 'BOEP'])){
       $result = $repository->findBy(['collection' => $id], ['collection' => 'ASC', 'volume' => 'ASC']);
+    } elseif ($type === 'bl') {
+      $result = $repository->findBy(['collection' => 'BL'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BL') {
       $result = $repository->findBy(['collection' => 'BL'], ['collection' => 'ASC', 'volume' => 'ASC']);
+    } elseif ($type === 'boep') {
+      $result = $repository->findBy(['collection' => 'BOEP'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BOEP') {
       $result = $repository->findBy(['collection' => 'BOEP'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BL Konk.') {

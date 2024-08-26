@@ -1,5 +1,6 @@
 {% extends 'frontend.html.twig' %}
 {% set c = corrections|first %}
+{% set comp = compilations|first %}
 
 {% block beta %}
   {{ title }}
@@ -14,7 +15,27 @@
 {% set edition = '' %}
 {% set collection = '' %}
 
-{% block lefty_title %}Editionen{% endblock %}
+{% block lefty_title %}
+  {% if type == 'volume' %}
+    {{ id }} in
+    <br/>
+    BL&nbsp;Online
+  {% elseif type == 'register' %}
+    Editionen für Register-Id {{ id }}
+  {% else %}
+    Editionen in
+    <br />
+    {% if type == 'collection' %}
+      {{ comp.collection }}
+    {% elseif type == 'tm' or  type == 'hgv' or  type == 'ddb' or  type == 'biblio' %}
+      {% if type == 'tm' or  type == 'hgv' or  type == 'biblio' %}{{ type | upper }}&nbsp;{% endif %}{{ id }}
+    {% elseif c is not null and c is not empty %}
+      {{c.compilation.short}}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+
 
 {% block lefty %}
 <ul>
@@ -41,24 +62,30 @@
 </ul>
 {% endblock %}
 
-{% block righty_title %}weitere
-{{ c.compilation.collection }}
+
+{% block righty_title %}
+  {% if type == 'tm' or type == 'hgv' or type == 'ddb' or type == 'volume' or type == 'biblio' or type == 'register' %}
+  {% else %}
+  weitere
+  {{ comp.collection }}s
+  {% endif %}
 {% endblock %}
 
 {% block righty %}
-<ul>
-  {% for c in compilations %}
-    
-    {% if c.collection == 'BOEP' %}
-      <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': c.title }) }}">{{ c.short}}</a></li>
-    {% else %}
-      {% if c.volume < 14 or c.volume > 100 %}
-        <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}">{{ c.short}}</a></li>
-      {% endif %}
-    {% endif %}
-    
-  {% endfor %}
-</ul>
+  {% if type == 'tm' or type == 'hgv' or type == 'ddb' or type == 'volume' or type == 'biblio' or type == 'register' %}
+  {% else %}
+    <ul>
+      {% for c in compilations %}
+        {% if c.collection == 'BOEP' %}
+          <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'boep', 'id': c.title }) }}">{{ c.item}}</a></li>
+        {% else %}
+          {% if c.volume < 14 or c.volume > 100 %}
+            <li><a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}">{{ c.short}}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}
 
 {% block body %}

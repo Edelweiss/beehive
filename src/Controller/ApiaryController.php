@@ -125,6 +125,11 @@ class ApiaryController extends BeehiveController{
       $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
       $response->headers->set('Content-Type', 'application/rdf+xml'); //$response->headers->set('Content-Type', 'text/xml');
       return $response;
+    } elseif ($format === 'latex') {
+      $response = new Response($this->renderView('apiary/honey.tex.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
+      $response->headers->set('Content-Type', 'application/tex+txt'); //$response->headers->set('Content-Type', 'text/tex');
+      $response->headers->set('Content-Disposition', 'attachment; filename=' . str_replace(' ', '', $title . '.tex'));
+      return $response;
     } else {
       $data = array('corrections' => array());
       $data = array('count' => count($corrections));

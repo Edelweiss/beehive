@@ -1,0 +1,42 @@
+{% extends 'frontend.tex.twig' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+
+{% set edition = '' %}
+{% set text = '' %}
+
+\begin{tabular}{ | m{5em} | m{1cm}| m{1cm} | }
+  \hline
+  {% for c in corrections %}
+    {% if c.edition.title != edition %}
+      {#{ c.edition.title }#} & c & c \\
+      \hline
+      {% set edition = c.edition.title %}
+      {% set text = '' %}
+
+      {% for d in c.edition.docketEntries %}
+        {% if d.position or d.text %}
+          {#{ d.text }#} & {{ c.position }} & {#{ d.info }#}
+        {% else %}
+          {#{ d.info }#} & c & c \\
+        {% endif %}
+        \hline
+      {% endfor %}
+    {% endif %}
+
+
+
+
+
+    cell1 dummy text dummy text dummy text& cell2 & cell3 \\ 
+    \hline
+
+  {% endfor %}
+
+\end{tabular}
+  
+{% endblock %}

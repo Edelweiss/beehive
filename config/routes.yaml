@@ -281,7 +281,7 @@ PapyrillioBeehive_ApiaryHoney:
         format: html
     requirements:
       type: '(tm|hgv|ddb|biblio|bl|register|boep|volume|collection)'
-      format: '(plain|xml|html|rdf|json)'
+      format: '(plain|xml|html|rdf|json|latex)'
 
 # Security / User
 

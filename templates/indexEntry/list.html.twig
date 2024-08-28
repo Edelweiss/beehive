@@ -29,7 +29,7 @@
         <li id="{{ i.id }}" class="phrase">
         {% if i.compilations|length > 0 %}
           <span class="phrase">{{ i.phrase }}</span><span class="biblio">,&nbsp;siehe 
-            {% for c in i.compilations %}{% if loop.first == false  %}, {% endif%}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}
+            {% for c in i.compilations %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}
           </span>
           {% endif %}
         </li>

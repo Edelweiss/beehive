@@ -1,5 +1,6 @@
 {% extends 'frontend.html.twig' %}
 {% set c = corrections|first %}
+{% set r = c.registerEntries|first %}
 {% set comp = compilations|first %}
 
 {% block beta %}
@@ -7,9 +8,20 @@
 {% endblock %}
 
 {% block gamma %}
-  Achtung der Inhalt der angezeigten {{ c is not null and c is not empty ? c.compilation.collection : 'Editionen' }} bla bla bla…
+  Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
+  {% set comp_short = '' %}
+  {% for c in corrections %}
+    {% if c.compilation.short != comp_short  %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.compilation.volume }) }}" title="{{ c.compilation.short }}">{{ c.compilation.short|replace({' ' : '&nbsp;'})|raw }}</a>{% set comp_short = c.compilation.short %}{% endif %}
+  {% endfor %}
+
+  {% if r %}
   <br />
-  Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus commodo mattis sapien et ultricies.
+  Weitere identifier und Links: HGV {{ r.hgv }}
+  =
+  <a href="https://papyri.info/hgv/{{ r.hgv }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ r.tm }}</a>
+  =
+  <a href="https://papyri.info/hgv/{{ r.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ r.ddb }}</a>
+  {% endif %}
 {% endblock %}
 
 {% set edition = '' %}
@@ -35,11 +47,8 @@
   {% endif %}
 {% endblock %}
 
-
-
 {% block lefty %}
 <ul>
-
   {% if type == 'boep' and id != 'Bulletin of Online Emendations to Papyri' %}
     {% for c in corrections %}
       {% set currentCollection = c.registerEntries|length and c.registerEntries|first.dclp|length ? 'DCLP' : 'DDB' %}
@@ -52,7 +61,7 @@
   {% endif %}
   {% for c in corrections %}
       {% if c.edition.title != edition %}
-        <li><a href="#{{ c.edition.title != edition ? 'e' ~ c.edition.sort : '2' }}" class="edition">
+        <li><a href="#{{ c.edition.title|replace({' ': '_', '.': ''}) }}" class="edition">
             {{ c.edition.title }}
             </a>
             </li>

@@ -4,7 +4,7 @@
 <div class="apiary">
   {% for c in corrections %}
     {% if c.edition.title != edition %}
-      <h4 {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">
+      <h4 id="{{ c.edition.title|replace({' ': '_', '.': ''}) }}" class="edition">
         {{ c.edition.title }}
         {% set edition = c.edition.title %}
         {% set text = '' %}
@@ -26,7 +26,7 @@
         <div class="text">
           {% if c.text != text %}
             {% if c.registerEntries|length and c.registerEntries|first %}
-              <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'register', 'id': c.registerEntries|first.id }) }}" title="Alle Einträge für {{ c.registerEntries|first }}">{{ c.text }}</a>
+              <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'hgv', 'id': c.registerEntries|first.hgv }) }}" title="Alle Einträge für {{ c.registerEntries|first }}">{{ c.text }}</a>
             {% else %}
               {{ c.text }}
             {% endif %}
@@ -36,9 +36,13 @@
         <div class="position">{{ c.position }}</div>
         <div class="description">{{ c.description }}</div>
         <div class="bl">
-          <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
-          <br />
+          {% if c.compilation.collection == 'BOEP' %}
+            <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="{{ c.compilation.short }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}">{{ c.compilation.short|replace({' ' : '&nbsp;'})|raw }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+          {% else %}
+            <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+          {% endif %}
           {% if c.source %}
+            <br />
             <a href="http://papyri.info/biblio/{{ c.source }}">Biblio</a>
           {% endif %}
         </div>

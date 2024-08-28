@@ -8,9 +8,25 @@
         </id>
         <field name="type" type="string" length="64"/>
         <field name="topic" type="string" length="64"/>
+        <field name="tab" type="string" length="255"/>
+        <field name="papy_new" type="integer"/>
+        <field name="greek_new" type="integer"/>
+        <field name="lemma" type="string" length="255"/>
+        <field name="sort" type="string" length="255"/>
         <field name="phrase" type="text"/>
         <many-to-one field="correction" target-entity="Correction" inversed-by="indexEntries">
             <join-column name="correction_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
         </many-to-one>
+        <many-to-many field="compilations" target-entity="Compilation">
+            <join-table name="compilation_index_entry">
+                <join-columns>
+                    <join-column name="index_entry_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="compilation_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <!-- don't forget to init the collection in entity __construct() method -->
     </entity>
 </doctrine-mapping>

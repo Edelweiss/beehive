@@ -3,6 +3,7 @@ namespace App\Entity;
 
 use App\Repository\CompilationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\IndexEntry;
 
 class Compilation
 {
@@ -84,10 +85,12 @@ class Compilation
      * @var Papyrillio\BeehiveBundle\Entity\Correction
      */
     private $corrections;
+    private $indexEntries;
 
     public function __construct()
     {
         $this->corrections = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->indexEntries = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -278,6 +281,16 @@ class Compilation
     public function getCorrections()
     {
         return $this->corrections;
+    }
+
+    public function addIndexEntry(\App\Entity\IndexEntry $indexEntry)
+    {
+        $this->indexEntries[] = $indexEntry;
+    }
+
+    public function getIndexEntries()
+    {
+        return $this->indexEntries;
     }
     
     protected function numberToRoman($num)

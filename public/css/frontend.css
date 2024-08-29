@@ -419,3 +419,19 @@ ul.archive span {
     width: 80px;
     float: left;
 }
+
+/* NEW WORDS GHOSTWORDS */
+
+ul.indexEntry,
+ul.indexEntry li {
+    list-style: none;
+    list-style-type: none;
+}
+
+ul.indexEntry {
+    column-count: 2;
+}
+
+ul.indexEntry li span.phrase {
+    font-weight: bold;
+}

@@ -1,12 +1,10 @@
 {% extends 'frontend.html.twig' %}
 
-{% set topic = '' %}
-
 {% block beta %}
-{% if indexEntries[0].type == 'Ghostword' %}
-Ghostwords
+  {% if type == 'Ghostword' %}
+    Ghostwords
   {% else %}
-  Neue Wörter
+    Neue Wörter
   {% endif %}
 {% endblock %}
 
@@ -14,51 +12,30 @@ Ghostwords
 
 {% block lefty %}
 <ul>
-  {% for i in indexEntries %}
-    {% if i.topic != topic %}
-      <li><a href="#{{ i.topic | replace({ ' ': '_'}) }}">{{ i.topic }}</a></li>
-      {% set topic = i.topic %}
-    {% endif %}
+  {% for topic, list in indexEntries %}
+
+    <li><a href="#{{ topic | replace({ ' ': '_'}) }}">{{ topic }}</a></li>
+
   {% endfor %}
 </ul>
 {% endblock %}
 
 {% block body %}
 
-<table class="indexEntry">
-  <!--thead>
-    <tr>
-      <th class="topic">Thema</th>
-      <th class="phrase">Wort</th>
-      <th class="context">Kontext</th>
-      <th class="biblio">Bibliographie</th>
-    </tr>
-  </thead-->
-  <tbody>
-    {% for i in indexEntries %}
-      {% if i.topic != topic %}
-        <tr class="topic">
-          <th class="topic" colspan="3">
-            <h4 id="{{ i.topic | replace({ ' ': '_'}) }}">{{ i.topic }}</h4>
-            {% set topic = i.topic %}
-          </th>
-        </tr>
-      {% endif %}
-      <tr id="{{ i.id }}" class="phrase">
-        <td class="phrase">
-          {{ i.phrase }}
-        </td>
-        <td class="context" title="{{ i.correction.description }}">
-           <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': i.correction.id}) }}">BL&nbsp;{{ i.correction.compilation.title }}{% if i.correction.compilationPage %}&nbsp;S.&nbsp;{{ i.correction.compilationPage }}{% endif %}{% if i.correction.compilationIndex %}&nbsp;#&nbsp;{{ i.correction.compilationIndex }}{% endif %}</a>
-        </td>
-        <td class="biblio">
-          {% if i.correction.source %}
-            <a href="http://papyri.info/biblio/{{ i.correction.source }}">Biblio</a>
+{% for topic, list in indexEntries %}
+   <h4 id="{{ topic | replace({ ' ': '_'}) }}">{{ topic }}</h4>
+   <ul class="indexEntry"><!--  style="column-count: 2" -->
+      {% for i in list %}
+        <li id="{{ i.id }}" class="phrase">
+        {% if i.compilations|length > 0 %}
+          <span class="phrase">{{ i.phrase }}</span><span class="biblio">,&nbsp;siehe 
+            {% for c in i.compilations %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}
+          </span>
           {% endif %}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        </li>
+      {% endfor %}
+    </ul>
+{% endfor %}
+
 
 {% endblock %}

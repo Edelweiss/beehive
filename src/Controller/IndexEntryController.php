@@ -18,8 +18,8 @@ class IndexEntryController extends BeehiveController{
     $repository = $entityManager->getRepository(IndexEntry::class);
 
     $query = $entityManager->createQuery('
-      SELECT i, c, e, c FROM App\Entity\IndexEntry i
-      LEFT JOIN i.correction c LEFT JOIN c.edition e JOIN c.compilation c2 WHERE i.type = :type ORDER BY i.topic, i.phrase'
+      SELECT i, c FROM App\Entity\IndexEntry i
+      LEFT JOIN i.compilations c WHERE i.type = :type ORDER BY i.sort'
     );
 
     $parameters = array('type' => $type);
@@ -27,7 +27,13 @@ class IndexEntryController extends BeehiveController{
     $query->setParameters($parameters);
 
     $indexEntries = $query->getResult();
-    return $this->render('indexEntry/list.html.twig', ['indexEntries' => $indexEntries]);
+    $topic_indexEntries = [];
+    foreach($indexEntries as $ie){
+      $topic_indexEntries[$ie->getTopic()][$ie->getId()] = $ie;
+    }
+
+
+    return $this->render('indexEntry/list.html.twig', ['type' => $type, 'indexEntries' => $topic_indexEntries]);
   }
 
 }

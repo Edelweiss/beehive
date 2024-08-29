@@ -25,7 +25,7 @@
     <div class="correction">
         <div class="text">
           {% if c.text != text %}
-            {% if c.registerEntries|length and c.registerEntries|first %}
+            {% if c.registerEntries|length and c.registerEntries|first and c.registerEntries|first.hgv %}
               <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'hgv', 'id': c.registerEntries|first.hgv }) }}" title="Alle Einträge für {{ c.registerEntries|first }}">{{ c.text }}</a>
             {% else %}
               {{ c.text }}

@@ -23,7 +23,7 @@
         {% endif %}
       {% endif %}
       <tr id="{{ c.id }}">
-        <td {{ c.edition.title != edition ? 'id=e' ~ c.edition.sort : '' }} class="edition">
+        <td {{ c.edition.title != edition ? 'id=' ~ c.edition.title|replace({' ': '_', '.': ''}) : '' }} class="edition">
           {% if c.edition.title != edition %}
             {{ c.edition.title }}
             {% set edition = c.edition.title %}
@@ -32,7 +32,11 @@
         </td>
         <td class="text">
           {% if c.text != text %}
-            {{ c.text }}
+            {% if c.registerEntries|length and c.registerEntries|first and (c.registerEntries|first.hgv or c.registerEntries|first.tm) %}
+              <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': (c.registerEntries|first.hgv ? 'hgv' : 'tm'), 'id': (c.registerEntries|first.hgv ? c.registerEntries|first.hgv : c.registerEntries|first.tm) }) }}" title="Alle Einträge für {{ c.registerEntries|first }}">{{ c.text }}</a>
+            {% else %}
+              {{ c.text }}
+            {% endif %}
             {% set text = c.text %}
           {% endif %}
         </td>

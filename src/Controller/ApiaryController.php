@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Correction;
+use App\Entity\Log;
 use App\Entity\Compilation;
 use App\Entity\Register;
 use Doctrine\ORM\EntityManagerInterface;

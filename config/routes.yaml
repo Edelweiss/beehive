@@ -284,7 +284,7 @@ PapyrillioBeehive_ApiaryHoney:
       format: '(plain|xml|html|rdf|json|latex)'
 
 PapyrillioBeehive_ApiaryCorrectionInfo:
-    path:  /correction/info/{id}
+    path: /info/{id}
     controller: App\Controller\ApiaryController::info
 
 # Security / User

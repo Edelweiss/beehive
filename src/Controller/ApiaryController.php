@@ -22,8 +22,8 @@ class ApiaryController extends BeehiveController{
   private function getCompilationsOfInterest($corrections){
     $compilationsOfInterest = [];
     foreach($corrections as $correction){
-      if(!isset($compilationsOfInterest[$correction.getCompilation().getId()])){
-        $compilationsOfInterest[$correction.getCompilation().getId()] = $correction.getCompilation();
+      if(!isset($compilationsOfInterest[$correction->getCompilation()->getId()])){
+        $compilationsOfInterest[$correction->getCompilation()->getId()] = $correction->getCompilation();
       }
     }
     return ksort($compilationsOfInterest);

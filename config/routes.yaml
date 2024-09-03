@@ -144,7 +144,7 @@ PapyrillioBeehive_Log:
 
 PapyrillioBeehive_CorrectionList:
     path:  /correction/list
-    controller: App\Controller\CorrectionController::list 
+    controller: App\Controller\CorrectionController::list
 
 PapyrillioBeehive_CorrectionPrint:
     path:  /correction/print
@@ -154,27 +154,27 @@ PapyrillioBeehive_CorrectionPrint:
 
 PapyrillioBeehive_CorrectionShow:
     path:  /correction/show/{id}
-    controller: App\Controller\CorrectionController::show 
+    controller: App\Controller\CorrectionController::show
 
 PapyrillioBeehive_CorrectionTest:
     path:  /correction/test/{id}
-    controller: App\Controller\CorrectionController::test 
+    controller: App\Controller\CorrectionController::test
 
 PapyrillioBeehive_CorrectionDelete:
     path:  /correction/delete/{id}
-    controller: App\Controller\CorrectionController::delete 
+    controller: App\Controller\CorrectionController::delete
 
 PapyrillioBeehive_CorrectionNew:
     path:  /correction/new
-    controller: App\Controller\CorrectionController::new 
+    controller: App\Controller\CorrectionController::new
 
 PapyrillioBeehive_CorrectionUpdate:
     path:  /correction/update/{id}
-    controller: App\Controller\CorrectionController::update 
+    controller: App\Controller\CorrectionController::update
 
 PapyrillioBeehive_CorrectionLinkSnippet:
     path:  /correction/snippet/link/{id}
-    controller: App\Controller\CorrectionController::snippetLink 
+    controller: App\Controller\CorrectionController::snippetLink
 
 # Edition
 
@@ -282,6 +282,10 @@ PapyrillioBeehive_ApiaryHoney:
     requirements:
       type: '(tm|hgv|ddb|biblio|bl|register|boep|volume|collection)'
       format: '(plain|xml|html|rdf|json|latex)'
+
+PapyrillioBeehive_ApiaryCorrectionInfo:
+    path:  /correction/info/{id}
+    controller: App\Controller\ApiaryController::info
 
 # Security / User
 

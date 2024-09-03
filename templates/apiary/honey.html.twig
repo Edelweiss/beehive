@@ -36,6 +36,10 @@
     BL&nbsp;Online
   {% elseif type == 'register' %}
     Editionen für Register-Id {{ id }}
+  {% elseif type == 'collection' and id == 'ddb'  %}
+    Editionen für BOEP doc.
+  {% elseif type == 'collection' and id == 'dclp'  %}
+    Editionen für BOEP lit.
   {% else %}
     Editionen in
     <br />

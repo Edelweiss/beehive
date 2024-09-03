@@ -98,7 +98,7 @@ class ApiaryController extends BeehiveController{
     }
 
     $logs = array_merge(
-      $entityManager->getRepository(Log::class)->getLogs($tcorrection),
+      $entityManager->getRepository(Log::class)->getLogs($correction),
       $entityManager->getRepository(Log::class)->getTaskLogs($correction));
 
     return $this->render('apiary/info.html.twig', ['correction' => $correction, 'logs' => $this->logs]);

@@ -26,7 +26,8 @@ class ApiaryController extends BeehiveController{
         $compilationsOfInterest[$correction->getCompilation()->getId()] = $correction->getCompilation();
       }
     }
-    return ksort($compilationsOfInterest);
+    ksort($compilationsOfInterest);
+    return $compilationsOfInterest;
   }
 
   private function getCompilations($type, $id){

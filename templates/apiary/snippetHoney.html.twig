@@ -37,9 +37,9 @@
         <div class="description">{{ c.description }}</div>
         <div class="bl">
           {% if c.compilation.collection == 'BOEP' %}
-            <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="{{ c.compilation.short }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}">{{ c.compilation.short|replace({' ' : '&nbsp;'})|raw }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+            <a href="{{ path('PapyrillioBeehive_ApiaryCorrectionInfo', {'id': c.id}) }}" title="{{ c.compilation.short }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}">{{ c.compilation.short|replace({' ' : '&nbsp;'})|raw }}{% if c.compilationIndex %}&nbsp;{{ c.compilationIndex }}{% endif %}</a>
           {% else %}
-            <a href="{{ path('PapyrillioBeehive_CorrectionShow', {'id': c.id}) }}" title="BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
+            <a href="{{ path('PapyrillioBeehive_ApiaryCorrectionInfo', {'id': c.id}) }}" title="BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}">BL&nbsp;{{ c.compilation.title }}{% if c.compilationPage %}&nbsp;S.&nbsp;{{ c.compilationPage }}{% endif %}{% if c.compilationIndex %}&nbsp;#&nbsp;{{ c.compilationIndex }}{% endif %}</a>
           {% endif %}
           {% if c.source %}
             <br />

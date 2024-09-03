@@ -11,7 +11,7 @@
   {% if type != 'collection' %}
   Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
 
-  {% for coi in compilationsOfInterests %}
+  {% for coi in compilationsOfInterest %}
    {% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>
   {% endfor %}
 

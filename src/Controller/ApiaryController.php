@@ -142,8 +142,8 @@ class ApiaryController extends BeehiveController{
       $response->headers->set('Content-Disposition', 'attachment; filename=' . str_replace(' ', '', $title . '.tex'));
       return $response;
     } else {
-      $data = array('corrections' => array());
-      $data = array('count' => count($corrections));
+      $data = ['corrections' => []];
+      $data = $data['count'] = count($corrections);
       foreach($corrections as $correction){
         $data['corrections'][$correction->getId()] = array(
           'tm' => $correction->getTm(),

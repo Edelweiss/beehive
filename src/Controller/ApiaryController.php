@@ -84,6 +84,9 @@ class ApiaryController extends BeehiveController{
     }
     return $id;
   }
+  
+  public function info($id): Response{
+  }
 
   public function honey($type, $id, $format = 'html'): Response{
     $entityManager = $this->getDoctrine()->getManager();

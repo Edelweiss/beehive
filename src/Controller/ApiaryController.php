@@ -19,6 +19,16 @@ class ApiaryController extends BeehiveController{
     return $this->render('apiary/index.html.twig');
   }
 
+  private function getCompilationsOfInterest($corrections){
+    $compilationsOfInterest = [];
+    foreach($correction in $correction){
+      if(!isset($compilationsOfInterest[$correction.getCompilation().getId()])){
+        $compilationsOfInterest[$correction.getCompilation().getId()] = $correction.getCompilation();
+      }
+    }
+    return ksort($compilationsOfInterest);
+  }
+
   private function getCompilations($type, $id){
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Compilation::class);
@@ -115,18 +125,19 @@ class ApiaryController extends BeehiveController{
 
     $corrections = $query->getResult();
     $compilations = $this->getCompilations($type, $id);
+    $compilationsOfInterest = $this->getCompilationsOfInterest($corrections);
     $title = $this->makeTitle($type, trim($id, '%'), $corrections);
 
     if($format === 'html'){
-      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
+      return $this->render('apiary/honey.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'compilationsOfInterest' => $compilationsOfInterest, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
     } elseif($format === 'plain'){
-      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
+      return $this->render('apiary/snippetHoney.html.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'compilationsOfInterest' => $compilationsOfInterest, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]);
     } elseif ($format === 'rdf') {
-      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
+      $response = new Response($this->renderView('apiary/honey.xml.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'compilationsOfInterest' => $compilationsOfInterest, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
       $response->headers->set('Content-Type', 'application/rdf+xml'); //$response->headers->set('Content-Type', 'text/xml');
       return $response;
     } elseif ($format === 'latex') {
-      $response = new Response($this->renderView('apiary/honey.tex.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
+      $response = new Response($this->renderView('apiary/honey.tex.twig', ['corrections' => $corrections, 'compilations' => $compilations, 'compilationsOfInterest' => $compilationsOfInterest, 'title' => $title, 'type' => $type, 'id' => trim($id, '%')]));
       $response->headers->set('Content-Type', 'application/tex+txt'); //$response->headers->set('Content-Type', 'text/tex');
       $response->headers->set('Content-Disposition', 'attachment; filename=' . str_replace(' ', '', $title . '.tex'));
       return $response;

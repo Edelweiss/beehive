@@ -10,9 +10,9 @@
 {% block gamma %}
   {% if type != 'collection' %}
   Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
-  {% set comp_short = '' %}
-  {% for c in corrections %}
-    {% if c.compilation.short != comp_short  %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.compilation.volume }) }}" title="{{ c.compilation.short }}">{{ c.compilation.short|replace({' ' : '&nbsp;'})|raw }}</a>{% set comp_short = c.compilation.short %}{% endif %}
+
+  {% for coi in compilationsOfInterests %}
+   {% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>
   {% endfor %}
 
   {% if r %}

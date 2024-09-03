@@ -113,13 +113,13 @@ class ApiaryController extends BeehiveController{
     // QUERY
 
     $query = $entityManager->createQuery('
-      SELECT e, c, t, r FROM App\Entity\Correction c
-      LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE ' . $where . ' ORDER BY ' . $sort
+      SELECT e, c, t, r, d FROM App\Entity\Correction c
+      LEFT JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 JOIN e.dockets d WHERE ' . $where . ' ORDER BY ' . $sort
     );
     $query->setParameters($parameters);
     if($type === 'collection' && in_array($id, ['ddb', 'dclp'])){
       $query = $entityManager->createQuery('
-        SELECT r, e, c, t FROM App\Entity\Correction c
+        SELECT e, c, t, r FROM App\Entity\Correction c
         JOIN c.registerEntries r LEFT JOIN c.tasks t JOIN c.edition e JOIN c.compilation c2 WHERE c2.collection = :collection AND  r.' . $id . ' IS NOT NULL ORDER BY c.sort'
       );
       $query->setParameters(['collection' => 'BOEP']);

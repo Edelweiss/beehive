@@ -86,6 +86,21 @@ class ApiaryController extends BeehiveController{
   }
   
   public function info($id): Response{
+
+    $entityManager = $this->getDoctrine()->getManager();
+    $repository = $entityManager->getRepository(Correction::class);
+
+    $correction = $repository->findOneBy(['id' => $id]);
+    
+    if(!$correction){
+      throw $this->createNotFoundException('Correction #' . $id . ' does not exist');
+    }
+
+    $logs = array_merge(
+      $entityManager->getRepository(Log::class)->getLogs($tcorrection),
+      $entityManager->getRepository(Log::class)->getTaskLogs($correction));
+
+    return $this->render('apiary/info.html.twig', ['correction' => $correction, 'logs' => $this->logs]);
   }
 
   public function honey($type, $id, $format = 'html'): Response{

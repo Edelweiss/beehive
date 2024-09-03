@@ -101,7 +101,7 @@ class ApiaryController extends BeehiveController{
       $entityManager->getRepository(Log::class)->getLogs($correction),
       $entityManager->getRepository(Log::class)->getTaskLogs($correction));
 
-    return $this->render('apiary/info.html.twig', ['correction' => $correction, 'logs' => $this->logs]);
+    return $this->render('apiary/info.html.twig', ['correction' => $correction, 'logs' => $logs]);
   }
 
   public function honey($type, $id, $format = 'html'): Response{

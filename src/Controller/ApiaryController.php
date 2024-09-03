@@ -34,8 +34,10 @@ class ApiaryController extends BeehiveController{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(Compilation::class);
     $result = [];
-    if($type === 'collection' && in_array($id, ['BL', 'BL Konk.', 'BOEP', 'ddb'])){
+    if($type === 'collection' && in_array($id, ['BL', 'BL Konk.', 'BOEP'])){
       $result = $repository->findBy(['collection' => $id], ['collection' => 'ASC', 'volume' => 'ASC']);
+    } elseif ($type === 'collection' && in_array($id, ['ddb', 'dclp'])) {
+      $result = $repository->findBy(['collection' => 'BOEP'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'bl') {
       $result = $repository->findBy(['collection' => 'BL'], ['collection' => 'ASC', 'volume' => 'ASC']);
     } elseif ($type === 'BL') {

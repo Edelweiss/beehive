@@ -19,6 +19,13 @@ body {
     background-color: #f3e4bf;
 }
 
+ul,
+ul li {
+    list-style: none;
+    list-style-type: none;
+    margin: 0;
+}
+
 div#container {
     background-image: url("../images/frontend/curve.png"), url("../images/frontend/skyline_heidelberg.png");
     background-position: 0 0, bottom 80px center;
@@ -85,6 +92,11 @@ div#righty a:active {
     background-position: left 2px;
 }
 
+a[target="_blank"],
+a[target="_blank"]:link,
+a[target="_blank"]:visited,
+a[target="_blank"]:hover,
+a[target="_blank"]:active,
 div#footer a,
 div#footer a:link,
 div#footer a:visited,
@@ -199,6 +211,10 @@ div#topic.topic_PapyrillioBeehive_Archive {
 
 div#topic.topic_PapyrillioBeehive_Home {
     background-image: url("../images/frontend/topic_home.png");
+}
+
+div#topic.topic_PapyrillioBeehive_ApiaryCorrectionInfo {
+    background-image: url("../images/frontend/topic_honeycomb.png");
 }
 
 div#quick1 {

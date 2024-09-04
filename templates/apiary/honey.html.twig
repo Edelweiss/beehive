@@ -11,17 +11,21 @@
   {% if type != 'collection' %}
   Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
 
-  {% for coi in compilationsOfInterest %}
-   {% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>
+  {% for key, coi in compilationsOfInterest %}
+   {% if key != 'BOEP'  %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endif  %}
   {% endfor %}
+  {% if compilationsOfInterest.BOEP is defined %}
+   {% if compilationsOfInterest|length > 1  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP' }) }}" title="Bulletin of Online Emendations to Papyri">BOEP</a>
+  {% endif %}
 
   {% if r %}
   <br />
-  Weitere identifier und Links: HGV {{ r.hgv }}
-  =
-  <a href="http://www.trismegistos.org/text/{{ r.hgv }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ r.tm }}</a>
+  Weitere identifier und Links:
+  <a href="http://www.trismegistos.org/text/{{ r.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ r.tm }}</a>
   =
   <a href="https://papyri.info/hgv/{{ r.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ r.ddb }}</a>
+  =
+  HGV {{ r.hgv }}
   {% endif %}
   {% endif %}
 {% endblock %}

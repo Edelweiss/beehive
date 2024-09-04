@@ -1,0 +1,33 @@
+{% if correction and correction.id and correction.registerEntries|length %}
+  <table class="register">
+    <thead>
+      <tr>
+        <th scope="col" class="tm" style="padding: 2px;">TM (HGV)</th>
+        <th scope="col" class="ddbdp" style="padding: 2px;">DDB</th>
+        <th scope="col" class="link" style="padding: 2px;">Links im Internet</th>
+      </tr>
+    </thead>
+    <tbody>    
+      {% for registerEntry in correction.registerEntries %}
+        <tr>
+          <td style="padding: 2px;">{{registerEntry.tm}}</td>
+          
+          {% if registerEntry.tm != registerEntry.hgv %}
+            ({{registerEntry.hgv}})
+          {% endif %}
+          
+          <td style="padding: 2px;">{{registerEntry.ddb}}</td>
+          <td style="padding: 2px;">
+            <ul class="registerLinks" style="float: left">
+              {% for name, link in registerEntry.links %}
+                {% if name != 'TM (XML)' %}
+                <li style="float: left"><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

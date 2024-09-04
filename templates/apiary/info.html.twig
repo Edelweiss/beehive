@@ -1,5 +1,32 @@
 {% extends 'frontend.html.twig' %}
 
+{% block beta %}
+  {{ correction.edition.title }}
+  <span id="text" class="edit">{{ correction.text }}</span>{% if correction.position %}, <span id="position" class="edit">{{ correction.position }}</span>{% endif %}
+    <span>(</span><span id="compilation">{{ correction.compilation.short }}</span>
+    {% if correction.compilation.collection == 'BL' %}
+      <span>S. </span><span id="compilationPage" class="edit">{{ correction.compilationPage }}</span>
+    {% elseif correction.compilation.collection == 'BOEP' %}
+      <span id="compilationIndex" class="edit">{{ correction.compilationIndex }}</span>
+  {% endif %}
+    <span>)</span>
+{% endblock %}
+
+{% block gamma %}
+  {% if correction.registerEntries|length %}
+  Weitere identifier und Links:
+  <a href="http://www.trismegistos.org/text/{{ correction.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ correction.tm }}</a>
+  =
+  <a href="https://papyri.info/hgv/{{ correction.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ correction.ddb }}</a>
+  =
+  HGV {{ correction.hgv }}
+  {% endif %}
+{% endblock %}
+
 {% block body %}
-  !!!
+  <p id="description" class="editArea greek">{{ correction.description }}</p>
+  {% if correction.registerEntries|length > 1 %}
+    <h4>Siehe auch:</h4>
+    {% include 'register/snippetList.html.twig' with {'correction': correction} %}
+  {% endif %}
 {% endblock %}

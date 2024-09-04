@@ -77,9 +77,9 @@ class ApiaryController extends BeehiveController{
     }
     if($type === 'collection'){
       if($id ===  'ddb') {
-        return 'BOEP-DDB-Einträge in der Berichtigungsliste';
+        return 'DDB-Einträge in BOEP';
       } elseif ($id ===  'dclp') {
-        return 'BOEP-DCLP-Einträge in der Berichtigungsliste';
+        return 'DCLP-Einträge in BOEP';
       } elseif ($id ===  'BL') {
         return 'Berichtigungsliste Online';
       } elseif ($id ===  'BL Konk.') {

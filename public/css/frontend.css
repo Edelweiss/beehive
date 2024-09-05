@@ -334,7 +334,7 @@ div.apiary div.docket p {
 div.apiary div.correction div.text {
     border-right: 1px solid grey;
 }
-
+table.apiary td.text a,
 div.apiary div.correction div.text a {
     background-image: none;
     padding: 0;

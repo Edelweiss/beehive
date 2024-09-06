@@ -353,6 +353,7 @@ div.apiary div.correction div.description {
 
 div.apiary h4 {
     display: table-row;
+    #display: table-caption;
     #background-color: lightyellow;
 }
 
@@ -380,13 +381,13 @@ table.apiary tr td.text {
 }
 
 table.apiary tr td.position {
-    width: 8em;
+    width: 6em;
     text-align: right;
     border-bottom: solid 1px lightgrey;
 }
 
 table.apiary tr td.bl {
-    width: 12em;
+    width: 8em;
     vertical-align: bottom;
     font-size: smaller;
     color: gray;

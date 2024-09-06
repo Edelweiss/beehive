@@ -16,7 +16,8 @@
 
 {% block body %}
   <p>Hier finden Sie Zugang zu sämtlichen Einträgen der BL, BL-Konkordanz und BOEP der vergangenen Jahre sowie die einzelnen Bände gebündelt nach Erscheinungsdatum.</p>
-  <h4 id="bl">BL – Berichtigungsliste</h4>
+  <h4 id="bl" class="archive">BL – Berichtigungsliste</h4>
+  <p class="archive">INFOTEXT ARCHIVE BL</p>
   <ul class="archive">
     {% for c in bl %}
       {% if c.volume < 14 %}
@@ -29,7 +30,8 @@
       {% endif %}
     {% endfor %}
   </ul>
-  <h4 id="blKonk">BL Konkordanz</h4>
+  <h4 id="blKonk" class="archive">BL Konkordanz</h4>
+  <p class="archive">INFOTEXT ARCHIVE BL KONK.</p>
   <ul class="archive">
     {% for c in konk %}
       <li>
@@ -38,7 +40,8 @@
       </li>
     {% endfor %}
   </ul>
-  <h4 id="boep">BOEP – Bulletin of Online Emendations to Papyri</h4>
+  <h4 id="boep" class="archive">BOEP – Bulletin of Online Emendations to Papyri</h4>
+  <p class="archive">INFOTEXT ARCHIVE BOED</p>
   <ul class="archive">
     {% for c in boep %}
       <li>

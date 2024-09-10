@@ -1,58 +1,55 @@
 {% extends 'frontend.html.twig' %}
-{% set c = corrections|first %}
-{% set r = c.registerEntries|first %}
-{% set comp = compilations|first %}
 
 {% block beta %}
   {{ title }}
 {% endblock %}
 
 {% block gamma %}
-  {% if type != 'collection' %}
-  Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
+  {% if compilationsOfInterest|length and type != 'collection' %}
+    Die Inhalte der angezeigten Korrekturen stammen aus den Online-Beständen von
 
-  {% for key, coi in compilationsOfInterest %}
-   {% if key != 'BOEP'  %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endif  %}
-  {% endfor %}
-  {% if compilationsOfInterest.BOEP is defined %}
-   {% if compilationsOfInterest|length > 1  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP' }) }}" title="Bulletin of Online Emendations to Papyri">BOEP</a>
-  {% endif %}
+    {% for key, coi in compilationsOfInterest %}
+      {% if key != 'BOEP'  %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': coi.volume }) }}" title="{{ coi.short }}">{{ coi.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endif  %}
+    {% endfor %}
+    {% if compilationsOfInterest.BOEP is defined %}
+      {% if compilationsOfInterest|length > 1  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP' }) }}" title="Bulletin of Online Emendations to Papyri">BOEP</a>
+    {% endif %}
 
-  {% if r %}
-  <br />
-  Weitere identifier und Links:
-  <a href="http://www.trismegistos.org/text/{{ r.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ r.tm }}</a>
-  =
-  <a href="https://papyri.info/hgv/{{ r.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ r.ddb }}</a>
-  =
-  HGV {{ r.hgv }}
-  {% endif %}
+    {% if corrections|length and corrections|first.registerEntries|length %}
+      {% set r = corrections|first.registerEntries|first %}
+      <br />
+      Weitere identifier und Links:
+      <a href="http://www.trismegistos.org/text/{{ r.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ r.tm }}</a>
+      =
+      <a href="https://papyri.info/hgv/{{ r.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ r.ddb }}</a>
+      =
+      HGV {{ r.hgv }}
+    {% endif %}
   {% endif %}
 {% endblock %}
 
-{% set edition = '' %}
-{% set collection = '' %}
-
 {% block lefty_title %}
-  {% if type == 'volume' %}
-    {{ id }} in
-    <br/>
-    BL&nbsp;Online
-  {% elseif type == 'register' %}
-    Editionen für Register-Id {{ id }}
-  {% elseif type == 'collection' and id == 'ddb'  %}
-    Editionen für BOEP doc.
-  {% elseif type == 'collection' and id == 'dclp'  %}
-    Editionen für BOEP lit.
-  {% else %}
-    Editionen in
-    <br />
-    {% if type == 'collection' %}
-      {{ comp.collection }}
-    {% elseif type == 'tm' or  type == 'hgv' or  type == 'ddb' or  type == 'biblio' %}
-      {% if type == 'tm' or  type == 'hgv' or  type == 'biblio' %}{{ type | upper }}&nbsp;{% endif %}{{ id }}
-    {% elseif c is not null and c is not empty %}
-      {{c.compilation.short}}
+  {%if corrections|length %}
+    {% if type == 'volume' %}
+      {{ id }} in
+      <br/>
+      BL&nbsp;Online
+    {% elseif type == 'register' %}
+      Editionen für Register-Id {{ id }}
+    {% elseif type == 'collection' and id == 'ddb'  %}
+      Editionen für BOEP doc.
+    {% elseif type == 'collection' and id == 'dclp'  %}
+      Editionen für BOEP lit.
+    {% else %}
+      Editionen in
+      <br />
+      {% if type == 'collection' %}
+        {{ comp.collection }}
+      {% elseif type == 'tm' or  type == 'hgv' or  type == 'ddb' or  type == 'biblio' %}
+        {% if type == 'tm' or  type == 'hgv' or  type == 'biblio' %}{{ type | upper }}&nbsp;{% endif %}{{ id }}
+      {% elseif corrections|length %}
+        {{corrections|first.compilation.short}}
+      {% endif %}
     {% endif %}
   {% endif %}
 {% endblock %}
@@ -60,22 +57,26 @@
 {% block lefty %}
 <ul>
   {% if type == 'boep' and id != 'Bulletin of Online Emendations to Papyri' %}
+    {% set collection = '' %}
     {% for c in corrections %}
       {% set currentCollection = c.registerEntries|length and c.registerEntries|first.dclp|length ? 'DCLP' : 'DDB' %}
-          {% if currentCollection != collection %}
+        {% if currentCollection != collection %}
           <li><a href="#{{ currentCollection }}">{{ currentCollection }}</a></li>
           {% set collection = currentCollection %}
-          {% endif %}
+        {% endif %}
     {% endfor %}
     <hr />
   {% endif %}
+
+  {% set edition = '' %}
   {% for c in corrections %}
       {% if c.edition.title != edition %}
-        <li><a href="#{{ c.edition.title|replace({' ': '_', '.': ''}) }}" class="edition">
+        <li>
+          <a href="#{{ c.edition.title|replace({' ': '_', '.': ''}) }}" class="edition">
             {{ c.edition.title }}
-            </a>
-            </li>
-            {% set edition = c.edition.title %}
+          </a>
+        </li>
+        {% set edition = c.edition.title %}
       {% endif %}
   {% endfor %}
 </ul>
@@ -108,11 +109,13 @@
 {% endblock %}
 
 {% block body %}
-
-  {% if c is not null and c is not empty and c.compilation.collection == 'BOEP' %}
-    {% include 'apiary/snippetBoep.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
+  {% if corrections|length %}
+    {% if corrections|first.compilation.collection == 'BOEP' %}
+      {% include 'apiary/snippetBoep.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
+    {% else %}
+      {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
+    {% endif %}
   {% else %}
-    {% include 'apiary/snippetHoney.html.twig' with {'corrections': corrections, 'type': type, 'id': id} %}
+    <p>Für {{ type|upper }}&nbsp;{{ id }} sind keine Datensätze abrufbar</p>
   {% endif %}
-
 {% endblock %}

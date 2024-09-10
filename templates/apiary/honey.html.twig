@@ -44,7 +44,7 @@
       Editionen in
       <br />
       {% if type == 'collection' %}
-        {{ comp.collection }}
+        {{ corrections|first.compilation.collection }}
       {% elseif type == 'tm' or  type == 'hgv' or  type == 'ddb' or  type == 'biblio' %}
         {% if type == 'tm' or  type == 'hgv' or  type == 'biblio' %}{{ type | upper }}&nbsp;{% endif %}{{ id }}
       {% elseif corrections|length %}
@@ -84,10 +84,12 @@
 
 
 {% block righty_title %}
-  {% if type == 'tm' or type == 'hgv' or type == 'ddb' or type == 'volume' or type == 'biblio' or type == 'register' %}
-  {% else %}
-  weitere
-  {{ comp.collection }}s
+  {% if corrections|length %}
+    {% if type == 'tm' or type == 'hgv' or type == 'ddb' or type == 'volume' or type == 'biblio' or type == 'register' %}
+    {% else %}
+    weitere
+    {{ corrections|first.compilation.collection }}s
+    {% endif %}
   {% endif %}
 {% endblock %}
 

@@ -5,7 +5,7 @@
   {% for c in corrections %}
     {% if c.edition.title != edition %}
       <h4 id="{{ c.edition.title|replace({' ': '_', '.': ''}) }}" class="edition">
-        {{ c.edition.title }}
+        {{ c.edition.title }} <span><a href="#top" title="zurück zum Anfang" class="backtotop">⇧</a></span>
         {% set edition = c.edition.title %}
         {% set text = '' %}
       </h4>

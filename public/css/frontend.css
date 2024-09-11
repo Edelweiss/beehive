@@ -107,6 +107,17 @@ div#footer a:active {
     background-position: left 2px;
 }
 
+a.backtotop,
+a.backtotop:link,
+a.backtotop:visited,
+a.backtotop:hover,
+a.backtotop:active {
+    background-image: none;
+
+    color: #503d31;
+    #font-family: Papyrus, Palatino, serif;
+    text-decoration: none;
+}
 
 /* HEADER */
 

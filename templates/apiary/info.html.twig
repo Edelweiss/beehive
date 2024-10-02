@@ -4,7 +4,7 @@
   BL-Eintrag zu {{ correction.edition.title }}
   <span id="text" class="edit">{{ correction.text }}</span>{% if correction.position %}, <span id="position" class="edit">{{ correction.position }}</span>{% endif %}
     <span>in </span><span id="compilation">{{ correction.compilation.short }}</span>
-    {% if correction.compilation.collection == 'BL' and correction.compilationPage %}
+    {% if correction.compilation.collection starts with 'BL' and correction.compilationPage %}
       <span>S. </span><span id="compilationPage" class="edit">{{ correction.compilationPage }}</span>
     {% elseif correction.compilation.collection == 'BOEP' %}
       <span id="compilationIndex" class="edit">{{ correction.compilationIndex }}</span>

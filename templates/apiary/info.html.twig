@@ -19,6 +19,9 @@
   {% if correction.ddb %}
       =
       <a href="https://papyri.info/hgv/{{ correction.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ correction.ddb }}</a>
+  {% elsif correction.dclp %}
+      =
+      <a href="https://papyri.info/dclp/{{ correction.dclp }}"  title="Weitere Informationen auf papyri.info" target="_blank">DCLP auf Papyri.info</a>
   {% endif %}
   =
   HGV {{ correction.hgv }}

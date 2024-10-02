@@ -4,6 +4,10 @@
   Archiv vergangener Editionen
 {% endblock %}
 
+{% block gamma %}
+  Hier finden Sie Zugang zu sämtlichen Einträgen der BL, BL-Konkordanz und BOEP der vergangenen Jahre sowie die einzelnen Bände gebündelt nach Erscheinungsdatum.
+{% endblock %}
+
 {% block lefty_title %}Kollektionen{% endblock %}
 
 {% block lefty %}
@@ -15,9 +19,9 @@
 {% endblock %}
 
 {% block body %}
-  <p>Hier finden Sie Zugang zu sämtlichen Einträgen der BL, BL-Konkordanz und BOEP der vergangenen Jahre sowie die einzelnen Bände gebündelt nach Erscheinungsdatum.</p>
-  <h4 id="bl" class="archive">BL – Berichtigungsliste</h4>
-  <p class="archive">INFOTEXT ARCHIVE BL</p>
+  <h4 id="bl" class="archive" style="margin-top: 0;">BL – Berichtigungsliste</h4>
+  <p class="archive">Der gesamte Inhalt von BL I-XIII kann eingesehen und durchsucht werden. Die Quelle der Bände I-XI ist die BL-CD. Daher gibt es immer noch Tippfehler und bestimmte Ungenauigkeiten, die vom Ausgangsmaterial übernommen wurden. Die Einträge sind nicht mit den gedruckten Bänden abgeglichen worden. Die Fehler können im Laufe der Zeit in der Datenbank korrigiert werden. Diese Korrekturen durchzuführen wird davon abhängen, daß Benutzer die Fehler mitteilen.
+Korrekturen, die nicht in BL XIII enthalten sind, aber für künftige Bände gesammelt werden, sofern sie in der traditionellen Form erscheinen, können ebenfalls eingesehen und durchsucht werden. Diese sind keineswegs vollständig.</p>
   <ul class="archive">
     {% for c in bl %}
       {% if c.volume < 14 %}
@@ -31,7 +35,7 @@
     {% endfor %}
   </ul>
   <h4 id="blKonk" class="archive">BL Konkordanz</h4>
-  <p class="archive">INFOTEXT ARCHIVE BL KONK.</p>
+  <p class="archive">Hier finden sich nur die in den beiden BL-Korkordanz-Bänden gefundenen und auf die BL-CD übertragenen Korrekturen. Diese sind nicht mit den gedruckten Bänden abgeglichen worden.</p>
   <ul class="archive">
     {% for c in konk %}
       <li>
@@ -41,7 +45,7 @@
     {% endfor %}
   </ul>
   <h4 id="boep" class="archive">BOEP – Bulletin of Online Emendations to Papyri</h4>
-  <p class="archive">INFOTEXT ARCHIVE BOEP</p>
+  <p class="archive">Es ist nun möglich, alle BOEP-Korrekturen in der normalen papyrologischen Reihenfolge der veröffentlichten Serien anzuschauen. Es ist nicht mehr notwendig, jedes einzelne BOEP zu überprüfen. Die laufenden Nummern wurden rückwirkend hinzugefügt.</p>
   <ul class="archive">
     {% for c in boep %}
       <li>

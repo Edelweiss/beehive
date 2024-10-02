@@ -25,6 +25,14 @@
       =
       HGV {{ r.hgv }}
     {% endif %}
+  {% elseif type == 'collection' %}
+    {% if id == 'BOEP' %}
+      Es ist jetzt möglich, alle BOEP-Korrekturen an einem Ort einzusehen. Diese sind alphabetisch nach ihrer BL-Abkürzung geordnet. Es ist nicht mehr notwendig, jedes einzelne BOEP zu überprüfen. Die laufenden Nummern sind nachträglich hinzugefügt worden.
+    {% elseif id == 'ddb' %}
+      Alle Korrekturen im BOEP, die dokumentarische Texte betreffen, sind an einem Ort gesammelt. Sie sind alphabetisch nach ihrem BL-Kürzel geordnet.
+    {% elseif id == 'dclp' %}
+      Alle Korrekturen im BOEP, die literarische und halbliterarische Texte betreffen, werden an einem Ort gesammelt. Sie sind alphabetisch nach ihrem BL-Kürzel geordnet.
+    {% endif %}
   {% endif %}
 {% endblock %}
 

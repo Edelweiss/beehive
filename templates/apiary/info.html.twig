@@ -14,17 +14,19 @@
 
 {% block gamma %}
   {% if correction.registerEntries|length %}
-  Weitere identifier und Links:
-  <a href="http://www.trismegistos.org/text/{{ correction.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ correction.tm }}</a>
-  {% if correction.ddb %}
+    Weitere identifier und Links:
+    <a href="http://www.trismegistos.org/text/{{ correction.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ correction.tm }}</a>
+    {% if correction.ddb %}
       =
       <a href="https://papyri.info/hgv/{{ correction.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ correction.ddb }}</a>
-  {% elseif correction.dclp %}
+    {% elseif correction.dclp %}
       =
       <a href="https://papyri.info/dclp/{{ correction.dclp }}"  title="Weitere Informationen auf papyri.info" target="_blank">DCLP auf Papyri.info</a>
-  {% endif %}
-  =
-  HGV {{ correction.hgv }}
+    {% endif %}
+    {% if correction.hgv %}
+      =
+      HGV {{ correction.hgv }}
+    {% endif %}
   {% endif %}
 {% endblock %}
 

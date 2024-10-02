@@ -16,8 +16,10 @@
   {% if correction.registerEntries|length %}
   Weitere identifier und Links:
   <a href="http://www.trismegistos.org/text/{{ correction.tm }}"  title="Weitere Informationen auf Trismegistos" target="_blank">TM {{ correction.tm }}</a>
-  =
-  <a href="https://papyri.info/hgv/{{ correction.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ correction.ddb }}</a>
+  {% if correction.ddb %}
+      =
+      <a href="https://papyri.info/hgv/{{ correction.hgv }}"  title="Weitere Informationen auf papyri.info" target="_blank">{{ correction.ddb }}</a>
+  {% endif %}
   =
   HGV {{ correction.hgv }}
   {% endif %}

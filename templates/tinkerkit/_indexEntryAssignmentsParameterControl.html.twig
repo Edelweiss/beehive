@@ -1,0 +1,28 @@
+<form id="indexEntryAssignmentsParameterControl" autocomplete="off">
+<p>
+  <select id="compilationId" name="compilationid">
+    {% for compilation in compilationList %}
+
+      <option value="{{ compilation.id }}" {{ compilation.id == compilationId ? 'selected="selected"' : '' }}>{{ compilation.short }}</option>
+
+    {% endfor %}
+  </select>
+
+  <select id="type" name="type">
+    {% for typeTitle in ['Neues Wort', 'Ghostword'] %}
+      <option value="{{ typeTitle }}" {{ typeTitle == type ? 'selected="selected"' : '' }}>{{ typeTitle }}</option>
+    {% endfor %}
+  </select>
+
+  <select id="topic" name="topic">
+    {% for topicTitle in topicList %}
+      <option value="{{ topicTitle }}" {{ topicTitle == topic ? 'selected="selected"' : '' }}>{{ topicTitle }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="topic">Suchbegriff:</label>
+  <input id="search" name="search" type="text" value="{{ search }}"/>
+
+  <input type="submit" value="Daten laden" onClick="window.location = '/beehive/tinkerkit/indexEntry/manageAssignments/' + $('#compilationId').val() + '/' + $('#type').val() + '/' + $('#topic').val() + '/' + $('#search').val(); return false;"/>
+</p>
+</form>

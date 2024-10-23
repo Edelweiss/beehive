@@ -1,34 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <form autocomplete="off">
-  <p>
-    <select id="compilationId" name="compilationid">
-      {% for compilation in compilationList %}
 
-        <option value="{{ compilation.id }}" {{ compilation.id == compilationId ? 'selected="selected"' : '' }}>{{ compilation.short }}</option>
+  {% include 'tinkerkit/_indexEntryAssignmentsParameterControl.html.twig' with {'compilationList': compilationList, 'compilationId': compilationId, 'type': type, 'topicList': topicList, 'topic': topic, 'search': search} %}
 
-      {% endfor %}
-    </select>
+  <form>
+    <input name="compilationId" type="hidden" value="{{ compilationId }}" />
+    <input name="type" type="hidden" value="{{ type }}" />
+    <input name="topic" type="hidden" value="{{ topic }}" />
+    <input name="search" type="hidden" value="{{ search }}" />
 
-    <select id="type" name="type">
-      {% for typeTitle in ['Neues Wort', 'Ghostword'] %}
-        <option value="{{ typeTitle }}" {{ typeTitle == type ? 'selected="selected"' : '' }}>{{ typeTitle }}</option>
-      {% endfor %}
-    </select>
+    <div>
+      <div>
+        <ul>
+          {% for indexEntry in indexEntryList %}
+            <li>{{ indexEntry.phrase }}</li>
+          {% endfor%}
+        </ul>
+      </div>
 
-    <select id="topic" name="topic">
-      {% for topicTitle in topicList %}
-        <option value="{{ topicTitle }}" {{ topicTitle == topic ? 'selected="selected"' : '' }}>{{ topicTitle }}</option>
-      {% endfor %}
-    </select>
-
-    <label for="topic">Suchbegriff:</label>
-    <input id="search" name="search" type="text" value="{{ search }}"/>
-
-    <input type="submit" value="Daten laden" onClick="window.location = '/beehive/tinkerkit/indexEntry/manageAssignments/' + $('#compilationId').val() + '/' + $('#type').val() + '/' + $('#topic').val() + '/' + $('#search').val(); return false;"/>
- 
-  </p>
+      <div>
+        <ul>
+          {% for c in correctionList %}
+            <li title="{{ c.edition.title }} {{ c.text }} {{ c.position }}">{{ c.description }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
   </form>
+
 {% endblock %}

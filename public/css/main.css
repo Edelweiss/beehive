@@ -537,3 +537,23 @@ form#editionNew input#edition_new_title {
 form#editionNew input#edition_new_volume {
     width: 4em;
 }
+
+/* INDEX_ENTRY */
+
+div#indexEntryMangager {
+  position: relative;
+  background-color: green;
+}
+
+div#indexEntryMangager div#indexEntryList,
+div#indexEntryMangager div#correctionList {
+    width: 400px;
+    height: 500px;
+    float: left;
+    overflow: scroll;
+    background-color: red;
+  }
+  div#indexEntryMangager div#correctionList {
+
+    background-color: blue;
+  }

@@ -10,8 +10,8 @@
     <input name="topic" type="hidden" value="{{ topic }}" />
     <input name="search" type="hidden" value="{{ search }}" />
 
-    <div>
-      <div>
+    <div id="indexEntryMangager">
+      <div id="indexEntryList">
         <ul>
           {% for indexEntry in indexEntryList %}
             <li>{{ indexEntry.phrase }}</li>
@@ -19,7 +19,7 @@
         </ul>
       </div>
 
-      <div>
+      <div id="correctionList">
         <ul>
           {% for c in correctionList %}
             <li title="{{ c.edition.title }} {{ c.text }} {{ c.position }}">{{ c.description }}</li>

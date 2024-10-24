@@ -23,8 +23,8 @@ class IndexEntryController extends BeehiveController{
 
     if($compilationId){
       $query = $entityManager->createQuery('
-        SELECT i, c FROM App\Entity\IndexEntry i
-        JOIN i.corrections c WHERE i.type = :type AND c.compilation = :compilationId ORDER BY i.sort');
+        SELECT i, c, comp FROM App\Entity\IndexEntry i
+        JOIN i.corrections c LEFT JOIN i.compilations comp WHERE i.type = :type AND c.compilation = :compilationId ORDER BY i.sort');
       $parameters = ['type' => $type, 'compilationId' => $compilationId];
       $query->setParameters($parameters);
       $indexEntries = $query->getResult();
@@ -42,8 +42,8 @@ class IndexEntryController extends BeehiveController{
       $compilations = $repositoryCompilation->findBy(['collection' => 'BL']);
     } else {
       $query = $entityManager->createQuery('
-        SELECT i, c FROM App\Entity\IndexEntry i
-        JOIN i.compilations c WHERE i.type = :type ORDER BY i.sort');
+        SELECT i, c, comp FROM App\Entity\IndexEntry i
+        JOIN i.compilations c LEFT JOIN i.compilations comp WHERE i.type = :type ORDER BY i.sort');
       $parameters = ['type' => $type];
       $query->setParameters($parameters);
       $indexEntries = $query->getResult();

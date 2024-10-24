@@ -48,10 +48,10 @@
 {% block body %}
 
 {% for topic, list in indexEntries %}
-   <h4 id="{{ topic | replace({ ' ': '_'}) }}">{{ topic }}{% if app.user and compilation %}&nbsp;<a href="{{path('PapyrillioBeehive_IndexEntryManageAssignments', {'compilationId' : compilation.id, 'type': type, 'topic': topic})}}" style="font-size: .8em; color: darksalmon;">bearbeiten</a>&nbsp;<a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_'})}}').show();" style="font-size: .8em; color: darksalmon;">ausstehende anzeigen</a>{% endif %}</h4>
+   <h4 id="{{ topic | replace({ ' ': '_'}) }}">{{ topic }}{% if app.user and compilation %}&nbsp;<a href="{{path('PapyrillioBeehive_IndexEntryManageAssignments', {'compilationId' : compilation.id, 'type': type, 'topic': topic})}}" style="font-size: .8em; color: darksalmon;">bearbeiten</a>&nbsp;<a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_', ',': '_', 'ö': 'oe'})}}').show();" style="font-size: .8em; color: darksalmon;">ausstehende anzeigen</a>{% endif %}</h4>
    {% if app.user and compilation %}
-     <div id="unassigned_{{topic|replace({' ': '_'})}}" style="background-color: lightgrey; display: none;">
-       ausstehend für <b>{{topic}}</b>: <a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_'})}}').hide();" style="font-size: .8em; color: darksalmon;">verbergen</a><br/>
+     <div id="unassigned_{{topic|replace({' ': '_', ',': '_', 'ö': 'oe'})}}" style="background-color: lightgrey; display: none;">
+       ausstehend für <b>{{topic}}</b>: <a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_', ',': '_', 'ö': 'oe'})}}').hide();" style="font-size: .8em; color: darksalmon;">verbergen</a><br/>
        <ul style="columns: 5; background-color: lightgrey;">
        {% for u in unassigned %}
        <li>{% if u.topic == topic %}{{ u.phrase }}{% endif %}</li>
@@ -62,15 +62,13 @@
    <ul class="indexEntry"><!--  style="column-count: 2" -->
       {% for i in list %}
         <li id="{{ i.id }}" class="phrase">
-        {% if i.compilations|length > 0 %}
-          <span class="phrase">{{ i.phrase }}</span>{% if not compilation %}<span class="biblio">,&nbsp;siehe 
-            {% for c in i.compilations %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}
-          </span>{% else %},&nbsp;S. {% for c in i.corrections %}{% if not loop.first %}, {% endif %}{{ c.compilationPage }}{% endfor %}{% endif %}
+          <span class="phrase">{{ i.phrase }}</span>
+          {% if not compilation and i.compilations|length > 0 %}<span class="biblio">,&nbsp;{% for c in i.compilations %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}</span>
+          {% else %}<span class="biblio">,&nbsp;S. {% for c in i.corrections %}{% if not loop.first %}, {% endif %}{{ c.compilationPage }}{% endfor %}</span>
           {% endif %}
         </li>
       {% endfor %}
     </ul>
 {% endfor %}
-
 
 {% endblock %}

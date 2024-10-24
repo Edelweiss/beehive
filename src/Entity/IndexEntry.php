@@ -17,11 +17,12 @@ class IndexEntry
     private $sort;
     private $phrase;
     private $compilations;
-    private $correction;
+    private $corrections;
 
     public function __construct()
     {
         $this->compilations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->corrections = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId()
@@ -99,14 +100,14 @@ class IndexEntry
         return $this->phrase;
     }
 
-    public function setCorrection(\App\Entity\Correction $correction)
+    public function addCorrection(\App\Entity\Correction $correction)
     {
-        $this->correction = $correction;
+        $this->corrections[] = $correction;
     }
 
-    public function getCorrection()
+    public function getCorrections()
     {
-        return $this->correction;
+        return $this->corrections;
     }
 
     public function addCcompilation(\App\Entity\Compilation $compilation)

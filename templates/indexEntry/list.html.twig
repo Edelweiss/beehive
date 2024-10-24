@@ -6,35 +6,66 @@
   {% else %}
     Neue Wörter
   {% endif %}
+  {% if compilation %}
+    für {{ compilation.short }}
+  {% endif %}
 {% endblock %}
 
 {% block gamma %}
-  Die Listen sind noch unvollständig und noch nicht einzelnen Korrekturen zugeordnet. Sie werden kontinuierlich erweitert und sollen langfristig auf die Korrekturen verweisen, auf die sie sich in den jeweiligen Bänden beziehen.
+  {% if compilation %}
+    Gehe zu <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': compilation.volume }) }}" title="{{ compilation.short }}">{{ compilation.short|replace({' ' : '&nbsp;'})|raw }}</a>
+  {% else %}
+    Die Listen sind noch unvollständig und noch nicht einzelnen Korrekturen zugeordnet. Sie werden kontinuierlich erweitert und sollen langfristig auf die Korrekturen verweisen, auf die sie sich in den jeweiligen Bänden beziehen.
+  {% endif %}
 {% endblock %}
 
 {% block lefty_title %}Kategorien{% endblock %}
 
 {% block lefty %}
-<ul>
-  {% for topic, list in indexEntries %}
+  <ul>
+    {% for topic, list in indexEntries %}
+      <li><a href="#{{ topic | replace({ ' ': '_'}) }}">{{ topic }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
 
-    <li><a href="#{{ topic | replace({ ' ': '_'}) }}">{{ topic }}</a></li>
+{% block righty_title %}
+  {% if app.user and compilation %}
+    Index für:
+  {% endif %}
+{% endblock %}
 
-  {% endfor %}
-</ul>
+{% block righty %}
+  {% if app.user %}
+    <ul>
+      {% for c in compilations %}
+        <li><a href="{{ path(type == 'Neues Wort' ? 'PapyrillioBeehive_IndexEntryNew' : 'PapyrillioBeehive_IndexEntryGhostword', {'compilationId': c.id}) }}">{{ c.short }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}
 
 {% block body %}
 
 {% for topic, list in indexEntries %}
-   <h4 id="{{ topic | replace({ ' ': '_'}) }}">{{ topic }}</h4>
+   <h4 id="{{ topic | replace({ ' ': '_'}) }}">{{ topic }}{% if app.user and compilation %}&nbsp;<a href="{{path('PapyrillioBeehive_IndexEntryManageAssignments', {'compilationId' : compilation.id, 'type': type, 'topic': topic})}}" style="font-size: .8em; color: darksalmon;">bearbeiten</a>&nbsp;<a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_'})}}').show();" style="font-size: .8em; color: darksalmon;">ausstehende anzeigen</a>{% endif %}</h4>
+   {% if app.user and compilation %}
+     <div id="unassigned_{{topic|replace({' ': '_'})}}" style="background-color: lightgrey; display: none;">
+       ausstehend für <b>{{topic}}</b>: <a href="javascript: return false;" onclick="$('#unassigned_{{topic|replace({' ': '_'})}}').hide();" style="font-size: .8em; color: darksalmon;">verbergen</a><br/>
+       <ul style="columns: 5; background-color: lightgrey;">
+       {% for u in unassigned %}
+       <li>{% if u.topic == topic %}{{ u.phrase }}{% endif %}</li>
+       {% endfor %}
+       </ul>
+     </div>
+   {% endif %}
    <ul class="indexEntry"><!--  style="column-count: 2" -->
       {% for i in list %}
         <li id="{{ i.id }}" class="phrase">
         {% if i.compilations|length > 0 %}
-          <span class="phrase">{{ i.phrase }}</span><span class="biblio">,&nbsp;siehe 
+          <span class="phrase">{{ i.phrase }}</span>{% if not compilation %}<span class="biblio">,&nbsp;siehe 
             {% for c in i.compilations %}{% if loop.first == false  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': c.volume }) }}" title="{{ c.short }}">{{ c.short|replace({' ' : '&nbsp;'})|raw }}</a>{% endfor %}
-          </span>
+          </span>{% else %},&nbsp;S. {% for c in i.corrections %}{% if not loop.first %}, {% endif %}{{ c.compilationPage }}{% endfor %}{% endif %}
           {% endif %}
         </li>
       {% endfor %}

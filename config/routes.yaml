@@ -249,16 +249,19 @@ PapyrillioBeehive_SystemCheckSort:
 # IndexEntry
 
 PapyrillioBeehive_IndexEntryGhostword:
-    path:  /ghostwords
+    path:  /ghostwords/{compilationId}
     controller: App\Controller\IndexEntryController::list
     defaults:
         type: 'Ghostword'
+        compilationId: null
 
 PapyrillioBeehive_IndexEntryNew:
-    path:  /newwords
+    path:  /newwords/{compilationId}
     controller: App\Controller\IndexEntryController::list
     defaults:
         type: 'Neues Wort'
+        compilationId: null
+        
 
 PapyrillioBeehive_IndexEntry:
     path:  /idx/{type}

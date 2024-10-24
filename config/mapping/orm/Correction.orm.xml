@@ -36,12 +36,23 @@
                 <cascade-remove/>
             </cascade>
         </one-to-many>
-        <one-to-many field="indexEntries" target-entity="IndexEntry" mapped-by="correction" orphan-removal="true">
+        <!--one-to-many field="indexEntries" target-entity="IndexEntry" mapped-by="correction" orphan-removal="true">
             <cascade>
                 <cascade-persist/>
                 <cascade-remove/>
             </cascade>
-        </one-to-many>
+        </one-to-many-->
+        <many-to-many field="indexEntries" target-entity="IndexEntry">
+            <join-table name="compilation_index_entry">
+                <join-columns>
+                    <join-column name="compilation_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="index_entry_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <!-- don't forget to init the collection in entity __construct() method -->
         <many-to-many field="registerEntries" target-entity="Register">
             <join-table name="correction_register">
                 <join-columns>

@@ -551,9 +551,9 @@ div#indexEntryMangager div#correctionList {
     height: 500px;
     float: left;
     overflow: scroll;
-    background-color: red;
+    background-color: darkgrey;
   }
   div#indexEntryMangager div#correctionList {
 
-    background-color: blue;
+    background-color: grey;
   }

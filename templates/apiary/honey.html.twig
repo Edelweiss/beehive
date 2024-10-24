@@ -15,7 +15,7 @@
       {% if compilationsOfInterest|length > 1  %}, {% endif %}<a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'collection', 'id': 'BOEP' }) }}" title="Bulletin of Online Emendations to Papyri">BOEP</a>
     {% endif %}
 
-    {% if corrections|length and corrections|first.registerEntries|length %}
+    {% if type != 'bl' and corrections|length and corrections|first.registerEntries|length %}
       {% set r = corrections|first.registerEntries|first %}
       <br />
       Weitere identifier und Links:

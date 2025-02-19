@@ -782,7 +782,7 @@ values
 (NULL, 'p.wisc;1', 'P.Wisc. 1', 788000),
 (NULL, 'p.wisc;2', 'P.Wisc. 2', 789000),
 (NULL, 'p.worp;', 'P.Worp', 790000),
-(NULL, 'p.wuerzb;', 'P.Würzb.', 791000),
+(NULL, 'p.wuerzb;', 'P.Würzb. 1', 791000),
 (NULL, 'p.yale;1', 'P.Yale 1', 792000),
 (NULL, 'p.yale;3', 'P.Yale 3', 793000),
 (NULL, 'p.yale;4', 'P.Yale 4', 794000),
@@ -947,6 +947,49 @@ values
 (NULL, 'zpe;224', 'ZPE 224', 957000),
 (NULL, 'zpe;226', 'ZPE 226', 958000);
 
+insert into
+ volume(id, hybrid, title, sort)
+values
+(NULL, 'aegyptus;103', 'Aegyptus 103', 11004),
+(NULL, 'analpap;31', 'AnalPap 31', 20001),
+(NULL, 'analpap;33', 'AnalPap 33', 20002),
+(NULL, 'analpap;34', 'AnalPap 34', 20003),
+(NULL, 'arctos;13', 'Arctos 13', 42113),
+(NULL, 'basp;60', 'BASP 60', 63001),
+(NULL, 'bgu;21', 'BGU 21', 66001),
+(NULL, 'bgu;22', 'BGU 22', 66002),
+(NULL, 'cde;96', 'CdÉ 96', 107001),
+(NULL, 'cde;98', 'CdÉ 98', 107003),
+(NULL, 'ddbdp;2002', 'DDbDP 2002', 173988),
+(NULL, 'ddbdp;2013', 'DDbDP 2013', 173999),
+(NULL, 'ddbdp;2015', 'DDbDP 2015', 174001),
+(NULL, 'ddbdp;2016', 'DDbDP 2016', 174002),
+(NULL, 'ddbdp;2017', 'DDbDP 2017', 174003),
+(NULL, 'ddbdp;2021', 'DDbDP 2021', 179001),
+(NULL, 'ddbdp;2023', 'DDbDP 2023', 179003),
+(NULL, 'gr.med.pap;2', 'Gr.Med.Pap. 2', 439900),
+(NULL, 'p.christ.musl;', 'P.Christ.Musl.', 363100),
+(NULL, 'p.clt;', 'P.CLT', 364100),
+(NULL, 'p.harr;3', 'P.Harr. 3', 450001),
+(NULL, 'p.koelnland;', 'P.KölnLand.', 520101),
+(NULL, 'p.lup.univ;1', 'P.Lup.Univ. 1', 552501),
+(NULL, 'p.mon.epiph;', 'P.Mon.Epiph.', 594101),
+(NULL, 'p.oxy;87', 'P.Oxy. 87', 685001),
+(NULL, 'p.petr.cahier;', 'P.Petr.Cahier', 694901),
+(NULL, 'p.stras;10', 'P.Stras. 10', 753001),
+(NULL, 'p.tebt.quen;', 'P.Tebt.Quen.', 754500),
+(NULL, 'p.wuerzb;2', 'P.Würzb. 2', 791002),
+(NULL, 'pylon;4', 'Pylon 4', 831004),
+(NULL, 'pylon;5', 'Pylon 5', 831005),
+(NULL, 'pylon;6', 'Pylon 6', 831006),
+(NULL, 'sb;30', 'SB 30', 853002),
+(NULL, 'tyche;36', 'Tyche 36', 894001),
+(NULL, 'tyche;37', 'Tyche 37', 894002),
+(NULL, 'zpe;227', 'ZPE 227', 958001),
+(NULL, 'zpe;228', 'ZPE 228', 958002),
+(NULL, 'zpe;229', 'ZPE 229', 958003),
+(NULL, 'zrg;139', 'ZRG 139', 958739);
+
 ALTER TABLE `register` ADD `volume_id` INT UNSIGNED NULL AFTER `id`; 
 
 ALTER TABLE `register` ADD  CONSTRAINT `register_volume` FOREIGN KEY (`volume_id`) REFERENCES `volume`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
@@ -966,7 +1009,7 @@ DELETE FROM register WHERE ddb LIKE '%ddbdp;2022;%';
 DELETE FROM register WHERE ddb LIKE '%ddbdp;2023;%';
 
 
-SELECT * FROM register r JOIN `volume` v ON SUBSTRING_INDEX(r.ddb, ';', 2) = v.ddb ORDER BY v.sort, r.ddb;
+SELECT * FROM register r JOIN `volume` v ON SUBSTRING_INDEX(r.ddb, ';', 2) = v.hybrid WHERE `ddb` LIKE 'aegyptus%' AND volume_id IS NULL ORDER BY v.sort, r.ddb;
 UPDATE register r JOIN `volume` v ON SUBSTRING_INDEX(r.ddb, ';', 2) = v.hybrid SET r.volume_id = v.id WHERE volume_id IS NULL AND ddb IS NOT NULL;
 UPDATE register r JOIN `volume` v ON SUBSTRING_INDEX(r.dclp, ';', 2) = v.hybrid SET r.volume_id = v.id WHERE volume_id IS NULL AND ddb IS NULL AND dclp IS NOT NULL;
 

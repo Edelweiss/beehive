@@ -211,6 +211,14 @@ div#topic.topic_PapyrillioBeehive_IndexEntryGhostword {
     background-image: url("../images/frontend/topic_ghostwords.png");
 }
 
+div#topic.topic_PapyrillioBeehive_IndexEntryGhostwordSearch {
+    background-image: url("../images/frontend/topic_ghostsearch.png");
+}
+
+div#topic.topic_PapyrillioBeehive_IndexEntryNewSearch {
+    background-image: url("../images/frontend/topic_newsearch.png");
+}
+
 div#topic.topic_PapyrillioBeehive_ApiaryHoney {
     background-image: url("../images/frontend/topic_boep.png");
 }

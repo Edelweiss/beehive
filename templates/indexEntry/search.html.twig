@@ -1,7 +1,7 @@
 {% extends 'frontend.html.twig' %}
 
 {% block title %}
-  {{ type == 'Ghostword' ? 'Ghostwords' : 'Neue Wörter' }}{{ key ? ' Suche' : ''}}|{{ parent() }}
+  {{ type == 'Ghostword' ? 'Ghostwords' : 'Neue Wörter' }} Suche|{{ parent() }}
 {% endblock %}
 
 {% block beta %}
@@ -19,11 +19,7 @@
   {% if compilation %}
     Gehe zu <a href="{{ path('PapyrillioBeehive_ApiaryHoney', {'type': 'bl', 'id': compilation.volume }) }}" title="{{ compilation.short }}">{{ compilation.short|replace({' ' : '&nbsp;'})|raw }}</a>
   {% else %}
-    {% if key %}
-      Suchergebnisse für »{{ key }}« in den Indexeinträgen für {{ type == 'Ghostword' ? 'Ghostwords' : 'Neue Wörter' }}
-    {% else %}
-      Die Listen sind noch unvollständig und noch nicht einzelnen Korrekturen zugeordnet. Sie werden kontinuierlich erweitert und sollen langfristig auf die Korrekturen verweisen, auf die sie sich in den jeweiligen Bänden beziehen.
-    {% endif%}
+    Suchergebnisse für »{{ key }}« in den Indexeinträgen für {{ type == 'Ghostword' ? 'Ghostwords' : 'Neue Wörter' }}
   {% endif %}
 {% endblock %}
 

@@ -13,6 +13,30 @@ use DateTime;
 
 class IndexEntryController extends BeehiveController{
 
+  public function search($type = 'Neues Wort', $key): Response{
+    $entityManager = $this->getDoctrine()->getManager();
+    $repository = $entityManager->getRepository(IndexEntry::class);
+
+    $query = $entityManager->createQuery('
+        SELECT i, c, comp, e FROM App\Entity\IndexEntry i
+        JOIN i.corrections c LEFT JOIN i.compilations comp LEFT JOIN c.edition e WHERE i.type = :type AND i.phrase LIKE :key ORDER BY i.sort');
+    $parameters = ['type' => $type, 'key' => '%' . $key . '%'];
+    $query->setParameters($parameters);
+    $indexEntries = $query->getResult();
+
+    $topic_indexEntries = [];
+    foreach($indexEntries as $ie){
+      $topic_indexEntries[$ie->getTopic()][$ie->getId()] = $ie;
+    }
+
+    $compilation = null;
+    $compilations = [];
+    $unassigned = [];
+
+    //return $this->render('indexEntry/list.html.twig', ['type' => $type, 'key' => $key, 'indexEntries' => $topic_indexEntries]);
+    return $this->render('indexEntry/list.html.twig', ['type' => $type, 'key' => $key, 'compilation' => $compilation, 'compilations' => $compilations, 'indexEntries' => $topic_indexEntries, 'unassigned' => $unassigned]);
+  }
+
   public function list($type = 'Neues Wort', $compilationId = null): Response{
     $entityManager = $this->getDoctrine()->getManager();
     $repository = $entityManager->getRepository(IndexEntry::class);
@@ -54,7 +78,9 @@ class IndexEntryController extends BeehiveController{
       $topic_indexEntries[$ie->getTopic()][$ie->getId()] = $ie;
     }
 
-    return $this->render('indexEntry/list.html.twig', ['type' => $type, 'compilation' => $compilation, 'compilations' => $compilations, 'indexEntries' => $topic_indexEntries, 'unassigned' => $unassigned]);
+    $key = null;
+
+    return $this->render('indexEntry/list.html.twig', ['type' => $type, 'key' => $key, 'compilation' => $compilation, 'compilations' => $compilations, 'indexEntries' => $topic_indexEntries, 'unassigned' => $unassigned]);
   }
 
 }

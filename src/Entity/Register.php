@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RegisterRepository;
+use App\Entity\Volume;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable;
 use Doctrine\ORM\Event\LifecycleEventArgs; // prePersist
@@ -181,6 +182,7 @@ class Register
      * @var Papyrillio\BeehiveBundle\Entity\Correction
      */
     private $corrections;
+    private $volume;
 
     /**
      * Get id
@@ -310,6 +312,30 @@ class Register
     public function getCorrections()
     {
         return $this->corrections;
+    }
+
+    public function setVolume(\App\Entity\Volume $volume)
+    {
+        $this->volume = $volume;
+    }
+
+    public function getVolume()
+    {
+        return $this->volume;
+    }
+
+    public function linkVolume(\App\Entity\Volume $volume = null)
+    {
+    if($volume){
+      $this->setVolume($volume);
+    }
+    else {
+      //try to find fitting volume by ddb-hybrid or dclp-hybrid
+      if($this->ddb){
+      }
+      if($this->dclp) {
+      }
+    }
     }
 
     public function __toString(){

@@ -265,7 +265,18 @@ PapyrillioBeehive_IndexEntryNew:
     defaults:
         type: 'Neues Wort'
         compilationId: null
-        
+
+PapyrillioBeehive_IndexEntryGhostwordSearch:
+    path:  /ghostwords_search/{key}
+    controller: App\Controller\IndexEntryController::search
+    defaults:
+        type: 'Ghostword'
+
+PapyrillioBeehive_IndexEntryNewSearch:
+    path:  /newwords_search/{key}
+    controller: App\Controller\IndexEntryController::search
+    defaults:
+        type: 'Neues Wort'
 
 PapyrillioBeehive_IndexEntry:
     path:  /idx/{type}

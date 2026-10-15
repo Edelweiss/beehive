@@ -109,9 +109,15 @@ class UpdateRegisterCommand extends Command
 # Crap finden
 # SELECT * FROM register WHERE tm IS NULL OR tm = '' OR tm = 0 OR hgv = '' OR hgv = '0'
 
-            // SELECT * FROM `register` r WHERE r.hgv = '100111' OR (r.hgv IS NULL AND r.tm = '100111')
-            $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
+            // First try to match by HGV number
+            $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv = ' . "'" . $hgv . "'");
             $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
+            
+            // If no HGV match found, try to match by TM number (only when HGV is NULL)
+            if(count($matchingRegisterEntry) === 0) {
+                $findMatchingRegisterEntry = $this->entityManager->createQuery('SELECT r.id, r.hgv, r.tm, r.ddb, r.dclp FROM App\Entity\Register r ' . ' WHERE r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'");
+                $matchingRegisterEntry = $findMatchingRegisterEntry->getResult();
+            }
 
             if(count($matchingRegisterEntry) === 1){ // UPDATE
                 if(($matchingRegisterEntry[0]['ddb'] != $ddb) OR ($matchingRegisterEntry[0]['dclp'] != $dclp)){
@@ -120,7 +126,7 @@ class UpdateRegisterCommand extends Command
 
                     $idnoInfo .= ' (ALT: ' . $matchingRegisterEntry[0]['ddb'] . '/' . $matchingRegisterEntry[0]['dclp'] . ')' . ' ……… aktualisiert';
 
-                    $updateQuery = $this->entityManager->createQuery('UPDATE App\Entity\Register r SET ' . $setDdb . ', '  . $setDclp . ' WHERE r.hgv = ' . "'" . $hgv . "'" . ' OR (r.hgv IS NULL AND r.tm = ' . "'" . $tm . "'" . ')');
+                    $updateQuery = $this->entityManager->createQuery('UPDATE App\Entity\Register r SET ' . $setDdb . ', '  . $setDclp . ' WHERE r.id = ' . $matchingRegisterEntry[0]['id']);
                     if(!$this->dryRun){
                        $updated = $updateQuery->getResult();
                        if($updated){

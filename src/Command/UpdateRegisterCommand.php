@@ -71,7 +71,7 @@ class UpdateRegisterCommand extends Command
             $tm = self::fallback(trim($data[1]), null);
             $ddb = self::fallback(trim($data[2]), null);
             $dclp = self::fallback(trim($data[3]), null);
-            $idnoInfo = str_pad($row, 6, ' ', STR_PAD_LEFT) . ': ' . ($hgv ? $hgv : $tm) . ($ddb || $dclp ? '/' . $ddb . ($ddb && $dclp ? '/' : '') . $dclp : '');
+            $idnoInfo = 'ROW ' . str_pad($row, 6, ' ', STR_PAD_LEFT) . ': ' . ' HGV/TM ' . ($hgv ? $hgv : $tm) . ($ddb || $dclp ? ' | DDB/DCLP ' . $ddb . ($ddb && $dclp ? '/' : '') . $dclp : '');
 
             if($hgv && (intval($hgv) >= 500000) && (intval($hgv) <= 500100)){
                 echo $idnoInfo . ' WARNUNG, HGV-Nummer wird ignoriert' . "\n";

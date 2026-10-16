@@ -73,7 +73,7 @@ class ImportCommand extends ReadFodsCommand
           }
 
           $taskList = [];
-          $taskList['ddb'] = self::fallback($row['task_ddb'], null);
+          $taskList['ddb'] = self::fallback($row['task_ddb'] ?? null, null);
           foreach($taskList as $category => $description){
             if($description){
               $task = new Task();
